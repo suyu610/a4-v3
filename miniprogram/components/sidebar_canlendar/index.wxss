@@ -1,0 +1,51 @@
+/* components/sidebar_canlendar/index.wxss */
+.container {
+  /* padding-top: 40rpx; */
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 40rpx;
+}
+.week {
+  color: #86909c;
+  font-size: 12px;
+}
+.days {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 12rpx;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+}
+.days-active {
+  background-color: #332feb;
+  color: white;
+  border-radius: 16px;
+}
+
+.days-grey {
+  color: #e9e9e9;
+  font-weight: normal;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+}
+.dot {
+  width: 5px;
+  height: 5px;
+  box-sizing: border-box;
+  border-radius: 2.5px;
+}
+
+.blue {
+  background-color: #5e4ae8;
+  margin-right: 1.5px;
+}
+
+.yellow {
+  background-color: #fb8f45;
+  margin-left: 1.5px;
+}

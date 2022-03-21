@@ -1,0 +1,67 @@
+var newmark = startmark = 0
+var status = 1
+
+function touchstart(e, ins) {
+  var pageY = (e.touches[0] || e.changedTouches[0]).pageY
+  startmark = newmark = pageY
+}
+
+function touchmove(e, ins) {
+  var pageY = (e.touches[0] || e.changedTouches[0]).pageY
+  newmark = pageY
+  var data = {
+    windowHeight: e.currentTarget.dataset.height
+  }
+
+  if (startmark < pageY) {
+    // if (data.windowHeight * 0.75 > Math.abs(newmark - startmark)) {
+    //   ins.selectComponent('.container').setStyle({
+    //   transform: 'translateY(' + Math.min(data.windowHeight * 0.75, ((status == 0 ? data.windowHeight * 0.75 : 0) + newmark - startmark)) + 'px)'
+    //   })
+    // }
+  }
+}
+
+function touchend(e, ins) {
+  var pageY = (e.touches[0] || e.changedTouches[0]).pageY
+  newmark = pageY
+  var data = {
+    windowHeight: e.currentTarget.dataset.height
+  }
+
+  if (startmark < pageY) {
+    if (data.windowHeight * 0.1 < Math.abs(newmark - startmark)) {
+      // ins.selectComponent('.container').setStyle({
+      //   transform: 'translateY(' + (data.windowHeight * 0.75) + 'px)'
+      // })
+      status = 0 // 收起状态
+    } else {
+      // ins.selectComponent('.container').setStyle({
+      //   transform: 'translateY(0px)'
+      // })
+      status = 1 // 展开状态
+    }
+  }
+
+  if (startmark > newmark) {
+    // ins.selectComponent('.container').setStyle({
+    //   transform: 'translateY(0px)'
+    // })
+    status = 1 // 收起状态
+  }
+
+  if (status == 0) {
+    // ins.setTimeout(function () {
+    //   ins.selectComponent('.container').setStyle({
+    //     transform: 'translateY(0px)'
+    //   })
+    //   status = 1
+    // }, 500)
+    ins.callMethod("closeDict")
+  }
+}
+module.exports = {
+  touchstart: touchstart,
+  touchmove: touchmove,
+  touchend: touchend
+}

@@ -1,0 +1,53 @@
+<image class="top-bg" mode="widthFix" src="../../images/shadow.png"></image>
+
+<view class="container" style="padding-top:{{searchBarTop+4}}px">
+  <view class="top">
+    <!-- 顶部的控制 -->
+    <view class="header">
+      <!-- <image class="closeIcon" src="./images/close.png"></image> -->
+      <text class="title">我的</text>
+    </view>
+    <view class="info">
+      <view class="userinfo">
+        <image class="avatar" src="./images/avatar.png"></image>
+        <image class="medal" src="./images/medal.png"></image>
+        <view class="nickname">想柒点下班</view>
+      </view>
+
+      <view class="setting-icon" bindtap="jump2Setting">
+        <image src="./images/setting.png"></image>
+      </view>
+    </view>
+    <!-- 时间 -->
+    <view class="timeinfo" bindtap="showTimeInfoToast">
+      <view class="time">
+        <view class="num">32<text class="day">天</text></view>
+        <view class="desc">今年学习</view>
+      </view>
+      <view class="divider"></view>
+      <view class="time">
+        <view class="num">21<text class="day">天</text></view>
+        <view class="desc">本月学习</view>
+      </view>
+      <view class="divider"></view>
+
+      <view class="time">
+        <view class="num">24<text class="day">天</text></view>
+        <view class="desc">连续学习</view>
+      </view>
+    </view>
+  </view>
+  <view class="bottom">
+    <view class="canlendar" bindtap="jump2Calendar">
+      <canlendar></canlendar>
+    </view>
+    <block wx:for="{{notvipFuncItemList}}" wx:key="index">
+      <sidebar-item itemName="{{item.title}}" iconPath="{{item.icon}}" url="{{item.url}}"></sidebar-item>
+    </block>
+    <sidebar-title></sidebar-title>
+    <block wx:for="{{vipFuncItemList}}" wx:key="index">
+      <sidebar-item itemName="{{item.title}}" iconPath="{{item.icon}}" isVip="true" url="{{item.url}}"></sidebar-item>
+    </block>
+  </view>
+
+</view>

@@ -1,0 +1,245 @@
+/* components/progressCard/index.wxss */
+@import "../../style/font.wxss";
+
+.progressCard {
+  width: auto;
+  padding: 15px;
+  margin: 0 16px;
+  margin-top: 24px;
+  background-color: var(--white);
+  border-radius: 24rpx;
+  display: flex;
+  justify-content: start;
+}
+
+.book-img image {
+  height: 88px;
+  width: 67px;
+}
+
+.progress-container {
+  padding-left: 32rpx;
+  width: 100%;
+}
+
+.progress-container-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.progress-container-header-text {
+  font-weight: var(--bold);
+  color: var(--black);
+  font-size: 18px;
+  font-family: var(--simhei);
+}
+.change-dict {
+  font-family: "MiSans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #5f67ea;
+  /* identical to box height, or 117% */
+}
+
+.progress-remain {
+  font-family: "MiSans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  /* identical to box height, or 117% */
+
+  display: flex;
+  align-items: flex-end;
+
+  /* Text/3-次要信息 */
+
+  color: #86909c;
+  padding-bottom: 18rpx;
+}
+.edit-img {
+  width: 14px;
+  height: 14px;
+  padding-right: 3px;
+  top: 2px;
+  position: relative;
+}
+
+.progress-container-info {
+  width: 100%;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+}
+
+.progress-container-info-text-1 {
+  color: var(--black);
+  font-size: var(--overline);
+  font-family: var(--simhei);
+  font-weight: var(--medium);
+  opacity: 0.5;
+}
+
+.progress-container-info-text-2 {
+  color: #86909c;
+  font-size: 11px;
+  font-family: var(--simhei);
+}
+.black {
+  color: var(--black);
+}
+
+.bold{
+  font-weight: bold;
+}
+.progress {
+  width: 100%;
+  height: 5px;
+  background-color: var(--grey);
+  border-radius: 3px;
+  position: relative;
+}
+
+.progress-current {
+  height: 5px;
+  background-color: var(--primary);
+  border-radius: 3px;
+  position: absolute;
+}
+
+.sentence-container {
+  width: 100%;
+}
+
+.english-container {
+  width: 100%;
+  margin-bottom: 5px;
+  overflow-wrap: break-word;
+  line-height: 100%;
+}
+
+.english-text {
+  color: var(--black);
+  font-size: var(--english);
+  font-family: var(--poppins-italic);
+}
+
+.chinese-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.chinese-text {
+  color: var(--black);
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--light);
+}
+
+.title-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.title-text {
+  color: var(--black);
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--light);
+  line-height: 16px;
+}
+
+.like-container {
+  width: 46px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.like-img {
+  width: 16px;
+  height: 16px;
+  padding-right: 3px;
+}
+
+.like-text {
+  color: var(--black);
+  font-size: var(--body);
+  font-weight: var(--light);
+}
+
+.progressCard-loading {
+  width: auto;
+  height: 155px;
+  margin: 0 20px;
+  border: 1px solid rgba(248, 248, 248, 1);
+  box-shadow: 0px 0px 10px rgba(230, 230, 230, 0.5);
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/*coffee cup*/
+.coffee-cup {
+  width: 20px;
+  height: 24px;
+  border: 1px rgba(0, 0, 0, 1) solid;
+  border-radius: 0px 0px 5px 5px;
+  position: relative;
+  margin: 36px auto;
+}
+
+.coffee-cup:after,
+.coffee-cup:before {
+  position: absolute;
+  content: "";
+}
+
+.coffee-cup:after {
+  width: 5px;
+  height: 12px;
+  border: 1px #000 solid;
+  border-left: none;
+  border-radius: 0px 20px 20px 0px;
+  left: 20px;
+}
+
+.coffee-cup:before {
+  width: 1px;
+  height: 6px;
+  background-color: rgba(0, 0, 0, 1);
+  top: -10px;
+  left: 4px;
+  box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 1),
+    5px -5px 0px 0px rgba(0, 0, 0, 1), 10px 0px 0px 0px rgba(0, 0, 0, 1);
+  animation: steam 1s linear infinite alternate;
+}
+
+@keyframes steam {
+  0% {
+    height: 0px;
+  }
+
+  100% {
+    height: 6px;
+  }
+}

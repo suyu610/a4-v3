@@ -1,0 +1,47 @@
+/**
+ * WXML方法封装
+ * tool.wxs
+ */
+
+/**
+ * 计算过去时间戳到现在的时间戳的时间段
+ *
+ * @param {oldTimeStamp} 时间戳
+ * @return {timeInterval} 用户信息
+ */
+function calcTimeIntervalTillNow(currentTimeStamp, quitTimeStamp) {
+
+  var timeDiff = currentTimeStamp - quitTimeStamp // 时间差的毫秒数
+
+  var days = Math.floor(timeDiff / (24 * 3600 * 1000)); // 计算出天数
+  var timeLeft_1 = timeDiff % (24 * 3600 * 1000); // 计算天数后剩余的时间
+  var hours = Math.floor(timeLeft_1 / (3600 * 1000)); // 计算天数后剩余的小时数
+  var timeLeft_2 = timeDiff % (3600 * 1000); // 计算剩余小时后剩余的毫秒数
+  var minutes = Math.floor(timeLeft_2 / (60 * 1000)); // 计算剩余的分钟数
+
+  // 根据情况决定返回的时间字段
+  if (days > 0) {
+    return days + '天'
+  } else if (days == 0 && hours > 0) {
+    return hours + '小时'
+  } else if (days == 0 && hours == 0) {
+    return minutes + '分钟'
+  }
+}
+
+
+
+/**
+ * 计算整数百分比
+ *
+ * @param {num_1, num_2} 分子，分母
+ * @return {percent} 用户信息
+ */
+function calcPercent(num_1, num_2) {
+  return parseInt((num_1 / num_2) * 100)
+}
+
+module.exports = {
+  calcTimeIntervalTillNow: calcTimeIntervalTillNow,
+  calcPercent: calcPercent
+}

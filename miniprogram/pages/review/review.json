@@ -1,0 +1,19 @@
+{
+  "usingComponents": {
+    "v-navigationBar": "../../components/navigationBar",
+    "v-wordCard": "../../components/wordCard",
+    "v-calendar": "../../components/calendar",
+    "v-wordDic": "../../components/wordDic",
+    "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index",
+    "van-popup": "../../miniprogram_npm/@vant/weapp/popup/index",
+    "van-tab": "../../miniprogram_npm/@vant/weapp/tab/index",
+    "van-tabs": "../../miniprogram_npm/@vant/weapp/tabs/index",
+    "van-divider": "../../miniprogram_npm/@vant/weapp/divider/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-loading": "@vant/weapp/loading/index"
+
+
+
+  }
+}

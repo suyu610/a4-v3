@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "v-navigationBar": "../../components/navigationBar",
+    "bgBtn": "../../components/bgBtn/bgBtn"
+  }
+}

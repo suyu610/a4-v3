@@ -1,0 +1,15 @@
+<!-- navigationBar -->
+<v-navigationBar type="leftBar" title="切换词书" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+
+<van-tabs active="{{ active }}" swipeable animated>
+  <block wx:for="{{bookColumns}}" wx:key="id">
+    <van-tab title="{{item.name}}">
+      <scroll-view scroll-y scroll-x="{{false}}" class="tab-container" style="height:{{tabContainerHeight}}px">
+        <block wx:for="{{item.bookList}}" wx:for-item="book" wx:key="index">
+          <!-- <view>{{book.bookName}}</view> -->
+          <book-item bookName="{{book.bookName}}" totalCount="{{book.totalCount}}" hasAdded="{{book.hasAdded}}" isCurrent="{{book.isCurrent}}" desc="{{book.desc}}"></book-item>
+        </block>
+      </scroll-view>
+    </van-tab>
+  </block>
+</van-tabs>

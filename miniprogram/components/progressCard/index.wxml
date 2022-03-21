@@ -1,0 +1,36 @@
+<!-- tool.wxs -->
+<wxs src="../../tools.wxs" module="tools" />
+
+<!-- progressCard -->
+<view wx:if="{{!loading}}" class="progressCard">
+
+  <view class="book-img">
+    <image src="./images/book.png"></image>
+  </view>
+  <!-- progress-container -->
+  <view class="progress-container">
+    <view class="progress-container-header" bind:tap="onNaviToDictionary">
+      <text class="progress-container-header-text">{{currentDicCode!=null && currentDicCode!=''? dictInfo[currentDicCode].name : '请选择词书'}}</text>
+      <view class="change-dict">
+        <image class="edit-img" src="./images/exchange.png"></image>
+        <text>更换词书</text>
+      </view>
+    </view>
+    <view class="progress-remain">
+      <text>按当前计划，剩余20天</text>
+    </view>
+    <view class="progress" id="progress">
+      <view class="progress-current" style="width:{{progressCurrentWidth}}\%"></view>
+    </view>
+    <view class=" progress-container-info">
+      <text class="progress-container-info-text-2" wx:if="{{currentDicCode!=null  && currentDicCode!=''}}">进度 <text class="black bold">{{ progressList[currentDicCode]==null?0:progressCurrentWidth }}%</text> </text>
+      <text class="progress-container-info-text-2">({{progressList[currentDicCode]==null?0:progressList[currentDicCode]>dictInfo[currentDicCode].totalWordNum?dictInfo[currentDicCode].totalWordNum:progressList[currentDicCode]}}/{{dictInfo[currentDicCode].totalWordNum}})</text>
+      <text class="progress-container-info-text-2" wx:if="{{currentDicCode==null  || currentDicCode==''}}">未选择词书</text>
+    </view>
+  </view>
+</view>
+
+<!-- progressCard-loading -->
+<view wx:if="{{loading}}" class="progressCard-loading">
+  <view class="coffee-cup"></view>
+</view>

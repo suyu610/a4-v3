@@ -1,0 +1,27 @@
+{
+  "usingComponents": {
+    "v-navigationBar": "../../components/navigationBar",
+    "van-cell": "../../miniprogram_npm/@vant/weapp/cell/index",
+    "van-cell-group": "../../miniprogram_npm/@vant/weapp/cell-group/index",
+    "van-collapse": "../../miniprogram_npm/@vant/weapp/collapse/index",
+    "van-collapse-item": "../../miniprogram_npm/@vant/weapp/collapse-item/index",
+    "van-radio": "../../miniprogram_npm/@vant/weapp/radio/index",
+    "van-radio-group": "../../miniprogram_npm/@vant/weapp/radio-group/index",
+    "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index",
+    "v-wordDic": "../../components/wordDic",
+    "van-sticky": "@vant/weapp/sticky/index",
+    "van-empty": "@vant/weapp/empty/index",
+    "van-stepper": "@vant/weapp/stepper/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-switch": "@vant/weapp/switch/index", 
+    "van-field": "@vant/weapp/field/index",
+    "van-checkbox": "@vant/weapp/checkbox/index",
+    "van-checkbox-group": "@vant/weapp/checkbox-group/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "v-wordCard": "../../components/wordCard",
+    "v-calendar": "../../components/calendar",
+    "van-divider": "../../miniprogram_npm/@vant/weapp/divider/index"
+
+  },
+  "onReachBottomDistance": 300
+}

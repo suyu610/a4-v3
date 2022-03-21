@@ -1,0 +1,117 @@
+var startmark = 0;
+var status = 0;
+var JUDGEPOINT = 0.3;
+var drawerComp, drawerWidth, iconComp;
+
+function touchStart(e, ins) {
+  var pageX = e.touches[0].pageX;
+  startmark = pageX;
+  drawerComp = ins.selectComponent('.drawer');
+  iconComp = ins.selectComponent('.menu-img');
+  drawerWidth = drawerComp.getDataset().drawerwidth;
+  iconComp.setStyle({
+    'opacity': "0"
+  })
+}
+
+function touchMove(e, ins) {
+  var offset = e.touches[0].pageX - startmark;
+
+  if (offset < 0 && status == 1) {
+    setDrawer(drawerWidth + offset);
+  }
+
+  if (offset > 0 && status == 0) {
+    setDrawer(Math.min(drawerWidth, offset));
+  }
+
+
+}
+
+function setIcon(isOpen) {
+  if (isOpen) {
+    iconComp.setStyle({
+      'background-image': "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGiSURBVHgBvdi9UgIxEAfw3csT+AZa+NHgUDA+hdJDI3ZII3Z2jqWVY6N0noUfpYoPYC+NI408iRUxYYABSS5fu/evyN1e7jfcQTKLoFJvds4BZFd/BoT87eH2FEqI6b5YbxxfqWF3sVAi5v3HmyNgzEGzc4dStpYOorzIlKz1v1gX6gugTIyOxJPMdhEXyoqZJoOxvIaSUC7MGOS9+BkOPjYrtQ0ErJqKEKC6tbu3Pvr+fAVmzPtTry30YDQcvHCiPDGT82J2kAsVglkCcaBCMSsgSlQMxgiiQMVirKAUVAqmEBSDSsVM53Rnv9HO1RpzaDuv177JZIkYb5APqii+GB0BnnE9PgpMECgGFYoJBoWgYjA6GUQEMZMUNaYEf0Oun/YcFLn2BYF8MSkob1AoJhblBfL5B1YvzBfFLsEJ8l0OqHYJggIzG1OgBBWGCiUoMRQoQY1JRQkOTApKcGFiUYITE4Mydj8oMYtxbvJs3Q8OjI6eS89pLSjqflBjfFHG7gcXxoWadz+2K7U1taPaUY/vF6S87D/3usAc/aIb7nv2B7kS3o/LY49AAAAAAElFTkSuQmCC)"
+    })
+  } else {
+    iconComp.setStyle({
+      'background-image': "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA0CAYAAADbsStYAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGUSURBVHgB7do/TgJBFAbw7z0s7OQCxqWzUzpjotlwA08gwQOgJwBLO7gA4Qh6AVj/xNjJDVw4wVKL85wdBCksBhuZ9f2KDSRvknnZyWzy5QH/BK3+OYrr0RYQYcMZIHtO+qN11iwbPa01WgK0EQqRpCRyliT9zKec88dJrVEPqskcUTxjvvQt569F5wiQPY5N31pG2Mq+hfNGjRkjQCTkfSG5RkWkjwDZfXd9a0v5Y5KO0t1KdUqCfXvwvY/DH8rs5XnzNOx1oJRSSimllFKFsgzH4rheNsxNAUUoFMnejem6Rm2T0QfzEAFEnb+UuoRhxpSnaRGKK3KNEvEBCi70FNDbIhy7R8G5RreM6UCQoqhsb6uflyi/lAi8gwIRyNi9SKWUUkoppZQKwveIXHzRFJY2EMawht1452HQu/Zd4KZSjuP6ITHd2p/bCEO+z3ivUp1O3l5ffBa4hIGZWwjTeiNyRBTCcf1J5Fu4CMe8RkE3zho51/yNAncIESHxLXWNPg56fRsiec/VbQIRSkrGXPnWfwJOTG/Mbt3ZJwAAAABJRU5ErkJggg==)"
+    })
+  }
+}
+
+function touchEnd(e, ins) {
+  iconComp.setStyle({
+    'opacity': "1"
+  })
+
+  setIcon(status == 1)
+
+  var pageX = (e.touches[0] || e.changedTouches[0]).pageX;
+  var offset = pageX - startmark;
+
+  if (offset > 0 && status == 0) {
+    if (offset < drawerWidth * JUDGEPOINT) {
+      setDrawer(0);
+    } else {
+      setDrawer(drawerWidth);
+      status = 1;
+    }
+  } else if (offset < -10) {
+    setDrawer(0);
+    status = 0;
+  }
+
+  setIcon(status == 1)
+}
+
+function setDrawer(x) {
+  setCompTransX(drawerComp, x);
+}
+
+function setCompTransX(comp, x) {
+  if (x != 0 && x != drawerWidth) {
+    comp.setStyle({
+      transform: 'translateX(' + x + 'px)',
+      transition: '0'
+    })
+  } else {
+    comp.setStyle({
+      transform: 'translateX(' + x + 'px)',
+      transition: 'All 0.2s linear'
+    })
+  }
+}
+
+function closeDrawer() {
+  setDrawer(0)
+  setIcon(false)
+}
+
+function openDrawer() {
+  setDrawer(drawerWidth);
+  setIcon(true)
+}
+
+
+
+function toggleDrawer() {
+  if (status == 1) {
+    status = 0
+    closeDrawer()
+  } else {
+    status = 1
+    openDrawer()
+  }
+}
+
+
+
+module.exports = {
+  touchstart: touchStart,
+  touchmove: touchMove,
+  touchend: touchEnd,
+  setDrawer: setDrawer,
+  closeDrawer: closeDrawer,
+  toggleDrawer: toggleDrawer
+}

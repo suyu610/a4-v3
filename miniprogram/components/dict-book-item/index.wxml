@@ -1,0 +1,30 @@
+<view style="content: ''; overflow: hidden;padding-top: 12px;"></view>
+<view class="container">
+  <view class="check" wx:if="{{isCurrent}}">
+    <text>当前词书</text>
+  </view>
+
+  <view class="check add-people" wx:if="{{!isCurrent}}">
+    <text>123人</text>
+  </view>
+  <book-img bookName="{{bookName}}" totalCount="{{totalCount}}"></book-img>
+  <view class="info" wx:if="{{hasAdded}}">
+    <view class="title">{{bookName}}</view>
+    <view class="desc">按当前计划，剩余<text style="color:black">{{remainDay}}</text>天完成学习</view>
+    <view class="progress-bar">
+      <view class="progress-active" style="width: 30%;"></view>
+    </view>
+    <view class="progress-info">
+      <view class="progress-left">
+        <view class="progress-title">进度</view>
+        <view class="percent">72%</view>
+      </view>
+      <view class="progress-right">(103/275)</view>
+    </view>
+  </view>
+
+  <view class="info" wx:else>
+    <view class="title">{{bookName}}</view>
+    <view class="desc book-desc">{{desc}}</view>
+  </view>
+</view>

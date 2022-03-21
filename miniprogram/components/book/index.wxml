@@ -1,0 +1,5 @@
+<view class="container">
+  <image mode="heightFix" src="./images/book.png"></image>
+  <view class="title">{{bookName}}</view>
+  <view class="count">{{totalCount}}词</view>
+</view>

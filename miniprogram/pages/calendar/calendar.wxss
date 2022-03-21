@@ -1,0 +1,23 @@
+/* pages/calendar/calendar.wxss */
+
+page {
+  background-color: #f5f6f8;
+}
+.share-btn {
+  width: 100vw;
+  bottom: 50px;
+  position: absolute;
+}
+.controlTool .top,
+.controlTool .bottom {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px 5px 20px;
+}
+.controlTool {
+  padding-top: 12px;
+}
+
+.controlTool .bottom {
+  padding-top: 8px;
+}

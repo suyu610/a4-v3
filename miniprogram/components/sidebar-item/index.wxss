@@ -1,0 +1,33 @@
+/* components/sidebar-item/index.wxss */
+.container {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 28rpx 40rpx;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+.container .left {
+  display: flex;
+  align-items: center;
+  padding-left: 3px;
+}
+.container .left .icon image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.container .left .icon {
+  padding-right: 20rpx;
+}
+
+.container .left .name {
+  font-size: 15px;
+  color: #2f3137;
+}
+
+.jumpIcon image {
+  width: 16rpx;
+}

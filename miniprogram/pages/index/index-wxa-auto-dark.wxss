@@ -1,0 +1,19 @@
+/* 
+此文件为开发者工具生成，生成时间: 2022/3/3 上午2:09:51
+使用方法：
+在 index.wxss 文件末尾引入样式
+```
+@import "./index-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+  .search-keyboard {
+    background-color: rgb(90 90 90);
+  }
+
+  .dictPopup {
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+
+}

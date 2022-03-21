@@ -1,0 +1,21 @@
+/* components/sidebar-title/index.wxss */
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 34rpx 28rpx;
+  padding-bottom: 20rpx;
+  align-items: center;
+}
+.title {
+  font-family: "MiSans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #4e5969;
+}
+
+image {
+  width: 144rpx;
+  height: 36rpx;
+}

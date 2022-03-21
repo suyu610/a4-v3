@@ -1,0 +1,15 @@
+{
+  "usingComponents": {
+    "v-navigationBar": "../../components/navigationBar",
+    "v-progressCard": "../../components/progressCard",
+    "v-wordCard": "../../components/wordCard",
+    "v-wordDic": "../../components/wordDic",
+    "v-homeCard": "../../components/homeCard/homeCard",
+    "sidebar": "../../components/sidebar/sidebar",
+    "bgBtn": "../../components/bgBtn/bgBtn",
+    "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index",
+    "van-popup": "../../miniprogram_npm/@vant/weapp/popup/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index"
+  },
+  "navigationBarTextStyle": "black"
+}

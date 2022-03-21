@@ -1,0 +1,19 @@
+<!--pages/upload-book/upload-book.wxml-->
+<v-navigationBar type="leftBar" title="上传词书" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+<view class="desc-container">
+  <view class="title">使用说明</view>
+  <view class="body">
+    <view>如下图所示</view>
+    <view style="padding-left: 15px;"> Excel：单词放在第一列</view>
+    <view style="padding-left: 15px;"> 文本文件：每一行一个单词</view>
+    <view>然后点击底部按钮完成上传</view>
+  </view>
+  <view class="images">
+    <image mode="widthFix" src="./images/1.png"></image>
+    <image mode="widthFix" src="./images/2.png"></image>
+  </view>
+</view>
+
+<view class="bottom" bindtap="chooseFile">
+  <bgBtn title="选择文件" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bgBtn>
+</view>

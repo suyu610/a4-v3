@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "canlendar": "../sidebar_canlendar",
+    "sidebar-item": "../sidebar-item",
+    "sidebar-title": "../sidebar-title"
+  }
+}

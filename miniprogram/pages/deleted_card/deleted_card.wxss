@@ -1,0 +1,317 @@
+/* pages/review/review.wxss */
+.tabBar-shadow {
+  width: 100%;
+  height: 52px;
+  box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.recommend-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px 15px 20px;
+}
+
+.recommend-header-text {
+  color: var(--black);
+  font-size: var(--header-1);
+  font-family: var(--poppins-title);
+}
+
+.recommend-header-text-filter {
+  opacity: 0.7;
+  color: var(--deepGrey);
+  font-family: var(--poppins-title);
+}
+.recommend-header-text-sub {
+  opacity: 0.7;
+  color: var(--deepGrey);
+  font-family: var(--poppins-title);
+  font-size: var(--body);
+}
+
+.btn-container {
+  display: flex;
+  text-align: right;
+}
+
+.filter-Btn {
+  justify-content: space-around;
+  transition: 0.2s;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 5px 0px 5px;
+  border-radius: 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+.filter-img {
+  width: 12px;
+  height: 12px;
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
+.filter-btn-text {
+  color: var(--deepGrey);
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--overline);
+}
+
+.calendar-header {
+  width: auto;
+  margin: 0 20px 15px 20px;
+}
+
+.calendar-header-top {
+  padding: 0 0 20px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.calendar-header-info {
+  width: 40%;
+  background-color: var(--white);
+  border: 1px solid rgba(248, 248, 248, 1);
+  box-shadow: 0px 1px 2px rgba(153, 153, 153, 0.1);
+  border-radius: 4px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: start;
+  padding: 10px;
+}
+
+.calendar-header-info .header-img {
+  width: 26px;
+  height: 26px;
+  padding-right: 5px;
+}
+
+.calendar-header-main {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-header-text {
+  color: var(--black);
+  font-size: var(--header-1);
+  font-family: var(--poppins-title);
+  line-height: 22px;
+}
+
+.calendar-header-text-year {
+  color: var(--black);
+  font-weight: var(--normal);
+  opacity: 0.3;
+}
+
+.calendar-header-right {
+  height: 22px;
+  padding-right: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.calendar-header-top-text {
+  font-size: var(--header-2);
+  font-weight: var(--normal);
+}
+
+.calendar-header-bottom-text {
+  padding-top: 5px;
+  color: var(--deepBlue);
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--light);
+}
+
+.progress {
+  width: 84px;
+  height: 3px;
+  background-color: var(--grey);
+  border-radius: 3px;
+  position: relative;
+}
+
+.progress-current {
+  width: 70%;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 3px;
+  position: absolute;
+}
+
+.practice-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0px 3px 7px rgba(83, 141, 255, 0.3);
+  position: fixed;
+  right: 20px;
+  bottom: 75px;
+  transition: 0.2s;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+.practice-img {
+  width: 22px;
+  height: 22px;
+}
+.search-placeholder {
+  font-size: var(--body);
+  color: var(--deepGrey);
+}
+
+.search-keyboard {
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+}
+
+.dictPopup {
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: auto !important;
+  background-color: transparent !important;
+}
+
+.progress-header-text-all {
+  opacity: 0.7;
+  /* color: var(--deepGrey); */
+  font-size: var(--overline);
+  font-family: var(--poppins-title);
+}
+.progress-header-text-num{
+  padding-left: 10px;
+}
+.progress-header-text-all {
+  opacity: 0.5;
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--light);
+}
+
+.select-all-btn {
+  padding-left: 10px;
+  /* padding-right: 2px; */
+  height: 22px;
+  line-height: 22px;
+
+  /* border: 0.5px solid rgba(28, 0, 219, 0.7); */
+  /* border: 1px solid rgba(29, 29, 29, 0.3); */
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.select-all-btn-img {
+  width: 14px;
+  height: 14px;
+  /* padding-top: 5px; */
+  padding-right: 2px;
+  opacity: 0.5;
+}
+
+.search-keyboard-left {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-img {
+  width: 18px;
+  height: 18px;
+  margin: 2px 10px 0 10px;
+}
+
+.search-keyboard-right {
+  width: 40px;
+  height: 20px;
+  padding: 3px 10px;
+  margin-right: 10px;
+  border: 0.7px solid rgba(28, 37, 42, 1);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+}
+
+.search-keyboard-right-text {
+  color: var(--black);
+  font-size: var(--header-2);
+  font-family: var(--simhei);
+  font-weight: var(--normal);
+}
+
+.btn-container {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.add-Btn {
+  /* background: linear-gradient(90deg, rgba(29, 0, 219, 1) 0%, rgba(96, 28, 239, 1) 100%); */
+  transition: 0.2s;
+  width: 126px;
+  height: 36px;
+  padding: 0 27px;
+  border: 1px solid #1c00db;
+  border-radius: 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-img {
+  width: 18px;
+  height: 18px;
+  border-radius: 100px;
+}
+
+.add-btn-text {
+  color: var(--primary);
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--medium);
+  line-height: 18px;
+}
+
+.add-btn-text-nomore {
+  color: var(--deepGrey);
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--medium);
+  line-height: 18px;
+}

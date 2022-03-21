@@ -1,0 +1,73 @@
+<!-- calendar -->
+
+<wxs module="m1">
+  var getProgressWidth = function (year, month, dayIndex, array) {
+    // 首先拼接
+    console.log(year + month + dayIndex)
+    return '5%';
+  }
+  module.exports.getProgressWidth = getProgressWidth;
+</wxs>
+
+<wxs src="../../darkmode.wxs" module="darkmodeUtil" />
+
+<view class="container">
+  <view class="month-header">
+    <text class="month-header-text" decode="true">{{MonthStrArr[curMon-1]}}&nbsp;{{curYear}}</text>
+    <view class="navi-container">
+      <image class="navi-img" src="{{darkmodeUtil.addSuffix('./images/left.png',darkMode)}}" bindtap="tapToggleMonthBtn" data-direct="prev"></image>
+      <image class="navi-img" src="{{darkmodeUtil.addSuffix('./images/right.png',darkMode)}}" bindtap="tapToggleMonthBtn" data-direct="next"></image>
+    </view>
+  </view>
+
+  <!-- week-header -->
+  <view class="week-header">
+    <van-grid column-num="7" border="{{ false }}">
+      <van-grid-item content-class="day-content-class" use-slot wx:for="{{weekDayNameArr}}" wx:key="item">
+        <text class="week-header-text">{{item}}</text>
+      </van-grid-item>
+    </van-grid>
+  </view>
+
+  <!-- day-container -->
+  <view class="day-container">
+    <van-grid column-num="7" border="{{ false }}">
+      <!--  上个月的日期占位 -->
+      <van-grid-item content-class="day-content-class" use-slot wx:for="{{ beginWeek }}" wx:key="item">
+        <view class="day-item"></view>
+      </van-grid-item>
+      <!-- 本月 -->
+      <van-grid-item content-class="day-content-class" use-slot wx:for="{{ monthDayCount }}" wx:key="item">
+        <!-- day-item-chosen -->
+        <view class="day-item-chosen" wx:if="{{curYear == chosenDate.year &&curMon == chosenDate.month && index == chosenDate.day-1}}">
+          <text class="day-item-text-chosen">{{ index + 1 }}</text>
+        </view>
+
+        <!-- day-item -->
+        <view wx:if="{{index < chosenDate.day-1}}" bindtap="changeChosenDay" class="day-item" data-index="{{index}}">
+          <text class="day-item-text">{{ index + 1 }}</text>
+          <view class="dots" wx:if="{{index<15 && index!=3}}">
+            <view class="blue dot" wx:if="{{index!=1}}"></view>
+            <view class="yellow dot" wx:if="{{index!=2}}"></view>
+          </view>
+        </view>
+        <!-- 比当前时间更长的 -->
+        <view wx:if="{{index > chosenDate.day-1}}" bindtap="changeChosenDay" class="day-item day-item-future" data-index="{{index}}">
+          <text class="day-item-text">{{ index + 1 }}</text>
+        </view>
+      </van-grid-item>
+    </van-grid>
+  </view>
+
+  <view class="footer">
+    <view class="left">
+      <view class="dot blue"></view>
+      <text>当日已复习</text>
+    </view>
+    <view class="right">
+      <view class="dot yellow"></view>
+      <text>当日已新学</text>
+    </view>
+  </view>
+
+</view>

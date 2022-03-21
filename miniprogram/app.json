@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/empty/empty",
+    "pages/upload-book/upload-book",
+    "pages/dictionary/dictionary",
+    "pages/calendar/calendar",
+    "pages/index/index",
+    "pages/wordlist/wordlist",
+    "pages/settings/settings",
+    "pages/review/review",
+    "pages/practice/practice",
+    "pages/spell/spell",
+    "pages/settings/more_settings/more_settings",
+    "pages/deleted_card/deleted_card"
+  ],
+  "darkmode": true,
+  "themeLocation": "theme.json",
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "@navBgColor",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

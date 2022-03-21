@@ -1,0 +1,41 @@
+<!-- wordCard [Not Loading OR Empty] -->
+<view class="body">
+  <view wx:if="{{!ifEmpty}}" class="wordCard">
+    <view class="header">
+      <view class="header-left">
+        <text class="header-left-text-1">练习{{wordCard.progress==null?0:wordCard.progress.seq}}次</text>
+        <text class="header-left-text-2" decode="true" wx:if="{{formatTime==null}}">&nbsp;/&nbsp; 计算中 </text>
+        <text class="header-left-text-2" decode="true" wx:if="{{formatTime == 'HAS_DONE'}}">&nbsp;/&nbsp; 复习完成 </text>
+        <text class="header-left-text-2" decode="true" wx:if="{{formatTime!=null && formatTime != 'HAS_DONE'}}">&nbsp;/&nbsp;{{time>0?'推荐'+ formatTime +'后复习':'推荐现在复习'}} </text>
+      </view>
+      <view class="header-right">
+        <image class="delete-img" src="./images/delete{{darkMode?'_dark':''}}.png" bindtap="deleteCard"></image>
+      </view>
+    </view>
+    <van-divider hairline />
+    <view class="main">
+      <block wx:for="{{_wordCard.wordList}}" wx:key="wordName">
+        <text wx:if="{{!item.isDeleted}}" bindtap="onWord" data-word="{{item.wordName}}" data-item="{{item}}" class="main-text" id="{{item.word_id}}" style="opacity:{{item.isDeleted?'0':'1'}};left:{{item.left_cal != undefined ? item.left_cal : ''}}px;right:{{item.right_cal != undefined ? item.right_cal : ''}}px;top:{{10 + 35 * item.top_cal}}px;">{{item.wordName}}</text>
+        <text wx:else data-word="{{item.wordName}}" data-item="{{item}}" class="main-text" id="{{item.word_id}}" style="opacity:{{item.isDeleted?'0':'1'}};left:{{item.left_cal != undefined ? item.left_cal : ''}}px;right:{{item.right_cal != undefined ? item.right_cal : ''}}px;top:{{10 + 35 * item.top_cal}}px;">{{item.wordName}}</text>
+      </block>
+    </view>
+    <view class="footer">
+      <image bindtap="refreshCard" class="refresh-img" src="{{darkMode?'./images/refresh_dark.png':'./images/refresh.png'}}"></image>
+      <image bindtap="switchChecked" class="unchecked-img" src="{{cardChecked ?darkMode?'./images/checked_dark.png':'./images/checked.png':darkMode?'./images/unchecked_dark.png':'./images/unchecked.png'}}"></image>
+    </view>
+  </view>
+
+  <!-- wordCard [Loading] -->
+  <view wx:if="{{loading || resort}}" class="wordCard-loading">
+    <view class="coffee-cup"></view>
+  </view>
+
+  <!-- wordCard [Empty] --> 
+  <view wx:if="{{!loading && ifEmpty}}" class="wordCard-loading wordCard-empty">
+    <view class="bottom-text-head">{{mode=="review"?'恭喜你':mode=="calendar"?'该日未添加卡片':'今日暂无卡片'}}</view>
+    <view class="bottom-text-body">{{mode=="review"?'已完成全部推荐复习的卡片':mode=="calendar"?'请从首页添加':'点击下方添加卡片按钮完成添加'}}</view>
+    <image mode="scaleToFill" src="https://cdns.qdu.life/a4/images/sentence/v2/{{today[6]}}{{today[7]}}.jpg?imageMogr2/thumbnail/x384/format/jpg/interlace/1/quality/100"> </image>
+    <!-- <image> </image> -->
+ 
+  </view>
+</view> 

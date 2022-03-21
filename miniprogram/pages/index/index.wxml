@@ -1,0 +1,49 @@
+<!-- navigationBar -->
+<wxs module="drawer" src="./index.wxs"></wxs>
+<view class="wrapper" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
+  <view class="container">
+    <!-- <v-navigationBar type="searchBar" showBottomShadow="{{ true }}" bind:search="onSearch" bindtap="{{drawer.openDrawer}}"></v-navigationBar> -->
+    <image class="top-bg" mode="widthFix" src="../../images/shadow.png"></image>
+    <view class="navigationbar" style="height:{{navigationBarHeight}}px;">
+      <view class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
+        <image class="menu-img" bind:tap="{{drawer.toggleDrawer}}"></image>
+      </view>
+      <!-- searchBar -->
+      <view class="searchBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;" bind:tap="onSearch">
+        <image class="search-img" src="./images/search.png"></image>
+        <text class="searchBar-text">开始查询单词吧！</text>
+      </view>
+    </view>
+
+    <scroll-view class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled="true" refresher-triggered="{{refresherTriggered}}" bindrefresherrefresh="onScrollViewRefresh">
+      <!-- progressCard -->
+      <v-progressCard loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentDicCode="{{currentDicCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progressCard>
+      <v-homeCard type="review"></v-homeCard>
+      <v-homeCard type="study"></v-homeCard>
+    </scroll-view>
+
+    <view class="footer"> -- Consice And Efficient --</view>
+
+    <!-- search-keyboard -->
+    <view wx:if="{{ showSearchBar }}" class="search-keyboard" style="bottom:{{keyboardHeight}}px;">
+      <view class="search-keyboard-left">
+        <image class="search-img" src="./images/search.png"></image>
+        <input value="{{searchWordInputValue}}" bindconfirm="onTapSearchWordBtn" bindblur="bindSearchWordKeyInputBlur" bindinput="bindSearchWordKeyInput" placeholder="请输入要搜索的单词" placeholder-class="search-placeholder" focus confirm-type="search" adjust-position="{{false}}" bind:focus="onKeyboardFocus"></input>
+      </view>
+    </view>
+
+    <!-- van-overlay -->
+    <van-overlay show="{{ showOverlay }}" custom-style="z-index:99" bind:click="onClickHideOverlay" />
+
+    <!-- van-popup -->
+    <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="bottom" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
+      <v-wordDic class="v-worddic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
+    </van-popup>
+
+    <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
+  </view>
+
+  <view class="drawer drawerA" data-drawerwidth="{{windowWidth}}">
+    <sidebar></sidebar>
+  </view>
+</view>

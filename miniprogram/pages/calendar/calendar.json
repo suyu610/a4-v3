@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "calendar": "../../components/calendar",
+    "navigationBar": "../../components/navigationBar",
+    "item": "../../components/calendar-item",
+    "bgBtn": "../../components/bgBtn/bgBtn"
+
+  }
+}

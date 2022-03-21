@@ -1,0 +1,18 @@
+function addSuffix(filename, darkmode) {
+
+  return getFileName(filename) + (darkmode ? '_dark' : '') + getExtension(filename)
+}
+
+// 获取文件名
+function getFileName(name) {
+  return name.substring(0, name.lastIndexOf("."))
+}
+
+// 获取 .后缀名
+function getExtension(name) {
+  return name.substring(name.lastIndexOf("."))
+}
+
+module.exports = {
+  addSuffix: addSuffix
+}

@@ -1,0 +1,64 @@
+/* 
+此文件为开发者工具生成，生成时间: 2022/3/3 上午2:09:51
+使用方法：
+在 app.wxss 文件末尾引入样式
+```
+@import "./app-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+  .clickable--hover {
+    background-color: rgb(25, 26, 27);
+  }
+  .add-btn-text {
+    color: var(--black) !important;
+  }
+  .wordCard-empty .bottom-text-head,
+  .bottom-text-body {
+    color: var(--black) !important;
+  }
+  .van-field__control {
+    color: var(--black)!important;
+  }
+  .practice-btn {
+    background-color: #6045da !important;
+  }
+
+  .phoneticSign-text {
+    color: var(--black) !important;
+  }
+  .van-action-sheet__gap {
+    background-color: var(--white) !important;
+  }
+  .van-popup,
+  .van-tabs__scroll {
+    background-color: var(--white) !important;
+  }
+  .van-ellipsis {
+    color: var(--black) !important;
+  }
+  .van-action-sheet__cancel,
+  .van-action-sheet__item {
+    background-color: var(--white) !important;
+  }
+
+  .van-cell {
+    background-color: var(--white) !important;
+    color: var(--black) !important;
+  }
+
+ 
+
+  page {
+    background-color: rgb(19, 19, 19);
+    --black: rgb(198, 198, 216);
+    --white: rgb(17, 17, 17);
+    --grey: #484646;
+    --red: rgb(197, 32, 8);
+    --primary: rgb(223, 156, 255);
+    --secondary: rgb(119, 121, 255);
+    --deepBlue: rgb(255, 237, 255);
+    --deepGrey: rgb(111, 111, 111);
+  }
+}

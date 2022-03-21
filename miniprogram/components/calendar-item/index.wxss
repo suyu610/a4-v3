@@ -1,0 +1,54 @@
+/* components/calendar-item/index.wxss */
+
+.container {
+  background-color: #fff;
+  min-width: 43vw;
+  display: flex;
+  border-radius: 12px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  box-sizing: border-box;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 8.98248px;
+  text-align: center;
+}
+
+.icon image {
+  width: 13px;
+  height: 13px;
+}
+
+.right-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+}
+
+.right-top .right-num {
+  font-family: "MiSans";
+  font-weight: 600;
+  font-size: 22px;
+  text-align: center;
+  color: #1d2129;
+}
+
+.right-top .right-top {
+  font-family: "MiSans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #c9cdd4;
+  padding-left: 4px;
+}
+
+.info .right-bottom {
+  font-size: 10px;
+  text-align: right;
+  color: #1d2129;
+}

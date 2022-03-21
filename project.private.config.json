@@ -1,0 +1,30 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "review",
+          "pathName": "pages/review/review",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "settings",
+          "pathName": "pages/settings/settings",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+/**app.wxss**/
+.clickable--hover {
+  background-color: #f2f3f5;
+}
+
+page {
+  background-color: #fcfcfc;
+  width: 100%;
+  height: 100%;
+  --black: #1d1d1f;
+  --black_0_3: rgb(0 0 0 / 30%);
+  --white: #ffffff;
+  --grey: #f8f8f8;
+  --red: rgb(255, 91, 54);
+  --primary: rgba(28, 0, 219, 1);
+  --secondary: #6066ee;
+  --deepBlue: #150b47;
+  --deepGrey: #8c8c8c;
+  --wordName-En-practice: 54rpx;
+  --wordName-Ch: 22px;
+  --wordName-En: 18px;
+  --header-1: 16px;
+  --header-2: 14px;
+  --english: 13px;
+  --body: 12px;
+  --overline: 10px;
+
+  --simhei: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica,
+    "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB",
+    "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN",
+    "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti",
+    SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+  --poppins-title: "Poppins-title";
+  --poppins-italic: "Poppins-italic";
+  --poppins-normal: "Poppins-normal";
+  --segoe-ui: "Segoe UI";
+  --noto-sans: "Noto Sans";
+  --inter: "Inter";
+
+  --extra-light: 100;
+  --semi-light: 200;
+  --light: 300;
+  --normal: 400;
+  --medium: 500;
+  --semi-bold: 600;
+  --bold: 700;
+  --extra-bold: 700;
+}
+
+
+
+@import "app-wxa-auto-dark.wxss";

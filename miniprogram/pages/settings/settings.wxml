@@ -1,0 +1,73 @@
+<!-- navigationBar -->
+<!-- <v-navigationBar type="searchBar" showBottomShadow="true"></v-navigationBar> -->
+<navigationBar type="leftBar" title="设置页"></navigationBar>
+
+<scroll-view scroll-y class="container">
+  <!-- settings-header -->
+
+  <view class="settings-header">
+    <text class="settings-header-text">Settings</text>
+  </view>
+
+  <!-- van-call-group -->
+  <van-cell-group title-class="cell-title" -group inset custom-class="group">
+    <van-cell title-class="cell-title" clickable title="每日新学单词目标" value="{{setting.targetCount}}个" data-name="2" bind:click="toggleTargetPopup" is-link>
+    </van-cell>
+    <van-cell title-class="cell-title" clickable value="{{currentDictName}}" title="修改当前词书" bind:click="jumpToDictChange" is-link>
+    </van-cell>
+    <van-cell title-class="cell-title" clickable title="深色模式" bind:click="openDarkMode" is-link>
+    </van-cell>
+    <van-cell title-class="cell-title" clickable title="更多设置" bind:click="jump2MoreSettings" is-link>
+    </van-cell>
+  </van-cell-group>
+
+  <view style="width:100%;height:15px;"></view>
+
+  <van-cell-group title-class="cell-title" -group inset custom-class="group">
+    <van-cell title-class="cell-title" clickable title="反馈与建议" open-type="feedback" data-name="2" is-link>
+      <!-- 用了个透明的按钮，去跳转feedback -->
+      <button open-type="feedback" class="contact-button">
+        a
+      </button>
+    </van-cell>
+    <van-cell title-class="cell-title" clickable title="官方QQ群" value="233956276" data-qq="233956276" data-name="2" bind:click="copyQQ" is-link>
+    </van-cell>
+
+    <van-cell title-class="cell-title" clickable title="重置当前词书进度" data-name="2" bind:click="onClickResetProgress" is-link>
+    </van-cell>
+  </van-cell-group>
+
+</scroll-view>
+<!-- tabBar-shadow -->
+<view class="tabBar-shadow"></view>
+<!-- <van-popup show="{{ showDarModeTutorialValue }}" bind:close="onCloseDarModeTutorial" custom-style="height:70%">
+  <image style="border-radius:10px; height: 90%;width: 100%;" mode="heightFix" src="https://cdns.qdu.life/a4/images/darkmode.gif"></image>
+</van-popup> -->
+
+<van-popup show="{{ showTargetPopupValue }}" clo round bind:close="toggleTargetPopup" position="bottom" custom-style="height:30%;padding:20px;text-align:center">
+  <view class="settings-header" style="padding:0;padding-bottom: 20px;font-weight: bold;">
+    <text class="settings-header-text">每日新学单词目标</text>
+  </view>
+  <van-stepper min="5" value="{{ setting.targetCount }}" integer input-width="60px" button-size="38px" bind:change="onChangeDailyTarget" />
+  <!-- footer -->
+  <view class="footer">
+    <view class="footer-right" bindtap="changeTargetCount">
+      <text class="footer-right-text">确定</text>
+    </view>
+  </view>
+</van-popup>
+
+<van-popup show="{{ resetProgressValue }}" clo round bind:close="onClickResetProgress" position="bottom" custom-style="height:40%;padding:20px;text-align:center">
+  <view class="settings-header" style="padding:0;padding-bottom: 20px;font-weight: bold;">
+    <text class="settings-header-text">将重置《{{currentDictName}}》的所有进度<text style="color:#1C00DB!important">\n本词书所有卡片将被删除且不可恢复</text></text>
+  </view>
+  <van-cell-group>
+    <van-field model:value="{{ resetProgressTextValue }}" placeholder="确认请在此输入 \" 重置进度\"" border="{{ false }}" />
+  </van-cell-group>
+  <!-- footer -->
+  <view class="footer" bindtap="beginResetProgress" style="transition:.3s; opacity: {{resetProgressTextValue=='重置进度'?'1':'0.3'}};">
+    <view class="footer-right">
+      <text class="footer-right-text">重置</text>
+    </view>
+  </view>
+</van-popup>

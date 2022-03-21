@@ -1,0 +1,18 @@
+<!--pages/calendar/calendar.wxml-->
+<navigationBar type="leftBar" title="学习日历"></navigationBar>
+<view style="height: 20px;"></view>
+<calendar bind:changeMonth="changeMonth" bind:changeChosenDate="changeChosenDate" calendarData="{{calendarData}}"></calendar>
+
+<view class="controlTool">
+  <view class="top">
+    <item index="1" num="22" piece="张" info="新学卡片"></item>
+    <item index="2" num="32" piece="张" info="复习卡片"></item>
+  </view>
+  <view class="bottom">
+    <item index="3" num="32" piece="min" info="学习时长"></item>
+    <item index="4" num="45" piece="张" info="练习次数"></item>
+  </view>
+</view>
+<view class="share-btn">
+  <bgBtn title="截图分享" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bgBtn>
+</view>

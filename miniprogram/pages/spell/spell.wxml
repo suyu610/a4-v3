@@ -1,0 +1,140 @@
+<!-- navigationBar -->
+<v-navigationBar type="leftBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+
+<!-- container -->
+<view class="container" style="height:{{practiceViewHeight}}px; " bindtap="hideKeyboard">
+  <view class="container-head">
+    <text class="head-progress"> {{curPracticeIndex + 1}} / {{practiceWordArr.length}}</text>
+    <view>
+      <image bindtap="onTapFavorBtn" class="favor-img" src="./images/favor{{curWord.favor?'_fill':''}}.png"></image>
+      <image bindtap="onTapSettingBtn" class="setting-img" style="opacity: {{showMeaning?'1':'0.4'}};" src="./images/setting.png"></image>
+    </view>
+    <!-- <text class="head-progress"> setting </text> -->
+  </view>
+
+  <!-- container-up -->
+  <view class="container-up">
+    <!-- wordName -->
+    <!-- <text class="wordname-text" style="font-size: {{wordfontSize}}rpx;font-weight: {{wordfontWeight==0?'100':wordfontWeight==1?'400':'600'}};">{{practiceWordArr[curPracticeIndex].wordName}}</text> -->
+    <text class="wordname-text">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text>
+    <text class="wordname-text {{spellCorrect?'':'blur'}}">{{curWord.wordName}}</text>
+
+    <!-- phoneticSign -->
+    <view class="sound-container" bindtap="speakCurrentWord">
+      <text class="phonetic-type" catchtap="toggleVoiceType">[{{voiceType}}]</text>
+      <image class="sound-img" src="./images/sound.png"></image>
+      <text class="phoneticSign-text  {{spellCorrect?'':'blur'}}">/ {{voiceType=='美'?curWord.prsUs:curWord.prsUk}} /</text>
+    </view>
+
+    <!-- shortDef -->
+    <!-- <text class="shortDef-text" style="font-size:  {{defFontSize}}rpx;">{{practiceWordArr[curPracticeIndex].isLearned?'请复述五遍单词的释义':showSelfDef?'记录':'n. 提供证据或讲述过去事件的官方书面文件'}}</text> -->
+  </view>
+
+  <!-- container-down -->
+  <view class="container-down" style="bottom:{{customKeyboard==1?'60px':'76px'}}">
+    <!-- selDefWordNameCh -->
+    <text class="selDefWordNameCh-text">请拼写以上单词</text>
+    <view class="progress" id="progress" wx:if="{{reviewMode && openCountdown}}">
+      <view class="progress-current" style="width:{{progressCurrentWidth}}\%"></view>
+    </view>
+    <view bindtap="onAddSelfDefTapped" wx:if="{{!reviewMode}}" style="transition:.3s;filter:blur{{showMeaning?'(0)':'(5px)'}};">
+      <text class="selDefWordNameCh-text">同时默念五遍中文释义：<text class="short-def-text">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text> </text>
+      <image class="edit-def-top-img" src="./images/edit{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?'':'_blue'}}.png"></image>
+    </view>
+    <!-- button-container -->
+    <view class="button-container" style="padding-top: {{(isFocus && customKeyboard)?'222px':(isFocus && !customKeyboard)? '0px':'90px'}};">
+      <view class="button" catchtap="showKeyboard" hover-stay-time="70" hover-class="clickable--hover">
+        <text class="button-text">拼写</text>
+        <view class="button-line"></view>
+      </view>
+      <view class="button" bindtap="toggleDict" hover-stay-time="70" hover-class="clickable--hover">
+        <text class="button-text">查看释义</text>
+        <view class="button-line button-line-red"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置项暂时关闭 -->
+  <!-- <van-popup show="{{ showSettingSheetValue }}" closeable position="bottom" custom-style="height: 50%;overflow:hidden" round bind:close="toggleSettingSheet">
+    <van-cell-group title="设置">
+      <van-cell title="单词尺寸" is-link label="字号: {{wordfontSize/2}}px  字粗: {{wordfontWeight==2?'粗':wordfontWeight==1?'中':'细'}}" center bindtap="toggleFontSettingSheet" />
+      <van-cell title="默认显示" bindtap="toggleShowSelfDef" value="{{showSelfDef?'自定义释义':'词典释义'}}" is-link />
+      <van-cell title="读音类型" bindtap="toggleVoiceType" value="{{voiceType}}音" is-link />
+
+      <van-cell title="{{showCountDown?'':'不'}}显示倒计时">
+        <van-switch checked="{{ showCountDown }}" active-color="#6066EE" size="38rpx" bind:change="onChangeShowCountDown" />
+      </van-cell>
+    </van-cell-group>
+  </van-popup>
+
+  <van-popup show="{{ showFontSettingSheetValue }}" closeable position="bottom" custom-style="height: 40%;overflow:hidden" round bind:close="toggleFontSettingSheet">
+    <van-cell-group title="单词尺寸设置" border="{{false}}">
+      <van-cell title="单词大小" value="{{wordfontSize/2}}px" center border="{{false}}">
+      </van-cell>
+      <view class="fontset-progress">
+        <van-slider value="{{wordfontSize}}" min="20" max="80" step="2" active-color="#6066ee" bind:change="onChangeFontSize" bind:drag="onChangeFontSize">
+        </van-slider>
+      </view>
+
+      <van-cell title="单词粗细" label-class="" value="{{wordfontWeight==2?'粗':wordfontWeight==1?'中':'细'}}" center border="{{false}}">
+      </van-cell>
+      <view class="fontset-progress">
+        <van-slider value="{{wordfontWeight}}" min="0" max="2" step="1" active-color="#6066ee" bind:change="onChangeFontWeight" bind:drag="onChangeFontWeight"></van-slider>
+      </view>
+
+      <van-cell title="释义大小" value="{{defFontSize/2}}px" center border="{{false}}">
+      </van-cell>
+      <view class="fontset-progress">
+        <van-slider value="{{defFontSize}}" min="20" max="64" step="2" active-color="#6066ee" bind:change="onChangeDefFontSize" bind:drag="onChangeDefFontSize">
+        </van-slider>
+      </view>
+
+    </van-cell-group>
+    <view class="button fontset-reset-button">
+      <text class="button-text">重置</text>
+      <view class="button-line button-line-red"></view>
+    </view>
+  </van-popup> -->
+</view>
+
+<!-- edit-def-keyboard -->
+<view wx:if="{{ showAddDefBar }}" class="edit-def-keyboard" style="bottom:{{keyboardHeight}}px;">
+  <view class="edit-def-keyboard-left">
+    <image class="edit-def-img" src="./images/edit.png"></image>
+    <input value="{{curWord.selfShortDef}}" confirm-type="done" bindinput="selfDefChange" adjust-position="{{false}}" placeholder-class="edit-def-place-holder" bind:blur="onKeyboardBlur" bind:focus="onKeyboardFocus" placeholder="添加自定义释义"></input>
+  </view>
+  <view class="edit-def-keyboard-right" bindtap="saveSeflDef">
+    <text class="edit-def-keyboard-right-text">完成</text>
+  </view>
+</view>
+
+<van-overlay show="{{ showOverlay }}" bind:click="onClickHideOverlay" />
+
+<!-- 词典，让他去调用自己的接口吧 -->
+<van-popup round show="{{ showDictValue }}" position="bottom" bind:close="toggleDict">
+  <v-wordDic noFooter="{{true}}" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
+</van-popup>
+
+<!-- 系统键盘 -->
+<van-transition show="{{ isFocus  && !customKeyboard }}" custom-class="block" name="fade-up">
+  <view class='bottom-container' style="bottom:{{keyboardHeight}}px;">
+    <view class="keyboard-tool">
+      <view class="keyboard-tool-item" bindtap="speakCurrentWord">发音</view>
+      <view class="keyboard-tool-item" bindtap="toggleDict">查看释义</view>
+      <view class="keyboard-tool-item" bindtap="skipSpell">跳过</view>
+      <view class="keyboard-tool-item done" bindtap="inputDone">完成</view>
+    </view>
+    <input value="{{textValue}}" adjust-position="{{false}}" bindconfirm="inputDone" bindinput="systemKeyboardInput" focus="{{keyboardFocusValue}}" class="text text_con_focus" confirm-hold="{{true}}" confirm-type="done" bind:blur="onKeyboardBlur" bind:focus="onKeyboardFocus" style="margin-bottom:0"></input>
+    <!-- <usKeyboard bindinput="inputChange" bindtapLeftTopBtn="speakCurrentWord" bindskip="skipSpell" bindtapLeftBtn="toggleDict" binddone="inputDone" id="keyboard"></usKeyboard> -->
+  </view>
+</van-transition>
+
+<van-transition show="{{ isFocus && customKeyboard }}" custom-class="block" name="fade-up">
+  <view class='bottom-container'>
+    <view class="text text_con_focus">{{textValue}}<view class="keyboard-cursor">
+      </view>
+      <image class="keyboard-del-icon" src="./images/delete.png" catchtap="clearKeyboardValue"></image>
+    </view>
+    <usKeyboard bindinput="inputChange" bindtapLeftTopBtn="speakCurrentWord" bindskip="skipSpell" bindtapLeftBtn="toggleDict" binddone="inputDone" id="keyboard"></usKeyboard>
+  </view>
+</van-transition>
