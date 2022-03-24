@@ -6,7 +6,7 @@
   filter: drop-shadow(0px 2px 24px rgba(55, 47, 208, 0.12));
 }
 
-.container image {
+.container .img {
   position: absolute;
   top: 0;
   left: 0;

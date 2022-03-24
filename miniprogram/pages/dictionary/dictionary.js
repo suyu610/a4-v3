@@ -65,7 +65,6 @@ Page({
       }, ]
     }, {
       id: 2,
-
       name: "大学",
       bookList: [{
         id: 1,
@@ -110,7 +109,6 @@ Page({
       }, ]
     }, {
       id: 4,
-
       name: "高中",
       bookList: [{
         id: 1,

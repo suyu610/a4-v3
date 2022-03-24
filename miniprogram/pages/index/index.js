@@ -17,6 +17,7 @@ import {
 import {
   Card
 } from '../../models/card'
+import router from '../../router/index'
 
 const user = new User()
 const resource = new Resource()
@@ -61,6 +62,11 @@ Page({
     })
   },
 
+  jump2NewWord() {
+    router.push({
+      name: 'newWord'
+    })
+  },
   /**
    * 搜索框的值改变 
    */
@@ -519,7 +525,6 @@ Page({
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
-
       scrollViewHeight: app.globalData.scrollViewHeight,
       senInfo: e.sentence,
       loading: false,

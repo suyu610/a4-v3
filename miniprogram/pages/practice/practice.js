@@ -85,7 +85,11 @@ Page({
       },
     ],
   },
-
+  showWordListPopup() {
+    this.setData({
+      showWordListPopupValue: true
+    })
+  },
   onShow() {
     this.setData({
       voiceType: app.globalData.voiceType

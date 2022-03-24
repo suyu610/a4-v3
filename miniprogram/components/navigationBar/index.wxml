@@ -1,7 +1,7 @@
 <wxs src="../../darkmode.wxs" module="darkmodeUtil" />
 <!-- navigationBar -->
 
-<view class="container" style="height:{{navigationBarHeight}}px;">
+<view class="container" style="height:{{navigationBarHeight}}px;background-color: {{bgColor}};">
   <view class="main" style="height:{{navigationBarHeight}}px;">
     <view wx:if="{{type == 'searchBar'}}" class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
       <image class="menu-img" src="{{darkmodeUtil.addSuffix('./images/menu.png',darkMode)}}" bind:tap="onTapMenu"></image>

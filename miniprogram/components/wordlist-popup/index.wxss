@@ -1,0 +1,25 @@
+.title {
+  text-align: center;
+  font-size: 18px;
+  text-align: center;
+  color: #1d2129;
+  padding-top: 24px;
+  font-weight: bold;
+}
+
+.sub-title {
+  position: absolute;
+  right: 16px;
+  top: 24px;
+  color: #878f9a;
+  font-size: 13px;
+}
+
+.confirm-btn {
+  padding-top: 40px;
+}
+
+.right-icon {
+  width: 16.5px;
+  height: 16.5px;
+}

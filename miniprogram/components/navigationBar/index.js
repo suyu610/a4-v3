@@ -8,7 +8,8 @@ Component({
   properties: {
     type: String,
     showBottomShadow: Boolean,
-    title: String
+    title: String,
+    bgColor: String
   },
 
   /**

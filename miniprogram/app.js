@@ -1,5 +1,7 @@
 // app.js
-import * as dateTools from 'utils/dateTools'
+import * as dateTools from './utils/dateTools'
+import * as cacheUtil from './utils/cacheUtil'
+
 import {
   User
 } from 'models/user.js'
@@ -26,25 +28,11 @@ App({
     // this.loadFontFace();
     this.initServerData();
     this.initSystemData();
+    this.initSystemCache();
+  },
+  
+  initSystemCache: function () {
 
-    // wx.getStorage({
-    //   key: 'token',
-    //   success(res) {
-    //     wx.setBackgroundFetchToken({
-    //       token: res.data
-    //     })
-    //   }
-    // })
-
-    // wx.getBackgroundFetchData({
-    //   'fetchType': 'pre',
-    //   success: e => {
-    //     console.log(e)
-    //   },
-    //   fail: e => {
-    //     console.log(e)
-    //   },
-    // })
   },
 
   initSystemData: function () {
@@ -52,6 +40,8 @@ App({
     innerAudioContext = wx.createInnerAudioContext({
       useWebAudioImplement: true
     });
+
+
 
     this.globalData.innerAudioContext = innerAudioContext
     this.globalData.showNoEver = false

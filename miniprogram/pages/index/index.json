@@ -6,7 +6,7 @@
     "v-wordDic": "../../components/wordDic",
     "v-homeCard": "../../components/homeCard/homeCard",
     "sidebar": "../../components/sidebar/sidebar",
-    "bgBtn": "../../components/bgBtn/bgBtn",
+    "bgBtn": "../../components/bgBtn",
     "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index",
     "van-popup": "../../miniprogram_npm/@vant/weapp/popup/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index"

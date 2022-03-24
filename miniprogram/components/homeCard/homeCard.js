@@ -18,6 +18,13 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    subBtnTapped() {
+      this.triggerEvent('subBtnTapped', {});
+    },
+
+    mainBtnTapped() {
+      this.triggerEvent('mainBtnTapped', {});
+    }
 
   }
 })

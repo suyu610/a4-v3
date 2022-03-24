@@ -1,4 +1,6 @@
 // components/sidebar/sidebar.js
+import router from '../../router/index'
+
 const app = getApp()
 Component({
   /**
@@ -12,13 +14,25 @@ Component({
    * 组件的初始数据
    */
   data: {
+
+    showExportActionSheetValue: false,
+    exportActionSheetActions: [{
+        name: '今日新学卡片',
+      },
+      {
+        name: '今日复习卡片',
+      }, {
+        name: '所有卡片',
+      }
+    ],
     notvipFuncItemList: [{
         title: '全部卡片',
         icon: './images/allcard.png'
       },
       {
-        title: '收藏单词',
-        icon: './images/mark.png'
+        title: '单词本',
+        icon: './images/mark.png',
+        routerName: 'wordlist'
       },
       {
         title: '定时提醒',
@@ -34,7 +48,7 @@ Component({
         title: '自定义词书',
         icon: './images/custom.png',
         isVip: true,
-        url: '../../pages/upload-book/upload-book'
+        routerName: 'uploadBook'
       },
       {
         title: '单词随身听',
@@ -44,9 +58,9 @@ Component({
       {
         title: '导出卡片',
         icon: './images/export.png',
-        isVip: true
+        isVip: true,
+        name: "export"
       },
-
     ],
 
   },
@@ -55,10 +69,28 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    jump2Calendar() {
-      wx.navigateTo({
-        url: '../../pages/calendar/calendar',
+    onTapSidebarItem(e) {
+      if (e.currentTarget.dataset.name == 'export') {
+        this.setData({
+          showExportActionSheetValue: true
+        })
+      }
+    },
+
+    onSelectExportActionSheet(e) {
+      console.log(e)
+    },
+    onCloseExportActionSheet() {
+      this.setData({
+        showExportActionSheetValue: false
       })
+    },
+
+    jump2Calendar() {
+      router.push({
+        name: 'calendar'
+      })
+
     },
 
     showTimeInfoToast() {
@@ -72,8 +104,8 @@ Component({
     },
 
     jump2Setting() {
-      wx.navigateTo({
-        url: '../../pages/settings/settings',
+      router.push({
+        name: 'settings'
       })
     }
   },

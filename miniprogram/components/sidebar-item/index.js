@@ -1,10 +1,12 @@
 // components/sidebar-item/index.js
+import router from '../../router/index'
+
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    url: String,
+    routerName: String,
     iconPath: {
       type: String,
       value: './images/allcard.png',
@@ -31,9 +33,11 @@ Component({
    */
   methods: {
     jumpRouter() {
-      wx.navigateTo({
-        url: this.data.url,
-      })
+      if (this.data.routerName != '') {
+        router.push({
+          name: this.data.routerName,
+        })
+      }
     }
   }
 })

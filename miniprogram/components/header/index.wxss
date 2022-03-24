@@ -1,0 +1,53 @@
+/* components/header/index.wxss */
+.container-head {
+  padding: 15px 14px 24px 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #fcfcfc;
+  justify-items: center;
+}
+
+.head-progress {
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  color: #181a1d;
+  width: 100%;
+  display: flex;
+  font-weight: bold;
+
+}
+.subtitle {
+  /* color: grey; */
+  font-size: 15px;
+  padding-left: 5px;
+}
+
+.select-all-btn-active {
+  color: white !important;
+  background: rgba(76, 52, 240, 0.48);
+}
+
+.blue {
+  color: #4c34f0;
+}
+.head-right {
+  display: flex;
+  height: 24px;
+  line-height: 24px;
+}
+.progress-header-text-all {
+  font-size: 12px;
+  font-family: var(--poppins-title);
+  padding-left: 4px;
+  color: #4e5969;
+}
+.select-all-btn:first-child {
+  margin-right: 4px;
+}
+.select-all-btn {
+  width: 58px;
+  align-items: center;
+  height: 24px;
+}

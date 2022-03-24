@@ -1,11 +1,13 @@
 {
   "pages": [
     "pages/empty/empty",
+    "pages/new-word/index",
+    "pages/wordlist/wordlist",
+    "pages/wordlist/detail/detail",
     "pages/upload-book/upload-book",
     "pages/dictionary/dictionary",
     "pages/calendar/calendar",
     "pages/index/index",
-    "pages/wordlist/wordlist",
     "pages/settings/settings",
     "pages/review/review",
     "pages/practice/practice",

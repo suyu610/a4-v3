@@ -18,8 +18,8 @@
     <scroll-view class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled="true" refresher-triggered="{{refresherTriggered}}" bindrefresherrefresh="onScrollViewRefresh">
       <!-- progressCard -->
       <v-progressCard loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentDicCode="{{currentDicCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progressCard>
-      <v-homeCard type="review"></v-homeCard>
-      <v-homeCard type="study"></v-homeCard>
+      <v-homeCard type="review" bind:mainBtnTapped="jump2ReviewWord" bind:subBtnTapped=""></v-homeCard>
+      <v-homeCard type="study" bind:mainBtnTapped="jump2NewWord" bind:subBtnTapped=""></v-homeCard>
     </scroll-view>
 
     <view class="footer"> -- Consice And Efficient --</view>

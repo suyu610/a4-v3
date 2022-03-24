@@ -1,0 +1,109 @@
+<!--wxml-->
+<wxs module="m1">
+  var showChecked = function (word, wordCheckedList) {
+    return wordCheckedList.indexOf(word) > -1
+  }
+  module.exports.showChecked = showChecked;
+</wxs>
+<wxs src="../../../darkmode.wxs" module="darkmodeUtil" />
+
+<!--pages/wordlist/wordlist.wxml-->
+<van-sticky>
+  <v-navigationBar type="leftBar" title="{{groupName}}"></v-navigationBar>
+</van-sticky>
+<van-empty description="未收藏单词哦" wx:if="{{wordList.length==0}}" />
+<scroll-view class="container" wx:else id="scroller" bind:scroll="onScroll" scroll-y style="height: {{scrollViewHeight}}px;">
+  <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }} ">
+    <view class="container-head" id="containerHeader">
+      <view bindtap="onTapSettingBtn">
+        <text class="head-progress">当前共有「<text class="blue">{{totalWordNum}}</text>个单词」</text>
+      </view>
+      <view class="head-right">
+        <!-- style="border:0.5px solid {{allSelectMode? 'rgba(28, 0, 219, 0.7);':'border: 0.5px solid rgba(29, 29, 31, 0.7);'}}" -->
+        <view class="select-all-btn {{editMode?'select-all-btn-active':''}}" bindtap="onTapEditBtn">
+          <image class="select-all-btn-img" mode="heightFix" wx:if="{{!editMode}}" src="{{darkmodeUtil.addSuffix('./images/edit.png',darkMode)}}"></image>
+          <text class=" progress-header-text progress-header-text-all" wx:if="{{editMode}}" style="color:white">编辑中</text>
+          <text class=" progress-header-text progress-header-text-all" wx:else>编辑</text>
+        </view>
+        <view class="select-all-btn" bindtap="selectAll">
+          <image class="select-all-btn-img" mode="heightFix" src="{{darkmodeUtil.addSuffix('./images/confirm.png',darkMode)}}"></image>
+          <text class=" progress-header-text progress-header-text-all">全选</text>
+        </view>
+      </view>
+    </view>
+
+  </van-sticky>
+
+  <van-cell-group title="2022.02.12">
+    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
+      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+        <view slot="title" style="display:flex;justify-content:start">
+          <view class="van-cell-text">{{item.wordName}}</view>
+        </view>
+        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
+      </van-cell>
+    </block>
+  </van-cell-group>
+  <van-cell-group title="2022.02.12">
+    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
+      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+        <view slot="title" style="display:flex;justify-content:start">
+          <view class="van-cell-text">{{item.wordName}}</view>
+        </view>
+        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
+      </van-cell>
+    </block>
+  </van-cell-group>
+  <van-cell-group title="2022.02.12">
+    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
+      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+        <view slot="title" style="display:flex;justify-content:start">
+          <view class="van-cell-text">{{item.wordName}}</view>
+        </view>
+        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
+      </van-cell>
+    </block>
+  </van-cell-group>
+  <van-cell-group title="2022.02.12">
+    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
+      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+        <view slot="title" style="display:flex;justify-content:start">
+          <view class="van-cell-text">{{item.wordName}}</view>
+        </view>
+        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
+      </van-cell>
+    </block>
+  </van-cell-group>
+  <van-cell-group title="2022.02.12">
+    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
+      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+        <view slot="title" style="display:flex;justify-content:start">
+          <view class="van-cell-text">{{item.wordName}}</view>
+        </view>
+        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
+      </van-cell>
+    </block>
+  </van-cell-group>
+  <van-cell-group title="2022.02.09">
+    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
+      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+        <view slot="title" style="display:flex;justify-content:start">
+          <view class="van-cell-text">as{{item.wordName}}z</view>
+        </view>
+        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
+      </van-cell>
+    </block>
+  </van-cell-group>
+  <!-- addBtn -->
+  <view class="btn-container" id="add-btn" bindtap="onTapDeleteWordArr">
+    <shadowBtn wx:if="{{wordCheckedList.length!=0}}" title="{{editMode?'删除':'开始练习'}}"></shadowBtn>
+  </view>
+
+</scroll-view>
+
+<!-- van-popup -->
+<van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="bottom" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
+  <v-wordDic class="v-worddic" loading="{{dictLoading}}" wordContent="{{curWordContent}}" noFooter="{{true}}" bind:closeDict="onClickHideOverlay" />
+</van-popup>
+
+<van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />

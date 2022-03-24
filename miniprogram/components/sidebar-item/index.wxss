@@ -14,7 +14,7 @@
   align-items: center;
   padding-left: 3px;
 }
-.container .left .icon image {
+.container .left .icon .item-icon {
   width: 40rpx;
   height: 40rpx;
 }
@@ -28,6 +28,11 @@
   color: #2f3137;
 }
 
-.jumpIcon image {
+.jumpIcon .icon {
   width: 16rpx;
+}
+
+.jumpIcon .lock{
+  width: 30rpx;
+
 }

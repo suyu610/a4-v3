@@ -17,7 +17,7 @@ import {
 const user = new User()
 const resource = new Resource()
 const cardApi = new Card()
-
+import router from '../../router/index'
 Page({
 
   /**
@@ -67,9 +67,13 @@ Page({
       cardApi.getNeedReviewCard(1).then(e => {
         app.globalData.needReviewCard = e
         app.globalData.needRefreshReviewData = false
-        wx.redirectTo({
-          url: '../index/index',
-        })
+        console.log("??")
+        router.replace({
+          name: 'index',
+        });
+        // wx.redirectTo({
+        //   url: '../index/index',
+        // })
       })
     })
     app.globalData.needRefreshTodayCard = false

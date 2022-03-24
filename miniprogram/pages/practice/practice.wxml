@@ -2,13 +2,14 @@
 
 <!-- navigationBar -->
 <v-navigationBar type="logoutBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+<wordlist-popup show="{{showWordListPopupValue}}"></wordlist-popup>
 
 <!-- container -->
 <view class="container" style="height:{{practiceViewHeight}}px; ">
   <view class="container-head">
     <text class="head-progress"> {{curPracticeIndex + 1}} / {{practiceWordArr.length}}</text>
     <view>
-      <image bindtap="onTapFavorBtn" class="favor-img" src="./images/favor{{curWord.favor?'_fill':''}}.png"></image>
+      <image bindtap="onTapFavorBtn" bindlongpress="showWordListPopup" class="favor-img" src="./images/favor{{curWord.favor?'_fill':''}}.png"></image>
       <!-- <image bindtap="onTapSettingBtn" class="setting-img" style="opacity: {{showMeaning?'1':'0.4'}};" src="./images/setting.png"></image> -->
     </view>
     <!-- <text class="head-progress"> setting </text> -->
@@ -39,7 +40,7 @@
       <view class="progress-current" style="width:{{progressCurrentWidth}}\%"></view>
     </view>
     <view bindtap="onAddSelfDefTapped" wx:if="{{!reviewMode}}" style="transition:.3s;filter:blur{{showMeaning?'(0)':'(5px)'}};">
-      <text class="selDefWordNameCh-text">请默念五遍中文释义：<text  class="short-def-text">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text> </text>
+      <text class="selDefWordNameCh-text">请默念五遍中文释义：<text class="short-def-text">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text> </text>
       <!-- <image class="edit-def-top-img" src="./images/edit{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?'':'_blue'}}.png"></image> -->
     </view>
     <!-- button-container -->

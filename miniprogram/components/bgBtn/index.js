@@ -5,10 +5,10 @@ Component({
    */
   properties: {
     title: String,
+    pt: Number,
     textColor: {
       type: String,
       value: '#F5F7FB',
-
     },
     bgColor: {
       type: String,

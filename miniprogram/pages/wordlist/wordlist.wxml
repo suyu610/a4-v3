@@ -1,73 +1,32 @@
-<!--wxml-->
-<wxs module="m1">
-  var showRightChecked = function (word, wordRightCheckedList) {
-    return wordRightCheckedList.indexOf(word) > -1
-  }
-  module.exports.showRightChecked = showRightChecked;
-</wxs>
-<wxs src="../../darkmode.wxs" module="darkmodeUtil" />
-
-<!--pages/wordlist/wordlist.wxml-->
-<van-sticky>
-  <v-navigationBar type="leftBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
-</van-sticky>
-<van-empty description="未收藏单词哦" wx:if="{{wordList.length==0}}" />
-<view class="container" wx:else>
-  <van-sticky offset-top="{{ 88 }}">
-    <view class="container-head">
-      <view wx:if="{{!editMode}}" bindtap="onTapSettingBtn">
-        <image class="setting-img" src="{{darkmodeUtil.addSuffix('./images/filter.png',darkMode)}}"></image>
-        <text class="head-progress">共{{totalWordNum}}个单词 / 共{{lastPage}}页</text>
-      </view>
-      <text class="head-progress" style="{{darkMode?'color:white':''}}" wx:if="{{editMode}}" bindtap="selectAll">{{wordLeftCheckedList.length==wordList.length?'取消全选':'选择全部'}}</text>
-      <view class="head-right">
-        <view class="select-all-btn" bindtap="selectRightAll" wx:if="{{!editMode}}" style="border:0.5px solid {{allSelectMode? 'rgba(28, 0, 219, 0.7);':'border: 0.5px solid rgba(29, 29, 31, 0.7);'}}">
-          <image class="select-all-btn-img" wx:if="{{!allSelectMode}}" src="{{darkmodeUtil.addSuffix('./images/confirm.png',darkMode)}}"></image>
-          <text class=" progress-header-text progress-header-text-all" style=" color:{{darkMode?'color:white':allSelectMode?'rgba(28, 0, 219, 1)':''}}">{{allSelectMode?'取消全选':'全选'}}</text>
-        </view>
-      </view>
-      <text class="head-progress" style="{{darkMode?'color:white':''}}" wx:if="{{editMode}}" bindtap="onTapSettingBtn">取消编辑</text>
-    </view>
-    <!-- <view class="container-head">
-      <van-stepper value="{{ currentPageIndex }}" bind:change="onChangePageIndex" min="{{currentPageIndex}}" max="{{lastPage}}" />
-      <view class="select-all-btn" bindtap="goToPage" style="border:0.5px solid {{allSelectMode? 'rgba(28, 0, 219, 0.7);':'border: 0.5px solid rgba(29, 29, 31, 0.7);'}}">
-        <text class=" progress-header-text progress-header-text-all">跳转</text>
-      </view>
-    </view> -->
+<!--pages/wordlist/detail/detail.wxml-->
+<view class="container">
+  <van-sticky>
+    <v-navigationBar type="leftBar" title="单词本" bind:naviBack="onNaviBack"></v-navigationBar>
   </van-sticky>
-
   <van-cell-group>
-    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
-      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
-        <view slot="title" style="display:flex;justify-content:start">
-          <image wx:if="{{editMode}}" class="left-checked-img" src="{{ m1.showRightChecked(item.wordName,wordLeftCheckedList) ?  darkmodeUtil.addSuffix('images/checkbox_check.png',darkMode)   : darkmodeUtil.addSuffix('images/checkbox.png',darkMode) }}" />
-          <view class="van-cell-text">{{item.wordName}}</view>
+    <block wx:for="{{wordlistGroup}}" wx:key="id" wx:for-item="item">
+      <van-cell bindlongpress="openBottomSheet" bindtap="jump2WordlistDetail" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}单词" center clickable is-link>
+        <view slot="title">
+          <view class="van-cell-text">{{item.name}}</view>
         </view>
-        <image wx:if="{{!editMode}}" catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showRightChecked(item.wordName,wordRightCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
       </van-cell>
     </block>
   </van-cell-group>
 
-  <!-- addBtn -->
-  <view class="btn-container" id="add-btn" wx:if="{{editMode}}" bindtap="onTapDeleteWordArr">
-    <view class="add-Btn" style="opacity:{{wordLeftCheckedList.length==0?'34%':'100%'}}">
-      <text class="add-btn-text">删除</text>
-    </view>
-  </view>
-
-  <!-- practice-img -->
-  <view wx:if="{{!editMode && wordRightCheckedList.length != 0}}" class="practice-btn export-btn" style="opacity: 1;">
-    <image class="practice-img" src="images/export.png" bind:tap="onExportWordList"></image>
-  </view>
-
-  <view wx:if="{{!editMode && wordRightCheckedList.length != 0}}" class="practice-btn" style="opacity: 1;">
-    <image class="practice-img" src="images/practice.png" bind:tap="onPractice"></image>
+  <view class="btn-container" id="add-btn" bindtap="openFieldPupup">
+    <shadowBtn title="新建单词本"></shadowBtn>
   </view>
 </view>
+<van-action-sheet description=" 「 {{curGroupName}} 」" cancel-text="取消" show="{{ showBottomSheetValue }}" actions="{{ bottomSheetActions }}" bind:cancel="closeBottomSheet" bind:close="closeBottomSheet" bind:select="selectBottomSheet" />
 
-<!-- van-popup -->
-<van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="bottom" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
-  <v-wordDic class="v-worddic" loading="{{dictLoading}}" wordContent="{{curWordContent}}" noFooter="{{true}}" bind:closeDict="onClickHideOverlay" />
+<van-popup round show="{{ showFieldPopupValue }}" custom-class="dictPopup" closeable position="bottom" bind:close="closeFieldPupup" lock-scroll="{{false}}" custom-style="height:25%">
+  <view class="field-popup-container">
+    <view class="title">{{editMode?'重命名':'新建单词本'}}</view>
+    <van-cell-group>
+      <van-field cursor-spacing="70" value="{{  fieldValue }}" placeholder="{{ editMode ? curGroupName: '请输入分组名' }}" border bind:change="onChange" />
+    </van-cell-group>
+    <view class="btn">
+      <shadowBtn class="shadow-btn" title="{{editMode?'确认':'新建单词本'}}"></shadowBtn>
+    </view>
+  </view>
 </van-popup>
-
-<van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />

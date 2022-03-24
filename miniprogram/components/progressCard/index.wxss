@@ -12,11 +12,6 @@
   justify-content: start;
 }
 
-.book-img image {
-  height: 88px;
-  width: 67px;
-}
-
 .progress-container {
   padding-left: 32rpx;
   width: 100%;
@@ -98,7 +93,7 @@
   color: var(--black);
 }
 
-.bold{
+.bold {
   font-weight: bold;
 }
 .progress {

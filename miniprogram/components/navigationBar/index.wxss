@@ -4,6 +4,8 @@
   /* background-color: var(--white); */
   position: relative;
   z-index: 4;
+
+  background-color: #fcfcfc;
 }
 
 .main {
@@ -58,6 +60,6 @@
   padding-left: 30rpx;
 }
 
-.hidden{
+.hidden {
   opacity: 0;
 }

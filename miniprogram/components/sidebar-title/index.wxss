@@ -8,14 +8,13 @@
 }
 .title {
   font-family: "MiSans";
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
   color: #4e5969;
 }
 
-image {
+.medal {
   width: 144rpx;
   height: 36rpx;
 }

@@ -2,7 +2,7 @@
 <view class="container" bindtap="jumpRouter">
   <view class="left">
     <view class="icon">
-      <image src="{{iconPath}}">
+      <image class="item-icon" src="{{iconPath}}">
       </image>
     </view>
     <view class="name">{{itemName}}</view>
@@ -10,11 +10,11 @@
 
   <view class="right">
     <view class="jumpIcon" wx:if="{{isVip}}">
-      <image mode="heightFix" src="./images/lock.png"></image>
+      <image class="icon lock" mode="widthFix" src="./images/lock.png"></image>
     </view>
 
     <view class="jumpIcon" wx:else>
-      <image mode="widthFix" src="./images/arrow.png"></image>
+      <image class="icon" mode="widthFix" src="./images/arrow.png"></image>
     </view>
   </view>
 </view>

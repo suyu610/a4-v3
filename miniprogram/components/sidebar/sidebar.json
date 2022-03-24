@@ -3,6 +3,8 @@
   "usingComponents": {
     "canlendar": "../sidebar_canlendar",
     "sidebar-item": "../sidebar-item",
-    "sidebar-title": "../sidebar-title"
+    "sidebar-title": "../sidebar-title",
+    "van-action-sheet": "@vant/weapp/action-sheet/index"
+
   }
 }

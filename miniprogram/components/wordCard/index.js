@@ -29,6 +29,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    status_mode: {
+      type: Number,
+      value: 1
+    },
     loading: Boolean,
     wordCard: Object,
     ifEmpty: Boolean,
@@ -81,9 +85,12 @@ Component({
   lifetimes: {
     ready() {
       this.setData({
+        status_mode: Math.round(Math.random()) + 1,
         darkMode: app.globalData.theme == 'dark',
         today: app.globalData.todayDate
       })
+
+      console.log(this.data.status_mode)
       // 判断是否都删除了
       this.wordCardHandler(this.data.wordCard, true)
       if (this.data.wordCard != null && this.data.wordCard.cardId != -1) {

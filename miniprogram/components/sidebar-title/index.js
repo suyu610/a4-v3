@@ -18,6 +18,13 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    openVip() {
+      const expireTime = new Date().getTime() + 24 * 60 * 60 * 1000
+      let role = {
+        role: 'vip',
+        expire: expireTime
+      }
+      wx.setStorageSync('role', role)
+    }
   }
 })

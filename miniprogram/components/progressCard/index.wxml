@@ -4,9 +4,10 @@
 <!-- progressCard -->
 <view wx:if="{{!loading}}" class="progressCard">
 
-  <view class="book-img">
-    <image src="./images/book.png"></image>
-  </view>
+  <book bookName="{{currentDicCode!=null && currentDicCode!=''? dictInfo[currentDicCode].name : '请选择词书'}}" totalCount="{{dictInfo[currentDicCode].totalWordNum}}"></book>
+
+
+
   <!-- progress-container -->
   <view class="progress-container">
     <view class="progress-container-header" bind:tap="onNaviToDictionary">

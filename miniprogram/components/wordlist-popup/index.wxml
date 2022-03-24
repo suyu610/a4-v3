@@ -1,0 +1,23 @@
+<!--components/wordlist-popup/index.wxml-->
+<view class="container">
+  <van-popup round show="{{ show }}" custom-class="dictPopup" position="bottom" bind:close="closePopup" lock-scroll="{{false}}" custom-style="height:45%">
+    <view class="popup-container">
+      <view class="title">选择单词本</view>
+      <view class="sub-title">新建单词本</view>
+
+      <van-cell-group>
+        <block wx:for="{{wordlistGroup}}" wx:key="id" wx:for-item="item">
+          <van-cell bindtap="selectGroup" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}单词" center clickable>
+            <image class="right-icon" src="{{curId==item.id?'./images/checked.png':'./images/unchecked.png'}}" slot="right-icon">
+            </image>
+            <view slot="title">
+              <view class="van-cell-text">{{item.name}}</view>
+            </view>
+          </van-cell>
+        </block>
+      </van-cell-group>
+
+      <bgBtn title="完成" bgColor="#3D4262" width="246" height="34" pt="40"></bgBtn>
+    </view>
+  </van-popup>
+</view>
