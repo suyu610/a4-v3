@@ -1,17 +1,20 @@
 /* pages/index/index.wxss */
 @import "../../style/font.wxss";
 @media (prefers-color-scheme: dark) {
- .phoneticSign-text {
+  .phoneticSign-text {
     color: var(--black) !important;
   }
 }
 
 .container {
   padding: 15px 20px 20px 20px;
-  background-color: var(--grey);
+  background-color: var(--white);
   overflow: hidden;
   transition: 0.3s;
-}
+  border-radius: 16px;
+  width: 100%;
+  box-sizing: border-box;
+} 
 
 .check-label {
   color: lightgrey;
@@ -136,6 +139,8 @@
 .favor-img {
   width: 18px;
   height: 18px;
+  padding-bottom: 4px;
+
 }
 
 .main {
@@ -143,7 +148,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
+} 
 
 .shortDef-container {
   width: 100%;
@@ -190,8 +195,7 @@
   width: 82px;
   line-height: 30px;
   height: 30px;
-  background-color: rgba(240, 240, 240, 1);
-  color: var(--deepGrey);
+  background: #e5e6eb;
   padding: 0px 0px;
   margin-right: 12px;
   border-radius: 4px;
@@ -225,10 +229,10 @@
 }
 
 .def-block-unChosen-text {
-  color: var(--deepGrey);
   font-size: var(--body);
   font-family: var(--simhei);
   font-weight: var(--normal);
+  color: #4e5969;
 }
 
 .defination-container-main {
@@ -238,14 +242,14 @@
 }
 
 .defination-english {
-  color: var(--primary);
+  color: #3d4262;
   font-size: var(--body);
   font-family: var(--poppins-normal);
   font-weight: var(--normal);
 }
 
 .defination-chinese {
-  color: var(--primary);
+  color: #3d4262;
   font-size: var(--body);
   font-family: var(--simhei);
   font-weight: var(--normal);
@@ -279,7 +283,7 @@
 
 .footer {
   width: auto;
-  padding: 15px 0 0;
+  padding: 30px 0 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -289,8 +293,8 @@
 .footer-left {
   width: 45%;
   height: 40px;
-  border: 1px solid var(--primary);
-  border-radius: 6px;
+  border: 1px solid #3d4262;
+  border-radius: 31px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -298,7 +302,7 @@
 }
 
 .footer-left-text {
-  color: var(--primary);
+  color: #3d4262;
   font-size: var(--body);
   font-family: var(--simhei);
   font-weight: var(--medium);
@@ -307,12 +311,12 @@
 .footer-right {
   width: 45%;
   height: 40px;
-  background-color: var(--primary);
-  border-radius: 6px;
+  border-radius: 31px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background: #3d4262;
 }
 
 .footer-right-text {

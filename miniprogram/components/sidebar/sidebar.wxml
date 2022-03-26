@@ -42,13 +42,13 @@
       <canlendar></canlendar>
     </view>
     <block wx:for="{{notvipFuncItemList}}" wx:key="index">
-      <sidebar-item itemName="{{item.title}}" iconPath="{{item.icon}}" routerName="{{item.routerName}}"></sidebar-item>
+      <sidebar-item itemName="{{item.title}}" iconPath="{{item.icon}}" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
     </block>
     <sidebar-title></sidebar-title>
     <block wx:for="{{vipFuncItemList}}" wx:key="index">
-      <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" isVip="true" routerName="{{item.routerName}}"></sidebar-item>
+      <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" isVip="true" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
     </block>
   </view>
 </view>
 
-<van-action-sheet show="{{ showExportActionSheetValue }}" actions="{{ exportActionSheetActions }}" bind:close="onCloseExportActionSheet" bind:cancel="onCloseExportActionSheet" bind:select="onSelectExportActionSheet"  cancel-text="取消" />
+<van-action-sheet show="{{ showExportActionSheetValue }}" actions="{{ exportActionSheetActions }}" bind:close="onCloseExportActionSheet" bind:cancel="onCloseExportActionSheet" bind:select="onSelectExportActionSheet" cancel-text="取消" />

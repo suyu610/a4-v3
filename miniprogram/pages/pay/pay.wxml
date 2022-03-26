@@ -1,0 +1,17 @@
+<view class="container">
+  <navigationBar type="leftBar" title="开通会员" bgColor="transparent"></navigationBar>
+  <!-- 金额列表 -->
+  <view class="price-list">
+    <view class="item" wx:for="{{prices}}" wx:key="item" data-item="{{item}}" bindtap="selectItem">
+      <view class="price-box {{selected==item?'active':''}}">
+        <em><text class="price">{{item}}</text> 个月</em>
+      </view>
+    </view>
+  </view>
+  <view class="line"></view>
+  <van-submit-bar price="{{ 3050 }}" button-text="提交订单" bind:submit="onSubmit">
+    <van-tag type="primary">历史订单</van-tag>
+  </van-submit-bar>
+
+
+</view>

@@ -27,7 +27,12 @@ Component({
     ],
     notvipFuncItemList: [{
         title: '全部卡片',
-        icon: './images/allcard.png'
+        icon: './images/allcard.png',
+        routerName: 'allCard',
+        routerData: {
+          mode: "learn",
+          modeStr: "开始学习"
+        }
       },
       {
         title: '单词本',
@@ -53,7 +58,9 @@ Component({
       {
         title: '单词随身听',
         icon: './images/listen.png',
-        isVip: true
+        isVip: true,
+        name: "listen"
+
       },
       {
         title: '导出卡片',
@@ -72,13 +79,42 @@ Component({
     onTapSidebarItem(e) {
       if (e.currentTarget.dataset.name == 'export') {
         this.setData({
-          showExportActionSheetValue: true
+          showExportActionSheetValue: true,
+          mode: "export"
+        })
+      }
+
+      if (e.currentTarget.dataset.name == 'listen') {
+        this.setData({
+          showExportActionSheetValue: true,
+          mode: "listen"
         })
       }
     },
 
     onSelectExportActionSheet(e) {
-      console.log(e)
+      let routerName = ""
+      let mode = this.data.mode
+      let modeStr = this.data.mode == 'listen' ? "随身听" : "导出卡片"
+      switch (e.detail.name) {
+        case "今日新学卡片":
+          routerName = "todayStudy"
+          break;
+        case "今日复习卡片":
+          routerName = "todayReview"
+          break;
+        case "所有卡片":
+          routerName = "allCard"
+          break;
+      }
+
+      router.push({
+        name: routerName,
+        data: {
+          modeStr: modeStr,
+          mode: mode
+        }
+      })
     },
     onCloseExportActionSheet() {
       this.setData({

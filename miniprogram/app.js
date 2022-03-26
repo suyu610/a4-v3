@@ -68,10 +68,9 @@ App({
 
 
     // 设置全局变量
-    let sysInfo = wx.getSystemInfoSync()
+    let sysInfo = wx.getSystemInfoSync() 
     let theme = sysInfo.theme
     this.globalData.theme = theme
-    console.log(this.globalData.theme)
     let statusBarHeight = sysInfo.statusBarHeight
     let titleBarHeight = sysInfo.platform == 'android' ? 48 : 44
     let navigationBarHeight = statusBarHeight + titleBarHeight

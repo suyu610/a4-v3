@@ -1,0 +1,40 @@
+/* pages/new-word/index.wxss */
+page {
+  --dropdown-menu-background-color: transparent;
+  --dropdown-menu-box-shadow: 0;
+  /* font-size: 14px; */
+  --dropdown-menu-title-font-size: 14px;
+
+  --dropdown-menu-title-text-color: #4e5969;
+  /* --calendar-range-edge-background-color:  */
+}
+.container {
+  /* background-image: linear-gradient(#dde4f3 0%, rgba(253, 253, 253, 0) 100%); */
+
+  background: linear-gradient(179.99deg, #dde4f3 -23.82%, #f5f6f8 38.3%),
+    #f4f5f7;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+}
+
+.movable-btn {
+  z-index: 9;
+  bottom: 0;
+  position: fixed;
+}
+
+.placeholder {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 65px;
+  padding-top: 24px;
+}
+
+.calendar-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}

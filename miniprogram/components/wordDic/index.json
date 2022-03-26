@@ -11,6 +11,7 @@
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-transition": "@vant/weapp/transition/index",
     "van-dialog": "@vant/weapp/dialog/index",
-    "van-checkbox": "@vant/weapp/checkbox/index"
+    "van-checkbox": "@vant/weapp/checkbox/index",
+    "bgBtn":"../../components/bgBtn"
   }
 }

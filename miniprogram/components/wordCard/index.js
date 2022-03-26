@@ -29,6 +29,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    isFolder: Boolean,
     status_mode: {
       type: Number,
       value: 1
@@ -90,7 +91,7 @@ Component({
         today: app.globalData.todayDate
       })
 
-      console.log(this.data.status_mode)
+      // console.log(this.data.status_mode)
       // 判断是否都删除了
       this.wordCardHandler(this.data.wordCard, true)
       if (this.data.wordCard != null && this.data.wordCard.cardId != -1) {

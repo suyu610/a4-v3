@@ -1,4 +1,6 @@
 // components/sidebar-title/index.js
+import router from '../../router/index'
+
 Component({
   /**
    * 组件的属性列表
@@ -19,12 +21,9 @@ Component({
    */
   methods: {
     openVip() {
-      const expireTime = new Date().getTime() + 24 * 60 * 60 * 1000
-      let role = {
-        role: 'vip',
-        expire: expireTime
-      }
-      wx.setStorageSync('role', role)
+      router.push({
+        name: "pay"
+      })
     }
   }
 })

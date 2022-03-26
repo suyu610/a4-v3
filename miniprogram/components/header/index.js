@@ -5,7 +5,12 @@ Component({
    */
   properties: {
     title: String,
-    bgColor: String
+    bgColor: String,
+    cardNum: Number,
+    paddingBottom: {
+      type: Number,
+      value: 24
+    }
   },
 
   /**

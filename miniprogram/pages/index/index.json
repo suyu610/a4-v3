@@ -7,9 +7,11 @@
     "v-homeCard": "../../components/homeCard/homeCard",
     "sidebar": "../../components/sidebar/sidebar",
     "bgBtn": "../../components/bgBtn",
-    "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index",
-    "van-popup": "../../miniprogram_npm/@vant/weapp/popup/index",
-    "van-action-sheet": "@vant/weapp/action-sheet/index"
+    "van-overlay": "@vant/weapp/overlay/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-picker": "@vant/weapp/picker/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index"
   },
   "navigationBarTextStyle": "black"
 }

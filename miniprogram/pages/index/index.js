@@ -29,6 +29,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // planTimeColumn: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+
+    planTimeColumn: ["10", "15", "20", "30 (当前)", "40", "50", "60", "70", "80", "90", "100", "150", "200"],
+    showPlanTimeColumnValue: false,
     showGuide: false,
     appearDict: {},
     showPracticeSheetValue: false,
@@ -52,6 +56,16 @@ Page({
     dictNoFooterMode: false,
   },
 
+  onOpenPlanTimeColumn() {
+    this.setData({
+      showPlanTimeColumnValue: true
+    })
+  },
+  onClosePlanTimeColumn() {
+    this.setData({
+      showPlanTimeColumnValue: false
+    })
+  },
   tapGuide() {
     this.setData({
       showGuide: false
@@ -62,9 +76,15 @@ Page({
     })
   },
 
-  jump2NewWord() {
+  jump2TodayStudy() {
     router.push({
-      name: 'newWord'
+      name: 'todayStudy'
+    })
+  },
+
+  jump2TodayReview() {
+    router.push({
+      name: 'todayReview'
     })
   },
   /**
@@ -521,6 +541,7 @@ Page({
   onLoad: function () {
     // this.init()
     let e = app.globalData.todayInitData
+    console.log("searchBarTop", app.globalData.searchBarTop)
     this.setData({
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,

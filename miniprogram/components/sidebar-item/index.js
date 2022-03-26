@@ -7,6 +7,7 @@ Component({
    */
   properties: {
     routerName: String,
+    routerData: Object,
     iconPath: {
       type: String,
       value: './images/allcard.png',
@@ -34,8 +35,10 @@ Component({
   methods: {
     jumpRouter() {
       if (this.data.routerName != '') {
+        console.log(this.data.routerData)
         router.push({
           name: this.data.routerName,
+          data: this.data.routerData
         })
       }
     }

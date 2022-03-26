@@ -67,7 +67,6 @@ Page({
       cardApi.getNeedReviewCard(1).then(e => {
         app.globalData.needReviewCard = e
         app.globalData.needRefreshReviewData = false
-        console.log("??")
         router.replace({
           name: 'index',
         });

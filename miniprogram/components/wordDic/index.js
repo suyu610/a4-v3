@@ -1,6 +1,7 @@
 // components/wordDic/index.js
 
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import config from '../../config'
 import {
   WordList
 } from '../../models/wordlist.js'
@@ -13,25 +14,6 @@ const app = getApp()
 
 const card = new Card()
 const wordListApi = new WordList()
-
-const abbrDict = {
-  "noun": ["noun", "名词"],
-  "verb": ["verb", "动词"],
-  "adverb": ["adv", "副词"],
-  "conjunction": ["conj", "连词"],
-  "adjective": ["adj", "形容词"],
-  "preposition": ["prep", "介词"],
-  "pronoun": ["pron", "代词"],
-  "interjection": ["int", "感叹词"],
-  "adjective suffix": ["", "形容词后缀"],
-  "abbreviation": ["abbr", "缩写"],
-  "noun suffix": ["", "名词后缀"],
-  "definite article": ["", "定冠词"],
-  "adjective or adverb": ["adj or adv", "形容词或副词"],
-  "indefinite article": ["", "非定冠词"],
-  "preposition or conjunction": ["prep or conj", "介词或连词"],
-  "": ["blank", "缺省"]
-}
 
 Component({
   /**
@@ -51,8 +33,9 @@ Component({
    * 组件的初始数据
    */
   data: {
+    minWidth: app.globalData.windowWidth * 0.85,
     defIndex: 0,
-    abbrDict: abbrDict,
+    abbrDict: config.abbrDict,
     open: true,
     windowWidth: wx.getSystemInfoSync().windowWidth,
     windowHeight: wx.getSystemInfoSync().windowHeight,
@@ -74,7 +57,7 @@ Component({
   observers: {
     'wordContent': function (wordContent) {
       let that = this
-
+      console.log(wordContent)
       if (wordContent != null) {
         // 发音
         wx.getStorage({
@@ -179,35 +162,36 @@ Component({
 
     closeDict: function () {
       this.setData({
-        windowWidth: wx.getSystemInfoSync().windowWidth,
-        windowHeight: wx.getSystemInfoSync().windowHeight,
+        // windowWidth: wx.getSystemInfoSync().windowWidth,
+        // windowHeight: wx.getSystemInfoSync().windowHeight,
         status: 0
       })
-      wx.vibrateShort()
+      // wx.vibrateShort()
       this.triggerEvent('closeDict', {}, {})
     },
 
+    confirmWord: function () {
+      this.triggerEvent('confirmWord', {}, {})
+    },
     replaceWord: function () {
-      console.log("wordDic", this.data.dictCode)
       let that = this
-      wx.showLoading({
-        icon: 'none',
-        title: '处理中',
-      })
-      card.replaceWordInCard(this.data.dictCode, this.data.wordContent.wordName, this.data.cardId).then(newWord => {
-        wx.hideLoading({
-          success: (res) => {
-            wx.showToast({
-              icon: 'none',
-              title: '替换成功',
-            })
-          },
-        })
-        that.triggerEvent('replaceWord', {
-          word: that.data.wordContent.wordName,
-          newWord: newWord
-        }, {})
-      })
+      // wx.showLoading({
+      //   icon: 'none',
+      //   title: '处理中',
+      // })
+      // card.replaceWordInCard(this.data.dictCode, this.data.wordContent.wordName, this.data.cardId).then(newWord => {
+      //   wx.hideLoading({
+      //     success: (res) => {
+      //       wx.showToast({
+      //         icon: 'none',
+      //         title: '替换成功',
+      //       })
+      //     },
+      //   })
+      // })
+      that.triggerEvent('replaceWord', {
+        word: that.data.wordContent.wordName
+      }, {})
     },
 
     onChangeShowNoEver: function (e) {

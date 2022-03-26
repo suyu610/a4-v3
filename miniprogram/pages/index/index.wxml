@@ -18,8 +18,8 @@
     <scroll-view class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled="true" refresher-triggered="{{refresherTriggered}}" bindrefresherrefresh="onScrollViewRefresh">
       <!-- progressCard -->
       <v-progressCard loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentDicCode="{{currentDicCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progressCard>
-      <v-homeCard type="review" bind:mainBtnTapped="jump2ReviewWord" bind:subBtnTapped=""></v-homeCard>
-      <v-homeCard type="study" bind:mainBtnTapped="jump2NewWord" bind:subBtnTapped=""></v-homeCard>
+      <v-homeCard type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></v-homeCard>
+      <v-homeCard type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></v-homeCard>
     </scroll-view>
 
     <view class="footer"> -- Consice And Efficient --</view>
@@ -35,7 +35,7 @@
     <!-- van-overlay -->
     <van-overlay show="{{ showOverlay }}" custom-style="z-index:99" bind:click="onClickHideOverlay" />
 
-    <!-- van-popup -->
+    <!-- 词典 -->
     <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="bottom" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
       <v-wordDic class="v-worddic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
     </van-popup>
@@ -47,3 +47,13 @@
     <sidebar></sidebar>
   </view>
 </view>
+
+<van-popup show="{{ showPlanTimeColumnValue }}" bind:close="onClosePlanTimeColumn" round position="bottom" custom-style="height: 40%;">
+  <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChange" show-toolbar bind:confirm="onClosePlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
+</van-popup>
+
+<!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{planTimeColumn}}">
+  <view class="picker">
+    当前选择：{{array[index]}}
+  </view>
+</picker> -->

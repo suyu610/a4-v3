@@ -1,7 +1,9 @@
 <!-- wordCard [Not Loading OR Empty] -->
 <view class="body">
-  <view wx:if="{{!ifEmpty}}" class="wordCard">
+  <view wx:if="{{!ifEmpty}}" class="wordCard" style="box-shadow:{{isFolder?' 0 0.0625em 0.1875em 0 rgba(0, 0, 0, 0.1), 0 0.5em 0 -0.25em #f2f2f2, 0 0.5em 0.1875em -0.25em rgb(0 0 0 / 8%), 0 0 0 0 #e5e5e5eb, 0 1em 0.1875em -0.5em  rgb(0 0 0 / 0%)':''}} ">
     <view class="header">
+
+
       <view class="header-left">
         <view class="left-top">
           <text class="header-left-text-1">练习{{wordCard.progress==null?0:wordCard.progress.seq}}次</text>

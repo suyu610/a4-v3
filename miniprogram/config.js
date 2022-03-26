@@ -1,5 +1,6 @@
 // config.js
 const config = {
+
   // 域名前缀 
   api_base_url: 'https://beta.opentext.press/v1',
   // api_base_url: 'http://localhost:6110/v1', 
@@ -10,7 +11,7 @@ const config = {
     "0101": {
       name: "人教版一年级上",
       totalWordNum: 53
-    },  
+    },
     "0201": {
       name: "初中英语词汇",
       totalWordNum: 1849
@@ -102,7 +103,26 @@ const config = {
     "1001": {
       name: "测试自定义词书",
       totalWordNum: 1
-    } 
+    }
+  },
+
+  abbrDict: {
+    "noun": ["noun", "名词"],
+    "verb": ["verb", "动词"],
+    "adverb": ["adv", "副词"],
+    "conjunction": ["conj", "连词"],
+    "adjective": ["adj", "形容词"],
+    "preposition": ["prep", "介词"],
+    "pronoun": ["pron", "代词"],
+    "interjection": ["int", "感叹词"],
+    "adjective suffix": ["", "形容词后缀"],
+    "abbreviation": ["abbr", "缩写"],
+    "noun suffix": ["", "名词后缀"],
+    "definite article": ["", "定冠词"],
+    "adjective or adverb": ["adj or adv", "形容词或副词"],
+    "indefinite article": ["", "非定冠词"],
+    "preposition or conjunction": ["prep or conj", "介词或连词"],
+    "": ["blank", "缺省"]
   }
 }
 

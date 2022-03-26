@@ -1,0 +1,17 @@
+{
+  "usingComponents": {
+    "navigationBar": "../../components/navigationBar",
+    "header": "../../components/header",
+    "wordCard": "../../components/wordCard",
+    "shadowBtn": "../../components/shadowBtn",
+    "van-transition": "@vant/weapp/transition/index",
+    "bgBtn": "../../components/bgBtn",
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index",
+    "van-calendar": "@vant/weapp/calendar/index",
+    "van-empty": "@vant/weapp/empty/index"
+
+
+
+  }
+}

@@ -28,9 +28,27 @@ module.exports = {
     path: '/pages/calendar/calendar',
   },
 
+  todayStudy: {
+    path: '/pages/today-study/today-study'
+  },
 
-  newWord: {
-    path: '/pages/new-word/index'
+  todayReview: {
+    path: '/pages/today-review/today-review'
+  },
+
+  allCard: {
+    path: '/pages/all-card/all-card'
+  },
+
+  exportConfirm: {
+    path: '/pages/export-confirm/export-confirm'
+  },
+  
+  pay: {
+    path: '/pages/pay/pay'
+  },
+
+  listen: {
+    path: '/pages/listen/listen'
   }
-
 };

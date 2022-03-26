@@ -1,0 +1,28 @@
+<!--pages/new-word/index.wxml-->
+<movable-area class="container">
+  <navigationBar type="leftBar" title="{{title}}" bgColor="transparent"></navigationBar>
+  <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
+    <block wx:for="{{todayCards}}" wx:key="cardId">
+      <header title="02.14" cardNum="5" bgColor="transparent"></header>
+      <wordCard class="vwordcard" id="card_{{item.cardId}}" isFolder="{{!item.open}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
+      <block wx:for="{{todayCards}}" wx:key="idx" wx:for-item="card" wx:for-index="idx">
+        <!-- <van-transition name="fade" show="{{item.open}}" duration="{{ { enter: 400, leave: 300} }}"> -->
+        <view style="transition: 0;opacity: {{item.open?1:0}};transform: scaleY({{item.open?'1':'0'}});height: {{item.open?'':0}};">
+          <wordCard class="vwordcard" id="card_{{card.cardId}}" loading="{{card.loading}}" wordCard="{{card}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
+        </view>
+        <!-- </van-transition> -->
+      </block>
+
+      <image class="toggle-btn" bindtap="toggleOpenStatus" data-item="{{item}}" mode="heightFix" src="./images/{{item.open?'open':'close'}}.png"></image>
+    </block>
+    <!-- <view class="add-btn-wrapper">
+      <image class="add-btn" src="./images/add-btn.png" mode="widthFix"></image>
+    </view> -->
+    <!-- <bgBtn title="点此添加卡片" width="112" textColor="#86909C"></bgBtn> -->
+  </scroll-view>
+  <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}">
+    <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}">
+      <shadowBtn title="{{bottomBtnTitle}}"></shadowBtn>
+    </view>
+  </movable-view>
+</movable-area>

@@ -22,7 +22,7 @@
   <van-loading color="#1989fa" vertical>加载中...</van-loading>
 </view>
 <!--  bind:touchmove="{{test.touchmove}}" -->
-<view wx:if="{{!loading}}" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
+<view wx:if="{{!loading}}" style="min-width: {{minWidth}}px;" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
   <!-- header -->
   <view class=" header">
     <view class="header-up">
@@ -36,7 +36,7 @@
           <text class="edit-text" bindtap="resetSelfDef">还原</text>
         </view>
       </view>
-      <text class="close-text" bindtap="closeDict">点此关闭</text>
+      <!-- <text class="close-text" bindtap="closeDict">点此关闭</text> -->
     </view>
     <view class="header-down">
       <view class="header-down-left">
@@ -108,11 +108,12 @@
   </view>
   <!-- footer -->
   <view class="footer" wx:if="{{!noFooter && !editMode}}">
-    <view class="footer-left" bindtap="confirmDelete">
-      <text class="footer-left-text">删除单词</text>
+    <view class="footer-left" bindtap="replaceWord">
+      <!-- confirmDelete -->
+      <text class="footer-left-text">换一个</text>
     </view>
-    <view class="footer-right" bindtap="replaceWord">
-      <text class="footer-right-text">替换单词</text>
+    <view class="footer-right" bindtap="confirmWord">
+      <text class="footer-right-text">就这个</text>
     </view>
   </view>
 

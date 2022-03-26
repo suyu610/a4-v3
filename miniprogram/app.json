@@ -1,7 +1,11 @@
 {
   "pages": [
     "pages/empty/empty",
-    "pages/new-word/index",
+    "pages/listen/listen",
+    "pages/pay/pay",
+    "pages/export-confirm/export-confirm",
+    "pages/all-card/all-card",
+    "pages/today-study/today-study",
     "pages/wordlist/wordlist",
     "pages/wordlist/detail/detail",
     "pages/upload-book/upload-book",
@@ -13,7 +17,8 @@
     "pages/practice/practice",
     "pages/spell/spell",
     "pages/settings/more_settings/more_settings",
-    "pages/deleted_card/deleted_card"
+    "pages/deleted_card/deleted_card",
+    "pages/today-review/today-review"
   ],
   "darkmode": true,
   "themeLocation": "theme.json",
