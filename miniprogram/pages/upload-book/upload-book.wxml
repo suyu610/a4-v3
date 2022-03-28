@@ -3,16 +3,47 @@
 <view class="desc-container">
   <view class="title">使用说明</view>
   <view class="body">
-    <view>如下图所示</view>
+    <view style="color:#4E5969">你可以按照以下任一种格式制作你的词书，然后点击最下方的上传词书按钮即可完成添加。</view>
+    <!-- <view>如下图所示</view>
     <view style="padding-left: 15px;"> Excel：单词放在第一列</view>
     <view style="padding-left: 15px;"> 文本文件：每一行一个单词</view>
-    <view>然后点击底部按钮完成上传</view>
+    <view>然后点击底部按钮完成上传</view> -->
   </view>
   <view class="images">
-    <image mode="widthFix" src="./images/1.png"></image>
-    <image mode="widthFix" src="./images/2.png"></image>
+    <view>
+      <image src="./images/1.png"></image>
+      <view class="">Excel</view>
+    </view>
+    <view>
+      <image src="./images/2.png" style="border-radius: 12px;border:2px solid #C4C5C8;box-sizing: border-box"></image>
+      <view class="">TXT</view>
+    </view>
   </view>
 </view>
+
+<van-overlay show="{{ showUploadOverLayValue }}" bind:click="onClickHide">
+  <view class="wrapper">
+    <view class="block" catch:tap="noop">
+      <view class="head">
+        <image class="icon" src="./images/icon.png"></image>
+        <view class="title">上传词书</view>
+      </view>
+      <view class="progress">
+        <view class="progress-bar">
+          <view class="active" style="width:{{progressBarWidth+'%'}};"></view>
+        </view>
+        <view class="tip" wx:if="{{progressBarWidth<100 }}">{{tips}}</view>
+        <view class="tip" wx:else>
+          成功上传了<text class="blue">{{uploadWordCount}}</text>个单词
+        </view>
+      </view>
+      <view class="footer" bindtap="onClickHide">
+        <view class="text">{{uploadSuccess?'确定':'取消'}}</view>
+      </view>
+    </view>
+  </view>
+</van-overlay>
+
 
 <view class="bottom" bindtap="chooseFile">
   <bgBtn title="选择文件" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bgBtn>

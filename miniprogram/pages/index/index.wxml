@@ -3,29 +3,25 @@
 
 <wxs module="refresh">
   var dy = 0
-  function refreshText() {
-    if (dy <= 80) {
-      return "下拉搜索单2";
-    } else {
-      return "松手"
-    }
-  }
-  function onAbort(evt, instance) {
-    console.log("onAbort")
-    var icon = instance.selectComponent('.icon')
 
+  var icon, pullText, tips;
+
+  function onAbort(evt, instance) {
+    var icon = instance.selectComponent('.icon')
     icon.setStyle({
       "transform": "rotate(0deg)"
     })
   }
+
   function onPulling(evt, instance) {
+
     var p = Math.min((evt.detail.dy - 30) * 180 / 80, 180)
     var o = Math.min((evt.detail.dy - 30) / 80, 1)
 
     dy = evt.detail.dy
-    refreshText()
     var icon = instance.selectComponent('.icon')
     var pullText = instance.selectComponent('.pullText')
+    var tips = instance.selectComponent('.tips')
 
     if (evt.detail.dy > 30) {
       icon.setStyle({
@@ -33,16 +29,22 @@
       })
     }
 
-    if (evt.detail.dy > 30) {
-      pullText.setStyle({
-        "opacity": 1 - o
-      })
-    }
+    // if (evt.detail.dy > 30) {
+    pullText.setStyle({
+      "opacity": o,
+      "padding-right": tips.getBoundingClientRect().width * o + "px",
+    })
+    // }
+
+    // if (evt.detail.dy > 80) {
+    tips.setStyle({
+      "opacity": 1 - o
+    })
+    // }
 
   }
   var dy = 0
   module.exports = {
-    refreshText: refreshText,
     onPulling: onPulling,
     onAbort: onAbort
   }
@@ -65,7 +67,7 @@
 
     <scroll-view bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled="true" refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
       <view slot="refresher" class="refresh-container" style="display: block; width: 100%; height: 80px; background: transparent; display: flex; flex-direction: column; align-items: center;justify-content: center;">
-        <view class="pullText" style="font-size: 14px;color:grey;padding-top: 16px;padding-bottom: 6px;">下拉搜索单词</view>
+        <view class="pullText" style="font-size: 14px;color:grey;padding-top: 16px;padding-bottom: 6px;"><text class="tips">下拉</text>搜索单词</view>
         <view>
           <van-icon name="down" size="14px" color="grey" class="icon" />
         </view>
@@ -76,7 +78,7 @@
       <v-homeCard type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></v-homeCard>
     </scroll-view>
 
-    <view class="footer"> -- Consice And Efficient --</view>
+    <view class="footer"> 「 随便一张 」 </view>
 
     <!-- search-keyboard -->
     <view wx:if="{{ showSearchBar }}" class="search-keyboard" style="bottom:{{keyboardHeight}}px;">
@@ -105,9 +107,3 @@
 <van-popup show="{{ showPlanTimeColumnValue }}" bind:close="onClosePlanTimeColumn" round position="bottom" custom-style="height: 40%;">
   <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChange" show-toolbar bind:confirm="onClosePlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
 </van-popup>
-
-<!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{planTimeColumn}}">
-  <view class="picker">
-    当前选择：{{array[index]}}
-  </view>
-</picker> -->

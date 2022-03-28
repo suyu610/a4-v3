@@ -37,7 +37,8 @@
   align-items: center;
 }
 
-.top .info .userinfo .not-login{
+.top .info .userinfo .not-login {
+  padding-left: 20px;
   font-weight: bold;
 }
 

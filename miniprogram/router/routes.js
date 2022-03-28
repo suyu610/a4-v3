@@ -40,9 +40,6 @@ module.exports = {
     path: '/pages/all-card/all-card'
   },
 
-  exportConfirm: {
-    path: '/pages/export-confirm/export-confirm'
-  },
 
   pay: {
     path: '/pages/pay/pay'
@@ -52,7 +49,12 @@ module.exports = {
     path: '/pages/listen/listen'
   },
 
+
+  exportConfirm: {
+    path: '/packageSub/pages/export-confirm/export-confirm'
+  },
+
   snapshot: {
-    path: '/pages/snapshot/snapshot'
+    path: '/packageSub/pages/snapshot/snapshot'
   }
 };

@@ -24,8 +24,6 @@ function touchMove(e, ins) {
   if (offset > 0 && status == 0) {
     setDrawer(Math.min(drawerWidth, offset));
   }
-
-
 }
 
 function setIcon(isOpen) {

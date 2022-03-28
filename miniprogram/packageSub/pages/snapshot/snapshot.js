@@ -56,8 +56,7 @@ Page({
       "background": "#f8f8f8",
       "views": [{
         "type": "image",
-        // "url": "/images/202202@x3.png",
-        "url": "/images/202202@x3.png",
+        "url": "https://cdns.qdu.life/a4/snapshot/bg_1@x3.png",
         "css": {
           "width": "933px",
           "height": "1767px",
@@ -151,7 +150,7 @@ Page({
         "left": bottomProgressInfo['practiceCount'] >= 100 ? "714px" : bottomProgressInfo['practiceCount'] >= 10 ? "740px" : "750px",
         "fontSize": "44px",
         "fontWeight": "bold",
-        "fontFamily": "Inter", 
+        "fontFamily": "Inter",
         "textAlign": "center",
       }
     })
@@ -216,7 +215,7 @@ Page({
     return styleData
   },
   drawAvatar: function (styleData) {
-    let url = "../../images/avatar.png"
+    let url = "/images/avatar.png"
     if (app.globalData.userInfo) {
       url = app.globalData.userInfo.avatarUrl
     }

@@ -7,7 +7,6 @@
   background-color: #fff;
   border-radius: 12px;
   color: rgba(29, 29, 31, 1);
-
 }
 .desc-container .title {
   font-size: 16px;
@@ -19,17 +18,100 @@
   font-size: 13px;
 }
 
-.desc-container .images{
+.desc-container .images {
   display: flex;
-  justify-content: space-between;
+  text-align: center;
+  font-size: 12px;
+  color: #86909c;
+  justify-content: space-around;
 }
 
-.desc-container .images image{
-  width: 38vw;
+.desc-container .images image {
+  width: 98px;
+  margin-bottom: 12px;
+  height: 136px;
 }
 
-.bottom{
-  position:absolute;
+.bottom {
+  position: absolute;
   bottom: 49px;
   width: 100vw;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.block {
+  position: relative;
+
+  width: 279px;
+  height: 266px;
+  border-radius: 16px;
+  background-color: #fff;
+  text-align: center;
+}
+.head {
+  padding-top: 44px;
+}
+
+.head .icon {
+  height: 48px;
+  width: 48px;
+}
+
+.head .title {
+  padding-top: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.progress {
+  padding-top: 28px;
+}
+.progress-bar {
+  background: #e5e6eb;
+  border-radius: 22px;
+  width: 181px;
+  height: 4px;
+  margin: 0 auto;
+}
+
+.progress-bar .active {
+  transition: 0.2s;
+  width: 80%;
+  background: #424bff;
+  border-radius: 22px;
+  height: 100%;
+}
+
+.tip {
+  padding-top: 9px;
+  font-size: 14px;
+  text-align: center;
+  color: #4e5969;
+}
+
+.tip .blue {
+  color: #424bff;
+  font-weight: bold;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+
+  /* Fill/6-强调、图标、特殊场景 */
+
+  color: #4e5969;
+  align-items: center;
+  height: 55px;
+  line-height: 55px;
+  border-top: 1px solid #e5e6eb;
+  font-weight: 400;
+  font-size: 16px;
 }

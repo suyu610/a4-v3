@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "van-loading": "@vant/weapp/loading/index",
+    "navigationBar": "../../../components/navigationBar",
+    "header": "../../../components/header",
+    "wordCard": "../../../components/wordCard",
+    "shadowBtn": "../../../components/shadowBtn",
+    "van-transition": "@vant/weapp/transition/index", 
+    "bgBtn": "../../../components/bgBtn"
+ 
+  }
+} 

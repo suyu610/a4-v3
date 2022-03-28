@@ -1,5 +1,5 @@
 /* pages/snapshot/snapshot.wxss */
-@import "../../style/font.wxss";
+@import "../../../style/font.wxss";
 
 page {
   background: url("https://cdns.qdu.life/a4/images/poster/bg.png") 100% 100%

@@ -74,9 +74,6 @@ Page({
   },
 
   onConfirmCalendar(e) {
-
-    console.log(e.detail[0])
-    console.log(e.detail[1])
     const firstDate = new Date(e.detail[0])
     const secondDate = new Date(e.detail[1])
 

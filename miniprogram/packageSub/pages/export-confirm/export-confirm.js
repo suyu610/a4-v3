@@ -1,5 +1,5 @@
 // pages/export-confirm/export-confirm.js
-import router from '../../router/index'
+import router from '../../../router/index'
 const app = getApp()
 const gData = app.globalData
 
@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    fileUrl: "https://cdns.qdu.life/a4/wordlist-pdf/1648074226.pdf",
+    fileUrl: "",
     loading: true
 
   },

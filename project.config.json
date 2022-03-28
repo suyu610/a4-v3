@@ -40,7 +40,7 @@
     "ignoreUploadUnusedFiles": true
   },
   "appid": "wx93a822ab3bad4698",
-  "projectname": "A4-App",
+  "projectname": "v3",
   "libVersion": "2.16.0",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
