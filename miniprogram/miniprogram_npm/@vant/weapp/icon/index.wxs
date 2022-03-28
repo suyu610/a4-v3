@@ -25,7 +25,7 @@ function rootClass(data) {
 function rootStyle(data) {
   return style([
     {
-      color: 'data.color',
+      color: data.color,
       'font-size': addUnit(data.size),
     },
     data.customStyle,

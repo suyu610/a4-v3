@@ -43,6 +43,25 @@ Page({
     }
 
     let that = this
+
+    try {
+      var hasUserInfo = wx.getStorageSync('hasUserInfo')
+      var userInfo = wx.getStorageSync('userInfo')
+
+      if (hasUserInfo && userInfo) {
+        app.globalData.hasUserInfo = hasUserInfo
+        app.globalData.userInfo = userInfo
+
+        // Do something with return value
+      } else {
+        console.log("not login")
+      }
+    } catch (e) {
+      console.log(e)
+      // Do something when catch error
+    }
+
+
     resource.getInitData().then(e => {
       app.globalData.progressList = e.progressList
       app.globalData.currentDicCode = e.currentDicCode

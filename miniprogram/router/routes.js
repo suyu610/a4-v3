@@ -43,12 +43,16 @@ module.exports = {
   exportConfirm: {
     path: '/pages/export-confirm/export-confirm'
   },
-  
+
   pay: {
     path: '/pages/pay/pay'
   },
 
   listen: {
     path: '/pages/listen/listen'
+  },
+
+  snapshot: {
+    path: '/pages/snapshot/snapshot'
   }
 };

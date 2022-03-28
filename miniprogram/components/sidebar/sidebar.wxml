@@ -8,10 +8,15 @@
       <text class="title">我的</text>
     </view>
     <view class="info">
-      <view class="userinfo">
-        <image class="avatar" src="./images/avatar.png"></image>
+      <view class="userinfo" wx:if="{{hasUserInfo}}">
+        <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
         <image class="medal" src="./images/medal.png"></image>
-        <view class="nickname">想柒点下班</view>
+        <view class="nickname">{{userInfo.nickName}}</view>
+      </view>
+
+      <view class="userinfo" wx:else bindtap="getUserProfile">
+        <image class="avatar" src="../../images/avatar.png"></image>
+        <view class="not-login"> 点击登录 </view>
       </view>
 
       <view class="setting-icon" bindtap="jump2Setting">

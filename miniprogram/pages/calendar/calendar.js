@@ -1,5 +1,10 @@
 // pages/calendar/calendar.js
 const app = getApp()
+const {
+  wxml,
+  style
+} = require('./demo.js')
+
 import * as cardDataTools from '../../utils/cardDataTools'
 const filterSheetActionsArr = ["现在复习", "5分钟内复习", "30分钟内复习", "12小时内复习", "大于1天"]
 
@@ -18,6 +23,7 @@ import {
 
 const resource = new Resource
 const cardApi = new Card()
+import router from '../../router/index'
 
 const filterSheetActionsTimeArr = [
   -1,
@@ -34,13 +40,31 @@ Page({
    * 页面的初始数据
    */
   data: {
+    src: ''
 
   },
-
+  renderToCanvas() {
+    router.push({
+      name: "snapshot"
+    })
+  },
+  extraImage() {
+    const p2 = this.widget.canvasToTempFilePath()
+    p2.then(res => {
+      this.setData({
+        src: res.tempFilePath,
+        width: this.container.layoutBox.width,
+        height: this.container.layoutBox.height
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.widget = this.selectComponent('.widget')
+
+
     let that = this
     progress.getProgressByMonth(this.data.chosenYear + this.data.chosenMonth).then(function (e) {
       that.setData({

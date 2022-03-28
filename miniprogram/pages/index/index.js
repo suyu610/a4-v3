@@ -567,11 +567,19 @@ Page({
    * @param {}  无需参数
    * @toMethod this.init()  转入初始化函数
    */
-  onScrollViewRefresh: async function () {
-    this.onSearch()
-    this.setData({
-      refresherTriggered: false
-    })
+  onScrollViewRefresh: function (e) {
+    if (e.detail.dy > 80) {
+      console.log(e)
+      this.onSearch()
+      this.setData({
+        refresherTriggered: false
+      })
+      wx.vibrateShort()
+    } else {
+      this.setData({
+        refresherTriggered: false
+      })
+    }
   },
 
 

@@ -14,5 +14,5 @@
   </view>
 </view>
 <view class="share-btn">
-  <bgBtn title="截图分享" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bgBtn>
+  <bgBtn title="截图分享" width="246" height="30" textColor="#fff" bgColor="#3D4262" bindtap="renderToCanvas"></bgBtn>
 </view>

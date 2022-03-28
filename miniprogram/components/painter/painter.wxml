@@ -1,0 +1,14 @@
+<view style='position: relative;{{customStyle}};{{painterStyle}}'>
+  <block wx:if="{{!use2D}}">
+    <canvas canvas-id="photo" style="position: absolute; left: -9999px; top: -9999rpx;{{photoStyle}}" />
+    <block wx:if="{{dancePalette}}">
+      <canvas canvas-id="bottom" style="position: absolute;{{painterStyle}}" />
+      <canvas canvas-id="k-canvas" style="position: absolute;{{painterStyle}}" />
+      <canvas canvas-id="top" style="position: absolute;{{painterStyle}}" />
+      <canvas canvas-id="front" style="position: absolute;{{painterStyle}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" disable-scroll="{{true}}" />
+    </block>
+  </block>
+  <block wx:if="{{use2D}}">
+    <canvas type="2d" id="photo" style="{{photoStyle}}" />
+  </block>
+</view>

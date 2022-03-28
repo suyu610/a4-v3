@@ -37,6 +37,10 @@
   align-items: center;
 }
 
+.top .info .userinfo .not-login{
+  font-weight: bold;
+}
+
 .top .info .userinfo .nickname {
   padding-left: 12px;
   font-size: 18px;

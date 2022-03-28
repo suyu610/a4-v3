@@ -29,8 +29,19 @@ App({
     this.initServerData();
     this.initSystemData();
     this.initSystemCache();
+    this.initFont();
   },
-  
+
+  initFont() {
+    // wx.loadFontFace({
+    //   global: true,
+    //   family: 'PoppinsNormal',
+    //   scopes: ['webview', 'native'],
+    //   source: 'https://cdns.qdu.life/a4/font/Poppins-normal.ttf',
+
+    // })
+  },
+
   initSystemCache: function () {
 
   },
@@ -40,8 +51,6 @@ App({
     innerAudioContext = wx.createInnerAudioContext({
       useWebAudioImplement: true
     });
-
-
 
     this.globalData.innerAudioContext = innerAudioContext
     this.globalData.showNoEver = false
@@ -68,7 +77,7 @@ App({
 
 
     // 设置全局变量
-    let sysInfo = wx.getSystemInfoSync() 
+    let sysInfo = wx.getSystemInfoSync()
     let theme = sysInfo.theme
     this.globalData.theme = theme
     let statusBarHeight = sysInfo.statusBarHeight

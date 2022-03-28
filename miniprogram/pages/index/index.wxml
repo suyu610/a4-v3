@@ -1,6 +1,54 @@
 <!-- navigationBar -->
 <wxs module="drawer" src="./index.wxs"></wxs>
-<view class="wrapper" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
+
+<wxs module="refresh">
+  var dy = 0
+  function refreshText() {
+    if (dy <= 80) {
+      return "下拉搜索单2";
+    } else {
+      return "松手"
+    }
+  }
+  function onAbort(evt, instance) {
+    console.log("onAbort")
+    var icon = instance.selectComponent('.icon')
+
+    icon.setStyle({
+      "transform": "rotate(0deg)"
+    })
+  }
+  function onPulling(evt, instance) {
+    var p = Math.min((evt.detail.dy - 30) * 180 / 80, 180)
+    var o = Math.min((evt.detail.dy - 30) / 80, 1)
+
+    dy = evt.detail.dy
+    refreshText()
+    var icon = instance.selectComponent('.icon')
+    var pullText = instance.selectComponent('.pullText')
+
+    if (evt.detail.dy > 30) {
+      icon.setStyle({
+        "transform": "rotate(" + p + "deg)"
+      })
+    }
+
+    if (evt.detail.dy > 30) {
+      pullText.setStyle({
+        "opacity": 1 - o
+      })
+    }
+
+  }
+  var dy = 0
+  module.exports = {
+    refreshText: refreshText,
+    onPulling: onPulling,
+    onAbort: onAbort
+  }
+
+</wxs>
+<view class="wrapper" refresher-threshold="{{80}}" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
   <view class="container">
     <!-- <v-navigationBar type="searchBar" showBottomShadow="{{ true }}" bind:search="onSearch" bindtap="{{drawer.openDrawer}}"></v-navigationBar> -->
     <image class="top-bg" mode="widthFix" src="../../images/shadow.png"></image>
@@ -15,7 +63,13 @@
       </view>
     </view>
 
-    <scroll-view class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled="true" refresher-triggered="{{refresherTriggered}}" bindrefresherrefresh="onScrollViewRefresh">
+    <scroll-view bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled="true" refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
+      <view slot="refresher" class="refresh-container" style="display: block; width: 100%; height: 80px; background: transparent; display: flex; flex-direction: column; align-items: center;justify-content: center;">
+        <view class="pullText" style="font-size: 14px;color:grey;padding-top: 16px;padding-bottom: 6px;">下拉搜索单词</view>
+        <view>
+          <van-icon name="down" size="14px" color="grey" class="icon" />
+        </view>
+      </view>
       <!-- progressCard -->
       <v-progressCard loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentDicCode="{{currentDicCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progressCard>
       <v-homeCard type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></v-homeCard>

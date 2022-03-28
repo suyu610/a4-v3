@@ -9,7 +9,6 @@
 @font-face {
   font-family: "Poppins-italic";
   src: url("https://cdns.qdu.life/a4/font/Poppins-italic.ttf");
-
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -20,14 +19,6 @@
   src: url("https://cdns.qdu.life/a4/font/Poppins-normal.ttf");
 
   font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("https://cdns.qdu.life/a4/font/Inter.ttf");
-  font-weight: normal;
   font-style: normal;
   font-display: swap;
 }

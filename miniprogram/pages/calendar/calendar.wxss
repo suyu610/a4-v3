@@ -2,6 +2,7 @@
 
 page {
   background-color: #f5f6f8;
+  --grid-item-content-padding: 8px 8px;
 }
 .share-btn {
   width: 100vw;

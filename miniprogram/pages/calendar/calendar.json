@@ -4,6 +4,5 @@
     "navigationBar": "../../components/navigationBar",
     "item": "../../components/calendar-item",
     "bgBtn": "../../components/bgBtn"
-
   }
 }
