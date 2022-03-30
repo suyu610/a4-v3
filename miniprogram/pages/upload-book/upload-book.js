@@ -5,11 +5,28 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showTips: true,
     progressBarWidth: 0,
     tips: '加载中',
     showUploadOverLayValue: false
   },
+  showNoMore: function () {
+    let that = this
+    wx.showModal({
+      title: "提示",
+      content: "确认要关闭使用说明吗",
+      cancelColor: 'cancelColor',
+      confirmColor: '#220aac',
+      success(res) {
+        if (res.confirm) {
+          that.setData({
+            showTips: false
+          })
 
+        }
+      }
+    })
+  },
   chooseFile: function () {
     let that = this
     wx.chooseMessageFile({

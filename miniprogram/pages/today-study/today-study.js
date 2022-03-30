@@ -14,7 +14,7 @@ Page({
    */
   data: {
     cardCur: 0,
-    wordlist: ["hello", "abandon", "people", "world"],
+    wordlist: ["hello", "abandon", "people", "world", "open"],
     nextWordList: [],
     title: "今日计划新学",
     bottomBtnTitle: "开始学习",

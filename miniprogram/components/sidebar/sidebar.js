@@ -47,12 +47,13 @@ Component({
       },
       {
         title: '截图分享',
-        icon: './images/shoot.png'
+        icon: './images/shoot.png',
+        routerName: 'snapshot'
       },
 
     ],
     vipFuncItemList: [{
-        title: '自定义词书',
+        title: '导入词书',
         icon: './images/custom.png',
         isVip: true,
         routerName: 'uploadBook'
@@ -97,7 +98,7 @@ Component({
           wx.setStorageSync('userInfo', res.userInfo)
         },
         complete: () => {
-          wx.hideLoading() 
+          wx.hideLoading()
         }
       })
     },
@@ -105,7 +106,7 @@ Component({
       if (e.currentTarget.dataset.name == 'export') {
         this.setData({
           showExportActionSheetValue: true,
-          mode: "export"
+          mode: "export" 
         })
       }
 
@@ -114,6 +115,9 @@ Component({
           showExportActionSheetValue: true,
           mode: "listen"
         })
+        // router.push({
+        //   "name": "listen"
+        // })
       }
     },
 

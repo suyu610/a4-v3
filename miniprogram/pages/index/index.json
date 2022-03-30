@@ -12,7 +12,9 @@
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-picker": "@vant/weapp/picker/index",
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
-    "van-icon": "@vant/weapp/icon/index"
+    "van-icon": "@vant/weapp/icon/index",
+    "shadowBtn": "../../components/shadowBtn"
+
 
   },
   "navigationBarTextStyle": "black"

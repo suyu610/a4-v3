@@ -9,6 +9,10 @@ import {
 import {
   Card
 } from '../../models/card.js'
+import {
+  Resource
+} from '../../models/resource.js'
+const resource = new Resource()
 
 const app = getApp()
 
@@ -175,23 +179,22 @@ Component({
     },
     replaceWord: function () {
       let that = this
-      // wx.showLoading({
-      //   icon: 'none',
-      //   title: '处理中',
-      // })
-      // card.replaceWordInCard(this.data.dictCode, this.data.wordContent.wordName, this.data.cardId).then(newWord => {
-      //   wx.hideLoading({
-      //     success: (res) => {
-      //       wx.showToast({
-      //         icon: 'none',
-      //         title: '替换成功',
-      //       })
-      //     },
-      //   })
-      // })
-      that.triggerEvent('replaceWord', {
-        word: that.data.wordContent.wordName
-      }, {})
+      this.setData({
+        loading: true
+      })
+
+      card.replaceWordInCard(this.data.dictCode, this.data.wordContent.wordName, this.data.cardId).then(newWord => {
+        resource.getWordInfo(newWord).then(function (e) {
+          that.setData({
+            wordContent: e,
+            loading: false
+          })
+        })
+
+      })
+      // that.triggerEvent('replaceWord', {
+      //   word: that.data.wordContent.wordName
+      // }, {})
     },
 
     onChangeShowNoEver: function (e) {

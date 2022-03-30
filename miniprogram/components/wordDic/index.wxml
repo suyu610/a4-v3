@@ -18,7 +18,7 @@
   </view>
 </van-dialog>
 
-<view class="container" wx:if="{{loading}}" style="text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh;">
+<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; max-width: 90vw;min-width: {{minWidth}}px;">
   <van-loading color="#1989fa" vertical>加载中...</van-loading>
 </view>
 <!--  bind:touchmove="{{test.touchmove}}" -->
@@ -108,13 +108,13 @@
   </view>
   <!-- footer -->
   <view class="footer" wx:if="{{!noFooter && !editMode}}">
-    <view class="footer-left" bindtap="replaceWord">
+    <view class="footer-right" bindtap="replaceWord">
       <!-- confirmDelete -->
-      <text class="footer-left-text">换一个</text>
+      <text class="footer-right-text">换一个</text>
     </view>
-    <view class="footer-right" bindtap="confirmWord">
+    <!-- <view class="footer-right" bindtap="confirmWord">
       <text class="footer-right-text">就这个</text>
-    </view>
+    </view> -->
   </view>
 
   <view class="footer" wx:if="{{editMode}}">

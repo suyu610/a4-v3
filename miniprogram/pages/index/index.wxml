@@ -65,7 +65,7 @@
       </view>
     </view>
 
-    <scroll-view bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled="true" refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
+    <scroll-view bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation  refresher-enabled refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
       <view slot="refresher" class="refresh-container" style="display: block; width: 100%; height: 80px; background: transparent; display: flex; flex-direction: column; align-items: center;justify-content: center;">
         <view class="pullText" style="font-size: 14px;color:grey;padding-top: 16px;padding-bottom: 6px;"><text class="tips">下拉</text>搜索单词</view>
         <view>
@@ -78,7 +78,7 @@
       <v-homeCard type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></v-homeCard>
     </scroll-view>
 
-    <view class="footer"> 「 随便一张 」 </view>
+    <view class="container-footer" bindtap="showRandomCard"> 「 随便一张 」 </view>
 
     <!-- search-keyboard -->
     <view wx:if="{{ showSearchBar }}" class="search-keyboard" style="bottom:{{keyboardHeight}}px;">
@@ -106,4 +106,15 @@
 
 <van-popup show="{{ showPlanTimeColumnValue }}" bind:close="onClosePlanTimeColumn" round position="bottom" custom-style="height: 40%;">
   <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChange" show-toolbar bind:confirm="onClosePlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
+</van-popup>
+
+
+<van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 50%;background-color: #e2eeff;">
+  <view class="random-popup-container">
+    <view class="title">随机一张</view>
+    <v-wordCard type="random" class="vwordcard" loading="{{randomCard.loading}}" wordCard="{{randomCard}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></v-wordCard>
+    <view class="random-popup-container-footer">
+      <shadowBtn class="shadow-btn" title="开始练习"></shadowBtn>
+    </view>
+  </view>
 </van-popup>

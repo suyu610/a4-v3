@@ -1,13 +1,12 @@
 <!--pages/upload-book/upload-book.wxml-->
 <v-navigationBar type="leftBar" title="上传词书" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
-<view class="desc-container">
-  <view class="title">使用说明</view>
+<view class="desc-container" wx:if="{{showTips}}">
+  <view class="title">
+    <view>使用说明</view>
+    <view class="right" bindtap="showNoMore">不再提示</view>
+  </view>
   <view class="body">
     <view style="color:#4E5969">你可以按照以下任一种格式制作你的词书，然后点击最下方的上传词书按钮即可完成添加。</view>
-    <!-- <view>如下图所示</view>
-    <view style="padding-left: 15px;"> Excel：单词放在第一列</view>
-    <view style="padding-left: 15px;"> 文本文件：每一行一个单词</view>
-    <view>然后点击底部按钮完成上传</view> -->
   </view>
   <view class="images">
     <view>

@@ -22,23 +22,18 @@ Page({
 
     showCalendar: false,
     option2: [{
-        text: '练习次数',
-        value: -1
-      }, {
-        text: '1~3次',
-        value: 1
-      }, {
-        text: '4~6次',
-        value: 2
-      }, {
-        text: '7~10次',
-        value: 3
-      },
-      {
-        text: '大于10次',
-        value: '4'
-      }
-    ],
+      text: '选择词书',
+      value: -1
+    }, {
+      text: '考研核心词汇',
+      value: 1
+    }, {
+      text: '高考核心词汇',
+      value: 2
+    }, {
+      text: '中考核心词汇33',
+      value: 3
+    }, ],
     option3: [{
         text: '卡片状态',
         value: 'a'
@@ -115,7 +110,7 @@ Page({
       });
       console.log(wordlist)
       router.push({
-        name: this.data.mode == 'export' ? "exportConfirm" : "listen",
+        name: this.data.mode == 'export' ? "exportCardConfirm" : "listen",
         data: {
           wordlist
         }

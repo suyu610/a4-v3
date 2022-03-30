@@ -29,6 +29,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    type: String,
     isFolder: Boolean,
     status_mode: {
       type: Number,
@@ -49,7 +50,19 @@ Component({
     resort: true,
     time: -1, // 秒
     cardChecked: false,
-    today: app.globalData.todayDate
+    today: app.globalData.todayDate,
+    cardStatusActions: [{
+        name: '待练习',
+      },
+      {
+        name: '已学习',
+      },
+      {
+        name: '已完成',
+        subname: '描述信息'
+      },
+    ],
+
   },
 
   /**
@@ -86,7 +99,7 @@ Component({
   lifetimes: {
     ready() {
       this.setData({
-        status_mode: Math.round(Math.random()) + 1,
+        status_mode: Math.round(Math.random() * 2) + 1,
         darkMode: app.globalData.theme == 'dark',
         today: app.globalData.todayDate
       })
@@ -107,10 +120,8 @@ Component({
     // }
   },
 
-  /**
-   * 组件的方法列表
-   */
   methods: {
+
     startCountDown() {
       let that = this
       let time = that.getNextPracticeCountDownTime()
@@ -209,6 +220,17 @@ Component({
             console.log('用户点击取消')
           }
         }
+      })
+    },
+
+    onCloseCardStatus: function () {
+      this.setData({
+        showCardStatusValue: false
+      })
+    },
+    changeCardStatus: function () {
+      this.setData({
+        showCardStatusValue: true
       })
     },
     /**

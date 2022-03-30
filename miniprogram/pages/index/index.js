@@ -30,7 +30,57 @@ Page({
    */
   data: {
     // planTimeColumn: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+    randomCard: {
 
+      "cardId": 976842,
+      "date": null,
+      "dictCode": "0201",
+      "progress": {
+        "practiceTime": 1645463839000,
+        "seq": 1
+      },
+      "wordList": [{
+          "isDeleted": 0,
+          "left_cal": 14,
+          "passed": 0,
+          "top_cal": 0,
+          "width": 47.28125,
+          "wordName": "yours"
+        },
+        {
+          "isDeleted": 0,
+          "left_cal": 90,
+          "passed": 0,
+          "top_cal": 0,
+          "width": 75.96875,
+          "wordName": "anymore"
+        },
+        {
+          "isDeleted": 0,
+          "left_cal": 35,
+          "passed": 0,
+          "top_cal": 1,
+          "width": 61.546875,
+          "wordName": "choose"
+        },
+        {
+          "isDeleted": 0,
+          "left_cal": 107,
+          "passed": 0,
+          "top_cal": 1,
+          "width": 49.140625,
+          "wordName": "today"
+        },
+        {
+          "isDeleted": 0,
+          "left_cal": 50,
+          "passed": 0,
+          "top_cal": 2,
+          "width": 101.625,
+          "wordName": "conjunction"
+        }
+      ]
+    },
     planTimeColumn: ["10", "15", "20", "30 (当前)", "40", "50", "60", "70", "80", "90", "100", "150", "200"],
     showPlanTimeColumnValue: false,
     showGuide: false,
@@ -560,7 +610,17 @@ Page({
 
     app.globalData.needRefreshTodayCard = false
   },
+  showRandomCard: function () {
+    this.setData({
+      showRandomCardValue: true
+    })
+  },
 
+  onCloseRandomCard: function () {
+    this.setData({
+      showRandomCardValue: false
+    })
+  },
   /**
    * 下拉刷新函数
    * 

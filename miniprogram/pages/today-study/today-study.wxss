@@ -8,7 +8,7 @@
   height: 100%;
 }
 .card-swiper {
-  height: 100vh;
+  height: 98vh;
   width: 100vw;
   display: flex;
   align-items: center;

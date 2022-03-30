@@ -89,11 +89,6 @@ Page({
         }
       })
     }
-    // setTimeout(() => {
-    //   that.setData({
-    //     loading: false
-    //   })
-    // }, 2000);
   },
 
   /**

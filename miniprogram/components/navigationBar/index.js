@@ -9,7 +9,8 @@ Component({
     type: String,
     showBottomShadow: Boolean,
     title: String,
-    bgColor: String
+    bgColor: String,
+    color: String
   },
 
   /**

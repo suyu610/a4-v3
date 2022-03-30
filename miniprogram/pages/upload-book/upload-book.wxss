@@ -11,6 +11,24 @@
 .desc-container .title {
   font-size: 16px;
   font-weight: bold;
+  font-weight: bold;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.desc-container .title .right {
+  border: 1px solid #c9cdd4;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-family: "MiSans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 8px;
+  color: #86909c;
 }
 
 .desc-container .body {

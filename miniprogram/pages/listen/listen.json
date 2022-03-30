@@ -4,7 +4,11 @@
     "navigationBar": "../../components/navigationBar",
     "van-popup": "@vant/weapp/popup/index",
     "van-cell": "@vant/weapp/cell/index",
-    "van-cell-group": "@vant/weapp/cell-group/index"
-  
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-count-down": "@vant/weapp/count-down/index"
+
+
   }
 }

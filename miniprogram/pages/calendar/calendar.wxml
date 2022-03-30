@@ -1,5 +1,5 @@
 <!--pages/calendar/calendar.wxml-->
-<navigationBar type="leftBar" title="学习日历"></navigationBar>
+<navigationBar type="leftBar" title="学习日历" bgColor="transparent"></navigationBar>
 <view style="height: 20px;"></view>
 <calendar bind:changeMonth="changeMonth" bind:changeChosenDate="changeChosenDate" calendarData="{{calendarData}}"></calendar>
 

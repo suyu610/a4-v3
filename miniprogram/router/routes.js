@@ -49,9 +49,8 @@ module.exports = {
     path: '/pages/listen/listen'
   },
 
-
-  exportConfirm: {
-    path: '/packageSub/pages/export-confirm/export-confirm'
+  exportCardConfirm: {
+    path: '/packageSub/pages/export-card-confirm/export-card-confirm'
   },
 
   snapshot: {

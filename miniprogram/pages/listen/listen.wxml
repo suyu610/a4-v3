@@ -1,71 +1,95 @@
 <!--pages/export-confirm/export-confirm.wxml-->
-<view class="container">
+<view class="container loading-container" wx:if="{{loading}}">
+  <view class="child">
+    <van-loading size="24px" vertical>资源加载中</van-loading>
+  </view>
+
+</view>
+<view class="container" wx:else>
   <navigationBar type="leftBar" title="随身听" bgColor="transparent"></navigationBar>
-  <image class="setting" src="./images/setting.png"></image>
-  <view class="word-name">appease</view>
+  <view class="top">
+    <view style="display: flex;justify-content: space-between;opacity: {{closeTimerValue=='0'?'.3':'0'}};  align-items: center;">
+      <van-icon name="clock-o" style="position:relative; top:-1px" />
+      <van-count-down class="timer" time="{{ time }}" format="mm : ss" />
+    </view>
+    <image class="setting" src="./images/setting.png" bindtap="toggleSettingPopup"></image>
+  </view>
+  <view class="word-name">{{curWordContent.wordName}}</view>
   <view class="voice">
-    <view class="voice-type">[美]</view>
+    <view class="voice-type">[{{voiceType=='us'?'美':'英'}}]</view>
     <image class="voice-icon" src="./images/voice.png"></image>
-    <view class="prs">/ə’piz/</view>
+    <view class="prs">/{{voiceType=='us'?curWordContent.prsUs:curWordContent.prsUk}}/</view>
   </view>
   <view class="mean-ch">
     <view class="left" style="filter: blur({{blurMeanCh?'8':'0'}}px);">
       <image class="edit" src="./images/edit.png"></image>
-      <view>安抚</view>
+      <view>{{curWordContent.wordNameCh}}</view>
     </view>
     <image class="eye" bindtap="onTapBlurMeanCh" src="./images/eye.png"></image>
   </view>
-  <view class="mean-detail">
+  <view class="mean-detail" wx:if="{{curWordContent.exampleArr.length!=0}}">
     <view class="header">
-      <view style="filter: blur({{blurMeanDetail?'8':'0'}}px);">释义及例句</view>
+      <view style="filter: blur({{blurMeanDetail?'8':'0'}}px);">例句</view>
       <image class="eye" bindtap="onTapBlurMeanDetail" src="./images/eye.png"></image>
     </view>
-    <view class="defination-container" wx:if="{{wordContent.exampleArr.length!=0}}" style="filter: blur({{blurMeanDetail?'8':'0'}}px);">
+    <!-- <view class="defination-container" wx:if="{{curWordContent.exampleArr.length!=0}}" style="filter: blur({{blurMeanDetail?'8':'0'}}px);">
       <view style="height:5px;"></view>
-      <scroll-view scroll-x class="def-block-container">
-        <block wx:for="{{wordContent.definitionArr}}" wx:key="index">
+       <scroll-view scroll-x class="def-block-container">
+        <block wx:for="{{curWordContent.definitionArr}}" wx:key="index">
           <view class="def-block {{index==defIndex?'def-block-chosen':''}}" bindtap="onTapDefBtn" data-index="{{index}}">
-            <!--  词性 -->
+             
             <text class="{{index==defIndex?'def-block-chosen-text':'def-block-unChosen-text'}}">{{abbrDict[item.prs][1] +". "+ abbrDict[item.prs][0]}}</text>
           </view>
         </block>
-      </scroll-view>
+      </scroll-view> 
       <view class="defination-container-main">
-        <text class="defination-english">{{wordContent.definitionArr[defIndex].english}}</text>
+        <text class="defination-english">{{curWordContent.definitionArr[defIndex].english}}</text>
         <view style="height:4px;"></view>
-        <text class="defination-chinese">{{wordContent.definitionArr[defIndex].chinese}}</text>
+        <text class="defination-chinese">{{curWordContent.definitionArr[defIndex].chinese}}</text>
       </view>
-    </view>
+    </view>-->
     <!-- 例句 -->
-    <view class="example-container" wx:if="{{wordContent.exampleArr.length!=0}}" style="filter: blur({{blurMeanDetail?'8':'0'}}px);">
-      <text class="title-text">例句</text>
+    <view class="example-container" wx:if="{{curWordContent.exampleArr.length!=0}}" style="filter: blur({{blurMeanDetail?'8':'0'}}px);" wx:for="{{curWordContent.exampleArr}}" wx:key="index">
+      <!-- <text class="title-text">例句</text> -->
       <!-- <block wx:for="{{wordContent.exampleArr}}" wx:key="index"> -->
       <view style="height:5px;"></view>
-      <text class="example-english">{{wordContent.exampleArr[defIndex].english}}</text>
+      <text class="example-english">{{item.english}}</text>
       <view style="height:4px;"></view>
-      <text class="example-chinese">{{wordContent.exampleArr[defIndex].chinese}}</text>
+      <text class="example-chinese">{{item.chinese}}</text>
       <!-- </block> -->
     </view>
   </view>
   <view class="controller-tool">
-    <image class="random-play" src="./images/{{random?'inRandom':'notRandom'}}.png" bindtap="onTapRandomBtn"></image>
-    <image class="prev" src="./images/prev.png"></image>
-    <image class="play" src="./images/{{play?'pause':'play'}}.png" bindtap="onTapPlayBtn"></image>
-    <image class="next" src="./images/next.png"></image>
+    <image class="random-play" style="opacity: {{random?'1':'0.7'}};" src="./images/{{random?'inRandom':'notRandom'}}.png" bindtap="onTapRandomBtn"></image>
+    <image class="prev" bindtap="onTapPrevBtn" src="./images/prev.png"></image>
+    <image class="play" src="./images/{{isPlay?'pause':'play'}}.png" bindtap="onTapPlayBtn"></image>
+    <image class="next" bindtap="onTapNextBtn" src="./images/next.png"></image>
     <image class="list" src="./images/list.png" bindtap="toggleListPopup"></image>
   </view>
+
 </view>
 
-<van-popup round show="{{ showListPopupValue }}" custom-class="listPopup" position="bottom" bind:close="toggleListPopup" lock-scroll="{{false}}" custom-style="height:40%">
+
+<van-popup round show="{{ showListPopupValue }}" custom-class="listPopup" position="bottom" bind:close="toggleListPopup" lock-scroll="{{false}}" custom-style="height:{{74+44*(wordlist.length)}}px;max-height:60%">
   <view class="list-popup-container">
     <view class="title">播放列表 x7</view>
-    <block wx:for="{{wordlist}}" wx:key="index">
-      <van-cell bindtap="switchListSeq" border="{{false}}" data-index="{{index}}" title="{{item}}" clickable is-link="{{index==curPlayIndex}}"	>
-        <!-- <van-icon slot="icon" name="service-o" class="custom-icon" /> -->
-
-        <!-- <van-icon slot="right-icon" name="search" class="custom-icon" /> -->
+    <block wx:for="{{wordResourceList}}" wx:key="index">
+      <van-cell bindtap="switchListSeq" title-class="{{index==curPlayIndex?'active-cell-title':''}}" data-index="{{index}}" title="{{item.wordName}}" clickable>
+        <van-icon slot="right-icon" name="{{index==curPlayIndex?'music-o':''}}" />
       </van-cell>
-
     </block>
   </view>
 </van-popup>
+
+<van-popup round show="{{ showSettingPopupValue }}" custom-class="listPopup" position="bottom" bind:close="toggleSettingPopup" lock-scroll="{{false}}" custom-style="height:40%">
+  <view class="list-popup-container">
+    <view class="title">播放设置项</view>
+    <van-cell bindtap="" border="{{false}}" bindtap="onChangeVoiceType" title="发音类型" clickable is-link value="{{voiceType=='us'?'美音':'英音'}}" />
+    <van-cell bindtap="" border="{{false}}" bindtap="onChangeSpeakSentence" title="播放例句" clickable is-link value="{{speakSentence?'开':'关'}}" />
+    <van-cell bindtap="" border="{{false}}" bindtap="onChangeSpeakSpell" title="单词拼读" clickable is-link value="{{speakSpell?'开':'关'}}" />
+    <van-cell bindtap="" border="{{false}}" title="背景音乐" clickable is-link value="{{bgmName}}" bindtap="toggleBgmSettingSheet" />
+    <van-cell bindtap="" border=" {{false}}" title="定时关闭" clickable is-link value="关闭" />
+  </view>
+</van-popup>
+
+<van-action-sheet show="{{ showBgmSettingSheetValue }}" actions="{{ bgmSettingSheetActions }}" bind:close="onCloseBgmSettingSheet" bind:select="onSelectBgmSettingSheet" />

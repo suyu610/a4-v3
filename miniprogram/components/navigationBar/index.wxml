@@ -14,8 +14,10 @@
   </view>
 
   <!-- leftBar -->
-  <view wx:if="{{type == 'leftBar'}}" class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
-    <image class="left-img" src="{{darkmodeUtil.addSuffix('./images/left.png',darkMode)}}" bind:tap="onNaviBack"></image>
+  <view wx:if="{{type == 'leftBar'}}" class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;color:{{color}}">
+    <image class="left-img" wx:if="{{color=='white'}}" src="./images/left_dark.png" bind:tap="onNaviBack"></image>
+    <image class="left-img" wx:else src="{{darkmodeUtil.addSuffix('./images/left.png',darkMode)}}" bind:tap="onNaviBack"></image>
+    
     <view>{{title}}</view>
     <image class="left-img hidden" src="{{darkmodeUtil.addSuffix('./images/left.png',darkMode)}}" bind:tap="onNaviBack"></image>
   </view>
