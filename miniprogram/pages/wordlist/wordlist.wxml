@@ -19,14 +19,14 @@
 </view>
 <van-action-sheet description=" 「 {{curGroupName}} 」" cancel-text="取消" show="{{ showBottomSheetValue }}" actions="{{ bottomSheetActions }}" bind:cancel="closeBottomSheet" bind:close="closeBottomSheet" bind:select="selectBottomSheet" />
 
-<van-popup round show="{{ showFieldPopupValue }}" custom-class="dictPopup" closeable position="bottom" bind:close="closeFieldPupup" lock-scroll="{{false}}" custom-style="height:25%">
+<van-popup round show="{{ showFieldPopupValue }}" custom-class="dictPopup" closeable position="center" bind:close="closeFieldPupup" lock-scroll="{{false}}" custom-style="height:35%;width:70vw">
   <view class="field-popup-container">
     <view class="title">{{editMode?'重命名':'新建单词本'}}</view>
     <van-cell-group>
       <van-field cursor-spacing="70" value="{{  fieldValue }}" placeholder="{{ editMode ? curGroupName: '请输入分组名' }}" border bind:change="onChange" />
     </van-cell-group>
     <view class="btn">
-      <shadowBtn class="shadow-btn" title="{{editMode?'确认':'新建单词本'}}"></shadowBtn>
+      <shadowBtn class="shadow-btn" title='确认'></shadowBtn>
     </view>
   </view>
 </van-popup>

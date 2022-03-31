@@ -41,10 +41,10 @@ page {
   z-index: 999;
 }
 .word-name {
-  padding-top: 50px;
+  padding-top: 80rpx;
   text-align: center;
-  font-family: "Poppins";
-  font-style: normal;
+  font-family: "Poppins"; 
+  font-style: normal; 
   font-weight: 700;
   font-size: 32px;
   color: #1d2129;

@@ -1,5 +1,5 @@
 <!--components/sidebar-title/index.wxml-->
 <view class="container" bindtap="openVip">
   <view class="title">会员功能</view>
-  <image class="medal" mode="widthFix" src="./images/notvip.png"></image>
+  <image class="medal" mode="heightFix" src="./images/notvip.png"></image>
 </view>

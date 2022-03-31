@@ -4,9 +4,9 @@
 <view wx:if="{{imgUrl==null}}" class="empty">
   <van-loading size=" 24px" vertical>生成中...</van-loading>
 </view>
-<image bindtap="preview" wx:else src="{{imgUrl}}" mode="widthFix" style="top:12vh;width:75vw;height: auto;left: 12.5vw;position: absolute;border-radius: 12px;"></image>
+<image bindtap="preview" wx:else src="{{imgUrl}}" mode="widthFix" style="top:20vh;width:75vw;height: auto;left: 12.5vw;position: absolute;border-radius: 12px;"></image>
 
-<view class="bottom">
+<view class="bottom" bindtap="shareTimeline">
   <image class="divider" mode="widthFix" src="./images/divider.png"></image>
   <image class="share" mode="widthFix" src="./images/share.png"></image>
 </view>

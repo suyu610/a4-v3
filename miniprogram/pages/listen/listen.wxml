@@ -8,9 +8,9 @@
 <view class="container" wx:else>
   <navigationBar type="leftBar" title="随身听" bgColor="transparent"></navigationBar>
   <view class="top">
-    <view style="display: flex;justify-content: space-between;opacity: {{closeTimerValue=='0'?'.3':'0'}};  align-items: center;">
+    <view bindtap="toggleClockSettingSheet" data-type="button" style="display: flex;justify-content: space-between;opacity: {{clockValue=='不自动关闭'?'.0':'.3'}};  align-items: center;">
       <van-icon name="clock-o" style="position:relative; top:-1px" />
-      <van-count-down class="timer" time="{{ time }}" format="mm : ss" />
+      <van-count-down class="timer" time="{{ time }}" format="mm : ss" bind:finish="stopAllAudio" />
     </view>
     <image class="setting" src="./images/setting.png" bindtap="toggleSettingPopup"></image>
   </view>
@@ -72,7 +72,7 @@
 
 <van-popup round show="{{ showListPopupValue }}" custom-class="listPopup" position="bottom" bind:close="toggleListPopup" lock-scroll="{{false}}" custom-style="height:{{74+44*(wordlist.length)}}px;max-height:60%">
   <view class="list-popup-container">
-    <view class="title">播放列表 x7</view>
+    <view class="title">播放列表 x{{wordResourceList.length}}</view>
     <block wx:for="{{wordResourceList}}" wx:key="index">
       <van-cell bindtap="switchListSeq" title-class="{{index==curPlayIndex?'active-cell-title':''}}" data-index="{{index}}" title="{{item.wordName}}" clickable>
         <van-icon slot="right-icon" name="{{index==curPlayIndex?'music-o':''}}" />
@@ -87,9 +87,11 @@
     <van-cell bindtap="" border="{{false}}" bindtap="onChangeVoiceType" title="发音类型" clickable is-link value="{{voiceType=='us'?'美音':'英音'}}" />
     <van-cell bindtap="" border="{{false}}" bindtap="onChangeSpeakSentence" title="播放例句" clickable is-link value="{{speakSentence?'开':'关'}}" />
     <van-cell bindtap="" border="{{false}}" bindtap="onChangeSpeakSpell" title="单词拼读" clickable is-link value="{{speakSpell?'开':'关'}}" />
-    <van-cell bindtap="" border="{{false}}" title="背景音乐" clickable is-link value="{{bgmName}}" bindtap="toggleBgmSettingSheet" />
-    <van-cell bindtap="" border=" {{false}}" title="定时关闭" clickable is-link value="关闭" />
+    <van-cell bindtap="" border="{{false}}" bindtap="toggleBgmSettingSheet" title="背景音乐" clickable is-link value="{{bgmName}}" />
+    <van-cell bindtap="" border=" {{false}}" bindtap="toggleClockSettingSheet" title="定时关闭" clickable is-link value="{{clockValue}}" />
   </view>
 </van-popup>
+
+<van-action-sheet show="{{ showClockSettingSheetValue }}" actions="{{ clockSettingSheetActions }}" bind:close="onCloseClockSettingSheet" bind:select="onSelectClockSettingSheet" />
 
 <van-action-sheet show="{{ showBgmSettingSheetValue }}" actions="{{ bgmSettingSheetActions }}" bind:close="onCloseBgmSettingSheet" bind:select="onSelectBgmSettingSheet" />

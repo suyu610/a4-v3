@@ -87,9 +87,17 @@ Page({
     })
   },
   openFieldPupup() {
-    this.setData({
-      showFieldPopupValue: true,
-      editMode: false
+    // this.setData({
+    //   showFieldPopupValue: true,
+    //   editMode: false
+    // })
+    wx.showModal({
+      title: '新建单词本',
+      editable: true,
+      placeholderText: '请输入单词本名称',
+      cancelColor: 'cancelColor',
+      confirmColor:'#4931EB',
+      confirmText: '完成'
     })
   },
 

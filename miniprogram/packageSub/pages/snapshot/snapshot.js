@@ -38,6 +38,21 @@ Page({
       urls: [this.data.imgUrl],
     })
   },
+
+  shareTimeline() {
+
+  },
+  onShareTimeline: function () {
+    return {
+      title: '来看看我的学习记录吧~',
+      //query: 'id=-1'
+      imageUrl: this.data.imgUrl,
+      query: {
+        id: 1
+      }
+
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -52,14 +67,14 @@ Page({
     let styleData = {}
     styleData = {
       "width": "933px",
-      "height": "1767px",
+      "height": "1366px",
       "background": "#f8f8f8",
       "views": [{
         "type": "image",
-        "url": "https://cdns.qdu.life/a4/snapshot/bg_1@x3.png",
+        "url": "https://cdns.qdu.life/a4/snapshot/bg_2@x3.png",
         "css": {
           "width": "933px",
-          "height": "1767px",
+          "height": "1366px",
           "top": "0px",
           "left": "0px",
           "rotate": "0",
@@ -93,7 +108,7 @@ Page({
     styleData = that.fillDot(startIndex, dayCount, data, curIndex, styleData)
     styleData = that.drawAvatar(styleData)
     styleData = that.drawProgressInfo(progressInfo, styleData)
-    styleData = that.drawBottomProgressInfo(bottomProgressInfo, styleData)
+    // styleData = that.drawBottomProgressInfo(bottomProgressInfo, styleData)
 
     styleData = that.drawDate("11th March, 2022", styleData)
 

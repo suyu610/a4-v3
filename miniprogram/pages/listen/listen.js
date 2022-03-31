@@ -18,8 +18,9 @@ Page({
     abbrDict: config.abbrDict,
     showListPopupValue: false,
     showSettingPopupValue: false,
-    time: 60 * 60 * 1000,
+    time: 0,
     closeTimerValue: 0,
+    stopAllAudioValue: false,
     isFirst: true,
     isPlay: false,
     random: false,
@@ -48,6 +49,35 @@ Page({
         subname: 'Cello Suite No.1 in G major'
       },
     ],
+    clockFromButton: false,
+    clockValue: '不自动关闭',
+    clockSettingSheetActions: [{
+        name: '不自动关闭'
+      },
+      {
+        name: '1min'
+      },
+      {
+        name: '15min'
+      },
+      {
+        name: '30min'
+      },
+      {
+        name: '60min'
+      }
+    ],
+    showClockSettingSheetValue: false
+  },
+
+  stopAllAudio() {
+    console.log('stopAllAudio')
+    app.globalData.innerAudioContext.stop()
+    this.data.bgmInnerAudioContext.stop()
+    this.setData({
+      isPlay: false,
+      clockValue: '不自动关闭'
+    })
   },
   calAudioType() {
     // @1：英(1)  拼写(0) 有例句(0)
@@ -108,10 +138,40 @@ Page({
   },
 
   toggleBgmSettingSheet() {
+    this.toggleSettingPopup()
     this.setData({
       showBgmSettingSheetValue: !this.data.showBgmSettingSheetValue
     })
   },
+
+  toggleClockSettingSheet(e) {
+    this.setData({
+      showClockSettingSheetValue: !this.data.showClockSettingSheetValue,
+      showSettingPopupValue: false
+    })
+  },
+
+  onSelectClockSettingSheet(e) {
+    let clockValue = e.detail.name
+    if (clockValue != '不自动关闭') {
+      this.setData({
+        time: parseInt(clockValue) * 60 * 1000
+      })
+    } else {
+      this.setData({
+        time: 0
+      })
+    }
+    this.setData({
+      clockValue
+    })
+  },
+
+  onCloseClockSettingSheet() {
+    this.toggleClockSettingSheet()
+  },
+
+
   toggleSettingPopup() {
     this.setData({
       showSettingPopupValue: !this.data.showSettingPopupValue
@@ -328,6 +388,7 @@ Page({
     console.log("onHide")
     app.globalData.innerAudioContext.stop()
     this.data.bgmInnerAudioContext.stop()
+
   },
 
   /**

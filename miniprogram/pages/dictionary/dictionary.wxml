@@ -1,5 +1,5 @@
 <!-- navigationBar -->
-<v-navigationBar type="leftBar" title="切换词书" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+<v-navigationBar type="leftBar" title="切换词书" showBottomShadow="true" bind:naviBack="onNaviBack" bgColor="transparent"></v-navigationBar>
 
 <van-tabs active="{{ active }}" swipeable animated>
   <block wx:for="{{bookColumns}}" wx:key="id">

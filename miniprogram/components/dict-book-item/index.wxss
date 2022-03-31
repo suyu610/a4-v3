@@ -34,7 +34,7 @@
   width: 100%;
 }
 .info .title {
-  font-size: 18px;
+  font-size: 16px;
   color: #1d2129;
   font-weight: bold;
 }

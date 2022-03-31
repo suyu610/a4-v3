@@ -9,11 +9,11 @@ page {
 }
 .empty {
   background-color: white;
-  top: 12vh;
+  top: 20vh;
   width: 75vw;
   text-align: center;
-  height: 60vh;
-  line-height: 60vh;
+  height: 45vh;
+  line-height: 45vh;
   left: 12.5vw;
   position: absolute;
   border-radius: 12px;

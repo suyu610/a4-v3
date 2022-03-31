@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/empty/empty",
+    "pages/upload-book/upload-book",
     "pages/listen/listen",
     "pages/settings/settings",
-    "pages/upload-book/upload-book",
     "pages/calendar/calendar",
     "pages/pay/pay",
     "pages/all-card/all-card",

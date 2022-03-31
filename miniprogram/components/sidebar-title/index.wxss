@@ -15,6 +15,6 @@
 }
 
 .medal {
-  width: 144rpx;
-  height: 36rpx;
+  width: 200rpx;
+  height: 40rpx;
 }

@@ -4,7 +4,12 @@
     "canlendar": "../sidebar_canlendar",
     "sidebar-item": "../sidebar-item",
     "sidebar-title": "../sidebar-title",
-    "van-action-sheet": "@vant/weapp/action-sheet/index"
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "bgBtn": "../bgBtn",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index"
 
   }
 }

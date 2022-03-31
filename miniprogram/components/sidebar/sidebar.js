@@ -14,9 +14,18 @@ Component({
    * 组件的初始数据
    */
   data: {
+    timePickerFilter(type, options) {
+      if (type === 'minute') {
+        return options.filter((option) => option % 5 === 0);
+      }
+
+      return options;
+    },
+
     userInfo: {},
     hasUserInfo: false,
-
+    showTimePickerPopupValue: false,
+    showNotificationPopupValue: false,
     showExportActionSheetValue: false,
     exportActionSheetActions: [{
         name: '今日新学卡片',
@@ -43,7 +52,8 @@ Component({
       },
       {
         title: '定时提醒',
-        icon: './images/alarm.png'
+        icon: './images/alarm.png',
+        name: 'notification'
       },
       {
         title: '截图分享',
@@ -53,7 +63,7 @@ Component({
 
     ],
     vipFuncItemList: [{
-        title: '导入词书',
+        title: '自定义词书',
         icon: './images/custom.png',
         isVip: true,
         routerName: 'uploadBook'
@@ -106,7 +116,7 @@ Component({
       if (e.currentTarget.dataset.name == 'export') {
         this.setData({
           showExportActionSheetValue: true,
-          mode: "export" 
+          mode: "export"
         })
       }
 
@@ -119,8 +129,34 @@ Component({
         //   "name": "listen"
         // })
       }
+
+      if (e.currentTarget.dataset.name == 'notification') {
+        this.setData({
+          showNotificationPopupValue: true
+        })
+        // router.push({
+        //   "name": "listen"
+        // })
+      }
+
     },
 
+    showTimePickerPopup() {
+      this.setData({
+        showTimePickerPopupValue: true
+      })
+    },
+    
+    closeTimePickerPopup() {
+      this.setData({
+        showTimePickerPopupValue: false
+      })
+    },
+    closeNotificationPopup() {
+      this.setData({
+        showNotificationPopupValue: false
+      })
+    },
     onSelectExportActionSheet(e) {
       let routerName = ""
       let mode = this.data.mode
