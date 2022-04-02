@@ -13,9 +13,6 @@
       return value;
     }
     if (d.length > 1) {
-      if (d[1].length < 2) {
-        value = value.toString() + "0";
-      }
       return value;
     }
   }
@@ -46,7 +43,7 @@
     <view class="progress-info">
       <view class="progress-left">
         <view class="progress-title">进度</view>
-        <view class="percent">{{tool.toFix(100*curStudyNum/totalCount,2)}}%</view>
+        <view class="percent">{{tool.toFix(100*curStudyNum/totalCount,1)}}%</view>
       </view>
       <view class="progress-right">({{curStudyNum}}/{{totalCount}})</view>
     </view>

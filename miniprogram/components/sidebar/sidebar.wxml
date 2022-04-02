@@ -1,4 +1,4 @@
-<image class="top-bg" mode="widthFix" src="../../images/shadow.png"></image>
+<image class="top-bg" mode="widthFix" src="https://cdns.qdu.life/a4/images/shadow.png"></image>
 
 <view class="container" style="padding-top:{{searchBarTop+4}}px">
   <view class="top">

@@ -6,7 +6,3 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.underline{
-  /* border-bottom:1px #EEE solid; */
-}

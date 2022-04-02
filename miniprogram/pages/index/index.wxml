@@ -3,7 +3,6 @@
 
 <wxs module="refresh">
   var dy = 0
-
   var icon, pullText, tips;
 
   function onAbort(evt, instance) {
@@ -53,7 +52,7 @@
 <view class="wrapper" refresher-threshold="{{80}}" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
   <view class="container">
     <!-- <v-navigation-bar type="searchBar" showBottomShadow="{{ true }}" bind:search="onSearch" bindtap="{{drawer.openDrawer}}"></v-navigation-bar> -->
-    <image class="top-bg" mode="widthFix" src="../../images/shadow.png"></image>
+    <image class="top-bg" mode="widthFix" src="https://cdns.qdu.life/a4/images/shadow.png"></image>
     <view class="navigation-bar" style="height:{{navigationBarHeight}}px;">
       <view class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
         <image class="menu-img" bind:tap="{{drawer.toggleDrawer}}"></image>

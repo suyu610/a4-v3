@@ -9,7 +9,7 @@
     var numbers = '';
     for (var i = 0; i < val; i++) {
       numbers += '0';
-    }
+    } 
     var s = 1 + numbers;
     var spot = "." + numbers;
     var value = Math.round(parseFloat(data) * s) / s;
@@ -19,9 +19,6 @@
       return value;
     }
     if (d.length > 1) {
-      if (d[1].length < 2) {
-        value = value.toString() + "0";
-      }
       return value;
     }
   }
@@ -50,7 +47,7 @@
       <view class="progress-current" style="width:{{100*progressList[currentDicCode]/dictInfo[currentDicCode].totalWordNum}}\%"></view>
     </view>
     <view class=" progress-container-info">
-      <text class="progress-container-info-text-2" wx:if="{{currentDicCode!=null  && currentDicCode!=''}}">进度 <text class="black bold">{{ progressList[currentDicCode]==null?0:str.toFix(100*progressList[currentDicCode]/dictInfo[currentDicCode].totalWordNum,2)}}%</text> </text>
+      <text class="progress-container-info-text-2" wx:if="{{currentDicCode!=null  && currentDicCode!=''}}">进度 <text class="black bold">{{ progressList[currentDicCode]==null?0:str.toFix(100*progressList[currentDicCode]/dictInfo[currentDicCode].totalWordNum,1)}}%</text> </text>
       <text class="progress-container-info-text-2">({{progressList[currentDicCode]==null?0:progressList[currentDicCode]>dictInfo[currentDicCode].totalWordNum?dictInfo[currentDicCode].totalWordNum:progressList[currentDicCode]}}/{{dictInfo[currentDicCode].totalWordNum}})</text>
       <text class="progress-container-info-text-2" wx:if="{{currentDicCode==null  || currentDicCode==''}}">未选择词书</text>
     </view>
