@@ -11,10 +11,10 @@
 
   <!-- van-call-group -->
   <van-cell-group title-class="cell-title" -group inset custom-class="group">
-    <van-cell title-class="cell-title" clickable title="每日新学单词目标" value="{{setting.targetCount}}个" data-name="2" bind:click="toggleTargetPopup" is-link>
-    </van-cell>
-    <van-cell title-class="cell-title" clickable value="{{currentDictName}}" title="修改当前词书" bind:click="jumpToDictChange" is-link>
-    </van-cell>
+    <!-- <van-cell title-class="cell-title" clickable title="每日新学单词目标" value="{{setting.targetCount}}个" data-name="2" bind:click="toggleTargetPopup" is-link>
+    </van-cell> -->
+    <!-- <van-cell title-class="cell-title" clickable value="{{currentDictName}}" title="修改当前词书" bind:click="jumpToDictChange" is-link>
+    </van-cell> -->
     <van-cell title-class="cell-title" clickable title="深色模式" bind:click="openDarkMode" is-link>
     </van-cell>
     <van-cell title-class="cell-title" clickable title="更多设置" bind:click="jump2MoreSettings" is-link>

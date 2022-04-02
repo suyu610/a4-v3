@@ -9,7 +9,10 @@
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
     "bgBtn": "../bgBtn",
-    "van-datetime-picker": "@vant/weapp/datetime-picker/index"
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "popover": "../popover/popover",
+    "popover-item": "../popover/popover-item"
+
 
   }
 }

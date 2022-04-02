@@ -28,15 +28,16 @@
 }
 
 swiper-item.cardCur .swiper-item {
-  transform: none !important;
+  /* transform: none !important; */
   transition: all 0.3s ease-in 0s;
   padding-left: 5vw !important;
   padding-right: 5vw !important;
   /* width: 90vw !important; */
   margin: 0 auto;
+  transform: scaleY(1) !important;
+
   /* margin: 0 auto; */
 }
-
 .movable-btn {
   z-index: 9;
   bottom: 0;

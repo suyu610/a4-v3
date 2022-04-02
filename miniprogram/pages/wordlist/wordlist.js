@@ -36,7 +36,15 @@ Page({
       }
     ]
   },
-
+  onTap: function () {
+    this.popover = this.selectComponent('#popover')
+    // 获取按钮元素的坐标信息
+    wx.createSelectorQuery().in(this).select('#group_0').boundingClientRect(res => {
+      console.log(res)
+      // 调用自定义组件 popover 中的 onDisplay 方法z
+      this.popover.onDisplay(res);
+    }).exec();
+  },
   selectBottomSheet(e) {
     switch (e.detail.name) {
       case '重命名':
@@ -49,9 +57,19 @@ Page({
   },
 
   modifyGroupName() {
-    this.setData({
-      showFieldPopupValue: true,
-      editMode: true
+    // this.setData({
+    //   showFieldPopupValue: true,
+    //   editMode: true
+    // })
+
+
+    wx.showModal({
+      title: '修改分组名',
+      editable: true,
+      placeholderText: this.data.curGroupName,
+      cancelColor: 'cancelColor',
+      confirmColor: '#4931EB',
+      confirmText: '完成'
     })
   },
   openBottomSheet(e) {
@@ -96,7 +114,7 @@ Page({
       editable: true,
       placeholderText: '请输入单词本名称',
       cancelColor: 'cancelColor',
-      confirmColor:'#4931EB',
+      confirmColor: '#4931EB',
       confirmText: '完成'
     })
   },
@@ -135,7 +153,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.onTap()
   },
 
   /**

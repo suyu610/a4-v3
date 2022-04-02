@@ -193,6 +193,10 @@ page {
   justify-content: center;
   align-items: center;
 }
+/* 
+.def-block-container::scrollbar {
+  width: 0;  
+} */
 
 .def-block {
   width: 82px;

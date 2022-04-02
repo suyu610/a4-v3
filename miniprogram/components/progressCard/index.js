@@ -16,7 +16,6 @@ Component({
    */
   properties: {
     loading: Boolean,
-    senInfo: Object,
     userInfo: Object,
     progressList: Object,
     currentDicCode: String

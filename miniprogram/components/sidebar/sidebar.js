@@ -14,6 +14,9 @@ Component({
    * 组件的初始数据
    */
   data: {
+    notificationTypeIndex: 0,
+    notificationType: ['当日有未完成的任务', '总是提醒', '关闭提醒'],
+    isVip: false,
     timePickerFilter(type, options) {
       if (type === 'minute') {
         return options.filter((option) => option % 5 === 0);
@@ -73,7 +76,6 @@ Component({
         icon: './images/listen.png',
         isVip: true,
         name: "listen"
-
       },
       {
         title: '导出卡片',
@@ -140,23 +142,44 @@ Component({
       }
 
     },
-
+    onTap: function (e) {
+      this.popover = this.selectComponent('#popover1')
+      // 获取按钮元素的坐标信息
+      var id = e.target.id // 或者  获取点击元素的 ID 值
+      wx.createSelectorQuery().in(this).select('#' + id).boundingClientRect(res => {
+        console.log(res)
+        // 调用自定义组件 popover 中的 onDisplay 方法z
+        this.popover.onDisplay(res);
+      }).exec();
+    },
     showTimePickerPopup() {
       this.setData({
         showTimePickerPopupValue: true
       })
     },
-    
+
     closeTimePickerPopup() {
       this.setData({
         showTimePickerPopupValue: false
       })
     },
+    onTapConfirmBtn() {
+      this.triggerEvent('openAlarm', {})
+      this.closeNotificationPopup()
+    },
+
+    onChangeNotificationType() {
+      this.setData({
+        notificationTypeIndex: ++this.data.notificationTypeIndex
+      })
+    },
+
     closeNotificationPopup() {
       this.setData({
         showNotificationPopupValue: false
       })
     },
+
     onSelectExportActionSheet(e) {
       let routerName = ""
       let mode = this.data.mode
@@ -208,10 +231,26 @@ Component({
       router.push({
         name: 'settings'
       })
+    },
+    isVip() {
+      // 发http呢，还是用本地的呢？
+      const role = wx.getStorageSync('role')
+      const now = new Date().getTime();
+      return role != '' && role.role == 'vip' && role.expire > now
+    }
+  },
+  pageLifetimes: {
+    show() {
+      this.setData({
+        isVip: this.isVip()
+      })
     }
   },
   lifetimes: {
     ready() {
+      this.setData({
+        isVip: this.isVip()
+      })
       // [ todo ] 兼容getUserInfo 和 profile
       var hasUserInfo = app.globalData.hasUserInfo
       var userInfo = app.globalData.userInfo
@@ -224,6 +263,8 @@ Component({
       } else {
         console.log("not login")
       }
+
+
 
       // wx.getStorageSync('hasUserInfo', true)
 

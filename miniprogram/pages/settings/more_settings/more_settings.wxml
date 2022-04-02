@@ -9,7 +9,6 @@
 
   <!-- van-call-group -->
   <van-cell-group title-class="cell-title" -group inset custom-class="group">
-
     <van-cell title-class="cell-title" clickable value="{{setting.openCountdown==1?'已开启':'已关闭'}}" title="练习模式倒计时" data-name="2" bind:click="switchCountdown" is-link>
     </van-cell>
     <van-cell title-class="cell-title" clickable value="{{setting.showReviewToast==1?'已开启':'已关闭'}}" title="倒计时结束后提示释义" data-name="2" bind:click="switchReviewShowToast" is-link>
@@ -20,32 +19,15 @@
     </van-cell>
     <van-cell title-class="cell-title" clickable value="{{setting.customKeyboard==1?'使用':'不使用'}}" title="自定义键盘" bind:click="switchCustomKeyboard" is-link>
     </van-cell>
-
-
   </van-cell-group>
   <view style="width:100%;height:15px;"></view>
   <van-cell-group title-class="cell-title" -group inset custom-class="group">
     <van-cell title-class="cell-title" clickable title="官方QQ群" value="233956276" data-qq="233956276" data-name="2" bind:click="copyQQ" is-link>
     </van-cell>
   </van-cell-group>
-
-
 </scroll-view>
 <!-- tabBar-shadow -->
 <view class="tabBar-shadow"></view>
-
-<van-popup show="{{ showTargetPopupValue }}" clo round bind:close="toggleTargetPopup" position="bottom" custom-style="height:30%;padding:20px;text-align:center">
-  <view class="settings-header" style="padding:0;padding-bottom: 20px;font-weight: bold;">
-    <text class="settings-header-text">每日新学单词目标</text>
-  </view>
-  <van-stepper min="5" value="{{ setting.targetCount }}" integer input-width="60px" button-size="38px" bind:change="onChangeDailyTarget" />
-  <!-- footer -->
-  <view class="footer">
-    <view class="footer-right" bindtap="changeTargetCount">
-      <text class="footer-right-text">确定</text>
-    </view>
-  </view>
-</van-popup>
 
 <van-popup show="{{ resetProgressValue }}" clo round bind:close="onClickResetProgress" position="bottom" custom-style="height:40%;padding:20px;text-align:center">
   <view class="settings-header" style="padding:0;padding-bottom: 20px;font-weight: bold;">

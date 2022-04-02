@@ -12,6 +12,9 @@
     "van-transition": "@vant/weapp/transition/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-checkbox": "@vant/weapp/checkbox/index",
-    "bgBtn":"../../components/bgBtn"
+    "bgBtn": "../../components/bgBtn",
+    "popover": "../popover/popover",
+    "popover-item": "../popover/popover-item",
+    "wordlistPopup": "../wordlist-popup"
   }
 }

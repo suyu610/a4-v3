@@ -9,9 +9,15 @@
     </view>
     <view class="info">
       <view class="userinfo" wx:if="{{hasUserInfo}}">
-        <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        <image class="medal" src="./images/medal.png"></image>
+        <image class="avatar" bindtap="onTap" src="{{userInfo.avatarUrl}}" id="button1"></image>
+        <image class="medal" wx:if="{{isVip}}" src="./images/medal.png"></image>
         <view class="nickname">{{userInfo.nickName}}</view>
+        <popover id='popover1'>
+          <!-- <view>hello</view> -->
+          <popover-item bindtap='onClickA'>这是一个头像</popover-item>
+          <!--  <popover-item hasline>子菜单B</popover-item>
+        <popover-item>子菜单C</popover-item> -->
+        </popover>
       </view>
 
       <view class="userinfo" wx:else bindtap="getUserProfile">
@@ -49,7 +55,7 @@
     <block wx:for="{{notvipFuncItemList}}" wx:key="index">
       <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
     </block>
-    <sidebar-title></sidebar-title>
+    <sidebar-title isVip="{{isVip}}"></sidebar-title>
     <block wx:for="{{vipFuncItemList}}" wx:key="index">
       <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" isVip="true" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
     </block>
@@ -59,14 +65,14 @@
   <view class="popup-container">
     <view class="title">定时提醒</view>
     <van-cell title="每日提醒的时间" bindtap="showTimePickerPopup" title-class="popup-container-title" value-class="popup-container-value" value="20:20" is-link></van-cell>
-    <van-cell title="提醒的触发条件" title-class="popup-container-title" value-class="popup-container-value" value="当日有未完成的计划" is-link></van-cell>
-    <view class="popup-container-bottom" bindtap="closeNotificationPopup">
+    <van-cell title="提醒的触发条件" title-class="popup-container-title" bindtap="onChangeNotificationType" value-class="popup-container-value" value="{{notificationType[notificationTypeIndex%3]}}" is-link></van-cell>
+    <view class="popup-container-bottom" bindtap="onTapConfirmBtn"> 
       <bgBtn title="完成设置" bgColor="#3D4262" width="246" height="34"></bgBtn>
     </view>
   </view>
 </van-popup>
 <van-popup round show="{{ showTimePickerPopupValue }}" custom-class="dictPopup" position="bottom" bind:close="closeTimePickerPopup" lock-scroll="{{false}}" custom-style="height:50%">
-  <van-datetime-picker wx:if="{{ showTimePickerPopupValue }}" type="time" bind:cancel="closeTimePickerPopup"	bind:confirm="closeTimePickerPopup"	 show-toolbar title="每日提醒时间" filter="{{ timePickerFilter }}"  />
+  <van-datetime-picker wx:if="{{ showTimePickerPopupValue }}" type="time" bind:cancel="closeTimePickerPopup" bind:confirm="closeTimePickerPopup" show-toolbar title="每日提醒时间" filter="{{ timePickerFilter }}" />
 </van-popup>
 
-<van-action-sheet show="{{ showExportActionSheetValue }}" actions="{{ exportActionSheetActions }}" bind:close="onCloseExportActionSheet" bind:cancel="onCloseExportActionSheet" bind:select="onSelectExportActionSheet" cancel-text="取消" />
+<van-action-sheet show="{{ showExportActionSheetValue }}" description="卡片来源" actions="{{ exportActionSheetActions }}" bind:close="onCloseExportActionSheet" bind:cancel="onCloseExportActionSheet" bind:select="onSelectExportActionSheet" cancel-text="取消" />

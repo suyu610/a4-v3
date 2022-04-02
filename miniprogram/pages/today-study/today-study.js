@@ -23,7 +23,26 @@ Page({
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
   },
 
-
+  onTapBottomBtn() {
+    let wordlist = []
+    if (this.data.mode == 'export' || this.data.mode == "listen") {
+      let checkedCardArr = this.data.checkedCardArr
+      checkedCardArr.forEach(card => {
+        card.wordList.forEach(word => {
+          if (!word.isDeleted) {
+            wordlist.push(word.wordName)
+          }
+        });
+      });
+      console.log(wordlist)
+      router.push({
+        name: this.data.mode == 'export' ? "exportCardConfirm" : "listen",
+        data: {
+          wordlist
+        }
+      })
+    }
+  },
   replaceWord() {
     let cardCur = this.data.cardCur
 
@@ -71,6 +90,7 @@ Page({
       showDictPopup: false
     })
   },
+
   /**
    * 点击单词事件
    * 
@@ -81,7 +101,6 @@ Page({
     let cardId = e.detail.cardId
     let dictCode = e.detail.dictCode
     let that = this
-
 
     resource.getWordInfo(e.detail.wordName).then(function (e) {
       that.setData({

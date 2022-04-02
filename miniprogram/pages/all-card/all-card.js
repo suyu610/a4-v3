@@ -17,8 +17,8 @@ Page({
     showDropdownOverlay: true,
     checkedCardArr: [],
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
-    maxDate: new Date().getTime(),
-    minDate: new Date(2021, 9, 1).getTime(),
+    maxDate: null, //new Date().getTime(),
+    minDate: null, //new Date(2021, 9, 1).getTime(),
 
     showCalendar: false,
     option2: [{
@@ -90,7 +90,12 @@ Page({
     })
   },
   onOpenCalendar() {
-    console.log("onOpenCalendar")
+    if (this.data.minDate == null) {
+      this.setData({
+        maxDate: new Date().getTime(),
+        minDate: new Date(2021, 9, 1).getTime(),
+      })
+    }
 
     this.setData({
       showDropdownOverlay: false,
@@ -116,8 +121,6 @@ Page({
         }
       })
     }
-
-
   },
   /**
    * 生命周期函数--监听页面加载
@@ -140,7 +143,6 @@ Page({
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
-      senInfo: e.sentence,
       loading: false,
       progressList: e.progressList,
       currentDicCode: e.currentDicCode,

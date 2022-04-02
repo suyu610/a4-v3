@@ -13,9 +13,10 @@
     "van-picker": "@vant/weapp/picker/index",
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-icon": "@vant/weapp/icon/index",
-    "shadowBtn": "../../components/shadowBtn"
-
-
+    "shadowBtn": "../../components/shadowBtn",
+    "popover": "../../components/popover/popover",
+    "popover-item": "../../components/popover/popover-item",
+    "wordlistPopup": "../../components/wordlist-popup/index"
   },
   "navigationBarTextStyle": "black"
 }

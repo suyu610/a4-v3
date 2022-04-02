@@ -25,7 +25,6 @@
 }
 
 .left-bottom {
-  font-family: "MiSans";
   font-style: normal;
   font-weight: 400;
   font-size: 11px;

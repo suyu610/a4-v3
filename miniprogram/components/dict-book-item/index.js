@@ -6,7 +6,10 @@ Component({
   properties: {
     hasAdded: Boolean,
     isCurrent: Boolean,
+    finished: Boolean,
     bookName: String,
+    bookColumnId: Number,
+    curStudyNum: Number,
     desc: {
       type: String,
       value: '暂无详细介绍'

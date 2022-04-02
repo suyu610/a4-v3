@@ -51,50 +51,26 @@ Page({
       if (hasUserInfo && userInfo) {
         app.globalData.hasUserInfo = hasUserInfo
         app.globalData.userInfo = userInfo
-
-        // Do something with return value
       } else {
         console.log("not login")
       }
     } catch (e) {
       console.log(e)
-      // Do something when catch error
     }
 
 
     resource.getInitData().then(e => {
+      console.log(e)
       app.globalData.progressList = e.progressList
       app.globalData.currentDicCode = e.currentDicCode
-      app.globalData.senInfo = e.sentence
-      app.globalData.todayCards = e.todayCards.list
       app.globalData.setting = e.setting
-      app.globalData.deletedCardCount = e.deletedCardCount
-      app.globalData.markWordCount = e.markWordCount
       app.globalData.todayInitData = e
-
-      // that.setData({ 
-      //   senInfo: e.sentence, 
-      //   loading: false,
-      //   progressList: e.progressList,
-      //   currentDicCode: e.currentDicCode,
-      //   currentPageIndex: e.todayCards.pageNum,
-      //   totalCardNum: e.todayCards.total,
-      //   todayCards: e.todayCards.list,
-      //   hasNextPage: e.todayCards.hasNextPage
-      // })
-
-      cardApi.getNeedReviewCard(1).then(e => {
-        app.globalData.needReviewCard = e
-        app.globalData.needRefreshReviewData = false
-        router.replace({
-          name: 'index',
-        });
-        // wx.redirectTo({
-        //   url: '../index/index',
-        // })
-      })
+      app.globalData.briefCalendarList = e.briefCalendarList
+      app.globalData.role = e.role
+      router.replace({
+        name: 'index',
+      });
     })
-    app.globalData.needRefreshTodayCard = false
   },
 
   /**

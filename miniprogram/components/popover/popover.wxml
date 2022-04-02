@@ -1,0 +1,3 @@
+<view wx:if='{{visible}}' bindtap="onHide" class='{{visible?"show":"hide"}} popover-view {{vertical}} {{align}}' style='z-index:999;width:{{pw}}px;height:{{ph}}px;line-height:{{ph}}px;left:{{px}}px;top:{{py}}px; animation:{{animation?"myfirst 2s 5":""}} ;'>
+  <slot />
+</view>

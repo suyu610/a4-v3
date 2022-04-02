@@ -14,7 +14,7 @@
 
 .divider {
   height: 1px;
-  padding-top: 44rpx;
+  padding-top: 36rpx;
   border-bottom: 1px solid #f2f3f5;
   width: 100%;
 }
@@ -25,11 +25,11 @@
 }
 
 .header .left .title-img {
-  height: 38rpx;
+  height: 44rpx;
   width: 244rpx;
-}
+} 
 .main {
-  padding-top: 40rpx;
+  padding-top: 44rpx;
   padding-left: 4rpx;
 }
 .main .left,
@@ -43,26 +43,32 @@
 
 .main .title {
   color: #90919e;
-  padding-bottom: 18rpx;
+  padding-bottom: 28rpx;
   font-size: 22rpx;
+}
+.card_text{
+  width: 72rpx;
+  height: 32rpx;
 }
 
 .main .num {
-  font-family: "SF-Pro-Display-BoldItalic";
+  font-family: "SF Pro Display Num";
   font-size: 48px;
   line-height: 48px;
   color: #303339;
   margin-right: 14rpx;
 }
+
 .footer {
   align-items: center;
-  padding-top: 40rpx;
+  padding-top: 30rpx;
 }
 
 .footer .people {
-  height: 14px; 
+  height: 14px;
   width: 19px;
 }
+
 
 .footer .left .info {
   padding-left: 20rpx;

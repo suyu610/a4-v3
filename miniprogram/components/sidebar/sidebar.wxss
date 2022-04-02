@@ -1,6 +1,6 @@
 /* components/sidebar/sidebar.wxss */
-page{
-  --cell-vertical-padding:14px;
+page {
+  --cell-vertical-padding: 14px;
 }
 .container {
   width: 100vw;
@@ -84,6 +84,8 @@ page{
 .top .timeinfo .time .desc {
   font-size: 11px;
   text-align: center;
+  padding-top: 6rpx;
+
   color: #9fa7b5;
 }
 
@@ -92,6 +94,8 @@ page{
   font-size: 20px;
 }
 .top .timeinfo .time .day {
+  padding-left: 6rpx;
+
   font-size: 12px;
 }
 
@@ -126,21 +130,19 @@ page{
   padding-bottom: 20px;
   font-weight: bold;
 }
-.popup-container-value{
-  color:#1D2129!important;
+.popup-container-value {
+  color: #1d2129 !important;
   font-weight: bold;
-
 }
-.popup-container .popup-container-bottom{
+.popup-container .popup-container-bottom {
   position: absolute;
   bottom: 14px;
   width: 100%;
 }
 
-.popup-container-title{
-  color:  #4E5969;
-  font-family: 'MiSans';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
+.popup-container-title {
+  color: #4e5969;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
 }

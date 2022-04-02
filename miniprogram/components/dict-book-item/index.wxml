@@ -1,30 +1,60 @@
+<wxs module="tool">
+  function toFix(data, val) {
+    var numbers = '';
+    for (var i = 0; i < val; i++) {
+      numbers += '0';
+    }
+    var s = 1 + numbers;
+    var spot = "." + numbers;
+    var value = Math.round(parseFloat(data) * s) / s;
+    var d = value.toString().split(".");
+    if (d.length == 1) {
+      value = value.toString() + spot;
+      return value;
+    }
+    if (d.length > 1) {
+      if (d[1].length < 2) {
+        value = value.toString() + "0";
+      }
+      return value;
+    }
+  }
+  module.exports.toFix = toFix;
+</wxs>
 <view style="content: ''; overflow: hidden;padding-top: 12px;"></view>
 <view class="container">
-  <view class="check" wx:if="{{isCurrent}}">
-    <text>当前词书</text>
+
+  <view class="check current" wx:if="{{isCurrent}}">
+    <text>当前学习</text>
   </view>
 
-  <view class="check add-people" wx:if="{{!isCurrent}}">
-    <text>123人</text>
+  <view class="check learning" wx:if="{{!isCurrent && hasAdded}}">
+    <text>学习中</text>
   </view>
-  <book-img bookName="{{bookName}}" totalCount="{{totalCount}}"></book-img>
+
+  <view class="check finished" wx:if="{{!isCurrent && finished}}">
+    <text>已学完</text>
+  </view>
+
+  <book-img bookColumnId="{{bookColumnId}}" bookName="{{bookName}}" totalCount="{{totalCount}}"></book-img>
   <view class="info" wx:if="{{hasAdded}}">
     <view class="title">{{bookName}}</view>
     <view class="desc">按当前计划，剩余<text style="color:black">{{remainDay}}</text>天完成学习</view>
     <view class="progress-bar">
-      <view class="progress-active" style="width: 30%;"></view>
+      <view class="progress-active" style="width: {{100*curStudyNum/totalCount}}\%"></view>
     </view>
     <view class="progress-info">
       <view class="progress-left">
         <view class="progress-title">进度</view>
-        <view class="percent">72%</view>
+        <view class="percent">{{tool.toFix(100*curStudyNum/totalCount,2)}}%</view>
       </view>
-      <view class="progress-right">(103/275)</view>
+      <view class="progress-right">({{curStudyNum}}/{{totalCount}})</view>
     </view>
   </view>
 
   <view class="info" wx:else>
     <view class="title">{{bookName}}</view>
     <view class="desc book-desc">{{desc}}</view>
+    <view class="desc book-total-count">单词总数 <text class="bold">{{totalCount}}</text> </view>
   </view>
-</view>
+</view> 

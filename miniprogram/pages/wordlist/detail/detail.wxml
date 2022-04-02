@@ -102,7 +102,7 @@
 </scroll-view>
 
 <!-- van-popup -->
-<van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="bottom" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
+<van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
   <v-wordDic class="v-worddic" loading="{{dictLoading}}" wordContent="{{curWordContent}}" noFooter="{{true}}" bind:closeDict="onClickHideOverlay" />
 </van-popup>
 

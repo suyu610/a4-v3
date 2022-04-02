@@ -65,7 +65,7 @@
       </view>
     </view>
 
-    <scroll-view bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation  refresher-enabled refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
+    <scroll-view style="margin-top:32rpx;height: {{scrollViewHeight}}px;" bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
       <view slot="refresher" class="refresh-container" style="display: block; width: 100%; height: 80px; background: transparent; display: flex; flex-direction: column; align-items: center;justify-content: center;">
         <view class="pullText" style="font-size: 14px;color:grey;padding-top: 16px;padding-bottom: 6px;"><text class="tips">下拉</text>搜索单词</view>
         <view>
@@ -76,10 +76,16 @@
       <v-progressCard loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentDicCode="{{currentDicCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progressCard>
       <v-homeCard type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></v-homeCard>
       <v-homeCard type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></v-homeCard>
+      <view class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
+        <view>「 随心一张 」 </view>
+        <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image>
+      </view>
     </scroll-view>
 
-    <view class="container-footer" bindtap="showRandomCard"> 「 随便一张 」 </view>
-
+    <popover animation id='popover' show="{{true}}" parent-id="random">
+      <!-- <view>hello</view> -->
+      <popover-item closeable hasline>内容超出会自动隐藏用...表示 </popover-item>
+    </popover>
     <!-- search-keyboard -->
     <view wx:if="{{ showSearchBar }}" class="search-keyboard" style="bottom:{{keyboardHeight}}px;">
       <view class="search-keyboard-left">
@@ -93,28 +99,41 @@
 
     <!-- 词典 -->
     <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
-      <v-wordDic class="v-worddic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
+      <v-wordDic bind:showWordGroupPopup="showWordGroupPopup" class="v-worddic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
     </van-popup>
-
     <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
   </view>
 
   <view class="drawer drawerA" data-drawerwidth="{{windowWidth}}">
-    <sidebar></sidebar>
+    <sidebar bind:openAlarm="openAlarm"></sidebar>
   </view>
 </view>
 
-<van-popup show="{{ showPlanTimeColumnValue }}" bind:close="onClosePlanTimeColumn" round position="bottom" custom-style="height: 40%;">
+<van-popup show="{{ showPlanTimeColumnValue }}" bind:close="onClosePlanTimeColumn" round position="bottom" custom-style="height: 50%;">
   <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChange" show-toolbar bind:confirm="onClosePlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
 </van-popup>
 
-
 <van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 50%;background-color: #e2eeff;">
   <view class="random-popup-container">
-    <view class="title">随机一张</view>
+    <view class="title">
+      <view>随机一张</view>
+      <image style="width: 15px;height: 13px;" src="./images/random.png"></image>
+    </view>
     <v-wordCard type="random" class="vwordcard" loading="{{randomCard.loading}}" wordCard="{{randomCard}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></v-wordCard>
     <view class="random-popup-container-footer">
       <shadowBtn class="shadow-btn" title="开始练习"></shadowBtn>
     </view>
   </view>
 </van-popup>
+
+<van-overlay z-index="999" show="{{ alarmOverlay }}" bind:click="onClickHide">
+  <view class="wrapper" style="display: flex;align-items: center;justify-content: center;height: 50%; width: 90%;margin: 0 auto;">
+    <view class="block" catch:tap="noop" style="color: white;font-weight: bolder;font-size: 20px;animation:myfirst 2s infinite">
+      <view>勾选底部，"总是保持以上选择"</view>
+      <view>将不再出现此弹窗</view>
+      <!-- <image src=""></image> -->
+    </view>
+  </view>
+</van-overlay>
+
+<wordlistPopup bind:jump2BookList="jump2BookList" show="{{showWordGroupPopupValue}}"></wordlistPopup>

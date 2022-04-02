@@ -12,21 +12,28 @@
 
 .check {
   position: absolute;
-  top: 8px;
-  right: 9px;
-  padding: 0 12px;
+  top: 19px;
+  right: 12px;
+padding: 0 12px;
   height: 20px;
-  background: #FDF1EB;
-  color: #FE984F;
   border-radius: 4px;
   text-align: center;
   font-size: 10px;
   line-height: 20px;
 }
-.add-people{
-  /* width: 80px; */
+.current {
+  background: #fdf1eb;
+  color: #fe984f;
+}
+
+.learning {
   background: #ebf4fd;
   color: #297af4;
+}
+
+.finished {
+  background: #f2f3f5;
+  color: #c9cdd4;
 }
 
 .info {
@@ -46,11 +53,11 @@
 }
 
 .info .book-desc {
-  max-lines: 3;
+  max-lines: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box; /* 将对象作为弹性伸缩盒子模型显示 */
-  -webkit-line-clamp: 3; /* 控制最多显示几行 */
+  -webkit-line-clamp: 2; /* 控制最多显示几行 */
   -webkit-box-orient: vertical; /* 设置或检索伸缩盒对象的子元素的排列方式 */
 }
 .info .progress-bar {
@@ -82,4 +89,12 @@
 .progress-info .percent {
   padding-left: 4px;
   color: black;
+}
+.book-total-count{
+  position: absolute;
+  bottom: 20px;
+}
+
+.bold{
+  font-weight: bold;
 }

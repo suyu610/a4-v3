@@ -1,13 +1,17 @@
 <!--components/wordlist-popup/index.wxml-->
 <view class="container">
-  <van-popup round show="{{ show }}" custom-class="dictPopup" position="bottom" bind:close="closePopup" lock-scroll="{{false}}" custom-style="height:45%">
+  <van-popup round show="{{ show }}" custom-class="dictPopup" position="bottom" bind:close="closePopup" lock-scroll="{{false}}" custom-style="height:55%">
     <view class="popup-container">
-      <view class="title">选择单词本</view>
-      <view class="sub-title">新建单词本</view>
+      <view style="height:18px"></view>
+      <view class="top">
+        <view class="sub-title" style="text-align: left;" bindtap="jump2BookList">新建单词本</view>
+        <view class="title" style="text-align: center;">选择单词本</view>
+        <view class="sub-title" style="text-align: right;" bindtap="closePopup">取消</view>
+      </view>
 
       <van-cell-group>
         <block wx:for="{{wordlistGroup}}" wx:key="id" wx:for-item="item">
-          <van-cell bindtap="selectGroup" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}单词" center clickable>
+          <van-cell bindtap="selectGroup" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}个单词" center clickable>
             <image class="right-icon" src="{{curId==item.id?'./images/checked.png':'./images/unchecked.png'}}" slot="right-icon">
             </image>
             <view slot="title">
@@ -16,8 +20,12 @@
           </van-cell>
         </block>
       </van-cell-group>
-
-      <bgBtn title="完成" bgColor="#3D4262" width="246" height="34" pt="40"></bgBtn>
+      <view style="height:6vh"></view>
+      <!-- <view class="bottom"> -->
+      <view style="position: fixed; bottom:2vh;  width: 100%;" bindtap="closePopup">
+        <bgBtn title="完成" bgColor="#3D4262" width="246" height="34"></bgBtn>
+      </view>
+      <!-- </view> -->
     </view>
   </van-popup>
 </view>

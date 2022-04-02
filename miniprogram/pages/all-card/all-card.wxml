@@ -3,7 +3,6 @@
   <navigationBar type="leftBar" title="{{title}}" bgColor="transparent"></navigationBar>
   <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
     <header title="当前共有" bgColor="transparent" paddingBottom="4"></header>
-
     <van-dropdown-menu overlay="{{showDropdownOverlay}}" active-color="#4C34F0">
       <van-dropdown-item title="{{dataRange==null?'选择日期':dataRange}}" bind:open="onOpenCalendar" id="calendar-dropdown-item">
         <van-calendar id="calendar" type="range" title="选择日期" show="{{ showCalendarValue }}" round bind:close="onCloseCalendar" bind:confirm="onConfirmCalendar" position="bottom" allow-same-day color="#4c34f0" min-date="{{minDate}}" max-date="{{ maxDate }}">
@@ -25,8 +24,6 @@
     </block>
 
     <van-empty description="当前筛选条件下没有卡片" wx:if="{{todayCards.length==0}}" />
-
-
     <view class="placeholder"></view>
     <!-- <bgBtn title="点此添加卡片" width="112" textColor="#86909C"></bgBtn> -->
   </scroll-view>

@@ -76,7 +76,6 @@ function isVip() {
   // 发http呢，还是用本地的呢？
   const role = wx.getStorageSync('role')
   const now = new Date().getTime();
-
   return role != '' && role.role == 'vip' && role.expire > now
 }
 /**

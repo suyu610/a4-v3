@@ -7,7 +7,37 @@
   position: absolute;
   height: 100%;
 }
+.card-swiper {
+  height: 98vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.swiper-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scaleY(0.9);
+  transition: all 0.3s ease-in 0s;
+  width: 95vw;
+  box-sizing: border-box;
+  padding-left: 5vw !important;
+  padding-right: 5vw !important;
+} 
+
+swiper-item.cardCur .swiper-item {
+  /* transform: none !important; */
+  transition: all 0.3s ease-in 0s;
+  padding-left: 5vw !important;
+  padding-right: 5vw !important;
+  /* width: 90vw !important; */
+  margin: 0 auto;
+  transform: scaleY(1)!important;
+
+  /* margin: 0 auto; */
+}
 
 .movable-btn {
   z-index: 9;
@@ -25,5 +55,4 @@
   padding: 12px 0px 28px 0px;
   width: 112.32px;
   height: 28px;
-  }
-
+}

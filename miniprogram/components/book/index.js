@@ -4,18 +4,14 @@ Component({
   properties: {
     bookName: String,
     totalCount: Number,
-  },
-
-  data: {
-    randomIndex: 1
-  },
-  lifetimes: {
-    ready() {
-      this.setData({
-        randomIndex: Math.round(Math.random() * 4 + 1)
-      })
+    bookColumnId: {
+      type: Number, 
+      value: 1
     }
   },
+
+  data: {},
+  lifetimes: {},
 
   methods: {
 

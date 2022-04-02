@@ -3,106 +3,133 @@ const config = {
 
   // 域名前缀 
   api_base_url: 'https://beta.opentext.press/v1',
-  // api_base_url: 'http://localhost:6110/v1', 
-  // api_base_url: 'http://192.168.1.108:6110/v1', 
+  // api_base_url: 'http://localhost:6110/v2', 
+  // api_base_url: 'http://192.168.43.29:6110/v2',
+  // api_base_url: 'http://10.195.247.202:6110/v2',
 
-  // 词书信息            
+  // 词书信息             
   dictInfo: {
     "0101": {
       name: "人教版一年级上",
-      totalWordNum: 53
+      totalWordNum: 53,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0201": {
       name: "初中英语词汇",
-      totalWordNum: 1849
+      totalWordNum: 1849,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0202": {
       name: "中考核心词汇",
-      totalWordNum: 2140
+      totalWordNum: 2140,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0203": {
       name: "中考英语词汇",
-      totalWordNum: 2559
+      totalWordNum: 2559,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0301": {
       name: "高中英语词汇",
-      totalWordNum: 3786
+      totalWordNum: 3786,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0302": {
       name: "高考大纲词汇",
-      totalWordNum: 3635
+      totalWordNum: 3635,    
+      desc: "完整收录四级大纲词汇，高级备考之选",
+      isHot: true
     },
     "0303": {
       name: "高考英语词汇",
-      totalWordNum: 4077
+      totalWordNum: 4077,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0401": {
       name: "四级核心词汇",
-      totalWordNum: 5193
+      totalWordNum: 5193,
+      isHot: true,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0402": {
       name: "四级大纲词汇",
-      totalWordNum: 6298
+      totalWordNum: 6298,
+      desc: "完整收录四级大纲词汇，高级备考之选"
+
     },
     "0403": {
       name: "六级核心词汇",
-      totalWordNum: 5328
+      totalWordNum: 5328,
+      isHot: true,
+      desc: "完整收录四级大纲词汇，高级备考之选完整收录四级大纲词汇，高级备考之选完整收录四级大纲词汇，高级备考之选完整收录四级大纲词汇，高级备考之选完整收录四级大纲词汇，高级备考之选"
     },
     "0404": {
       name: "六级大纲词汇",
-      totalWordNum: 8013
+      totalWordNum: 8013,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0405": {
       name: "专四词汇",
-      totalWordNum: 4875
+      totalWordNum: 4875,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0406": {
       name: "专八词汇",
-      totalWordNum: 5829
+      totalWordNum: 5829,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0407": {
       name: "专升本词汇",
-      totalWordNum: 3218
+      totalWordNum: 3218,
+      isHot: true,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0501": {
       name: "考研核心词汇",
-      totalWordNum: 2015
+      totalWordNum: 2015,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0502": {
       name: "考研大纲词汇",
-      totalWordNum: 5617
+      totalWordNum: 5617,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0503": {
       name: "考研英语词汇",
-      totalWordNum: 6088
+      totalWordNum: 6088,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0601": {
       name: "托福核心词汇",
-      totalWordNum: 4264
+      totalWordNum: 4264,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0602": {
       name: "托福词汇",
-      totalWordNum: 5224
+      totalWordNum: 5224,
+      isHot: true,
+
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0603": {
       name: "雅思核心词汇",
-      totalWordNum: 3838
+      totalWordNum: 3838,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0604": {
       name: "雅思词汇",
-      totalWordNum: 5470
+      totalWordNum: 5470,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0605": {
       name: "GRE核心词汇",
-      totalWordNum: 2968
+      totalWordNum: 2968,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     },
     "0606": {
       name: "GRE词汇",
-      totalWordNum: 6513
-    },
-    "1001": {
-      name: "测试自定义词书",
-      totalWordNum: 1
+      totalWordNum: 6513,
+      desc: "完整收录四级大纲词汇，高级备考之选"
     }
   },
 
@@ -127,40 +154,3 @@ const config = {
 }
 
 export default config
-
-
-// index.js init()
-// let senInfo = await resource.getSenInfobyDate(app.globalData.todayDate)
-// console.log(senInfo)
-
-// let userInfo = await user.getUserInfo()
-// let userWordCardToday = await user.getUserWordCardByDate(app.globalData.todayDate)
-
-// // Check: 用户点赞记录是否更新到今天
-// if (userInfo.likeTodaySenInfo.date == app.globalData.todayDate) {
-//   this.setData({
-//     // senInfo,
-//     userInfo,
-//     loading: false,
-//     userWordCardToday,
-//   })
-// } else {
-//   // 本地UPDATE: userInfo.LikeTodaySenInfo
-//   userInfo.likeTodaySenInfo = {
-//     date: app.globalData.todayDate,
-//     status: false
-//   }
-
-//   this.setData({
-//     // senInfo,
-//     userInfo,
-//     loading: false,
-//     userWordCardToday,
-//   })
-
-//   // 云端UPDATE: userInfo.LikeTodaySenInfo
-//   await user.updateUserInfo('likeTodaySenInfo', {
-//     date: app.globalData.todayDate,
-//     status: false
-//   })
-// }

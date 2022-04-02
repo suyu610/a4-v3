@@ -1,0 +1,69 @@
+.popover-view {
+  position: absolute;
+  background-color: #332feb;
+  color: white;
+  box-shadow: 0px 0px 20px 1px #332feb40;
+  border-radius: 15rpx;
+  padding: 0 9px;
+  box-sizing: border-box;
+  z-index: 999;
+}
+
+@keyframes myfirst {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(0px, -5px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+/* 实现三角形 */
+.popover-view::before {
+  position: absolute;
+  display: inline-block;
+  width: 0;
+  height: 0px;
+  content: "";
+  border-style: solid;
+  border-width: 6px;
+  border-color: #332feb #332feb transparent transparent;
+  box-shadow: 0px 0px 20px 1px #332feb40;
+}
+
+/* 实现×*/
+/* .popover-view::after {
+  content:'x';
+  position: absolute;
+  display: inline-block;
+  width: 0;
+  height: 0px;
+  top: 16px;
+  right: 11px;
+  color: #ffffff;
+} */
+/* 上 */
+.popover-view.top::before {
+  bottom: -6px;
+  transform: rotate(135deg);
+}
+/* 下 */
+.popover-view.bottom::before {
+  top: -6px;
+  transform: rotate(-45deg);
+}
+/* 左 */
+.popover-view.left::before {
+  right: 20px;
+}
+/* 中 */
+.popover-view.center::before {
+  left: 47px;
+}
+/* 右 */
+.popover-view.right::before {
+  left: 20px;
+}

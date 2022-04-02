@@ -49,11 +49,14 @@ Component({
     editSelfShortDef: ''
   },
 
+  lifetimes: {
+    ready: function () {}
+  },
   pageLifetimes: {
     show: function () {
       this.setData({
         showNoEver: app.globalData.showNoEver,
-        voiceType: app.globalData.voiceType
+        voiceType: app.globalData.voiceType,
       })
     },
   },
@@ -87,6 +90,25 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    showTips: function (e) {
+      this.popover = this.selectComponent('#popover')
+      // 获取按钮元素的坐标信息
+      var id = e.target.id // 或者  获取点击元素的 ID 值
+      wx.createSelectorQuery().in(this).select('#' + id).boundingClientRect(res => {
+        console.log(res)
+        // 调用自定义组件 popover 中的 onDisplay 方法z
+        this.popover.onDisplay(res);
+      }).exec();
+    },
+
+    showWordGroupPopup: function () {
+      if (this.data.wordContent.mark) {
+        this.removeWord()
+      } else {
+        this.triggerEvent("showWordGroupPopup", {})
+      }
+    },
+
     toggleEditMode: function () {
       this.setData({
         editMode: !this.data.editMode

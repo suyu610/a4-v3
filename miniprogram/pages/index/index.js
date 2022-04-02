@@ -25,13 +25,9 @@ const cardApi = new Card()
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-    // planTimeColumn: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+    showWordGroupPopupValue: false,
     randomCard: {
-
       "cardId": 976842,
       "date": null,
       "dictCode": "0201",
@@ -81,7 +77,8 @@ Page({
         }
       ]
     },
-    planTimeColumn: ["10", "15", "20", "30 (当前)", "40", "50", "60", "70", "80", "90", "100", "150", "200"],
+
+    planTimeColumn: ["10", "15", "20", "30 (当前)", "40", "50", "60", "70", "80", "90", "100", "150", "200", "300", "400", "500"],
     showPlanTimeColumnValue: false,
     showGuide: false,
     appearDict: {},
@@ -96,16 +93,33 @@ Page({
       },
     ],
     loading: true,
-    senInfo: {},
     userInfo: {},
     todayCards: [],
     checkedCardArr: [],
-    latestCardId: "",
     searchWordInputValue: "",
-    showDictPopup: false,
-    dictNoFooterMode: false,
+    showDictPopup: false
   },
-
+  showWordGroupPopup() {
+    this.setData({
+      showWordGroupPopupValue: true
+    })
+  },
+  jump2BookList: function () {
+    router.push({
+      "name": "wordlist"
+    })
+  },
+  showTips: function (e) {
+    if (this.popover == null) {
+      this.popover = this.selectComponent("#popover")
+    }
+    // 获取按钮元素的坐标信息
+    var id = e.target.id // 获取点击元素的 ID 值
+    wx.createSelectorQuery().in(this).select('#' + id).boundingClientRect(res => {
+      // 调用自定义组件 popover 中的 onDisplay 方法
+      this.popover.onDisplay(res);
+    }).exec();
+  },
   onOpenPlanTimeColumn() {
     this.setData({
       showPlanTimeColumnValue: true
@@ -454,6 +468,7 @@ Page({
    * @toMethod 
    */
   onShow() {
+
     let pages = getCurrentPages();
     let currPage = pages[pages.length - 1]; //当前页面
     let fromRoute = currPage.data.fromRoute
@@ -479,103 +494,31 @@ Page({
     resource.getInitData().then(e => {
       app.globalData.progressList = e.progressList
       app.globalData.currentDicCode = e.currentDicCode
-      app.globalData.senInfo = e.sentence
-      app.globalData.todayCards = e.todayCards.list
       app.globalData.setting = e.setting
-      app.globalData.deletedCardCount = e.deletedCardCount
-      app.globalData.markWordCount = e.markWordCount
+
       that.setData({
-        senInfo: e.sentence,
         loading: false,
         progressList: e.progressList,
         currentDicCode: e.currentDicCode,
-        currentPageIndex: e.todayCards.pageNum,
-        totalCardNum: e.todayCards.total,
-        todayCards: e.todayCards.list,
-        hasNextPage: e.todayCards.hasNextPage
       })
     })
     app.globalData.needRefreshTodayCard = false
   },
 
 
-  getMoreTodayDate: function (indexPage) {
-    let that = this
-    cardApi.genTodayCard(indexPage).then(e => {
-      wx.hideNavigationBarLoading()
-      that.setData({
-        currentPageIndex: e.pageNum,
-        totalCardNum: e.total,
-        todayCards: that.data.todayCards.concat(e.list),
-        hasNextPage: e.hasNextPage
-      })
-    })
-  },
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    if (this.data.hasNextPage) {
-      this.setData({
-        hasNextPage: false
-      })
-      wx.showNavigationBarLoading()
-      // console.log("has Next Page")
-      let indexPage = this.data.currentPageIndex + 1
-      this.getMoreTodayDate(indexPage)
-    }
-  },
-
-  refreshCard: function (e) {
-    let that = this
-    let deletedWordName = e.detail.word
-    let cardId = e.currentTarget.dataset.cardid
-    // 调用子组件
-    let id = '#card_' + cardId
-    this.selectComponent(id).deleteCardWord(deletedWordName)
-    this.setData({
-      showDictPopup: false,
-    })
-
-
-  },
-
-  replaceWord: function (e) {
-    let that = this
-    let oldWord = e.detail.word
-    let newWord = e.detail.newWord
-    let cardId = e.currentTarget.dataset.cardid
-    // 调用子组件
-    let id = '#card_' + cardId
-    this.selectComponent(id).replaceCardWord(oldWord, newWord)
-    this.setData({
-      showDictPopup: false,
-    })
-
-  },
   onShareAppMessage: function (options) {
     var that = this;
     // 设置菜单中的转发按钮触发转发事件时的转发内容
     var shareObj = {
       title: "来体验A4纸背单词的方法吧", // 默认是小程序的名称(可以写slogan等)
-      imageUrl: '../../images/share.png', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      imageUrl: 'https://cdns.qdu.life/a4/images/share.png', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
-        // 转发成功之后的回调
         if (res.errMsg == 'shareAppMessage:ok') {}
-      },
-      fail: function () {
-        // 转发失败之后的回调
-        if (res.errMsg == 'shareAppMessage:fail cancel') {
-          // 用户取消转发
-        } else if (res.errMsg == 'shareAppMessage:fail') {
-          // 转发失败，其中 detail message 为详细失败信息
-        }
-      },
+      }
     }
     // 返回shareObj
     return shareObj;
   },
-  //用户点击右上角分享朋友圈
   onShareTimeline: function () {
     return {
       title: '来体验A4纸背单词的方法吧',
@@ -597,23 +540,48 @@ Page({
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
       scrollViewHeight: app.globalData.scrollViewHeight,
-      senInfo: e.sentence,
       loading: false,
       progressList: e.progressList,
       currentDicCode: e.currentDicCode,
-      currentPageIndex: e.todayCards.pageNum,
-      totalCardNum: e.todayCards.total,
-      todayCards: e.todayCards.list,
-      hasNextPage: e.todayCards.hasNextPage,
       windowWidth: app.globalData.windowWidth
     })
 
     app.globalData.needRefreshTodayCard = false
   },
+  setBackgroudImage() {
+    this.setData({
+      alarmOverlay: true
+    })
+  },
+  openAlarm() {
+    wx.getSetting({
+      withSubscriptions: true,
+      success(res) {
+        console.log(res.subscriptionsSetting)
+      }
+    })
+    let that = this
+    this.setBackgroudImage()
+    wx.requestSubscribeMessage({
+      tmplIds: ['HjD6Lq6HwmjuG7fCBKZ96sUEzmvAnl39bu3gS1rHbXU'],
+      success(res) {
+        console.log(res)
+        that.setData({
+          alarmOverlay: false
+        })
+      },
+      fail(res) {
+        console.log(res)
+      }
+    })
+  },
+
   showRandomCard: function () {
     this.setData({
       showRandomCardValue: true
     })
+    // this.
+    // this.popover.onHide()
   },
 
   onCloseRandomCard: function () {
@@ -642,14 +610,11 @@ Page({
     }
   },
 
-
   onTapMenu: function () {
     this.setData({
       drawerInfo: "transform:translateX(316px)"
     })
   },
-
-
 
   /**
    * 跳转到练习页
@@ -703,29 +668,6 @@ Page({
     var obj = JSON.stringify(this.data.checkedCardArr)
     wx.navigateTo({
       url: '../spell/spell?checkedCardArr=' + obj + '&pMode=' + pMode,
-    })
-  },
-
-  selectAll() {
-    let allSelectMode = this.data.allSelectMode
-
-    let checkedCardArr = []
-    if (!allSelectMode) {
-      let todayCards = this.data.todayCards
-      if (todayCards.length >= 20) {
-        wx.showToast({
-          icon: 'none',
-          title: '最大数量为20张卡片',
-        })
-      }
-      todayCards.forEach(e => {
-        checkedCardArr.push(e)
-      })
-    }
-
-    this.setData({
-      checkedCardArr,
-      allSelectMode: !allSelectMode
     })
   },
 })

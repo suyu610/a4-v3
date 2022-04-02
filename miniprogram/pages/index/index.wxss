@@ -6,6 +6,7 @@ page {
 .wrapper {
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 .container {
   background-image: linear-gradient(#dde4f3 0%, rgba(253, 253, 253, 0) 100%);
@@ -83,7 +84,8 @@ page {
   font-weight: 400;
   font-size: 12px;
   text-align: center;
-  color: #c9cdd4;
+  color: #86909C;
+  /* text-decoration: underline; */
   width: 100%;
   position: absolute;
   bottom: 68rpx;
@@ -281,7 +283,9 @@ page {
 
 .main {
   position: absolute;
+  z-index: 9;
   width: 100%;
+  overflow: hidden;
 }
 
 .drawer {
@@ -327,6 +331,27 @@ page {
 .random-popup-container .title {
   font-weight: bold;
   padding: 20px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} 
+.footer_text {
+  width: 133px;
+  height: 16px;
+  padding-top: 18rpx;
 }
 
+
+@keyframes myfirst {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(5px, -5px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
 @import "index-wxa-auto-dark.wxss";

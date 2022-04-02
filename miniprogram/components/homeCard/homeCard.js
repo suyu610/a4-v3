@@ -14,11 +14,18 @@ Component({
 
   },
 
+  lifetimes: {
+    ready() {
+      this.popover = this.selectComponent('#popover');
+    }
+  },
   /**
    * 组件的方法列表
    */
   methods: {
+
     subBtnTapped() {
+      console.log("subBtnTapped")
       this.triggerEvent('subBtnTapped', {});
     },
 

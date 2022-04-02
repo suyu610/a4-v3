@@ -3,23 +3,33 @@
   font-size: 18px;
   text-align: center;
   color: #1d2129;
-  padding-top: 24px;
+  /* padding-top: 24px; */
   font-weight: bold;
+  width: 40vw;
 }
 
 .sub-title {
-  position: absolute;
-  right: 16px;
-  top: 24px;
   color: #878f9a;
   font-size: 13px;
-}
-
-.confirm-btn {
-  padding-top: 40px;
+  width: 24vw;
 }
 
 .right-icon {
   width: 16.5px;
   height: 16.5px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 20px;
+  width: 100vw;
+}
+
+.top {
+  display: flex;
+  width: 90vw;
+  padding-bottom: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
 }

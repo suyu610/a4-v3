@@ -101,7 +101,7 @@ App({
     this.globalData.windowHeight = sysInfo.windowHeight
     this.globalData.windowWidth = sysInfo.windowWidth
 
-    let scrollViewHeight = sysInfo.windowHeight - navigationBarHeight - 55
+    let scrollViewHeight = sysInfo.windowHeight - navigationBarHeight
     this.globalData.scrollViewHeight = scrollViewHeight
 
     let practiceViewHeight = sysInfo.windowHeight - navigationBarHeight
@@ -110,18 +110,11 @@ App({
 
   /**
    * 初始化函数，从服务器上拉取数据
-   * 
    * @param {}  无需参数
    * @setData {senInfo, userInfo, userWordCardToday}  更新数据
    */
   initServerData() {
-    let that = this
-
     // todo: 这里应该是从服务器上拿到的数据
-    this.globalData.cardIdMap = {
-      "a": 'b'
-    }
-
     this.globalData.loading = false
     this.globalData.wordCardArr = {}
     this.globalData.createDateCardMap = {}

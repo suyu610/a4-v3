@@ -18,11 +18,11 @@
   </view>
 </van-dialog>
 
-<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; max-width: 90vw;min-width: {{minWidth}}px;">
+<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; width: {{noFooter?'75vw':'85vw'}};">
   <van-loading color="#1989fa" vertical>加载中...</van-loading>
 </view>
 <!--  bind:touchmove="{{test.touchmove}}" -->
-<view wx:if="{{!loading}}" style="min-width: {{minWidth}}px;" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
+<view wx:if="{{!loading}}" style=" width: {{noFooter?'75vw':'85vw'}};" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
   <!-- header -->
   <view class=" header">
     <view class="header-up">
@@ -47,10 +47,11 @@
           <text class="phoneticSign-text" bindtap="speakWordFunc">/{{voiceType=='美'?wordContent.prsUs:wordContent.prsUk}}/</text>
         </view>
       </view>
-      <image wx:if="{{wordContent.mark}}" class="favor-img" src="./images/favor_fill.png" bindtap="removeWord"></image>
-      <image wx:else class="favor-img" src="./images/favor.png" bindtap="addWord"></image>
+      <image bindlongpress="showWordGroupPopup" wx:if="{{wordContent.mark}}" class="favor-img" src="./images/favor_fill.png" bindtap="removeWord" id="markImage"></image>
+      <image bindlongpress="showWordGroupPopup" wx:else class="favor-img" src="./images/favor.png" bindtap="addWord"></image>
     </view>
   </view>
+
 
   <!-- van-divider -->
   <van-divider hairline customStyle="padding-bottom:10px;" />
@@ -69,7 +70,7 @@
     <view class="defination-container" wx:if="{{wordContent.exampleArr.length!=0}}">
       <text class="title-text">英英释意</text>
       <view style="height:5px;"></view>
-      <scroll-view scroll-x class="def-block-container">
+      <scroll-view show-scrollbar="{{false}}" scroll-x class="def-block-container">
         <block wx:for="{{wordContent.definitionArr}}" wx:key="index">
           <view class="def-block {{index==defIndex?'def-block-chosen':''}}" bindtap="onTapDefBtn" data-index="{{index}}">
             <!--  词性 -->

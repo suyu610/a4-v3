@@ -1,6 +1,8 @@
 <!-- wordCard [Not Loading OR Empty] -->
 <view class="body">
-  <view wx:if="{{!ifEmpty}}" class="wordCard" style="box-shadow:{{isFolder?' 0 0.0625em 0.1875em 0 rgba(0, 0, 0, 0.1), 0 0.5em 0 -0.25em #f2f2f2, 0 0.5em 0.1875em -0.25em rgb(0 0 0 / 8%), 0 0 0 0 #e5e5e5eb, 0 1em 0.1875em -0.5em  rgb(0 0 0 / 0%)':''}} ">
+  <!-- <view wx:if="{{!ifEmpty}}" class="wordCard" style="box-shadow:{{isFolder?' 0 0.0625em 0.1875em 0 rgba(0, 0, 0, 0.1), 0 0.5em 0 -0.25em #f2f2f2, 0 0.5em 0.1875em -0.25em rgb(0 0 0 / 8%), 0 0 0 0 #e5e5e5eb, 0 1em 0.1875em -0.5em  rgb(0 0 0 / 0%)':''}} "> -->
+  <view wx:if="{{!ifEmpty}}" class="wordCard">
+
     <view class="header">
       <view class="header-left">
         <view class="left-top">
@@ -45,6 +47,6 @@
   </view>
 
   <!-- 卡片状态 -->
-  <van-action-sheet show="{{ showCardStatusValue }}" actions="{{ cardStatusActions }}" bind:close="onCloseCardStatus" bind:select="onSelectCardStatus" title="切换卡片状态">
+  <van-action-sheet cancel-text="取消" show="{{ showCardStatusValue }}" actions="{{ cardStatusActions }}" bind:cancel="onCloseCardStatus" bind:close="onCloseCardStatus" bind:select="onSelectCardStatus" description="切换卡片状态">
   </van-action-sheet>
 </view>

@@ -4,7 +4,7 @@
     <view class="left">
       <image mode="aspectFit" src="./images/title_1_1.png" class="title-img"></image>
     </view>
-    <view class="right" bindtap="subBtnTapped">
+    <view class="right">
       <bgBtn title="了解规则" textColor="#ABB9CD"></bgBtn>
     </view>
   </view>
@@ -12,46 +12,47 @@
     <view class="left">
       <view class="title">需复习</view>
       <text class="num">5</text>
-      <text>张卡片</text>
+      <image class="card_text" mode="widthFix" src="./images/card_text.png"></image>
     </view>
     <view class="right">
       <view class="title">已完成</view>
       <text class="num">5</text>
-      <text>张卡片</text>
+      <image class="card_text" mode="widthFix" src="./images/card_text.png"></image>
     </view>
   </view>
   <view class="divider"></view>
+
   <view class="footer flex">
     <view class="left">
       <image class="people" mode="heightFix" src="./images/people.png"></image>
       <text class="info">今日8人完成复习计划</text>
     </view>
     <view class="right" bindtap="mainBtnTapped">
-      <bgBtn title="开始学习" bgColor="#595EF1" textColor="#fff" width="82" height="28"></bgBtn>
+      <bgBtn title="开始复习" bgColor="#595EF1" textColor="#fff" width="82" height="24"></bgBtn>
     </view>
   </view>
 </view>
 
 
-<view class="container" wx:if="{{type=='study'}}">
+<view class="container" wx:if="{{type=='study'}}" >
   <view class="header">
     <view class="left">
       <image mode="aspectFit" src="./images/title_2_1.png" class="title-img"></image>
     </view>
-    <view class="right" bindtap="subBtnTapped">
-      <bgBtn title="修改计划" textColor="#ABB9CD"></bgBtn>
+    <view class="right">
+      <bgBtn title="修改计划" bindtap="subBtnTapped" textColor="#ABB9CD"></bgBtn>
     </view>
   </view>
-  <view class="main flex">
+  <view class="main flex" >
     <view class="left">
       <view class="title">需新学</view>
       <text class="num">5</text>
-      <text>张卡片</text>
+      <image class="card_text" mode="widthFix" src="./images/card_text.png"></image>
     </view>
     <view class="right">
       <view class="title">已完成</view>
-      <text class="num">5</text>
-      <text>张卡片</text>
+      <text class="num">5</text> 
+      <image class="card_text" mode="widthFix" src="./images/card_text.png"></image>
     </view>
   </view>
   <view class="divider"></view>
@@ -61,7 +62,7 @@
       <text class="info">今日8人完成新学计划</text>
     </view>
     <view class="right" bindtap="mainBtnTapped">
-      <bgBtn title="开始学习" bgColor="#FB8F45" textColor="#fff" width="82" height="28"></bgBtn>
+      <bgBtn title="开始学习" bgColor="#FB8F45" textColor="#fff" width="82" height="24"></bgBtn>
     </view>
   </view>
 </view>

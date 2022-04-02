@@ -36,16 +36,19 @@
     <view class="wrapper">
       <view class="block" catch:tap="noop">
         <view class="head">
-          <image class="icon" src="./images/icon.png"></image>
-          <view class="title">上传词书</view>
+          <image class="icon" src="./images/icon.png" style="opacity:{{(50+progressBarWidth)/100}}"></image>
+          <view class="title" wx:if="{{progressBarWidth<100}}">上传中</view>
+          <view class="title" wx:if="{{progressBarWidth>=100 && !uploadSuccess}}">解析单词中</view>
+          <view class="title" wx:if="{{progressBarWidth>=100 && uploadSuccess}}">上传成功</view>
         </view>
         <view class="progress">
           <view class="progress-bar">
             <view class="active" style="width:{{progressBarWidth+'%'}};"></view>
           </view>
-          <view class="tip" wx:if="{{progressBarWidth<100 }}">{{tips}}</view>
-          <view class="tip" wx:else>
-            成功上传了<text class="blue">{{uploadWordCount}}</text>个单词
+          <view class="tip" wx:if="{{progressBarWidth<100}}">上传中</view>
+          <view class="tip" wx:if="{{progressBarWidth>=100 && !uploadSuccess}}">正在解析单词</view>
+          <view class="tip" wx:if="{{progressBarWidth>=100 && uploadSuccess}}">
+            成功上传<text class="blue">{{uploadWordCount}}</text>个单词
           </view>
         </view>
         <view class="footer" bindtap="onClickHide">

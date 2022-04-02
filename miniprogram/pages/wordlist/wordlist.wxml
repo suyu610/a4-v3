@@ -5,21 +5,26 @@
   </van-sticky>
   <van-cell-group>
     <block wx:for="{{wordlistGroup}}" wx:key="id" wx:for-item="item">
-      <van-cell bindlongpress="openBottomSheet" bindtap="jump2WordlistDetail" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}单词" center clickable is-link>
+      <van-cell data-popoverOffsetY="-30" data-popoverOffsetX="0" id="group_{{item.id}}" bindlongpress="openBottomSheet" bindtap="jump2WordlistDetail" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}单词" center clickable is-link>
         <view slot="title">
           <view class="van-cell-text">{{item.name}}</view>
         </view>
       </van-cell>
     </block>
   </van-cell-group>
-
+  <popover id='popover' animation>
+    <!-- <view>hello</view> -->
+    <popover-item bindtap='onClickA'>长按修改分组</popover-item>
+    <!--  <popover-item hasline>子菜单B</popover-item>
+        <popover-item>子菜单C</popover-item> -->
+  </popover>
   <view class="btn-container" id="add-btn" bindtap="openFieldPupup">
     <shadowBtn title="新建单词本"></shadowBtn>
   </view>
 </view>
-<van-action-sheet description=" 「 {{curGroupName}} 」" cancel-text="取消" show="{{ showBottomSheetValue }}" actions="{{ bottomSheetActions }}" bind:cancel="closeBottomSheet" bind:close="closeBottomSheet" bind:select="selectBottomSheet" />
+<van-action-sheet description=" {{curGroupName}} " cancel-text="取消" show="{{ showBottomSheetValue }}" actions="{{ bottomSheetActions }}" bind:cancel="closeBottomSheet" bind:close="closeBottomSheet" bind:select="selectBottomSheet" />
 
-<van-popup round show="{{ showFieldPopupValue }}" custom-class="dictPopup" closeable position="center" bind:close="closeFieldPupup" lock-scroll="{{false}}" custom-style="height:35%;width:70vw">
+<!-- <van-popup round show="{{ showFieldPopupValue }}" custom-class="dictPopup" closeable position="center" bind:close="closeFieldPupup" lock-scroll="{{false}}" custom-style="height:35%;width:70vw">
   <view class="field-popup-container">
     <view class="title">{{editMode?'重命名':'新建单词本'}}</view>
     <van-cell-group>
@@ -29,4 +34,4 @@
       <shadowBtn class="shadow-btn" title='确认'></shadowBtn>
     </view>
   </view>
-</van-popup>
+</van-popup> -->

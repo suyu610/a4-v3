@@ -15,6 +15,22 @@ Component({
         id: 0,
         name: '我的收藏',
         count: 18
+      }, {
+        id: 4,
+        name: '我的收藏',
+        count: 18
+      }, {
+        id: 5,
+        name: '我的收藏',
+        count: 18
+      }, {
+        id: 6,
+        name: '我的收藏',
+        count: 18
+      }, {
+        id: 7,
+        name: '我的收藏',
+        count: 18
       },
       {
         id: 1,
@@ -42,6 +58,10 @@ Component({
       this.setData({
         curId: e.currentTarget.dataset.id
       })
+    },
+
+    jump2BookList() {
+      this.triggerEvent("jump2BookList")
     }
 
   }

@@ -9,8 +9,8 @@
     "van-switch": "@vant/weapp/switch/index",
     "van-field": "@vant/weapp/field/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
-    "wordlist-popup": "../../components/wordlist-popup"
-
-
+    "wordlist-popup": "../../components/wordlist-popup",
+    "popover": "../../components/popover/popover",
+    "popover-item": "../../components/popover/popover-item"
   }
 }

@@ -19,7 +19,7 @@
     <!-- <bgBtn title="点此添加卡片" width="112" textColor="#86909C"></bgBtn> -->
   </scroll-view>
   <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}">
-    <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}">
+    <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}" bindtap="onTapBottomBtn">
       <shadowBtn title="{{bottomBtnTitle}}"></shadowBtn>
     </view>
   </movable-view>

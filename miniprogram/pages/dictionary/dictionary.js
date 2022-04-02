@@ -1,6 +1,7 @@
 // pages/settings/settings.js
 const app = getApp()
 import config from '../../config.js'
+
 import {
   WordBook
 } from '../../models/wordbook.js'
@@ -16,142 +17,47 @@ Page({
     activeNames: '1',
     currentWordBookName: '',
     oldWordBookName: '',
+    bookList: [],
     bookColumns: [{
-      id: 0,
-      name: "热门",
-      bookList: [{
-        id: 1,
-        bookName: "考研核心词汇",
-        hasAdded: true,
-        isCurrent: true,
-        totalCount: 275,
-        addedPeopleCount: 123,
-        desc: "1111词书的介绍"
+        name: "热门",
+        code: "-1",
+        bookList: []
       }, {
-        id: 1,
-        bookName: "高考核心词汇",
-        hasAdded: false,
-        addedPeopleCount: 123,
-        totalCount: 275,
-        desc: "完整收录四级大纲词汇，高效备考之选。\r\n完整收录四级大纲词汇，高效备考之选。完整收录四级大纲词汇，高效备考之选。完整收录四级大纲词汇，高效备考之选。"
-      }, {
-        id: 1,
-        bookName: "中考核心词汇",
-        hasAdded: true,
-        totalCount: 3075,
-        desc: "33333词书的介绍"
-      }, ]
-    }, {
-      id: 1,
-      name: "考研",
-      bookList: [{
-        id: 1,
-        bookName: "考研核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "1111词书的介绍"
-      }, {
-        id: 1,
-        bookName: "高考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "22222词书的介绍"
-      }, {
-        id: 1,
-        bookName: "中考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "33333词书的介绍"
-      }, ]
-    }, {
-      id: 2,
-      name: "大学",
-      bookList: [{
-        id: 1,
-        bookName: "考研核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "1111词书的介绍"
-      }, {
-        id: 1,
-        bookName: "高考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "22222词书的介绍"
-      }, {
-        id: 1,
-        bookName: "中考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "33333词书的介绍"
-      }, ]
-    }, {
-      id: 3,
-      name: "出国",
-      bookList: [{
-        id: 1,
-        bookName: "考研核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "1111词书的介绍"
-      }, {
-        id: 1,
-        bookName: "高考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "22222词书的介绍"
-      }, {
-        id: 1,
-        bookName: "中考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "33333词书的介绍"
-      }, ]
-    }, {
-      id: 4,
-      name: "高中",
-      bookList: [{
-        id: 1,
-        bookName: "考研核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "1111词书的介绍"
-      }, {
-        id: 1,
-        bookName: "高考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "22222词书的介绍"
-      }, {
-        id: 1,
-        bookName: "中考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "33333词书的介绍"
-      }, ]
-    }, {
-      id: 5,
-      name: "初中",
-      bookList: [{
-        id: 1,
-        bookName: "考研核心词汇",
-        hasAdded: true,
-        totalCount: 275,
-        desc: "1111词书的介绍"
-      }, {
-        id: 1,
-        bookName: "高考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "22222词书的介绍"
-      }, {
-        id: 1,
-        bookName: "中考核心词汇",
-        hasAdded: false,
-        totalCount: 275,
-        desc: "33333词书的介绍"
-      }, ]
-    }]
+        name: "考研",
+        code: "05",
+        bookList: []
+
+      },
+      {
+        name: "大学",
+        code: "04",
+        bookList: []
+
+      },
+      {
+        name: "出国",
+        code: "06",
+        bookList: []
+
+      },
+      {
+        name: "高中",
+        code: "03",
+        bookList: []
+
+      },
+      {
+        name: "初中",
+        code: "02",
+        bookList: []
+      },
+      {
+        name: "小学",
+        code: "01",
+        bookList: []
+
+      }
+    ]
   },
 
   /**
@@ -187,17 +93,7 @@ Page({
       })
     }
   },
-  onChange(event) {
-    this.setData({
-      activeNames: event.detail,
-    });
-  },
 
-  onRadioChange(event) {
-    this.setData({
-      radio: event.detail,
-    })
-  },
 
   onClick(event) {
     const {
@@ -210,15 +106,26 @@ Page({
     });
   },
 
-  /**
-   * 路由到词典页面事件
-   * @param {}  无需参数
-   * @toMethod wx.navigateBack()  路由回上一页
-   */
-  onNaviBack: function () {
-    wx.navigateBack()
-  },
+  judgeBookType(book, key, progressList, currentDicCode) {
+    if (progressList[key]) {
+      book.hasAdded = true
+      // 判断是否学完
+      if (progressList[key] == book.totalWordNum) {
+        book.finished = true
+      } else {
+        book.finished = false
+      }
+      book.curStudyNum = progressList[key]
+    } else {
+      book.hasAdded = false
+    }
 
+    if (currentDicCode == key) {
+      book.isCurrent = true
+    } else {
+      book.isCurrent = false
+    }
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -229,14 +136,35 @@ Page({
       windowHeight: app.globalData.windowHeight,
       tabContainerHeight: app.globalData.windowHeight - app.globalData.navigationBarHeight - TabsLineHeight
     })
-    // if (app.globalData.currentDicCode != null && app.globalData.currentDicCode != '') {
-    //   activeNames = (parseInt(app.globalData.currentDicCode / 100)).toString()
-    // }
+    let dict = config.dictInfo
+    let bookColumns = this.data.bookColumns
+    let currentDicCode = app.globalData.currentDicCode
+    let progressList = app.globalData.progressList
+    let targetCount = app.globalData.targetCount
+    this.setData({
+      targetCount
+    })
+    for (const key in dict) {
+      if (Object.hasOwnProperty.call(dict, key)) {
+        const book = dict[key];
+        this.judgeBookType(book, key, progressList, currentDicCode)
+        const bookColumnId = key.substr(0, 2)
+        book.bookColumnId = bookColumnId
+        book.remainDay = book.totalWordNum / targetCount
+        if (book.isHot) {
+          bookColumns[0].bookList.push(book)
+        }
+        this.data.bookColumns.forEach(column => {
+          if (column.code == bookColumnId) {
+            column.bookList.push(book)
+          }
+        });
 
-    // this.setData({
-    //   radio: app.globalData.currentDicCode,
-    //   currentWordBookName: config.dictInfo[app.globalData.currentDicCode].name,
-    //   oldWordBookName: config.dictInfo[app.globalData.currentDicCode],
-    // })
+      }
+    }
+
+    this.setData({
+      bookColumns
+    })
   },
 })

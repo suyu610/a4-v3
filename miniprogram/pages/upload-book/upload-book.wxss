@@ -28,7 +28,6 @@ page{
   border: 1px solid #c9cdd4;
   box-sizing: border-box;
   border-radius: 4px;
-  font-family: "MiSans";
   font-style: normal;
   font-weight: 400;
   font-size: 10px;

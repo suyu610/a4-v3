@@ -2,6 +2,10 @@
 const app = getApp()
 const globalData = app.globalData
 import router from '../../router/index'
+import {
+  Resource
+} from '../../models/resource.js'
+const resource = new Resource()
 
 Page({
 
@@ -9,15 +13,41 @@ Page({
    * 页面的初始数据
    */
   data: {
+    cardCur: 0,
+    wordlist: ["hello", "abandon", "people", "world", "open"],
     title: "今日推荐复习",
     bottomBtnTitle: "开始学习",
     mode: "study", // study export listen
-
     checkedCardArr: [],
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
     open: false
   },
-
+  cardSwiper(e) {
+    let that = this
+    that.setData({
+      cardCur: e.detail.current
+    })
+  },
+  onTapBottomBtn() {
+    let wordlist = []
+    if (this.data.mode == 'export' || this.data.mode == "listen") {
+      let checkedCardArr = this.data.checkedCardArr
+      checkedCardArr.forEach(card => {
+        card.wordList.forEach(word => {
+          if (!word.isDeleted) {
+            wordlist.push(word.wordName)
+          }
+        });
+      });
+      console.log(wordlist)
+      router.push({
+        name: this.data.mode == 'export' ? "exportCardConfirm" : "listen",
+        data: {
+          wordlist
+        }
+      })
+    }
+  },
   toggleOpenStatus(e) {
     let cardId = e.currentTarget.dataset.item.cardId
     let todayCards = this.data.todayCards
@@ -30,6 +60,44 @@ Page({
       todayCards
     })
   },
+
+  onClickHideOverlay: function (e) {
+    if (e.currentTarget.dataset.class == "swiper-item") {
+      return
+    }
+    let that = this
+    // 更新数据
+    this.setData({
+      showOverlay: false,
+      showSearchBar: false,
+      showDictPopup: false
+    })
+  },
+  /**
+   * 点击单词事件
+   * 
+   * @param {}  无需参数
+   * @setData {showPopup}  显示搜索框
+   */
+  onWord: function (e) {
+    let cardId = e.detail.cardId
+    let dictCode = e.detail.dictCode
+    let that = this
+
+    resource.getWordInfo(e.detail.wordName).then(function (e) {
+      that.setData({
+        currentCardId: cardId,
+        currentDictCode: dictCode,
+        curWord: e,
+        showSearchBar: false,
+        showDictPopup: true,
+        searchWordInputValue: "",
+        showOverlay: false,
+        dictNoFooterMode: false
+      })
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -37,6 +105,17 @@ Page({
     let e = app.globalData.todayInitData
     let todayCards = app.globalData.needReviewCard.list
     const data = router.extract(options);
+    let nextWordList = []
+    let that = this
+    this.data.wordlist.forEach(word => {
+      resource.getWordInfo(word).then(function (ele) {
+        nextWordList.push(ele)
+        that.setData({
+          nextWordList,
+        })
+      })
+    });
+
 
     if (data != null && data.mode != null) {
       this.setData({

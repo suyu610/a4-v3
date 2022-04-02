@@ -59,11 +59,8 @@ Page({
       showTargetPopupValue: !this.data.showTargetPopupValue,
       tmpTargetCount: this.data.setting.targetCount
     })
-    this.getTabBar().setData({
-      show: !this.data.showTargetPopupValue
-    })
-  },
 
+  },
 
   jumpToDictChange() {
     wx.navigateTo({
@@ -138,7 +135,7 @@ Page({
     })
   },
 
-  jump2DelCard(){
+  jump2DelCard() {
     wx.navigateTo({
       url: '../deleted_card/deleted_card',
     })
@@ -148,7 +145,7 @@ Page({
     let that = this
     wx.showModal({
       title: "提示",
-      showCancel:false,
+      showCancel: false,
       content: "将微信设置为深色模式即可\r\n如有疑问可咨询客服",
       confirmColor: '#220aac',
       confirmText: '好的',
@@ -375,11 +372,5 @@ Page({
       }
     })
 
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 2
-      })
-    }
   },
 })

@@ -5,6 +5,9 @@
     "wordCard": "../../components/wordCard",
     "shadowBtn": "../../components/shadowBtn",
     "van-transition": "@vant/weapp/transition/index",
-    "bgBtn": "../../components/bgBtn"
+    "bgBtn": "../../components/bgBtn",
+    "v-wordDic": "../../components/wordDic",
+    "van-overlay": "@vant/weapp/overlay/index",
+    "van-popup": "@vant/weapp/popup/index"
   }
 }

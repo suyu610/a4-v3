@@ -31,7 +31,6 @@
 }
 
 .right-top .right-num {
-  font-family: "MiSans";
   font-weight: 600;
   font-size: 22px;
   text-align: center;
@@ -39,7 +38,6 @@
 }
 
 .right-top .right-top {
-  font-family: "MiSans";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
