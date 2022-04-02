@@ -1,6 +1,6 @@
-<!-- navigationBar -->
+<!-- navigation-bar -->
 <view class="container">
-  <v-navigationBar type="leftBar" title="官方词书" showBottomShadow="true" bind:naviBack="onNaviBack" bgColor="transparent"></v-navigationBar>
+  <v-navigation-bar type="leftBar" title="官方词书" showBottomShadow="true" bind:naviBack="onNaviBack" bgColor="transparent"></v-navigation-bar>
   <van-tabs active="{{ active }}" swipeable animated>
     <block wx:for="{{bookColumns}}" wx:key="id" wx:for-item="column">
       <van-tab title="{{column.name}}">

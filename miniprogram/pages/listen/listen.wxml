@@ -6,7 +6,7 @@
 
 </view>
 <view class="container" wx:else>
-  <navigationBar type="leftBar" title="随身听" bgColor="transparent"></navigationBar>
+  <navigation-bar type="leftBar" title="随身听" bgColor="transparent"></navigation-bar>
   <view class="top">
     <view bindtap="toggleClockSettingSheet" data-type="button" style="display: flex;justify-content: space-between;opacity: {{clockValue=='不自动关闭'?'.0':'.3'}};  align-items: center;">
       <van-icon name="clock-o" style="position:relative; top:-1px" />

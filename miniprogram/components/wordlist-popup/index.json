@@ -4,6 +4,6 @@
     "van-popup": "@vant/weapp/popup/index",
     "van-cell": "../../miniprogram_npm/@vant/weapp/cell/index",
     "van-cell-group": "../../miniprogram_npm/@vant/weapp/cell-group/index",
-    "bgBtn": "../bgBtn"
+    "bg-btn": "../bg-btn"
   }
 }

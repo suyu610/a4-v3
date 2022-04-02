@@ -9,14 +9,13 @@
     "pages/pay/pay",
     "pages/all-card/all-card",
     "pages/today-study/today-study",
-    "pages/wordlist/wordlist",
+    "pages/wordlist/wordlist", 
     "pages/wordlist/detail/detail",
     "pages/index/index",
     "pages/review/review",
-    "pages/practice/practice",
+    "pages/practice/practice",  
     "pages/spell/spell",
     "pages/settings/more_settings/more_settings",
-    "pages/deleted_card/deleted_card",
     "pages/today-review/today-review"
   ],
   "subpackages": [{
@@ -24,7 +23,7 @@
     "pages": [
       "pages/export-card-confirm/export-card-confirm",
       "pages/snapshot/snapshot"
-    ]
+    ] 
   }],
   "darkmode": true,
   "themeLocation": "theme.json",

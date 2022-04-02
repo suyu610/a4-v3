@@ -1,0 +1,77 @@
+/* components/home-card/home-card.wxss */
+@import "../../style/font.wxss";
+.container {
+  background-color: #fff;
+  padding: 34rpx;
+  margin: 16px;
+  border-radius: 24rpx;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.divider {
+  height: 1px;
+  padding-top: 36rpx;
+  border-bottom: 1px solid #f2f3f5;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header .left .title-img {
+  height: 44rpx;
+  width: 244rpx;
+} 
+.main {
+  padding-top: 44rpx;
+  padding-left: 4rpx;
+}
+.main .left,
+.main .right {
+  width: 45%;
+}
+
+.main .left {
+  padding-right: 10rpx;
+}
+
+.main .title {
+  color: #90919e;
+  padding-bottom: 28rpx;
+  font-size: 22rpx;
+}
+.card_text{
+  width: 72rpx;
+  height: 32rpx;
+}
+
+.main .num {
+  font-family: "SF Pro Display Num";
+  font-size: 48px;
+  line-height: 48px;
+  color: #303339;
+  margin-right: 14rpx;
+}
+
+.footer {
+  align-items: center;
+  padding-top: 30rpx;
+}
+
+.footer .people {
+  height: 14px;
+  width: 19px;
+}
+
+
+.footer .left .info {
+  padding-left: 20rpx;
+  color: #86909c;
+  font-size: 24rpx;
+}

@@ -1,9 +1,9 @@
 {
   "usingComponents": {
-    "v-navigationBar": "../../components/navigationBar",
+    "v-navigation-bar": "../../components/navigation-bar",
     "v-wordCard": "../../components/wordCard",
     "v-calendar": "../../components/calendar",
-    "v-wordDic": "../../components/wordDic",
+    "v-word-dic": "../../components/word-dic",
     "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index",
     "van-popup": "../../miniprogram_npm/@vant/weapp/popup/index",
     "van-tab": "../../miniprogram_npm/@vant/weapp/tab/index",

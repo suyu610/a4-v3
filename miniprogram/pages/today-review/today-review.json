@@ -1,12 +1,12 @@
 {
   "usingComponents": {
-    "navigationBar": "../../components/navigationBar",
+    "navigation-bar": "../../components/navigation-bar",
     "header": "../../components/header",
     "wordCard": "../../components/wordCard",
-    "shadowBtn": "../../components/shadowBtn",
+    "shadow-btn": "../../components/shadow-btn",
     "van-transition": "@vant/weapp/transition/index",
-    "bgBtn": "../../components/bgBtn",
-    "v-wordDic": "../../components/wordDic",
+    "bg-btn": "../../components/bg-btn",
+    "v-word-dic": "../../components/word-dic",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-popup": "@vant/weapp/popup/index"
   }

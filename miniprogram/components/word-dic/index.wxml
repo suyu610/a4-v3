@@ -1,0 +1,129 @@
+<wxs module="tools">
+  var N_Filter = function (text) {
+    if (text) {
+      console.log(text); var pattern = "\\\\n"; var target = "\n"; var reg = getRegExp(pattern, "g"); return text.replace(reg, target);
+    }
+  }
+  module.exports = { N_Filter: N_Filter } //暴露接口
+</wxs>
+
+<!-- word-dic -->
+<!-- todo: 提取dialog组件 -->
+<van-dialog id="van-dialog" confirm-button-color="#220aac" confirm-button-text="删除" use-slot use-title-slot custom-style="">
+  <text slot="title" style="font-weight: bold;font-size: 18px;">注意</text>
+  <view style="color: #949090;padding: 12px 0px 3px 0px;text-align: center;">删除单词暂不可恢复</view>
+  <view style="text-align: center;width: 50vw;margin:10px auto">
+    <van-checkbox value="{{ showNoEver }}" bind:change="onChangeShowNoEver" icon-size="16px" checked-color="#220aac" label-class="check-label">不再显示</van-checkbox>
+    <!-- <van-radio value="{{ showNoEver }}" bind:change="onChangeShowNoEver" name="1" icon-size="16px" checked-color="#220aac" label-class="radio-label">以后不再显示 </van-radio> -->
+  </view>
+</van-dialog>
+
+<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; width: {{noFooter?'75vw':'85vw'}};">
+  <van-loading color="#1989fa" vertical>加载中...</van-loading>
+</view>
+<!--  bind:touchmove="{{test.touchmove}}" -->
+<view wx:if="{{!loading}}" style=" width: {{noFooter?'75vw':'85vw'}};" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
+  <!-- header -->
+  <view class=" header">
+    <view class="header-up">
+      <view class="header-up-left">
+        <text class="selDefWordNameCh-text" bindtap="copyWordName">{{(wordContent.selfShortDef != null && wordContent.selfShortDef != '' )?wordContent.selfShortDef: wordContent.wordNameCh}}</text>
+        <view class="edit-container" bindtap="toggleEditMode">
+          <text class="edit-text">自定义编辑</text>
+          <image class="edit-img" src="./images/edit.png"></image>
+        </view>
+        <view class="edit-container edit-container-clear" wx:if="{{wordContent.selfShortDef != null && wordContent.selfShortDef != ''}}">
+          <text class="edit-text" bindtap="resetSelfDef">还原</text>
+        </view>
+      </view>
+      <!-- <text class="close-text" bindtap="closeDict">点此关闭</text> -->
+    </view>
+    <view class="header-down">
+      <view class="header-down-left">
+        <text class="wordName-text" bindtap="copyWordName">{{wordContent.wordName}}</text>
+        <view class="sound-container" wx:if="{{wordContent.prsUs!=null && wordContent.prsUs!=''}}">
+          <text class="voice-type-text" bindtap="changeVoiceType">[{{voiceType}}]</text>
+          <image class="sound-img" src="./images/sound.png" bindtap="speakWordFunc"></image>
+          <text class="phoneticSign-text" bindtap="speakWordFunc">/{{voiceType=='美'?wordContent.prsUs:wordContent.prsUk}}/</text>
+        </view>
+      </view>
+      <image bindlongpress="showWordGroupPopup" wx:if="{{wordContent.mark}}" class="favor-img" src="./images/favor_fill.png" bindtap="removeWord" id="markImage"></image>
+      <image bindlongpress="showWordGroupPopup" wx:else class="favor-img" src="./images/favor.png" bindtap="addWord"></image>
+    </view>
+  </view>
+
+
+  <!-- van-divider -->
+  <van-divider hairline customStyle="padding-bottom:10px;" />
+
+  <!-- main -->
+  <view class="main" wx:if="{{!editMode}}">
+    <!-- 简明释义 -->
+    <view class="shortDef-container" wx:if="{{wordContent.shortDef!=null && wordContent.shortDef!=''}}" style="padding-bottom: {{wordContent.exampleArr.length!=0 ? 12 : 0}}px;">
+      <text class="title-text">简明释意</text>
+      <view style="height:5px;"></view>
+      <text class="shortDef-text" decode>{{tools.N_Filter(wordContent.shortDef)}}</text>
+    </view>
+
+    <!-- 英英释义 -->
+    <!-- <view class="defination-container" wx:if="{{wordContent.definitionArr !=null && wordContent.definitionArr.length !=0}}"> -->
+    <view class="defination-container" wx:if="{{wordContent.exampleArr.length!=0}}">
+      <text class="title-text">英英释意</text>
+      <view style="height:5px;"></view>
+      <scroll-view show-scrollbar="{{false}}" scroll-x class="def-block-container">
+        <block wx:for="{{wordContent.definitionArr}}" wx:key="index">
+          <view class="def-block {{index==defIndex?'def-block-chosen':''}}" bindtap="onTapDefBtn" data-index="{{index}}">
+            <!--  词性 -->
+            <text class="{{index==defIndex?'def-block-chosen-text':'def-block-unChosen-text'}}">{{abbrDict[item.prs][1] +". "+ abbrDict[item.prs][0]}}</text>
+          </view>
+        </block>
+      </scroll-view>
+      <view class="defination-container-main">
+        <text class="defination-english">{{wordContent.definitionArr[defIndex].english}}</text>
+        <view style="height:3px;"></view>
+        <text class="defination-chinese">{{wordContent.definitionArr[defIndex].chinese}}</text>
+      </view>
+    </view>
+
+    <!-- 例句 -->
+    <view class="example-container" wx:if="{{wordContent.exampleArr.length!=0}}">
+      <text class="title-text">例句</text>
+      <!-- <block wx:for="{{wordContent.exampleArr}}" wx:key="index"> -->
+      <view style="height:5px;"></view>
+      <text class="example-english">{{wordContent.exampleArr[defIndex].english}}</text>
+      <view style="height:3px;"></view>
+      <text class="example-chinese">{{wordContent.exampleArr[defIndex].chinese}}</text>
+      <!-- </block> -->
+    </view>
+
+    <!-- 熟练度 -->
+    <!-- <view class="opacity-container">
+      <text class="title-text">熟练度</text>
+      <view style="height:10px;"></view>
+      <van-slider value="50" active-color="#6066EE" step="25"></van-slider>
+    </view> -->
+  </view>
+
+  <view class="edit-input" wx:else>
+    <van-field model:value="{{ editSelfShortDef }}" placeholder="请输入自定义释义" border />
+  </view>
+  <!-- footer -->
+  <view class="footer" wx:if="{{!noFooter && !editMode}}">
+    <view class="footer-right" bindtap="replaceWord">
+      <!-- confirmDelete -->
+      <text class="footer-right-text">换一个</text>
+    </view>
+    <!-- <view class="footer-right" bindtap="confirmWord">
+      <text class="footer-right-text">就这个</text>
+    </view> -->
+  </view>
+
+  <view class="footer" wx:if="{{editMode}}">
+    <view class="footer-left" bindtap="toggleEditMode">
+      <text class="footer-left-text">取消</text>
+    </view>
+    <view class="footer-right" bindtap="confirmEditSelfDef">
+      <text class="footer-right-text">修改</text>
+    </view>
+  </view>
+</view>

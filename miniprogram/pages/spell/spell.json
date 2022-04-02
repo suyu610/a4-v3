@@ -1,13 +1,13 @@
 {
   "usingComponents": {
-    "v-navigationBar": "../../components/navigationBar",
+    "v-navigation-bar": "../../components/navigation-bar",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-slider": "@vant/weapp/slider/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-switch": "@vant/weapp/switch/index",
-    "v-wordDic": "../../components/wordDic",
+    "v-word-dic": "../../components/word-dic",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "usKeyboard": "/components/wx-us-keyboard/index",

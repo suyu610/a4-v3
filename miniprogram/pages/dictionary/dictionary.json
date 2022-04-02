@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "v-navigationBar": "../../components/navigationBar",
+    "v-navigation-bar": "../../components/navigation-bar",
     "book-item": "../../components/dict-book-item",
     "van-cell": "../../miniprogram_npm/@vant/weapp/cell/index",
     "van-cell-group": "../../miniprogram_npm/@vant/weapp/cell-group/index",

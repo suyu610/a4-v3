@@ -673,7 +673,7 @@ Page({
       // 判断当前在哪个tabbar
       // 复习页
       cardApi.getNeedReviewCard(1).then(e => {
-        wx.hideNavigationBarLoading()
+        wx.hidenavigation-barLoading()
         wx.hideLoading()
         that.setData({
           reviewTotalCardNum: e.total,
@@ -687,7 +687,7 @@ Page({
     }
 
     if (app.globalData.needRefreshCalendarData && this.data.activeTabIndex == 1) {
-      wx.hideNavigationBarLoading()
+      wx.hidenavigation-barLoading()
       wx.hideLoading()
 
       // 日历页
@@ -710,7 +710,7 @@ Page({
   getMoreReviewCard: function (pageIndex) {
     let that = this
     cardApi.getNeedReviewCard(pageIndex).then(e => {
-      wx.hideNavigationBarLoading()
+      wx.hidenavigation-barLoading()
       wx.hideLoading()
       that.setData({
         reviewNextPageLoading: false,
@@ -724,7 +724,7 @@ Page({
 
   getMoreCalendarCard(pageIndex) {
     wx.hideLoading()
-    wx.hideNavigationBarLoading()
+    wx.hidenavigation-barLoading()
 
     let that = this
     let dateWordCardArr = []
@@ -756,14 +756,14 @@ Page({
     }
     // 如果是推荐复习页
     if (this.data.activeTabIndex == 0 && this.data.reviewHasNextPage) {
-      wx.showNavigationBarLoading()
+      wx.shownavigation-barLoading()
       this.setData({
         reviewNextPageLoading: true
       })
       this.getMoreReviewCard(this.data.currentReviewPageIndex + 1)
     } else {
       if (this.data.activeTabIndex == 1 && this.data.calendarHasNextPage) {
-        wx.showNavigationBarLoading()
+        wx.shownavigation-barLoading()
         this.setData({
           calendarNextPageLoading: true
         })

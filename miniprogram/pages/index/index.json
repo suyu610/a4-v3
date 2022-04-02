@@ -1,22 +1,22 @@
 {
   "usingComponents": {
-    "v-navigationBar": "../../components/navigationBar",
-    "v-progressCard": "../../components/progressCard",
+    "v-navigation-bar": "../../components/navigation-bar",
+    "v-progress-card": "../../components/progress-card",
     "v-wordCard": "../../components/wordCard",
-    "v-wordDic": "../../components/wordDic",
-    "v-homeCard": "../../components/homeCard/homeCard",
+    "v-word-dic": "../../components/word-dic",
+    "homecard": "../../components/home-card/home-card",
     "sidebar": "../../components/sidebar/sidebar",
-    "bgBtn": "../../components/bgBtn",
+    "bg-btn": "../../components/bg-btn",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-picker": "@vant/weapp/picker/index",
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-icon": "@vant/weapp/icon/index",
-    "shadowBtn": "../../components/shadowBtn",
+    "shadow-btn": "../../components/shadow-btn",
     "popover": "../../components/popover/popover",
     "popover-item": "../../components/popover/popover-item",
     "wordlistPopup": "../../components/wordlist-popup/index"
   },
-  "navigationBarTextStyle": "black"
+  "navigation-barTextStyle": "black"
 }

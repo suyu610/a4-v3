@@ -1,5 +1,5 @@
-<!-- navigationBar -->
-<v-navigationBar type="leftBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+<!-- navigation-bar -->
+<v-navigation-bar type="leftBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigation-bar>
 <scroll-view scroll-y class="container">
   <!-- settings-header -->
 

@@ -1,5 +1,5 @@
 <!--pages/calendar/calendar.wxml-->
-<navigationBar type="leftBar" title="学习日历" bgColor="transparent"></navigationBar>
+<navigation-bar type="leftBar" title="学习日历" bgColor="transparent"></navigation-bar>
 <view style="height: 20px;"></view>
 <calendar bind:changeMonth="changeMonth" bind:changeChosenDate="changeChosenDate" calendarData="{{calendarData}}"></calendar>
 
@@ -14,5 +14,5 @@
   </view>
 </view>
 <view class="share-btn">
-  <bgBtn title="截图分享" width="246" height="30" textColor="#fff" bgColor="#3D4262" bindtap="renderToCanvas"></bgBtn>
+  <bg-btn title="截图分享" width="246" height="30" textColor="#fff" bgColor="#3D4262" bindtap="renderToCanvas"></bg-btn>
 </view>

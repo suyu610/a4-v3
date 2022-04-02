@@ -1,5 +1,5 @@
 <view class="container">
-  <navigationBar type="leftBar" title="开通会员" bgColor="transparent"></navigationBar>
+  <navigation-bar type="leftBar" title="开通会员" bgColor="transparent"></navigation-bar>
   <!-- 金额列表 -->
   <view class="price-list">
     <view class="item" wx:for="{{prices}}" wx:key="item" data-item="{{item}}" bindtap="selectItem">

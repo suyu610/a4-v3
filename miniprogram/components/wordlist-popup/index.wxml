@@ -23,7 +23,7 @@
       <view style="height:6vh"></view>
       <!-- <view class="bottom"> -->
       <view style="position: fixed; bottom:2vh;  width: 100%;" bindtap="closePopup">
-        <bgBtn title="完成" bgColor="#3D4262" width="246" height="34"></bgBtn>
+        <bg-btn title="完成" bgColor="#3D4262" width="246" height="34"></bg-btn>
       </view>
       <!-- </view> -->
     </view>

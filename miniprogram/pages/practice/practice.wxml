@@ -1,7 +1,7 @@
 <van-toast id="van-toast" />
 
-<!-- navigationBar -->
-<v-navigationBar type="logoutBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+<!-- navigation-bar -->
+<v-navigation-bar type="logoutBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigation-bar>
 <wordlist-popup show="{{showWordListPopupValue}}"></wordlist-popup>
 
 <!-- container -->
@@ -116,5 +116,5 @@
 
 <!-- 词典，让他去调用自己的接口吧 -->
 <van-popup round show="{{ showDictValue }}" position="bottom" bind:close="toggleDict">
-  <v-wordDic noFooter="{{true}}" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
+  <v-word-dic noFooter="{{true}}" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
 </van-popup>

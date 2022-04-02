@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "v-navigationBar": "../../../components/navigationBar",
+    "v-navigation-bar": "../../../components/navigation-bar",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-collapse": "@vant/weapp/collapse/index",

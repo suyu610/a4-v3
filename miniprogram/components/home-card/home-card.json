@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "bg-btn": "../bg-btn"
+  }
+}

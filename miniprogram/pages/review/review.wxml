@@ -1,5 +1,5 @@
-<!-- navigationBar -->
-<v-navigationBar type="searchBar" bindtap="onSearch" showBottomShadow="{{showBottomShadow}}"></v-navigationBar>
+<!-- navigation-bar -->
+<v-navigation-bar type="searchBar" bindtap="onSearch" showBottomShadow="{{showBottomShadow}}"></v-navigation-bar>
 
 <!-- scroll-view -->
 <scroll-view scroll-y="true" style="height:{{scrollViewHeight}}px;" bindscroll="onScrollViewScroll" bindscrolltolower="onReachBottom" lower-threshold="300">
@@ -130,7 +130,7 @@
 
 <!-- van-popup -->
 <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="bottom" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
-  <v-wordDic class="v-worddic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
+  <v-word-dic class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
 </van-popup>
 
 <van-action-sheet cancel-text="取消" show="{{ showFilterSheetValue }}" actions="{{ actions }}" bind:cancel="onTapFilterBtn" bind:close="onTapFilterBtn" bind:select="onSelectFilterSheet" />

@@ -1,7 +1,7 @@
 <!--pages/upload-book/upload-book.wxml-->
 <view class="container">
   <van-sticky>
-    <v-navigationBar type="leftBar" title="自定义词书" bgColor="#E8EDF6" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+    <v-navigation-bar type="leftBar" title="自定义词书" bgColor="#E8EDF6" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigation-bar>
   </van-sticky>
 
   <scroll-view scroll-y scroll-x="{{false}}" class="tab-container" style="height:{{tabContainerHeight}}px">
@@ -60,6 +60,6 @@
 
 
   <view class="bottom" bindtap="chooseFile">
-    <bgBtn title="选择文件" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bgBtn>
+    <bg-btn title="选择文件" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bg-btn>
   </view>
 </view>

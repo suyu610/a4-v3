@@ -169,7 +169,7 @@ Component({
     },
 
     onChangeNotificationType() {
-      this.setData({
+      this.setData({ 
         notificationTypeIndex: ++this.data.notificationTypeIndex
       })
     },

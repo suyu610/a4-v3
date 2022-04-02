@@ -1,6 +1,6 @@
 <!--pages/new-word/index.wxml-->
 <movable-area class="container">
-  <navigationBar type="leftBar" title="{{title}}" bgColor="transparent"></navigationBar>
+  <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
   <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
     <header title="当前共有" bgColor="transparent" paddingBottom="4"></header>
     <van-dropdown-menu overlay="{{showDropdownOverlay}}" active-color="#4C34F0">
@@ -8,8 +8,8 @@
         <van-calendar id="calendar" type="range" title="选择日期" show="{{ showCalendarValue }}" round bind:close="onCloseCalendar" bind:confirm="onConfirmCalendar" position="bottom" allow-same-day color="#4c34f0" min-date="{{minDate}}" max-date="{{ maxDate }}">
           <!--  -->
           <view class="calendar-footer" slot="footer">
-            <bgBtn title="重置" bindtap="onResetCalender" bgColor="#FB8F45" textColor="#fff" width="82" height="28"></bgBtn>
-            <bgBtn title="确定" bindtap="callConfirmCalendar" bgColor="#4C34F0" textColor="#fff" width="164" height="28"></bgBtn>
+            <bg-btn title="重置" bindtap="onResetCalender" bgColor="#FB8F45" textColor="#fff" width="82" height="28"></bg-btn>
+            <bg-btn title="确定" bindtap="callConfirmCalendar" bgColor="#4C34F0" textColor="#fff" width="164" height="28"></bg-btn>
           </view>
         </van-calendar>
         <!-- </view> -->
@@ -25,11 +25,11 @@
 
     <van-empty description="当前筛选条件下没有卡片" wx:if="{{todayCards.length==0}}" />
     <view class="placeholder"></view>
-    <!-- <bgBtn title="点此添加卡片" width="112" textColor="#86909C"></bgBtn> -->
+    <!-- <bg-btn title="点此添加卡片" width="112" textColor="#86909C"></bg-btn> -->
   </scroll-view>
   <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}">
     <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}" bindtap="onTapBottomBtn">
-      <shadowBtn title="{{bottomBtnTitle}}"></shadowBtn>
+      <shadow-btn title="{{bottomBtnTitle}}"></shadow-btn>
     </view>
   </movable-view>
 </movable-area>

@@ -1,6 +1,6 @@
-<!-- navigationBar -->
-<!-- <v-navigationBar type="searchBar" showBottomShadow="true"></v-navigationBar> -->
-<navigationBar type="leftBar" title="设置页"></navigationBar>
+<!-- navigation-bar -->
+<!-- <v-navigation-bar type="searchBar" showBottomShadow="true"></v-navigation-bar> -->
+<navigation-bar type="leftBar" title="设置页"></navigation-bar>
 
 <scroll-view scroll-y class="container">
   <!-- settings-header -->

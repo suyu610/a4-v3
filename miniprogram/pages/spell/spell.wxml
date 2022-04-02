@@ -1,5 +1,5 @@
-<!-- navigationBar -->
-<v-navigationBar type="leftBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigationBar>
+<!-- navigation-bar -->
+<v-navigation-bar type="leftBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigation-bar>
 
 <!-- container -->
 <view class="container" style="height:{{practiceViewHeight}}px; " bindtap="hideKeyboard">
@@ -112,7 +112,7 @@
 
 <!-- 词典，让他去调用自己的接口吧 -->
 <van-popup round show="{{ showDictValue }}" position="bottom" bind:close="toggleDict">
-  <v-wordDic noFooter="{{true}}" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
+  <v-word-dic noFooter="{{true}}" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
 </van-popup>
 
 <!-- 系统键盘 -->

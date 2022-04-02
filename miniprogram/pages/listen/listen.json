@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "van-loading": "@vant/weapp/loading/index",
-    "navigationBar": "../../components/navigationBar",
+    "navigation-bar": "../../components/navigation-bar",
     "van-popup": "@vant/weapp/popup/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",

@@ -9,7 +9,7 @@
 
 <!--pages/wordlist/wordlist.wxml-->
 <van-sticky>
-  <v-navigationBar type="leftBar" title="{{groupName}}"></v-navigationBar>
+  <v-navigation-bar type="leftBar" title="{{groupName}}"></v-navigation-bar>
 </van-sticky>
 <van-empty description="未收藏单词哦" wx:if="{{wordList.length==0}}" />
 <scroll-view class="container" wx:else id="scroller" bind:scroll="onScroll" scroll-y style="height: {{scrollViewHeight}}px;">
@@ -96,14 +96,14 @@
   </van-cell-group>
   <!-- addBtn -->
   <view class="btn-container" id="add-btn" bindtap="onTapDeleteWordArr">
-    <shadowBtn wx:if="{{wordCheckedList.length!=0}}" title="{{editMode?'删除':'开始练习'}}"></shadowBtn>
+    <shadow-btn wx:if="{{wordCheckedList.length!=0}}" title="{{editMode?'删除':'开始练习'}}"></shadow-btn>
   </view>
 
 </scroll-view>
 
 <!-- van-popup -->
 <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
-  <v-wordDic class="v-worddic" loading="{{dictLoading}}" wordContent="{{curWordContent}}" noFooter="{{true}}" bind:closeDict="onClickHideOverlay" />
+  <v-word-dic class="v-word-dic" loading="{{dictLoading}}" wordContent="{{curWordContent}}" noFooter="{{true}}" bind:closeDict="onClickHideOverlay" />
 </van-popup>
 
 <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />

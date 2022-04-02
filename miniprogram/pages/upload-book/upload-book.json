@@ -1,7 +1,7 @@
 {
   "usingComponents": {
-    "v-navigationBar": "../../components/navigationBar",
-    "bgBtn": "../../components/bgBtn",
+    "v-navigation-bar": "../../components/navigation-bar",
+    "bg-btn": "../../components/bg-btn",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-progress": "@vant/weapp/progress/index",
     "book-item": "../../components/dict-book-item",

@@ -1,5 +1,5 @@
 <!--pages/snapshot/snapshot.wxml-->
-<navigationBar type="leftBar" title="截图分享" bgColor="transparent" color="white"></navigationBar>
+<navigation-bar type="leftBar" title="截图分享" bgColor="transparent" color="white"></navigation-bar>
 <painter palette="{{styleData}}" bind:imgOK="onImgOK" />
 <view wx:if="{{imgUrl==null}}" class="empty">
   <van-loading size=" 24px" vertical>生成中...</van-loading>

@@ -5,7 +5,7 @@
     "van-field": "@vant/weapp/field/index",
     "van-button": "@vant/weapp/button/index",
     "van-switch": "@vant/weapp/switch/index",
-    "navigationBar": "../../components/navigationBar",
+    "navigation-bar": "../../components/navigation-bar",
     "van-submit-bar": "@vant/weapp/submit-bar/index"
 
 

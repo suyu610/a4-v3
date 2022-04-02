@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "v-navigationBar": "../../../components/navigationBar",
+    "v-navigation-bar": "../../../components/navigation-bar",
     "van-cell": "../../../miniprogram_npm/@vant/weapp/cell/index",
     "van-cell-group": "../../../miniprogram_npm/@vant/weapp/cell-group/index",
     "van-collapse": "../../../miniprogram_npm/@vant/weapp/collapse/index",
@@ -8,8 +8,8 @@
     "van-radio": "../../../miniprogram_npm/@vant/weapp/radio/index",
     "van-radio-group": "../../../miniprogram_npm/@vant/weapp/radio-group/index",
     "van-overlay": "../../../miniprogram_npm/@vant/weapp/overlay/index",
-    "v-wordDic": "../../../components/wordDic",
-    "shadowBtn": "../../../components/shadowBtn",
+    "v-word-dic": "../../../components/word-dic",
+    "shadow-btn": "../../../components/shadow-btn",
     "van-sticky": "@vant/weapp/sticky/index",
     "van-empty": "@vant/weapp/empty/index",
     "van-stepper": "@vant/weapp/stepper/index",

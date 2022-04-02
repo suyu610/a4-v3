@@ -2,8 +2,8 @@
   "usingComponents": {
     "painter": "/components/painter/painter",
     "van-loading": "@vant/weapp/loading/index",
-    "navigationBar": "/components/navigationBar"
+    "navigation-bar": "/components/navigation-bar"
 
   },
-  "navigationBarTextStyle": "white"
+  "navigation-barTextStyle": "white"
 }

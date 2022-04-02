@@ -1,0 +1,12 @@
+/* components/bg-btn/bg-btn.wxss */
+
+.wrapper {
+  border-radius: 28px;
+  padding: 4.5px 7px;
+  border-radius: 50px;
+  text-align: center;
+  margin: 0 auto;
+}
+.title {
+  font-size: 11px;
+}

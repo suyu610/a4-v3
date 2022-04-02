@@ -1,14 +1,14 @@
 {
   "component": true,
   "usingComponents": {
-    "canlendar": "../sidebar_canlendar",
+    "canlendar": "../sidebar-canlendar",
     "sidebar-item": "../sidebar-item",
     "sidebar-title": "../sidebar-title",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
-    "bgBtn": "../bgBtn",
+    "bg-btn": "../bg-btn",
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "popover": "../popover/popover",
     "popover-item": "../popover/popover-item"

@@ -1,6 +1,6 @@
 <!--pages/new-word/index.wxml-->
 <movable-area class="container">
-  <navigationBar type="leftBar" title="{{title}}" bgColor="transparent"></navigationBar>
+  <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
   <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
     <block wx:for="{{todayCards}}" wx:key="cardId">
       <header title="02.14" cardNum="5" bgColor="transparent"></header>
@@ -18,11 +18,11 @@
     <!-- <view class="add-btn-wrapper">
       <image class="add-btn" src="./images/add-btn.png" mode="widthFix"></image>
     </view> -->
-    <!-- <bgBtn title="点此添加卡片" width="112" textColor="#86909C"></bgBtn> -->
+    <!-- <bg-btn title="点此添加卡片" width="112" textColor="#86909C"></bg-btn> -->
   </scroll-view>
   <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}">
     <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}" bindtap="onTapBottomBtn">
-      <shadowBtn title="{{bottomBtnTitle}}"></shadowBtn>
+      <shadow-btn title="{{bottomBtnTitle}}"></shadow-btn>
     </view>
   </movable-view>
 </movable-area>
@@ -34,7 +34,7 @@
       <swiper-item data-class="swiper-item" wx:if="{{nextWordList.length !=0}}" wx:for="{{nextWordList}}" wx:key="index" wx:for-item="item" class="swiper-item {{cardCur==index?'cardCur':'cardNotCur'}}">
         <view class="swiper-item" data-class="swiper-item" catchtap="onClickHideOverlay" data-class="swiper-item">
           <view class="hidden"></view>
-          <v-wordDic class="v-worddic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{false}}" wordContent="{{item}}" noFooter bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:confirmWord="confirmWord" bind:refreshCard="refreshCard" />
+          <v-word-dic class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{false}}" wordContent="{{item}}" noFooter bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:confirmWord="confirmWord" bind:refreshCard="refreshCard" />
           <view class="hidden"></view>
         </view>
       </swiper-item>

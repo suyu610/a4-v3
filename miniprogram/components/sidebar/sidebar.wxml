@@ -67,7 +67,7 @@
     <van-cell title="每日提醒的时间" bindtap="showTimePickerPopup" title-class="popup-container-title" value-class="popup-container-value" value="20:20" is-link></van-cell>
     <van-cell title="提醒的触发条件" title-class="popup-container-title" bindtap="onChangeNotificationType" value-class="popup-container-value" value="{{notificationType[notificationTypeIndex%3]}}" is-link></van-cell>
     <view class="popup-container-bottom" bindtap="onTapConfirmBtn"> 
-      <bgBtn title="完成设置" bgColor="#3D4262" width="246" height="34"></bgBtn>
+      <bg-btn title="完成设置" bgColor="#3D4262" width="246" height="34"></bg-btn>
     </view>
   </view>
 </van-popup>

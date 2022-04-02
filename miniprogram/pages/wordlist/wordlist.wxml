@@ -1,7 +1,7 @@
 <!--pages/wordlist/detail/detail.wxml-->
 <view class="container">
   <van-sticky>
-    <v-navigationBar type="leftBar" title="单词本" bind:naviBack="onNaviBack"></v-navigationBar>
+    <v-navigation-bar type="leftBar" title="单词本" bind:naviBack="onNaviBack"></v-navigation-bar>
   </van-sticky>
   <van-cell-group>
     <block wx:for="{{wordlistGroup}}" wx:key="id" wx:for-item="item">
@@ -19,7 +19,7 @@
         <popover-item>子菜单C</popover-item> -->
   </popover>
   <view class="btn-container" id="add-btn" bindtap="openFieldPupup">
-    <shadowBtn title="新建单词本"></shadowBtn>
+    <shadow-btn title="新建单词本"></shadow-btn>
   </view>
 </view>
 <van-action-sheet description=" {{curGroupName}} " cancel-text="取消" show="{{ showBottomSheetValue }}" actions="{{ bottomSheetActions }}" bind:cancel="closeBottomSheet" bind:close="closeBottomSheet" bind:select="selectBottomSheet" />
@@ -31,7 +31,7 @@
       <van-field cursor-spacing="70" value="{{  fieldValue }}" placeholder="{{ editMode ? curGroupName: '请输入分组名' }}" border bind:change="onChange" />
     </van-cell-group>
     <view class="btn">
-      <shadowBtn class="shadow-btn" title='确认'></shadowBtn>
+      <shadow-btn class="shadow-btn" title='确认'></shadow-btn>
     </view>
   </view>
 </van-popup> -->

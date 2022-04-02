@@ -48,7 +48,7 @@ page {
   z-index: 5;
 }
 
-.navigationbar .search-img {
+.navigation-bar .search-img {
   width: 16px;
   height: 16px;
   padding: 0 5px 0 15px;
