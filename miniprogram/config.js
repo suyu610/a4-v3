@@ -5,8 +5,8 @@ const config = {
   api_base_url: 'https://beta.opentext.press/v1',
   // api_base_url: 'http://localhost:6110/v2', 
   // api_base_url: 'http://192.168.43.29:6110/v2',
-  // api_base_url: 'http://10.195.247.202:6110/v2',
-
+  // api_base_url: 'http://10.195.247.202:6110/v2', 
+ 
   // 词书信息             
   dictInfo: {
     "0101": {

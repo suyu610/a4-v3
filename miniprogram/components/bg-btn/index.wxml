@@ -2,4 +2,5 @@
 <view class="wrapper" style="background-color: {{bgColor}};width:{{width}}px;height:{{height}}px;line-height: {{height}}px;margin-top:{{pt}}px">
   <image wx:if="{{icon_src!=null}}" src="{{icon_src}}"></image>
   <view class="title" style="color:{{textColor}}">{{title}}</view>
+  <button class="share-button" open-type="share" wx:if="{{share}}"></button>
 </view>

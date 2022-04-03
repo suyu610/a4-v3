@@ -505,12 +505,17 @@ Page({
     app.globalData.needRefreshTodayCard = false
   },
 
+  share() {
+    console.log("share")
+  },
 
   onShareAppMessage: function (options) {
+    console.log(options)
     var that = this;
     // 设置菜单中的转发按钮触发转发事件时的转发内容
     var shareObj = {
-      title: "来体验A4纸背单词的方法吧", // 默认是小程序的名称(可以写slogan等)
+      path: "pages/empty/empty?invite=" + app.globalData.userid,
+      title: options.from == 'button' ? "邀请你共同免费解锁会员权益" : "来体验A4纸背单词的方法吧", // 默认是小程序的名称(可以写slogan等)
       imageUrl: 'https://cdns.qdu.life/a4/images/share.png', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         if (res.errMsg == 'shareAppMessage:ok') {}
@@ -533,7 +538,6 @@ Page({
    */
   onLoad: function () {
     // this.init()
-    let e = app.globalData.todayInitData
     console.log("searchBarTop", app.globalData.searchBarTop)
     this.setData({
       navigationBarHeight: app.globalData.navigationBarHeight,
@@ -541,8 +545,8 @@ Page({
       searchBarHeight: app.globalData.searchBarHeight,
       scrollViewHeight: app.globalData.scrollViewHeight,
       loading: false,
-      progressList: e.progressList,
-      currentDicCode: e.currentDicCode,
+      progressList: app.globalData.progressList,
+      currentDicCode: app.globalData.currentDicCode,
       windowWidth: app.globalData.windowWidth
     })
 

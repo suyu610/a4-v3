@@ -1,5 +1,5 @@
 <view class="container">
-  <image class="img" mode="heightFix" src="./images/book_{{bookColumnId%5+1}}.png"></image>
+  <image class="img icon icon-book-{{bookColumnId%5+1}}" mode="heightFix" />
   <view class="title">{{bookName}}</view>
   <view class="count">{{totalCount}}词</view>
-</view> 
+</view>

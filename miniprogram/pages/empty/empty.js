@@ -1,5 +1,6 @@
 // pages/empty/empty.js
 let app = getApp()
+let gData = app.globalData
 import config from '../../config.js'
 
 import {
@@ -31,12 +32,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     try {
       var value = wx.getStorageSync('hasShowGuide')
       if (value) {
 
       } else {
-        app.globalData.showGuide = true
+        gData.showGuide = true
       }
     } catch (e) {
       console.log(e)
@@ -49,8 +51,8 @@ Page({
       var userInfo = wx.getStorageSync('userInfo')
 
       if (hasUserInfo && userInfo) {
-        app.globalData.hasUserInfo = hasUserInfo
-        app.globalData.userInfo = userInfo
+        gData.hasUserInfo = hasUserInfo
+        gData.userInfo = userInfo
       } else {
         console.log("not login")
       }
@@ -61,12 +63,11 @@ Page({
 
     resource.getInitData().then(e => {
       console.log(e)
-      app.globalData.progressList = e.progressList
-      app.globalData.currentDicCode = e.currentDicCode
-      app.globalData.setting = e.setting
-      app.globalData.todayInitData = e
-      app.globalData.briefCalendarList = e.briefCalendarList
-      app.globalData.role = e.role
+      gData.progressList = e.progressList || {}
+      gData.currentDicCode = e.currentDicCode
+      gData.setting = e.setting
+      gData.userAuthInfo = e.userAuthInfo
+      gData.userid = e.userid
       router.replace({
         name: 'index',
       });

@@ -1,5 +1,7 @@
 /* components/home-card/home-card.wxss */
 @import "../../style/font.wxss";
+@import "../../icon.wxss";
+
 .container {
   background-color: #fff;
   padding: 34rpx;
@@ -27,12 +29,14 @@
 .header .left .title-img {
   height: 44rpx;
   width: 244rpx;
-} 
+}
+
+
 .main {
-  padding-top: 44rpx;
+  padding-top: 44rpx; 
   padding-left: 4rpx;
 }
-.main .left,
+.main .left, 
 .main .right {
   width: 45%;
 }
@@ -46,10 +50,7 @@
   padding-bottom: 28rpx;
   font-size: 22rpx;
 }
-.card_text{
-  width: 72rpx;
-  height: 32rpx;
-}
+
 
 .main .num {
   font-family: "SF Pro Display Num";
@@ -68,7 +69,6 @@
   height: 14px;
   width: 19px;
 }
-
 
 .footer .left .info {
   padding-left: 20rpx;

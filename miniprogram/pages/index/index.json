@@ -18,5 +18,5 @@
     "popover-item": "../../components/popover/popover-item",
     "wordlistPopup": "../../components/wordlist-popup/index"
   },
-  "navigation-barTextStyle": "black"
+  "navigationBarTextStyle": "black"
 }

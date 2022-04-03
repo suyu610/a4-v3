@@ -64,16 +64,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setnavigationBarTitle({
-      title: '选择词书',
-    })
-  },
 
+  },
   confirmSwitchBook() {
     let bookCode = this.data.radio;
     if (bookCode != null) {
       wordbook.switchCurBook(bookCode).then(e => {
-        wx.showToast({
+        wx.showToast({  
           icon: 'none',
           title: '已切换至 \r\n《' + e.book.bookName + '》',
         })

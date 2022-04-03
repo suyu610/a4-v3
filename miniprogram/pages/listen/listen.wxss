@@ -1,8 +1,8 @@
 /* pages/export-confirm/export-confirm.wxss */
 @import "../../style/font.wxss";
-page {
-  /* --count-down-text-color: #5d46f16e; */
-}
+/* page {
+  --count-down-text-color: #5d46f16e;
+} */
 .container {
   transition: 0.2s;
   background-color: #f5f8fe;

@@ -104,7 +104,7 @@
   </view>
 
   <view class="drawer drawerA" data-drawerwidth="{{windowWidth}}">
-    <sidebar bind:openAlarm="openAlarm"></sidebar>
+    <sidebar bind:openAlarm="openAlarm" bind:share="share"></sidebar>
   </view>
 </view>
 

@@ -14,6 +14,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    showInvitePopupValue: false,
     notificationTypeIndex: 0,
     notificationType: ['当日有未完成的任务', '总是提醒', '关闭提醒'],
     isVip: false,
@@ -91,7 +92,21 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    onInviteFriendTapped() {
+      this.triggerEvent("share")
+    },
 
+    showInvitePopup() {
+      this.setData({
+        showInvitePopupValue: true
+      })
+    },
+
+    hideInvitePopup(){
+      this.setData({
+        showInvitePopupValue: false
+      })
+    },
     getUserProfile(e) {
       wx.showLoading({
         title: '登录中',
@@ -106,6 +121,7 @@ Component({
             hasUserInfo: true
           })
           console.log(res.userInfo)
+          // todo: 发送给服务端
           wx.setStorageSync('hasUserInfo', true)
           wx.setStorageSync('userInfo', res.userInfo)
         },
@@ -127,18 +143,12 @@ Component({
           showExportActionSheetValue: true,
           mode: "listen"
         })
-        // router.push({
-        //   "name": "listen"
-        // })
       }
 
       if (e.currentTarget.dataset.name == 'notification') {
         this.setData({
           showNotificationPopupValue: true
         })
-        // router.push({
-        //   "name": "listen"
-        // })
       }
 
     },
@@ -169,7 +179,7 @@ Component({
     },
 
     onChangeNotificationType() {
-      this.setData({ 
+      this.setData({
         notificationTypeIndex: ++this.data.notificationTypeIndex
       })
     },
@@ -232,25 +242,29 @@ Component({
         name: 'settings'
       })
     },
-    isVip() {
-      // 发http呢，还是用本地的呢？
-      const role = wx.getStorageSync('role')
-      const now = new Date().getTime();
-      return role != '' && role.role == 'vip' && role.expire > now
-    }
-  },
-  pageLifetimes: {
-    show() {
-      this.setData({
-        isVip: this.isVip()
-      })
-    }
   },
   lifetimes: {
     ready() {
-      this.setData({
-        isVip: this.isVip()
-      })
+      let isInviteMode = app.globalData.isInviteMode
+      console.log(isInviteMode)
+      let role = app.globalData.userAuthInfo.role
+      let unlockCount = app.globalData.userAuthInfo.unlockCount
+      let invitePopupTitleText = isInviteMode === 'undefined' ? "会员解锁邀请" : (role != "vip") ? "邀请好友" : "恭喜！你已成功解锁会员"
+      let invitePopupSubTitleText = "共同免费解锁会员权益"
+      let invitePopupBottomText = "分享给好友或群聊"
+
+      if (isInviteMode) {
+        invitePopupSubTitleText = "xxx邀请你共同免费解锁会员权益"
+      } else {
+        if (role == 'vip') {
+          if (unlockCount < 3) {
+            invitePopupSubTitleText = "你可以继续分享，帮助" + parseInt(3 - unlockCount) + "名好友解锁"
+          } else {
+            invitePopupSubTitleText = "你的解锁名额已经用完"
+          }
+        }
+      }
+
       // [ todo ] 兼容getUserInfo 和 profile
       var hasUserInfo = app.globalData.hasUserInfo
       var userInfo = app.globalData.userInfo
@@ -264,12 +278,13 @@ Component({
         console.log("not login")
       }
 
-
-
-      // wx.getStorageSync('hasUserInfo', true)
-
       this.setData({
-        searchBarTop: app.globalData.searchBarTop
+        searchBarTop: app.globalData.searchBarTop,
+        role,
+        unlockCount,
+        invitePopupSubTitleText,
+        invitePopupTitleText,
+        invitePopupBottomText
       })
     }
   }

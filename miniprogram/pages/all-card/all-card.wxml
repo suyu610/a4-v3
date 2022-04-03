@@ -6,13 +6,11 @@
     <van-dropdown-menu overlay="{{showDropdownOverlay}}" active-color="#4C34F0">
       <van-dropdown-item title="{{dataRange==null?'选择日期':dataRange}}" bind:open="onOpenCalendar" id="calendar-dropdown-item">
         <van-calendar id="calendar" type="range" title="选择日期" show="{{ showCalendarValue }}" round bind:close="onCloseCalendar" bind:confirm="onConfirmCalendar" position="bottom" allow-same-day color="#4c34f0" min-date="{{minDate}}" max-date="{{ maxDate }}">
-          <!--  -->
           <view class="calendar-footer" slot="footer">
             <bg-btn title="重置" bindtap="onResetCalender" bgColor="#FB8F45" textColor="#fff" width="82" height="28"></bg-btn>
             <bg-btn title="确定" bindtap="callConfirmCalendar" bgColor="#4C34F0" textColor="#fff" width="164" height="28"></bg-btn>
           </view>
-        </van-calendar>
-        <!-- </view> -->
+        </van-calendar> 
       </van-dropdown-item>
       <van-dropdown-item value="{{value2}}" options="{{ option2 }}" bind:open="{{openCalendar}}" />
       <van-dropdown-item value="{{ value3 }}" options="{{ option3 }}" />
