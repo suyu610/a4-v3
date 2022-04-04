@@ -6,8 +6,8 @@ const config = {
   // api_base_url: 'http://localhost:6110/v2', 
   // api_base_url: 'http://192.168.43.29:6110/v2',
   // api_base_url: 'http://10.195.247.202:6110/v2', 
- 
-  // 词书信息             
+
+  // 词书信息
   dictInfo: {
     "0101": {
       name: "人教版一年级上",
@@ -36,7 +36,7 @@ const config = {
     },
     "0302": {
       name: "高考大纲词汇",
-      totalWordNum: 3635,    
+      totalWordNum: 3635,
       desc: "完整收录四级大纲词汇，高级备考之选",
       isHot: true
     },

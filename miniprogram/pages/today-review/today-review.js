@@ -136,7 +136,7 @@ Page({
       senInfo: e.sentence,
       loading: false,
       progressList: e.progressList,
-      currentDicCode: e.currentDicCode,
+      currentBookCode: e.currentBookCode,
       currentPageIndex: e.todayCards.pageNum,
       totalCardNum: e.todayCards.total,
       hasNextPage: e.todayCards.hasNextPage,

@@ -84,7 +84,7 @@ page {
   font-weight: 400;
   font-size: 12px;
   text-align: center;
-  color: #86909C;
+  color: #86909c;
   /* text-decoration: underline; */
   width: 100%;
   position: absolute;
@@ -334,13 +334,12 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
-} 
+}
 .footer_text {
   width: 133px;
   height: 16px;
   padding-top: 18rpx;
 }
-
 
 @keyframes myfirst {
   0% {
@@ -353,5 +352,18 @@ page {
   100% {
     transform: translate(0px, 0px);
   }
+}
+
+.loading-container {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: table;
+  justify-content: center;
+}
+
+.loading-container .child {
+  display: table-cell;
+  vertical-align: middle;
 }
 @import "index-wxa-auto-dark.wxss";

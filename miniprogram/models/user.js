@@ -49,6 +49,26 @@ class User extends HTTP {
     })
   }
   /**
+   * 修改用户资料
+   */
+
+  modifyUserProfile(profile) {
+    return new Promise((resolve, reject) => {
+      this.request({ 
+        url: '/user/profile',
+        method: 'POST', 
+        data: profile
+      }).then(res => {
+        resolve(res)
+      }). 
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
+
+  /**
    * 修改用户设置
    */
 
@@ -57,11 +77,11 @@ class User extends HTTP {
       this.request({
         url: '/user/modifySetting',
         method: 'POST',
-        data: setting
+        data: setting 
       }).then(res => {
-        resolve(res)
-      }).
-      catch(function (e) {
+        resolve(res) 
+      }). 
+      catch(function (e) { 
         console.log(e)
         reject(e)
       })

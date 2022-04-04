@@ -8,6 +8,7 @@
     "bg-btn": "../../components/bg-btn",
     "v-word-dic": "../../components/word-dic",
     "van-overlay": "@vant/weapp/overlay/index",
-    "van-popup": "@vant/weapp/popup/index"
+    "van-popup": "@vant/weapp/popup/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index"
   }
 }

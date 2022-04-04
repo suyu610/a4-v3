@@ -2,7 +2,7 @@
 <view class="container" wx:if="{{type=='review'}}">
   <view class="header">
     <view class="left">
-      <image mode="aspectFit" class="title-img icon icon-title-img-1-1"></image>
+      <image mode="aspectFit" class="title-img icon" src="./images/title_1_1.png"></image>
     </view>
     <view class="right">
       <bg-btn title="了解规则" textColor="#ABB9CD"></bg-btn>
@@ -11,12 +11,12 @@
   <view class="main flex">
     <view class="left">
       <view class="title">需复习</view>
-      <text class="num">5</text>
+      <text class="num">{{todoCount}}</text>
       <image class="icon icon-card-text" mode="widthFix" />
     </view>
     <view class="right">
       <view class="title">已完成</view>
-      <text class="num">5</text>
+      <text class="num">{{doCount}}</text>
       <image class="icon icon-card-text" mode="widthFix" />
     </view>
   </view>
@@ -37,7 +37,7 @@
 <view class="container" wx:if="{{type=='study'}}">
   <view class="header">
     <view class="left">
-      <image mode="aspectFit" class="title-img icon icon-title-img-2-1"></image>
+      <image mode="aspectFit" class="title-img icon" src="./images/title_2_1.png"></image>
     </view>
     <view class="right">
       <bg-btn title="修改计划" bindtap="subBtnTapped" textColor="#ABB9CD"></bg-btn>
@@ -46,12 +46,12 @@
   <view class="main flex">
     <view class="left">
       <view class="title">需新学</view>
-      <text class="num">5</text>
+      <text class="num">{{todoCount}}</text>
       <image class="icon icon-card-text" mode="widthFix" />
     </view>
     <view class="right">
       <view class="title">已完成</view>
-      <text class="num">5</text>
+      <text class="num">{{doCount}}</text>
       <image class="icon icon-card-text" mode="widthFix"></image>
     </view>
   </view>

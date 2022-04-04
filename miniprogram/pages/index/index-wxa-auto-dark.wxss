@@ -1,5 +1,5 @@
 /* 
-此文件为开发者工具生成，生成时间: 2022/3/3 上午2:09:51
+此文件为开发者工具生成，生成时间: 2022/4/5 上午1:57:23
 使用方法：
 在 index.wxss 文件末尾引入样式
 ```
@@ -8,12 +8,47 @@
  */
 
 @media (prefers-color-scheme: dark) {
-  .search-keyboard {
-    background-color: rgb(90 90 90);
-  }
+    .container {
+        background-image: rgb(0, 0, 0);
+    }
 
-  .dictPopup {
-    background-color: rgba(0, 0, 0, 0) !important;
-  }
+    .searchBar-text {
+        color: rgb(95, 106, 119);
+    }
 
+    .container-footer {
+        color: rgb(100, 110, 121);
+    }
+
+    .search-keyboard {
+        background-color: rgb(17, 17, 17);
+    }
+
+    .dictPopup {
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+
+    .drawer {
+        color: rgb(178, 194, 219);
+        background: rgb(26, 29, 34);
+    }
+
+    .btn {
+        border: rgb(0, 0, 0);
+        color: rgb(69, 126, 153);
+    }
+
+    @keyframes myfirst {
+        0% {
+            transform: translate(0px, 0px);
+        }
+
+        50% {
+            transform: translate(5px, -5px);
+        }
+
+        100% {
+            transform: translate(0px, 0px);
+        }
+    }
 }

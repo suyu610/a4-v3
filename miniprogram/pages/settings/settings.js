@@ -291,7 +291,7 @@ Page({
       title: '重置中',
     })
 
-    userApi.resetDictProgress(app.globalData.currentDicCode).then(e => {
+    userApi.resetDictProgress(app.globalData.currentBookCode).then(e => {
       wx.hideLoading();
       wx.showToast({
         icon: 'none',
@@ -308,7 +308,6 @@ Page({
   onShow() {
     let that = this
     this.setData({
-      currentDictName: config.dictInfo[app.globalData.currentDicCode].name,
       setting: app.globalData.setting,
       deletedCardCount: app.globalData.deletedCardCount,
       markWordCount: app.globalData.markWordCount

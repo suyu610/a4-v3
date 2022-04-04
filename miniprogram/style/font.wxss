@@ -46,3 +46,5 @@
   font-style: italic;
   font-display: swap;
 }
+
+@import 'font-wxa-auto-dark.wxss'

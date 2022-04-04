@@ -18,7 +18,7 @@ Component({
     loading: Boolean,
     userInfo: Object,
     progressList: Object,
-    currentDicCode: String
+    currentBookCode: String
   },
 
   /**
@@ -32,11 +32,12 @@ Component({
    * 组件的生命周期
    */
   lifetimes: {
-    attached: function () {
-      // 在组件实例进入页面节点树时执行
+    ready: function () {
+      let currentBookCode = this.data.currentBookCode
       this.setData({
         dictInfo: config.dictInfo,
-        darkMode: app.globalData.theme == 'dark'
+        darkMode: app.globalData.theme == 'dark',
+        remainDay: currentBookCode != null && currentBookCode != '' ? parseInt(config.dictInfo[currentBookCode].totalWordNum / app.globalData.setting.targetCount) : 0
       })
     }
   },
@@ -45,12 +46,11 @@ Component({
    * 数据监听器
    */
   observers: {
-    'progressList,currentDicCode': function (progressList, currentDicCode) {
-      // 设置进度条宽度  
-      this.getProgressCurrentWidth(progressList, currentDicCode)
+    'progressList,currentBookCode': function (progressList, currentBookCode) {
       // 设置当前时间戳
       this.setData({
-        currentTimeStamp: app.globalData.currentTimeStamp
+        currentTimeStamp: app.globalData.currentTimeStamp,
+        remainDay: currentBookCode != null && currentBookCode != '' ? parseInt(config.dictInfo[currentBookCode].totalWordNum / app.globalData.setting.targetCount) : 0
       })
     }
   },
@@ -60,52 +60,11 @@ Component({
    */
   methods: {
     /**
-     * 计算当前progress-current的宽度（从而计算进度条的百分比）
-     * 
-     * @param {} 无需参数
-     * @setData {progressCurrentWidth} 进度条当前宽度
-     */
-    getProgressCurrentWidth: function (progressList, currentDicCode) {
-      if (app.globalData.progressList == null || app.globalData.progressList.length == 0 || this.data.currentDicCode == '') return
-      let num_1 = Math.min(this.data.progressList[this.data.currentDicCode], config.dictInfo[this.data.currentDicCode].totalWordNum)
-      let num_2 = config.dictInfo[this.data.currentDicCode].totalWordNum
-      // 计算.progress节点容器宽度 
-      this.setData({
-        progressCurrentWidth: parseInt(100 * (num_1 / num_2))
-      })
-    },
-
-    /**
-     * 计算当前progress-current的宽度（从而计算进度条的百分比）
-     * 
-     * @param {} 无需参数
-     * @setData {progressCurrentWidth} 进度条当前宽度
-     */
-    onLike: async function () {
-      // 本地UPDATE
-      let str_1 = `senInfo.ifLike`
-      let str_2 = `senInfo.likeNum`
-      this.setData({
-        [str_1]: !this.data.senInfo.ifLike,
-        [str_2]: !this.data.senInfo.ifLike ? this.data.senInfo.likeNum + 1 : this.data.senInfo.likeNum - 1,
-      })
-      app.globalData.senInfo = this.data.senInfo
-
-      // 云端UPDATE
-      sentence.toggleSentenceMarkStatus(app.globalData.todayDate, this.data.senInfo.ifLike)
-
-      // await resource.updateSenInfobyDate(app.globalData.todayDate, 'likeNum', this.data.senInfo.likeNum)
-      // await user.updateUserInfo('likeTodaySenInfo', {
-      //   date: app.globalData.todayDate,
-      //   status: likeTodaySenInfo.status
-      // })
-    },
-
-    /**
      * 向上传递事件
      */
     onNaviToDictionary: function () {
       this.triggerEvent('naviToDictionary', {}, {})
-    }
+    },
+
   }
 })

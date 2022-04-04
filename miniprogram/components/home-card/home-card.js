@@ -4,7 +4,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    type: String
+    type: String,
+    doCount: Number,
+    todoCount: Number
   },
 
   /**
@@ -23,7 +25,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
     subBtnTapped() {
       console.log("subBtnTapped")
       this.triggerEvent('subBtnTapped', {});

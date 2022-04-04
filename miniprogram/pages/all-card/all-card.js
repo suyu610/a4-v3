@@ -24,36 +24,23 @@ Page({
     option2: [{
       text: '选择词书',
       value: -1
-    }, {
-      text: '考研核心词汇',
-      value: 1
-    }, {
-      text: '高考核心词汇',
-      value: 2
-    }, {
-      text: '中考核心词汇33',
-      value: 3
-    }, ],
+    }],
     option3: [{
         text: '卡片状态',
-        value: 'a'
+        value: -1
       },
       {
-        text: '待练习',
-        value: 'b'
-      },
-      {
-        text: '已学习',
-        value: 'c'
+        text: '未完成',
+        value: 0
       },
       {
         text: '已完成',
-        value: 'd'
-      },
+        value: 1
+      }
     ],
-    value1: 0,
+    value1: 0, 
     value2: -1,
-    value3: 'a',
+    value3: -1,
     dataRange: null
   },
 
@@ -144,12 +131,7 @@ Page({
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
       loading: false,
-      progressList: e.progressList,
-      currentDicCode: e.currentDicCode,
-      currentPageIndex: e.todayCards.pageNum,
-      totalCardNum: e.todayCards.total,
-      todayCards: app.globalData.needReviewCard.list,
-      hasNextPage: e.todayCards.hasNextPage,
+      progressList: app.globalData.progressList,
       windowWidth: app.globalData.windowWidth
     })
   },

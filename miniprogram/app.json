@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/empty/empty",
+    "pages/index/index",
     "pages/dictionary/dictionary",
     "pages/upload-book/upload-book",
     "pages/listen/listen",
@@ -11,7 +11,6 @@
     "pages/today-study/today-study",
     "pages/wordlist/wordlist", 
     "pages/wordlist/detail/detail",
-    "pages/index/index",
     "pages/review/review",
     "pages/practice/practice",  
     "pages/spell/spell",

@@ -26,7 +26,6 @@ App({
       });
     }
     // this.loadFontFace();
-    this.initServerData();
     this.initSystemData();
     this.initSystemCache();
     this.initFont();
@@ -106,19 +105,6 @@ App({
 
     let practiceViewHeight = sysInfo.windowHeight - navigationBarHeight
     this.globalData.practiceViewHeight = practiceViewHeight
-  },
-
-  /**
-   * 初始化函数，从服务器上拉取数据
-   * @param {}  无需参数
-   * @setData {senInfo, userInfo, userWordCardToday}  更新数据
-   */
-  initServerData() {
-    // todo: 这里应该是从服务器上拿到的数据
-    this.globalData.loading = false
-    this.globalData.wordCardArr = {}
-    this.globalData.createDateCardMap = {}
-    this.globalData.reviewDateCardMap = {}
   },
 
   loadFontFace() {

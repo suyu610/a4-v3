@@ -66,23 +66,43 @@ Page({
   onLoad: function (options) {
 
   },
-  confirmSwitchBook() {
-    let bookCode = this.data.radio;
+
+  onTapBookItem(e) {
+    let bookCode = e.currentTarget.dataset.code
+    let bookName = e.currentTarget.dataset.name
+    let that = this
+    if (bookCode != this.data.currentBookCode) {
+      wx.showModal({
+        title: "确认",
+        content: "是否切换词书为「" + bookName + "」",
+        cancelColor: 'cancelColor',
+        success(res) {
+          if (res.confirm) {
+            that.confirmSwitchBook(bookCode)
+          }
+        }
+      })
+    }
+  },
+  confirmSwitchBook(bookCode) {
+    let that = this
     if (bookCode != null) {
       wordbook.switchCurBook(bookCode).then(e => {
-        wx.showToast({  
+        wx.showToast({
           icon: 'none',
           title: '已切换至 \r\n《' + e.book.bookName + '》',
         })
-        app.globalData.needRefreshTodayCard = true
-        app.globalData.currentDicCode = bookCode
-      })
-
-      setTimeout(() => {
-        wx.navigateBack({
-          delta: 0,
+        app.globalData.currentBookCode = bookCode
+        let bookColumns = that.data.bookColumns
+        bookColumns.forEach(column => {
+          column.bookList.forEach(book => {
+            book.isCurrent = book.code == bookCode
+          }) 
         })
-      }, 1000);
+        this.setData({
+          bookColumns
+        })
+      })
     } else {
       wx.showToast({
         icon: 'none',
@@ -92,18 +112,7 @@ Page({
   },
 
 
-  onClick(event) {
-    const {
-      name
-    } = event.currentTarget.dataset;
-
-    this.setData({
-      radio: name,
-      currentWordBookName: config.dictInfo[name].name
-    });
-  },
-
-  judgeBookType(book, key, progressList, currentDicCode) {
+  judgeBookType(book, key, progressList, currentBookCode) {
     if (progressList[key]) {
       book.hasAdded = true
       // 判断是否学完
@@ -114,11 +123,12 @@ Page({
       }
       book.curStudyNum = progressList[key]
     } else {
-      book.hasAdded = false
-    }
+      book.hasAdded = false 
+    } 
 
-    if (currentDicCode == key) {
+    if (currentBookCode == key) {
       book.isCurrent = true
+      book.hasAdded = true
     } else {
       book.isCurrent = false
     }
@@ -128,25 +138,28 @@ Page({
    */
   onShow() {
     const TabsLineHeight = 44
+
+    let dict = config.dictInfo
+    let bookColumns = this.data.bookColumns
+    let currentBookCode = app.globalData.currentBookCode
+    let progressList = app.globalData.progressList
+    let targetCount = app.globalData.setting.targetCount
+
     this.setData({
+      dict,
+      targetCount,
+      currentBookCode,
       navigationBarHeight: app.globalData.navigationBarHeight,
       windowHeight: app.globalData.windowHeight,
       tabContainerHeight: app.globalData.windowHeight - app.globalData.navigationBarHeight - TabsLineHeight
     })
-    let dict = config.dictInfo
-    let bookColumns = this.data.bookColumns
-    let currentDicCode = app.globalData.currentDicCode
-    let progressList = app.globalData.progressList
-    let targetCount = app.globalData.targetCount
-    this.setData({
-      targetCount
-    })
     for (const key in dict) {
       if (Object.hasOwnProperty.call(dict, key)) {
         const book = dict[key];
-        this.judgeBookType(book, key, progressList, currentDicCode)
+        this.judgeBookType(book, key, progressList, currentBookCode)
         const bookColumnId = key.substr(0, 2)
         book.bookColumnId = bookColumnId
+        book.code = key
         book.remainDay = book.totalWordNum / targetCount
         if (book.isHot) {
           bookColumns[0].bookList.push(book)

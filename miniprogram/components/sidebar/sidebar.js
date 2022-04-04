@@ -1,13 +1,20 @@
 // components/sidebar/sidebar.js
 import router from '../../router/index'
-
+import {
+  User
+} from '../../models/user'
+const userApi = new User()
 const app = getApp()
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-
+    isVip: Boolean,
+    isInviteMode: Boolean,
+    userAuthInfo: Object,
+    userBaseInfo: Object,
+    studyRecordInfo: Object,
   },
 
   /**
@@ -17,7 +24,6 @@ Component({
     showInvitePopupValue: false,
     notificationTypeIndex: 0,
     notificationType: ['当日有未完成的任务', '总是提醒', '关闭提醒'],
-    isVip: false,
     timePickerFilter(type, options) {
       if (type === 'minute') {
         return options.filter((option) => option % 5 === 0);
@@ -25,9 +31,6 @@ Component({
 
       return options;
     },
-
-    userInfo: {},
-    hasUserInfo: false,
     showTimePickerPopupValue: false,
     showNotificationPopupValue: false,
     showExportActionSheetValue: false,
@@ -107,6 +110,7 @@ Component({
         showInvitePopupValue: false
       })
     },
+
     getUserProfile(e) {
       wx.showLoading({
         title: '登录中',
@@ -117,13 +121,15 @@ Component({
         desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         success: (res) => {
           this.setData({
-            userInfo: res.userInfo,
+            userBaseInfo: res.userInfo,
             hasUserInfo: true
           })
           console.log(res.userInfo)
+
           // todo: 发送给服务端
-          wx.setStorageSync('hasUserInfo', true)
-          wx.setStorageSync('userInfo', res.userInfo)
+          userApi.modifyUserProfile(res.userInfo).then(e => {
+            console.log("修改成功")
+          })
         },
         complete: () => {
           wx.hideLoading()
@@ -150,8 +156,8 @@ Component({
           showNotificationPopupValue: true
         })
       }
-
     },
+
     onTap: function (e) {
       this.popover = this.selectComponent('#popover1')
       // 获取按钮元素的坐标信息
@@ -242,12 +248,14 @@ Component({
         name: 'settings'
       })
     },
+
+
   },
+
   lifetimes: {
     ready() {
-      let isInviteMode = app.globalData.isInviteMode
-      console.log(isInviteMode)
-      let userAuthInfo = app.globalData.userAuthInfo || {}
+      let isInviteMode = this.data.isInviteMode
+      let userAuthInfo = this.data.userAuthInfo || {}
       let role = userAuthInfo.role
       let unlockCount = userAuthInfo.unlockCount
       let invitePopupTitleText = isInviteMode === 'undefined' ? "会员解锁邀请" : (role != "vip") ? "邀请好友" : "恭喜！你已成功解锁会员"
@@ -264,24 +272,10 @@ Component({
             invitePopupSubTitleText = "你的解锁名额已经用完"
           }
         }
-      }
-
-      // [ todo ] 兼容getUserInfo 和 profile
-      var hasUserInfo = app.globalData.hasUserInfo
-      var userInfo = app.globalData.userInfo
-      if (hasUserInfo && userInfo) {
-        this.setData({
-          hasUserInfo,
-          userInfo
-        })
-        // Do something with return value
-      } else {
-        console.log("not login")
-      }
+      } 
 
       this.setData({
         searchBarTop: app.globalData.searchBarTop,
-        role,
         unlockCount,
         invitePopupSubTitleText,
         invitePopupTitleText,

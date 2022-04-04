@@ -35,6 +35,12 @@ page {
   padding-top: 36rpx;
 }
 
+.top .timeinfo .time .notshow{
+  font-size: 16px;
+  padding-bottom: 3px;
+  color: #9fa7b5;
+  font-weight: normal;
+}
 .top .info .userinfo {
   display: flex;
   align-items: center;
@@ -145,6 +151,10 @@ page {
 .invite-popup-container .popup-container-bottom {
   position: absolute;
   bottom: 14px;
+  margin: 0 auto;
+  left: 50%;
+  transform: translate(-50%);
+
 }
 
 .popup-container .title {

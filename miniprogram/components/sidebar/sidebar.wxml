@@ -8,15 +8,12 @@
       <text class="title">我的</text>
     </view>
     <view class="info">
-      <view class="userinfo" wx:if="{{hasUserInfo}}">
-        <image class="avatar" bindtap="onTap" src="{{userInfo.avatarUrl}}" id="button1"></image>
-        <image class="medal" wx:if="{{role=='vip'}}" src="./images/medal.png"></image>
-        <view class="nickname">{{userInfo.nickName}}</view>
+      <view class="userinfo" wx:if="{{userBaseInfo!=null && userBaseInfo.avatarUrl != null }}">
+        <image class="avatar" bindtap="onTap" src="{{userBaseInfo.avatarUrl}}" id="button1"></image>
+        <image class="medal" wx:if="{{userAuthInfo.role=='vip'}}" src="./images/medal.png"></image>
+        <view class="nickname">{{userBaseInfo.nickName}}</view>
         <popover id='popover1'>
-          <!-- <view>hello</view> -->
           <popover-item bindtap='onClickA'>这是一个头像</popover-item>
-          <!--  <popover-item hasline>子菜单B</popover-item>
-        <popover-item>子菜单C</popover-item> -->
         </popover>
       </view>
 
@@ -32,19 +29,19 @@
     <!-- 时间 -->
     <view class="timeinfo" bindtap="showTimeInfoToast">
       <view class="time">
-        <view class="num">32<text class="day">天</text></view>
+        <view class="num">{{studyRecordInfo.yearDayCount}}<text class="day">天</text></view>
         <view class="desc">今年学习</view>
       </view>
       <view class="divider"></view>
       <view class="time">
-        <view class="num">21<text class="day">天</text></view>
+        <view class="num">{{studyRecordInfo.monthDayCount}}<text class="day">天</text></view>
         <view class="desc">本月学习</view>
       </view>
       <view class="divider"></view>
 
       <view class="time">
-        <view class="num">24<text class="day">天</text></view>
-        <view class="desc">连续学习</view>
+        <view class="num">{{studyRecordInfo.lastDayCount}}<text class="day">天</text></view>
+        <view class="desc">最长连续学习</view>
       </view>
     </view>
   </view>
@@ -55,7 +52,7 @@
     <block wx:for="{{notvipFuncItemList}}" wx:key="index">
       <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
     </block>
-    <sidebar-title bindtap="showInvitePopup" isVip="{{role=='vip'}}"></sidebar-title>
+    <sidebar-title bindtap="showInvitePopup" isVip="{{userAuthInfo.role=='vip'}}"></sidebar-title>
     <block wx:for="{{vipFuncItemList}}" wx:key="index">
       <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" isVip="true" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
     </block>
@@ -72,12 +69,12 @@
   </view>
 </van-popup>
 
-<van-popup round show="{{ showInvitePopupValue }}" custom-class="dictPopup" position="center" bind:close="hideInvitePopup" lock-scroll="{{true}}" custom-style="height:50%;width:85%">
+<van-popup round show="{{ showInvitePopupValue }}" custom-class="dictPopup" position="center" bind:close="hideInvitePopup" lock-scroll="{{true}}" custom-style="height:50%;width:80%">
   <view class="invite-popup-container" wx:if="{{ showInvitePopupValue }}">
     <view class="title">{{invitePopupTitleText}}</view>
     <view class="sub-title">{{invitePopupSubTitleText}}</view>
     <view class="popup-container-bottom" bindtap="onInviteFriendTapped">
-      <bg-btn title="{{invitePopupBottomText}}" share bgColor="#6C30F0" width="246" height="34"></bg-btn>
+      <bg-btn title="{{invitePopupBottomText}}" share bgColor="#6C30F0" width="220" height="30"></bg-btn>
     </view>
   </view>
 </van-popup>

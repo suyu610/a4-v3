@@ -66,12 +66,12 @@
 }
 
 .footer .people {
-  height: 14px;
+  height: 12px;
   width: 19px;
-}
+}  
 
 .footer .left .info {
-  padding-left: 20rpx;
+  padding-left: 14rpx;
   color: #86909c;
   font-size: 24rpx;
 }

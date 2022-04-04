@@ -29,26 +29,27 @@
 <!-- progress-card -->
 <view wx:if="{{!loading}}" class="progress-card">
 
-  <book bookColumnId="{{str.subStr(currentDicCode)}}" bookName="{{currentDicCode!=null && currentDicCode!=''? dictInfo[currentDicCode].name : '请选择词书'}}" totalCount="{{dictInfo[currentDicCode].totalWordNum}}"></book>
+  <book bookColumnId="{{str.subStr(currentBookCode)}}" bookName="{{currentBookCode!=null && currentBookCode!=''? dictInfo[currentBookCode].name : '请选择词书'}}" totalCount="{{dictInfo[currentBookCode].totalWordNum}}"></book>
 
   <!-- progress-container -->
   <view class="progress-container">
     <view class="progress-container-header" bind:tap="onNaviToDictionary">
-      <text class="progress-container-header-text">{{currentDicCode!=null && currentDicCode!=''? dictInfo[currentDicCode].name : '请选择词书'}}</text>
+      <text class="progress-container-header-text">{{currentBookCode!=null && currentBookCode!=''? dictInfo[currentBookCode].name : '请选择词书'}}</text>
       <view class="change-dict">
         <image class="edit-img" src="./images/exchange.png"></image>
         <text>更换词书</text>
       </view>
     </view>
     <view class="progress-remain">
-      <text>按当前计划，剩余20天</text>
+      <text wx:if="{{currentBookCode!=null  && currentBookCode!=''}}">按当前计划，剩余{{remainDay}}天</text>
+      <text wx:else>暂未开始学习计划</text>
     </view>
     <view class="progress" id="progress">
-      <view class="progress-current" style="width:{{100*progressList[currentDicCode]/dictInfo[currentDicCode].totalWordNum}}\%"></view>
+      <view class="progress-current" style="width:{{100*progressList[currentBookCode]/dictInfo[currentBookCode].totalWordNum}}\%"></view>
     </view>
-    <view class=" progress-container-info" wx:if="{{currentDicCode!=null  && currentDicCode!=''}}">
-      <text class="progress-container-info-text-2">进度 <text class="black bold">{{ progressList[currentDicCode]==null?0:str.toFix(100*progressList[currentDicCode]/dictInfo[currentDicCode].totalWordNum,1)}}%</text> </text>
-      <text class="progress-container-info-text-2">({{progressList[currentDicCode]==null?0:progressList[currentDicCode]>dictInfo[currentDicCode].totalWordNum?dictInfo[currentDicCode].totalWordNum:progressList[currentDicCode]}}/{{dictInfo[currentDicCode].totalWordNum}})</text>
+    <view class=" progress-container-info" wx:if="{{currentBookCode!=null  && currentBookCode!=''}}">
+      <text class="progress-container-info-text-2">进度 <text class="black bold">{{ progressList[currentBookCode]==null?0:str.toFix(100*progressList[currentBookCode]/dictInfo[currentBookCode].totalWordNum,1)}}%</text> </text>
+      <text class="progress-container-info-text-2">({{progressList[currentBookCode]==null?0:progressList[currentBookCode]>dictInfo[currentBookCode].totalWordNum?dictInfo[currentBookCode].totalWordNum:progressList[currentBookCode]}}/{{dictInfo[currentBookCode].totalWordNum}})</text>
     </view>
     <view class=" progress-container-info" wx:else>
       <text class="progress-container-info-text-2">未选择词书</text>

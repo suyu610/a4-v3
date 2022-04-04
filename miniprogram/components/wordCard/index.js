@@ -2,6 +2,8 @@ import {
   Card
 } from "../../models/card"
 
+import config from '../../config'
+
 // components/wordCard/index.js
 const app = getApp()
 const MAX_CARD_WIDTH = app.globalData.windowWidth - 60
@@ -46,20 +48,19 @@ Component({
    * 组件的初始数据
    */
   data: {
+    dictInfo: config.dictInfo,
     countdownClock: null,
     resort: true,
-    time: -1, // 秒
     cardChecked: false,
-    today: app.globalData.todayDate,
     cardStatusActions: [{
         name: '待练习',
       },
       {
-        name: '已学习',
+        name: '已练习',
       },
       {
         name: '已完成',
-        subname: '描述信息'
+        subname: '今后将不再推荐复习'
       },
     ],
 
@@ -89,27 +90,25 @@ Component({
       })
     },
 
-    'wordCard.progress': function () {
-      if (this.data.wordCard != null && this.data.wordCard.cardId != -1) {
-        this.startCountDown();
-      }
-    }
   },
 
   lifetimes: {
     ready() {
+      let date = this.data.wordCard.date
+      if (date != null) {
+        date = date.substr(0, 4) + "." + date.substr(4, 2) + "." + date.substr(6)
+        console.log(date)
+      }
+
       this.setData({
+        date,
         status_mode: Math.round(Math.random() * 2) + 1,
         darkMode: app.globalData.theme == 'dark',
-        today: app.globalData.todayDate
       })
 
       // console.log(this.data.status_mode)
       // 判断是否都删除了
       this.wordCardHandler(this.data.wordCard, true)
-      if (this.data.wordCard != null && this.data.wordCard.cardId != -1) {
-        this.startCountDown();
-      }
     }
   },
   pageLifetimes: {
@@ -121,83 +120,6 @@ Component({
   },
 
   methods: {
-
-    startCountDown() {
-      let that = this
-      let time = that.getNextPracticeCountDownTime()
-      if (this.data.wordCard.progress == null) {
-        this.setData({
-          formatTime: 'NEED_REVIEW'
-        })
-        return
-      }
-
-      // 如果复习超过了7次，则不需要再复习了
-      if (this.data.wordCard.progress.seq >= REVIEW_TIME_ARR.length) {
-        this.setData({
-          formatTime: 'HAS_DONE'
-        })
-        // clearInterval(this.data.countdownClock);
-        return
-      }
-
-      if (this.data.countdownClock != null) {
-        clearInterval(this.data.countdownClock);
-      }
-
-      that.setData({
-        time
-      })
-
-      let formatTime = that.data.time
-      if (time >= 24 * 60 * 60) {
-        formatTime = parseInt(time / (24 * 3600)) + "天"
-      } else if (time >= 60 * 60) {
-        formatTime = parseInt(time / 3600) + "小时"
-      } else if (time > 60) {
-        formatTime = parseInt(time / 60) + "分钟"
-      } else {
-        formatTime = parseInt(time) + "秒"
-      }
-
-      that.setData({
-        time: that.data.time - 1,
-        formatTime: formatTime
-      })
-
-      // this.data.countdownClock = setInterval(function () {
-      //   let formatTime = that.data.time
-      //   if (time >= 24 * 60 * 60) {
-      //     formatTime = parseInt(time / (24 * 3600)) + "天"
-      //   } else if (time >= 60 * 60) {
-      //     formatTime = parseInt(time / 3600) + "小时"
-      //   } else if (time > 60) {
-      //     formatTime = parseInt(time / 60) + "分钟"
-      //   } else {
-      //     formatTime = time + "秒"
-      //   }
-
-      //   that.setData({
-      //     time: that.data.time - 1,
-      //     formatTime: formatTime
-      //   })
-
-      //   // 如果时间小于0，则停止
-      //   if (that.data.time <= 0) {
-      //     clearInterval(that.data.countdownClock);
-      //   }
-      // }, 1000)
-    },
-
-    getNextPracticeCountDownTime: function () {
-      // 如果练习次数为0，则推荐其现在就复习，返回 -1
-      if (this.data.wordCard.progress == null) return -1;
-      // 否则，返回 最后一次复习时间 + 时间间隔数组[复习长度]
-      let currentDate = new Date().getTime();
-
-      return (this.data.wordCard.progress.practiceTime + REVIEW_TIME_ARR[this.data.wordCard.progress.seq] * 1000 - currentDate) / 1000
-    },
-
 
     /**
      * 删除卡片

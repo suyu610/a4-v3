@@ -1,4 +1,3 @@
-<!-- wordCard [Not Loading OR Empty] -->
 <view class="body">
   <!-- <view wx:if="{{!ifEmpty}}" class="wordCard" style="box-shadow:{{isFolder?' 0 0.0625em 0.1875em 0 rgba(0, 0, 0, 0.1), 0 0.5em 0 -0.25em #f2f2f2, 0 0.5em 0.1875em -0.25em rgb(0 0 0 / 8%), 0 0 0 0 #e5e5e5eb, 0 1em 0.1875em -0.5em  rgb(0 0 0 / 0%)':''}} "> -->
   <view wx:if="{{!ifEmpty}}" class="wordCard">
@@ -7,17 +6,15 @@
       <view class="header-left">
         <view class="left-top">
           <text class="header-left-text-1">练习{{wordCard.progress==null?0:wordCard.progress.seq}}次</text>
-          <text class="header-left-text-2" decode="true" wx:if="{{formatTime==null}}">&nbsp;/&nbsp; 计算中 </text>
-          <text class="header-left-text-2" decode="true" wx:if="{{formatTime == 'HAS_DONE'}}">&nbsp;/&nbsp; 复习完成 </text>
           <!-- <text class="header-left-text-2" decode="true" wx:if="{{formatTime!=null && formatTime != 'HAS_DONE'}}">&nbsp;/&nbsp;{{time>0?'推荐'+ formatTime +'后复习':'推荐现在复习'}} </text> -->
-          <text class="header-left-text-2" decode="true">&nbsp;/&nbsp;考研核心词汇</text>
+          <text class="header-left-text-2" decode="true">&nbsp;/&nbsp;{{dictInfo[wordCard.dictCode].name}}</text>
         </view>
         <view class="left-bottom">
-          创建于2021.02.22
+          创建于{{date}}
         </view>
       </view>
-      <view class="header-right">
-        <image class="status-img" src="./images/card_status_{{status_mode}}.png" mode="widthFix" bindtap="changeCardStatus"></image>
+      <view class="header-right" bindtap="changeCardStatus">
+        <view class="card_status card_status_{{status_mode}}">{{status_mode==1?'待练习':status_mode==2?'已练习':'已完成'}}</view>
       </view>
     </view>
     <van-divider hairline />
@@ -38,13 +35,6 @@
     <view class="coffee-cup"></view>
   </view>
 
-  <!-- wordCard [Empty] -->
-  <view wx:if="{{!loading && ifEmpty}}" class="wordCard-loading wordCard-empty">
-    <view class="bottom-text-head">{{mode=="review"?'恭喜你':mode=="calendar"?'该日未添加卡片':'今日暂无卡片'}}</view>
-    <view class="bottom-text-body">{{mode=="review"?'已完成全部推荐复习的卡片':mode=="calendar"?'请从首页添加':'点击下方添加卡片按钮完成添加'}}</view>
-    <image class="empty-image" mode="scaleToFill" src="https://cdns.qdu.life/a4/images/sentence/v2/{{today[6]}}{{today[7]}}.jpg?imageMogr2/thumbnail/x384/format/jpg/interlace/1/quality/100"> </image>
-    <!-- <image> </image> -->
-  </view>
 
   <!-- 卡片状态 -->
   <van-action-sheet cancel-text="取消" show="{{ showCardStatusValue }}" actions="{{ cardStatusActions }}" bind:cancel="onCloseCardStatus" bind:close="onCloseCardStatus" bind:select="onSelectCardStatus" description="切换卡片状态">

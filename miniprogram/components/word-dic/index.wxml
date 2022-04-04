@@ -18,11 +18,11 @@
   </view>
 </van-dialog>
 
-<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; width: {{noFooter?'75vw':'85vw'}};">
+<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; width: {{noFooter?'80vw':'85vw'}};">
   <van-loading color="#1989fa" vertical>加载中...</van-loading>
 </view>
 <!--  bind:touchmove="{{test.touchmove}}" -->
-<view wx:if="{{!loading}}" style=" width: {{noFooter?'75vw':'85vw'}};" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
+<view wx:if="{{!loading}}" style=" width: {{noFooter?'80vw':'85vw'}};" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
   <!-- header -->
   <view class=" header">
     <view class="header-up">

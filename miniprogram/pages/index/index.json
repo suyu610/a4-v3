@@ -2,7 +2,6 @@
   "usingComponents": {
     "v-navigation-bar": "../../components/navigation-bar",
     "v-progress-card": "../../components/progress-card",
-    "v-wordCard": "../../components/wordCard",
     "v-word-dic": "../../components/word-dic",
     "homecard": "../../components/home-card/home-card",
     "sidebar": "../../components/sidebar/sidebar",
@@ -16,7 +15,11 @@
     "shadow-btn": "../../components/shadow-btn",
     "popover": "../../components/popover/popover",
     "popover-item": "../../components/popover/popover-item",
-    "wordlistPopup": "../../components/wordlist-popup/index"
+    "wordlistPopup": "../../components/wordlist-popup/index",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-transition": "@vant/weapp/transition/index"
+
+
   },
   "navigationBarTextStyle": "black"
 }

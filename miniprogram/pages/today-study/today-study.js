@@ -8,6 +8,11 @@ import {
 } from '../../models/resource.js'
 const resource = new Resource()
 
+import {
+  Card
+} from '../../models/card.js'
+const cardApi = new Card()
+
 Page({
   /**
    * 页面的初始数据
@@ -21,26 +26,48 @@ Page({
     mode: "study", // study export listen
     checkedCardArr: [],
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
+    showPracticeSheetValue: false,
+    practiceModeActions: [{
+        name: '记忆模式',
+      }, {
+        name: '复习模式',
+      },
+      {
+        name: '拼写模式',
+      },
+    ],
   },
-
+  onPractice: function () {
+    if (this.data.checkedCardArr.length == 0) return
+    // 增加复习模式
+    this.setData({
+      showPracticeSheetValue: true
+    })
+  },
+  /**
+   * 底部按钮的点击事件
+   */
   onTapBottomBtn() {
     let wordlist = []
-    if (this.data.mode == 'export' || this.data.mode == "listen") {
-      let checkedCardArr = this.data.checkedCardArr
-      checkedCardArr.forEach(card => {
-        card.wordList.forEach(word => {
-          if (!word.isDeleted) {
-            wordlist.push(word.wordName)
-          }
-        });
+    let checkedCardArr = this.data.checkedCardArr
+    checkedCardArr.forEach(card => {
+      card.wordList.forEach(word => {
+        if (!word.isDeleted) {
+          wordlist.push(word.wordName)
+        }
       });
-      console.log(wordlist)
+    });
+    console.log(wordlist)
+
+    if (this.data.mode == 'export' || this.data.mode == "listen") {
       router.push({
         name: this.data.mode == 'export' ? "exportCardConfirm" : "listen",
         data: {
           wordlist
         }
       })
+    } else {
+      this.onPractice()
     }
   },
   replaceWord() {
@@ -55,6 +82,33 @@ Page({
     this.setData({
       cardCur
     })
+  },
+
+
+  jumpToPractice(pMode) {
+    // 传参
+    var obj = JSON.stringify(this.data.checkedCardArr)
+    wx.navigateTo({
+      url: '../practice/practice?checkedCardArr=' + obj + '&pMode=' + pMode,
+    })
+  },
+
+  onSelectPracticeSheet(e) {
+    let nameStr = e.detail.name
+    if (nameStr == '记忆模式') {
+      this.jumpToPractice('memory')
+      return
+    }
+
+    if (nameStr == '复习模式') {
+      this.jumpToPractice('practice')
+      return
+    }
+
+    if (nameStr == '拼写模式') {
+      this.jumpToSpellPractice('spelling')
+      return
+    }
   },
 
   cardSwiper(e) {
@@ -78,6 +132,7 @@ Page({
     }, 500);
     this.onClickHideOverlay(e)
   },
+
   onClickHideOverlay: function (e) {
     if (e.currentTarget.dataset.class == "swiper-item") {
       return
@@ -124,14 +179,15 @@ Page({
     const data = router.extract(options);
     let nextWordList = []
     let that = this
-    this.data.wordlist.forEach(word => {
-      resource.getWordInfo(word).then(function (ele) {
-        nextWordList.push(ele)
-        that.setData({
-          nextWordList,
-        })
-      })
-    });
+
+    // this.data.wordlist.forEach(word => {
+    //   resource.getWordInfo(word).then(function (ele) {
+    //     nextWordList.push(ele)
+    //     that.setData({
+    //       nextWordList,
+    //     })
+    //   })
+    // });
 
     if (data != null && data.mode != null) {
       this.setData({
@@ -147,14 +203,7 @@ Page({
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
-      senInfo: e.sentence,
-      loading: false,
-      progressList: e.progressList,
-      currentDicCode: e.currentDicCode,
-      currentPageIndex: e.todayCards.pageNum,
-      totalCardNum: e.todayCards.total,
-      todayCards: app.globalData.needReviewCard.list,
-      hasNextPage: e.todayCards.hasNextPage,
+      loading: true,
       windowWidth: app.globalData.windowWidth
     })
   },
@@ -196,7 +245,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let that = this
+    // 获取今日卡片
+    cardApi.genTodayCard(0).then(e => {
+      console.log(e)
+      that.setData({
+        todayCards: e.list,
+        currentPageIndex: e.pageNum,
+        totalCardNum: e.total,
+        hasNextPage: e.hasNextPage,
+        loading: false
+      })
+    })
   },
 
   /**

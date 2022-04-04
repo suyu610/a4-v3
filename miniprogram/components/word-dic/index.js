@@ -64,7 +64,6 @@ Component({
   observers: {
     'wordContent': function (wordContent) {
       let that = this
-      console.log(wordContent)
       if (wordContent != null) {
         // 发音
         wx.getStorage({

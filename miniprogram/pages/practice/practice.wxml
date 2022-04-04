@@ -1,13 +1,13 @@
 <van-toast id="van-toast" />
 
 <!-- navigation-bar -->
-<v-navigation-bar type="logoutBar" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigation-bar>
+<v-navigation-bar bgColor="transparent" type="leftBar" title="本组学习{{curPracticeIndex + 1}} / {{practiceWordArr.length}}"></v-navigation-bar>
 <wordlist-popup show="{{showWordListPopupValue}}"></wordlist-popup>
 
 <!-- container -->
 <view class="container" style="height:{{practiceViewHeight}}px; ">
   <view class="container-head">
-    <text class="head-progress"> {{curPracticeIndex + 1}} / {{practiceWordArr.length}}</text>
+    <!-- <text class="head-progress"> </text> -->
     <view>
       <image bindtap="onTapFavorBtn" bindlongpress="showWordListPopup" class="favor-img" src="./images/favor{{curWord.favor?'_fill':''}}.png"></image>
       <!-- <image bindtap="onTapSettingBtn" class="setting-img" style="opacity: {{showMeaning?'1':'0.4'}};" src="./images/setting.png"></image> -->
@@ -30,28 +30,31 @@
 
     <!-- shortDef -->
     <!-- <text class="shortDef-text" style="font-size:  {{defFontSize}}rpx;">{{practiceWordArr[curPracticeIndex].isLearned?'请复述五遍单词的释义':showSelfDef?'记录':'n. 提供证据或讲述过去事件的官方书面文件'}}</text> -->
+    <view class="short-def-container" style="transition:.1s;filter:blur{{!reviewMode?'(0)':'(8px)'}};">
+      <image class="short-def-icon" src="./images/pen-edit.png"></image>
+      <text class="short-def-text">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text>
+    </view>
   </view>
 
   <!-- container-down -->
   <view class="container-down">
     <!-- selDefWordNameCh -->
-    <text class="selDefWordNameCh-text">{{reviewMode?'请回忆以上单词的中文释义':''}}</text>
+    <text class="selDefWordNameCh-text">{{reviewMode?'请复述单词的中文释义':''}}</text>
     <view class="progress" id="progress" wx:if="{{reviewMode && openCountdown}}">
       <view class="progress-current" style="width:{{progressCurrentWidth}}\%"></view>
     </view>
-    <view bindtap="onAddSelfDefTapped" wx:if="{{!reviewMode}}" style="transition:.3s;filter:blur{{showMeaning?'(0)':'(5px)'}};">
-      <text class="selDefWordNameCh-text">请默念五遍中文释义：<text class="short-def-text">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text> </text>
+    <view bindtap="onAddSelfDefTapped" wx:if="{{!reviewMode}}">
+      <text class=" selDefWordNameCh-text">请朗读或默念五遍单词的中文释义 </text>
       <!-- <image class="edit-def-top-img" src="./images/edit{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?'':'_blue'}}.png"></image> -->
     </view>
     <!-- button-container -->
     <view class="button-container">
       <view class="button-1 ripple" bindtap="nextStep" hover-stay-time="70" hover-class="clickable--hover">
-        <image src="./images/check.png" class="button-img"></image>
+        <!-- <image src="./images/check.png" class="button-img"></image> -->
         <text class="button-1-text ripple">{{reviewMode?'想到了':'念完了'}}</text>
         <!-- <view class="button-line"></view> -->
       </view>
       <view class="button-2" bindtap="toggleDict" hover-stay-time="70" hover-class="clickable--hover">
-        <image src="./images/eye.png" class="button-img"></image>
         <text class="button-2-text">{{reviewMode?'提示下':'详细释义'}}</text>
         <!-- <view class="button-line button-line-red"></view> -->
       </view>
@@ -115,6 +118,6 @@
 <van-overlay show="{{ showOverlay }}" bind:click="onClickHideOverlay" />
 
 <!-- 词典，让他去调用自己的接口吧 -->
-<van-popup round show="{{ showDictValue }}" position="bottom" bind:close="toggleDict">
+<van-popup round show="{{ showDictValue }}" position="center" bind:close="toggleDict">
   <v-word-dic noFooter="{{true}}" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
 </van-popup>

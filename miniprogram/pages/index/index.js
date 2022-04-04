@@ -1,9 +1,8 @@
 // pages/index/index.js
 const app = getApp()
+let gData = app.globalData
 
 // 导入资源接口与用户接口
-import * as debugTools from '../../utils/debugTools'
-import * as cardDataTools from '../../utils/cardDataTools'
 import config from '../../config.js'
 
 import {
@@ -22,7 +21,6 @@ import router from '../../router/index'
 const user = new User()
 const resource = new Resource()
 const cardApi = new Card()
-
 Page({
 
   data: {
@@ -78,7 +76,7 @@ Page({
       ]
     },
 
-    planTimeColumn: ["10", "15", "20", "30 (当前)", "40", "50", "60", "70", "80", "90", "100", "150", "200", "300", "400", "500"],
+    planTimeColumn: ["10", "15", "20", "30", "40", "50", "60", "70", "80", "90", "100", "150", "200", "300", "400", "500"],
     showPlanTimeColumnValue: false,
     showGuide: false,
     appearDict: {},
@@ -130,23 +128,35 @@ Page({
       showPlanTimeColumnValue: false
     })
   },
-  tapGuide() {
-    this.setData({
-      showGuide: false
-    })
-    wx.setStorage({
-      key: 'hasShowGuide',
-      data: true
-    })
-  },
+
+
 
   jump2TodayStudy() {
+    if (!this.hasSetDict()) {
+      return
+    }
     router.push({
       name: 'todayStudy'
     })
   },
 
+  hasSetDict() {
+    if (this.data.currentBookCode == '' || this.data.currentBookCode == null) {
+      wx.showToast({
+        icon: 'none',
+        title: '请先选择词书',
+      })
+      return false
+    }
+
+    return true
+  },
   jump2TodayReview() {
+    // 如果未选择词书
+    if (!this.hasSetDict()) {
+      return
+    }
+
     router.push({
       name: 'todayReview'
     })
@@ -251,7 +261,7 @@ Page({
    */
   async onAddCard() {
     // 如果没有选定词书，则弹出警告
-    if (app.globalData.currentDicCode == null || app.globalData.currentDicCode == '') {
+    if (app.globalData.currentBookCode == null || app.globalData.currentBookCode == '') {
       wx.showToast({
         icon: 'none',
         title: '还未选择词书',
@@ -270,7 +280,7 @@ Page({
     let that = this;
     wx.showToast({
       icon: 'none',
-      title: '新增单词卡片\r\n《' + config.dictInfo[app.globalData.currentDicCode].name + '》',
+      title: '新增单词卡片\r\n《' + config.dictInfo[app.globalData.currentBookCode].name + '》',
       duration: 500
     })
 
@@ -318,7 +328,7 @@ Page({
         })
         // 处理一下progressList
         let progressList = that.data.progressList
-        progressList[that.data.currentDicCode] = progressList[that.data.currentDicCode] + 5
+        progressList[that.data.currentBookCode] = progressList[that.data.currentBookCode] + 5
         that.setData({
           loadingAddCard: false,
           todayCards,
@@ -480,29 +490,57 @@ Page({
       })
     }
 
-    if (app.globalData.needRefreshTodayCard) {
-      this.init()
-    }
     this.setData({
-      darkMode: app.globalData.theme == 'dark'
+      darkMode: app.globalData.theme == 'dark',
+      currentBookCode: app.globalData.currentBookCode
     })
-
   },
 
-  init() {
+  initFromServer() {
     let that = this
+
     resource.getInitData().then(e => {
-      app.globalData.progressList = e.progressList
-      app.globalData.currentDicCode = e.currentDicCode
-      app.globalData.setting = e.setting
+      console.log(e)
+      gData.progressList = e.progressList || {}
+      gData.currentBookCode = e.currentBookCode
+      gData.setting = e.setting
+      gData.userAuthInfo = e.userAuthInfo
+      gData.userid = e.userid
+      gData.userBaseInfo = e.userBaseInfo
+      gData.dailyStudyTask = e.dailyStudyTask
 
       that.setData({
-        loading: false,
+        navigationBarHeight: app.globalData.navigationBarHeight,
+        searchBarTop: app.globalData.searchBarTop,
+        searchBarHeight: app.globalData.searchBarHeight,
+        scrollViewHeight: app.globalData.scrollViewHeight,
+        windowWidth: app.globalData.windowWidth,
         progressList: e.progressList,
-        currentDicCode: e.currentDicCode,
+        currentBookCode: e.currentBookCode,
+        dailyStudyTask: e.dailyStudyTask,
+        userAuthInfo: e.userAuthInfo,
+        userBaseInfo: e.userBaseInfo,
+        studyRecordInfo: e.studyRecordInfo,
+        setting: e.setting
       })
+
+      var planTimeColumn = that.data.planTimeColumn
+      planTimeColumn.forEach((item, index) => {
+        if (item == e.setting.targetCount) {
+          planTimeColumn[index] = item + "*"
+        }
+      })
+      that.setData({
+        planTimeColumn
+      })
+
+      setTimeout(() => {
+        that.setData({
+          loading: false
+        })
+      }, 1000);
     })
-    app.globalData.needRefreshTodayCard = false
+
   },
 
   share() {
@@ -530,33 +568,29 @@ Page({
       imageUrl: '../../images/share.png'
     }
   },
-  /** 
+
+
+  onChangePlanPicker(e) {
+    console.log(parseInt(e.detail.value))
+  },
+
+  /**  
    * 生命周期函数: 监听页面加载
    * 
    * @param {}  无需参数
    * @toMethod 转入初始化函数 this.init()  
    */
-  onLoad: function () {
-    // this.init()
-    console.log("searchBarTop", app.globalData.searchBarTop)
-    this.setData({
-      navigationBarHeight: app.globalData.navigationBarHeight,
-      searchBarTop: app.globalData.searchBarTop,
-      searchBarHeight: app.globalData.searchBarHeight,
-      scrollViewHeight: app.globalData.scrollViewHeight,
-      loading: false,
-      progressList: app.globalData.progressList,
-      currentDicCode: app.globalData.currentDicCode,
-      windowWidth: app.globalData.windowWidth
-    })
-
-    app.globalData.needRefreshTodayCard = false
+  onLoad: function (options) {
+    console.log(options)
+    this.initFromServer()
   },
+
   setBackgroudImage() {
     this.setData({
       alarmOverlay: true
     })
   },
+
   openAlarm() {
     wx.getSetting({
       withSubscriptions: true,
@@ -581,11 +615,12 @@ Page({
   },
 
   showRandomCard: function () {
+    if (!this.hasSetDict()) {
+      return
+    }
     this.setData({
       showRandomCardValue: true
     })
-    // this.
-    // this.popover.onHide()
   },
 
   onCloseRandomCard: function () {
@@ -595,7 +630,7 @@ Page({
   },
   /**
    * 下拉刷新函数
-   * 
+   *   
    * @param {}  无需参数
    * @toMethod this.init()  转入初始化函数
    */
@@ -633,7 +668,6 @@ Page({
       showPracticeSheetValue: true
     })
   },
-
 
   onSelectPracticeSheet(e) {
     let nameStr = e.detail.name

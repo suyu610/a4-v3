@@ -4,11 +4,7 @@
 <movable-area class="container">
   <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
   <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
-    <header title="今日计划新学" bgColor="transparent"></header>
-    <!-- <block wx:for="{{todayCards}}" wx:key="index">
-      <wordCard loading="{{false}}" progress="" wordCard="{{}}"></wordCard>
-    </block> -->
-
+    <header title="今日计划新学" cardNum="{{totalCardNum}}" bgColor="transparent"></header>
     <block wx:for="{{todayCards}}" wx:key="cardId">
       <!-- wordCard [Not Loading OR Empty] -->
       <wordCard class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
@@ -25,6 +21,8 @@
   </movable-view>
 </movable-area>
 
+<!-- 学习模式选择 -->
+<van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
 
 <!-- 词典 -->
 <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}" custom-style="height:100%;width:100%;background: transparent;">

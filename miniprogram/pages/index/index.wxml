@@ -49,67 +49,77 @@
   }
 
 </wxs>
-<view class="wrapper" refresher-threshold="{{80}}" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
-  <view class="container">
-    <!-- <v-navigation-bar type="searchBar" showBottomShadow="{{ true }}" bind:search="onSearch" bindtap="{{drawer.openDrawer}}"></v-navigation-bar> -->
-    <image class="top-bg" mode="widthFix" src="https://cdns.qdu.life/a4/images/shadow.png"></image>
-    <view class="navigation-bar" style="height:{{navigationBarHeight}}px;">
-      <view class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
-        <image class="menu-img" bind:tap="{{drawer.toggleDrawer}}"></image>
-      </view>
-      <!-- searchBar -->
-      <view class="searchBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;" bind:tap="onSearch">
-        <image class="search-img" src="./images/search.png"></image>
-        <text class="searchBar-text">开始查询单词吧！</text>
-      </view>
-    </view>
 
-    <scroll-view style="margin-top:32rpx;height: {{scrollViewHeight}}px;" bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
-      <view slot="refresher" class="refresh-container" style="display: block; width: 100%; height: 80px; background: transparent; display: flex; flex-direction: column; align-items: center;justify-content: center;">
-        <view class="pullText" style="font-size: 14px;color:grey;padding-top: 16px;padding-bottom: 6px;"><text class="tips">下拉</text>搜索单词</view>
-        <view>
-          <van-icon name="down" size="14px" color="grey" class="icon" />
-        </view>
-      </view>
-      <!-- progress-card -->
-      <v-progress-card loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentDicCode="{{currentDicCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
-      <homecard type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
-      <homecard type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
-      <view class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
-        <view>「 随心一张 」 </view>
-        <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image>
-      </view>
-    </scroll-view> 
-
-    <popover animation id='popover' show="{{true}}" parent-id="random">
-      <!-- <view>hello</view> -->
-      <popover-item closeable hasline>内容超出会自动隐藏用...表示 </popover-item>
-    </popover>
-    <!-- search-keyboard -->
-    <view wx:if="{{ showSearchBar }}" class="search-keyboard" style="bottom:{{keyboardHeight}}px;">
-      <view class="search-keyboard-left">
-        <image class="search-img" src="./images/search.png"></image>
-        <input value="{{searchWordInputValue}}" bindconfirm="onTapSearchWordBtn" bindblur="bindSearchWordKeyInputBlur" bindinput="bindSearchWordKeyInput" placeholder="请输入要搜索的单词" placeholder-class="search-placeholder" focus confirm-type="search" adjust-position="{{false}}" bind:focus="onKeyboardFocus"></input>
-      </view>
-    </view>
-
-    <!-- van-overlay -->
-    <van-overlay show="{{ showOverlay }}" custom-style="z-index:99" bind:click="onClickHideOverlay" />
-
-    <!-- 词典 -->
-    <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
-      <v-word-dic bind:showWordGroupPopup="showWordGroupPopup" class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
-    </van-popup>
-    <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
-  </view>
-
-  <view class="drawer drawerA" data-drawerwidth="{{windowWidth}}">
-    <sidebar bind:openAlarm="openAlarm" bind:share="share"></sidebar>
+<view class="loading-container" wx:if="{{loading}}">
+  <view class="child">
+    <van-loading size="24px" vertical>加载中...</van-loading>
+    <!-- <view class="sentence">{{senInfo.english}}</view> -->
   </view>
 </view>
 
+<van-transition show="{{ !loading }}">
+  <view class="wrapper" refresher-threshold="{{80}}" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
+    <view class="container">
+      <!-- <v-navigation-bar type="searchBar" showBottomShadow="{{ true }}" bind:search="onSearch" bindtap="{{drawer.openDrawer}}"></v-navigation-bar> -->
+      <image class="top-bg" mode="widthFix" src="https://cdns.qdu.life/a4/images/shadow.png"></image>
+      <view class="navigation-bar" style="height:{{navigationBarHeight}}px;">
+        <view class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
+          <image class="menu-img" bind:tap="{{drawer.toggleDrawer}}"></image>
+        </view>
+        <!-- searchBar -->
+        <view class="searchBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;" bind:tap="onSearch">
+          <image class="search-img" src="./images/search.png"></image>
+          <text class="searchBar-text">开始查询单词吧！</text>
+        </view>
+      </view>
+
+      <scroll-view style="margin-top:32rpx;height: {{scrollViewHeight}}px;" bindrefresherrestore="{{refresh.onAbort}}" bindrefresherabort="{{refresh.onAbort}}" bindrefresherpulling="{{refresh.onPulling}}" class="scroll-view main" scroll-y bindscrolltolower="onReachBottom" scroll-with-animation refresher-enabled refresher-triggered="{{refresherTriggered}}" refresher-default-style="none" bindrefresherrefresh="onScrollViewRefresh">
+        <view slot="refresher" class="refresh-container" style="display: block; width: 100%; height: 80px; background: transparent; display: flex; flex-direction: column; align-items: center;justify-content: center;">
+          <view class="pullText" style="font-size: 14px;color:grey;padding-top: 16px;padding-bottom: 6px;"><text class="tips">下拉</text>搜索单词</view>
+          <view>
+            <van-icon name="down" size="14px" color="grey" class="icon" />
+          </view>
+        </view>
+        <!-- progress-card -->
+        <v-progress-card loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
+        <homecard todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
+        <homecard todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
+        <view class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
+          <view>「 随心一张 」 </view>
+          <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image>
+        </view>
+      </scroll-view>  
+ 
+      <popover animation id='popover' show="{{true}}" parent-id="random">
+        <!-- <view>hello</view> -->
+        <popover-item closeable hasline>内容超出会自动隐藏用...表示 </popover-item>
+      </popover>
+      <!-- search-keyboard -->
+      <view wx:if="{{ showSearchBar }}" class="search-keyboard" style="bottom:{{keyboardHeight}}px;">
+        <view class="search-keyboard-left">
+          <image class="search-img" src="./images/search.png"></image>
+          <input value="{{searchWordInputValue}}" bindconfirm="onTapSearchWordBtn" bindblur="bindSearchWordKeyInputBlur" bindinput="bindSearchWordKeyInput" placeholder="请输入要搜索的单词" placeholder-class="search-placeholder" focus confirm-type="search" adjust-position="{{false}}" bind:focus="onKeyboardFocus"></input>
+        </view>
+      </view>
+
+      <!-- van-overlay -->
+      <van-overlay show="{{ showOverlay }}" custom-style="z-index:99" bind:click="onClickHideOverlay" />
+
+      <!-- 词典 -->
+      <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
+        <v-word-dic bind:showWordGroupPopup="showWordGroupPopup" class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
+      </van-popup>
+      <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
+    </view>
+
+    <view class="drawer drawerA" data-drawerwidth="{{windowWidth}}">
+      <sidebar studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}" userBaseInfo="{{userBaseInfo}}" bind:openAlarm="openAlarm" bind:share="share"></sidebar>
+    </view>
+  </view>
+</van-transition>
+
 <van-popup show="{{ showPlanTimeColumnValue }}" bind:close="onClosePlanTimeColumn" round position="bottom" custom-style="height: 50%;">
-  <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChange" show-toolbar bind:confirm="onClosePlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
+  <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChangePlanPicker" show-toolbar bind:confirm="onClosePlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
 </van-popup>
 
 <van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 50%;background-color: #e2eeff;">

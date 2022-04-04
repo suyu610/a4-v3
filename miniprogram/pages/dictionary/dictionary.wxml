@@ -6,11 +6,10 @@
       <van-tab title="{{column.name}}">
         <scroll-view scroll-y scroll-x="{{false}}" class="tab-container" style="height:{{tabContainerHeight}}px">
           <block wx:for="{{column.bookList}}" wx:for-item="book" wx:key="index">
-            <book-item curStudyNum="{{book.curStudyNum}}" remainDay="{{book.remainDay}}" bookColumnId="{{book.bookColumnId}}" bookName="{{book.name}}" totalCount="{{book.totalWordNum}}" hasAdded="{{book.hasAdded}}" isCurrent="{{book.isCurrent}}" desc="{{book.desc}}"></book-item>
+            <book-item bindtap="onTapBookItem" data-name="{{book.name}}" data-code="{{book.code}}" curStudyNum="{{book.curStudyNum}}" remainDay="{{book.remainDay}}" bookColumnId="{{book.bookColumnId}}" bookName="{{book.name}}" totalCount="{{book.totalWordNum}}" hasAdded="{{book.hasAdded}}" isCurrent="{{book.isCurrent}}" desc="{{book.desc}}"></book-item>
           </block>
         </scroll-view>
       </van-tab>
     </block>
   </van-tabs>
-  <!-- <image class="custom-icon" src="./images/custom.png"></image> -->
 </view>
