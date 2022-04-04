@@ -5,7 +5,7 @@ Component({
     bookName: String,
     totalCount: Number,
     bookColumnId: {
-      type: Number, 
+      type: Number,
       value: 1
     }
   },
@@ -14,7 +14,9 @@ Component({
   lifetimes: {},
 
   methods: {
-
+    imgLoad(e) {
+      console.log(e)
+    },
 
   }
 })

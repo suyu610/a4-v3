@@ -1,5 +1,5 @@
 <view class="container">
-  <image class="img icon icon-book-{{bookColumnId%5+1}}" mode="heightFix" />
+  <image-ext class="img icon" src="https://cdns.qdu.life/a4/images/book_{{bookColumnId%5+1}}.png" placeholder-image="./images/book_loading.png" brokenImage="/icon/break.png" class="logo"></image-ext>
   <view class="title">{{bookName}}</view>
   <view class="count">{{totalCount}}词</view>
-</view>
+</view> 

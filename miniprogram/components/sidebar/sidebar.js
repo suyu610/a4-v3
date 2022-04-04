@@ -102,7 +102,7 @@ Component({
       })
     },
 
-    hideInvitePopup(){
+    hideInvitePopup() {
       this.setData({
         showInvitePopupValue: false
       })
@@ -247,8 +247,9 @@ Component({
     ready() {
       let isInviteMode = app.globalData.isInviteMode
       console.log(isInviteMode)
-      let role = app.globalData.userAuthInfo.role
-      let unlockCount = app.globalData.userAuthInfo.unlockCount
+      let userAuthInfo = app.globalData.userAuthInfo || {}
+      let role = userAuthInfo.role
+      let unlockCount = userAuthInfo.unlockCount
       let invitePopupTitleText = isInviteMode === 'undefined' ? "会员解锁邀请" : (role != "vip") ? "邀请好友" : "恭喜！你已成功解锁会员"
       let invitePopupSubTitleText = "共同免费解锁会员权益"
       let invitePopupBottomText = "分享给好友或群聊"
