@@ -24,6 +24,7 @@ const cardApi = new Card()
 Page({
 
   data: {
+    showInvitePopupValue: false,
     showWordGroupPopupValue: false,
     randomCard: {
       "cardId": 976842,
@@ -192,6 +193,7 @@ Page({
 
     resource.getWordInfo(this.data.searchWordInputValue).then(function (e) {
         wx.hideLoading()
+        console.log(e)
         that.setData({
           curWord: e,
           showSearchBar: false,
@@ -253,115 +255,7 @@ Page({
     app.globalData.needRefreshCalendarData = true
   },
 
-  /**
-   * 添加卡片事件
-   * 
-   * @param {}  无需参数
-   * @setData {userWordCardToday}  更新数据
-   */
-  async onAddCard() {
-    // 如果没有选定词书，则弹出警告
-    if (app.globalData.currentBookCode == null || app.globalData.currentBookCode == '') {
-      wx.showToast({
-        icon: 'none',
-        title: '还未选择词书',
-      })
-      return
-    }
 
-    // 防止多次点击
-    if (this.data.todayCards.length != 0 && this.data.todayCards[this.data.todayCards.length - 1].cardId == -1) {
-      wx.showLoading({
-        title: '添加卡片中',
-      })
-      return
-    }
-
-    let that = this;
-    wx.showToast({
-      icon: 'none',
-      title: '新增单词卡片\r\n《' + config.dictInfo[app.globalData.currentBookCode].name + '》',
-      duration: 500
-    })
-
-    // 占位用的空的卡片
-    let emptyNewCard = {
-      dictCode: "0301",
-      progress: [],
-      cardId: -1,
-      wordList: [],
-      loading: true,
-      loadingAddCard: true
-    }
-
-    if (this.data.todayCards.length == 0) {
-      this.setData({
-        loadingAddCard: true,
-        [`todayCards`]: [emptyNewCard],
-      })
-    } else {
-      let todayCards = this.data.todayCards
-      todayCards.push(emptyNewCard)
-      this.setData({
-        loadingAddCard: true,
-        todayCards
-      })
-    }
-    that.setData({
-      latestCardId: -1
-    })
-
-    // 从服务器拉取今日卡片  
-    var p = cardApi.genNewCard()
-    p.then(function (fetchNewCard) {
-        let todayCards = that.data.todayCards
-        // Check: 是否卡片为空 
-        todayCards.forEach(e => {
-          if (e.cardId == -1) {
-            e.dictCode = fetchNewCard.dictCode
-            e.cardId = fetchNewCard.cardId
-            e.progress = null
-            e.loading = false
-            e.wordList = fetchNewCard.wordList
-            return;
-          }
-        })
-        // 处理一下progressList
-        let progressList = that.data.progressList
-        progressList[that.data.currentBookCode] = progressList[that.data.currentBookCode] + 5
-        that.setData({
-          loadingAddCard: false,
-          todayCards,
-          progressList
-        })
-
-        setTimeout(() => {
-          console.log(app.globalData.needReviewCard.total)
-          if (app.globalData.showGuide && app.globalData.needReviewCard.total == 0) {
-            that.setData({
-              showGuide: true
-            })
-            app.globalData.showGuide = false
-          }
-        }, 500);
-
-
-        app.globalData.todayCards = todayCards
-        app.globalData.needRefreshCalendarData = true
-        app.globalData.needRefreshReviewData = true
-      },
-      function (e) {
-        // 背完了就要删除掉-1的卡片
-        let todayCards = that.data.todayCards
-        todayCards.pop()
-        that.setData({
-          loadingAddCard: false,
-          todayCards
-        })
-        console.log("背完了")
-      }
-    )
-  },
 
   /**
    * 搜索事件
@@ -478,24 +372,76 @@ Page({
    * @toMethod 
    */
   onShow() {
-
-    let pages = getCurrentPages();
-    let currPage = pages[pages.length - 1]; //当前页面
-    let fromRoute = currPage.data.fromRoute
-    // 如果是从练习页退回来的，则要取消掉选定的数组
-    if (fromRoute == "practice") {
+    let that = this
+    if (app.globalData.currentBookCode != null) {
       this.setData({
-        checkedCardArr: [],
-        allChecked: false
+        currentBookCode: app.globalData.currentBookCode
       })
     }
 
     this.setData({
       darkMode: app.globalData.theme == 'dark',
-      currentBookCode: app.globalData.currentBookCode
     })
   },
 
+  checkShareStatus() {
+    this.judgeSharePopup()
+    this.setData({
+      showInvitePopupValue: false
+    })
+    wx.showToast({
+      icon: 'none',
+      title: '成功解锁',
+    })
+  },
+
+  judgeSharePopup() {
+    let isInviteMode = this.data.isInviteMode
+    let userAuthInfo = this.data.userAuthInfo || {}
+    let role = userAuthInfo.role
+    let unlockCount = userAuthInfo.unlockCount
+    console.log(unlockCount)
+
+    let invitePopupTitleText = isInviteMode ? "会员解锁邀请" : (role != "vip") ? "邀请好友" : "成功解锁"
+    let invitePopupSubTitleText = "共同免费解锁会员权益"
+    let invitePopupBottomText = "分享给好友或群聊"
+
+    if (isInviteMode) {
+      invitePopupSubTitleText = "xxx邀请你共同免费解锁会员权益",
+        invitePopupBottomText = "立即解锁"
+
+      this.setData({
+        showInvitePopupValue: true,
+        isInviteMode: false,
+        invitePopupBottomText
+      })
+    } else {
+      if (role == 'vip') {
+        if (unlockCount < 3) {
+          invitePopupSubTitleText = "你可以继续分享，帮助" + parseInt(3 - unlockCount) + "名好友解锁"
+        } else {
+          invitePopupSubTitleText = "你的解锁名额已用完"
+        }
+      }
+    }
+
+    this.setData({
+      unlockCount,
+      invitePopupSubTitleText,
+      invitePopupTitleText,
+      invitePopupBottomText
+    })
+  },
+  showInvitePopup() {
+    this.setData({
+      showInvitePopupValue: true
+    })
+  },
+  hideInvitePopup() {
+    this.setData({
+      showInvitePopupValue: false
+    })
+  },
   initFromServer() {
     let that = this
 
@@ -508,7 +454,8 @@ Page({
       gData.userid = e.userid
       gData.userBaseInfo = e.userBaseInfo
       gData.dailyStudyTask = e.dailyStudyTask
-
+      gData.studyRecordInfo = e.studyRecordInfo
+      
       that.setData({
         navigationBarHeight: app.globalData.navigationBarHeight,
         searchBarTop: app.globalData.searchBarTop,
@@ -523,7 +470,7 @@ Page({
         studyRecordInfo: e.studyRecordInfo,
         setting: e.setting
       })
-
+      that.judgeSharePopup()
       var planTimeColumn = that.data.planTimeColumn
       planTimeColumn.forEach((item, index) => {
         if (item == e.setting.targetCount) {
@@ -548,13 +495,14 @@ Page({
   },
 
   onShareAppMessage: function (options) {
-    console.log(options)
+
+
     var that = this;
     // 设置菜单中的转发按钮触发转发事件时的转发内容
     var shareObj = {
-      path: "pages/empty/empty?invite=" + app.globalData.userid,
+      path: "pages/index/index?invite=" + app.globalData.userid,
       title: options.from == 'button' ? "邀请你共同免费解锁会员权益" : "来体验A4纸背单词的方法吧", // 默认是小程序的名称(可以写slogan等)
-      imageUrl: 'https://cdns.qdu.life/a4/images/share.png', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      imageUrl: 'https://cdns.qdu.life/a4/images/invite-share.png', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         if (res.errMsg == 'shareAppMessage:ok') {}
       }
@@ -581,8 +529,12 @@ Page({
    * @toMethod 转入初始化函数 this.init()  
    */
   onLoad: function (options) {
-    console.log(options)
     this.initFromServer()
+    if (options.invite != null) {
+      this.setData({
+        isInviteMode: true,
+      })
+    }
   },
 
   setBackgroudImage() {

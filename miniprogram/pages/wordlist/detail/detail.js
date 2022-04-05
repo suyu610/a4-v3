@@ -4,6 +4,7 @@ import {
 import {
   WordList
 } from "../../../models/wordlist"
+
 const app = getApp()
 
 import router from '../../../router/index'
@@ -17,11 +18,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    wordDateGroup: [],
+    wordListMap: {},
     container: null,
     showPracticeSheetValue: false,
     allSelectMode: false,
     scrollViewHeight: app.globalData.windowHeight - app.globalData.navigationBarHeight,
-
     practiceModeActions: [{
         name: '记忆模式',
       }, {
@@ -91,19 +93,20 @@ Page({
       },
     })
   },
-  selectAll() {
-    let wordList = this.data.wordList
-    let allSelectMode = this.data.allSelectMode
 
+  selectAll() {
+    let wordListMap = this.data.wordListMap
     let wordCheckedList = []
-    if (wordList.length != this.data.wordCheckedList.length) {
-      wordList.forEach(e => {
-        wordCheckedList.push(e.wordName)
+
+    for (var key in wordListMap) {
+      wordListMap[key].list.forEach(word => {
+        wordCheckedList.push(word)
       })
     }
+
+
     this.setData({
       wordCheckedList,
-      allSelectMode: !allSelectMode
     })
   },
 
@@ -128,20 +131,20 @@ Page({
     wx.showToast({
       title: '成功',
     })
-    // 把wordLeftCheckedList清空，并去除wordlist中，这些单词
-    let wordList = this.data.wordList
-    let wordLeftCheckedList = this.data.wordLeftCheckedList
-    let newWordList = []
-    wordList.forEach(e => {
-      if (wordLeftCheckedList.indexOf(e.wordName) == -1) {
-        newWordList.push({
-          "wordName": e.wordName
-        })
-      }
-    })
+
+    let wordListMap = this.data.wordListMap
+    let wordCheckedList = this.data.wordCheckedList
+
+    for (var key in wordListMap) {
+      wordListMap[key].list = wordListMap[key].list.filter(item => {
+        return wordCheckedList.indexOf(item) == -1
+      })
+    }
+
     this.setData({
-      wordList: newWordList,
-      wordLeftCheckedList: []
+      wordListMap,
+      totalWordNum: this.data.totalWordNum - wordCheckedList.length,
+      wordCheckedList: []
     })
   },
 
@@ -173,11 +176,10 @@ Page({
 
   jumpToPractice(pMode) {
     // 传参
-    var obj = JSON.stringify(this.data.wordRightCheckedList) //myObj：本js文件中的对象
+    var obj = JSON.stringify(this.data.wordCheckedList) //myObj：本js文件中的对象
     wx.navigateTo({
-      url: '../practice/practice?from=booklist&wordlist=' + obj + '&pMode=' + pMode,
+      url: '../../practice/practice?from=booklist&wordlist=' + obj + '&pMode=' + pMode,
     })
-
   },
 
   onClosePracticeSheet() {
@@ -185,44 +187,45 @@ Page({
       showPracticeSheetValue: false
     })
   },
+
   onPractice: function () {
     console.log("onPractice")
-    if (this.data.wordRightCheckedList.length == 0) return
+    if (this.data.wordCheckedList.length == 0) return
     this.setData({
       showPracticeSheetValue: true
     })
   },
 
-  onTapDeleteWordArr() {
-    if (this.data.wordLeftCheckedList.length == 0) {
+  onTapBottomBtn() {
+    if (this.data.wordCheckedList.length == 0) {
       return
     }
     let that = this
-    wx.showLoading({
-      title: '删除中',
-    })
 
-    wordlistApi.removeWordArr(this.data.wordLeftCheckedList).then(e => that.handleDelteWordArrSuccess(e),
-      function (e) {
-        console.log(e)
+    // 如果是编辑模式则需要删除
+    if (this.data.editMode) {
+      wx.showModal({
+        title: '提示',
+        content: '确认删除' + this.data.wordCheckedList.length + "个单词吗",
+        confirmColor: "#332FEB",
+        success(res) {
+          if (res.confirm) {
+            wx.showLoading({
+              title: '删除中',
+            })
+            wordlistApi.removeWordArr(that.data.wordCheckedList).then(e => that.handleDelteWordArrSuccess(e),
+              function (e) {
+                console.log(e)
+              })
+          }
+        }
       })
+
+    } else {
+      this.onPractice()
+    }
   },
 
-  onLeftBtnTapped(e) {
-    let word = e.currentTarget.dataset.word
-    let wordLeftCheckedList = this.data.wordLeftCheckedList
-    // 存在则删除
-    let index = wordLeftCheckedList.indexOf(word)
-    if (index != -1) {
-      wordLeftCheckedList.splice(index, 1)
-    } else {
-      // 不存在
-      wordLeftCheckedList.push(word)
-    }
-    this.setData({
-      wordLeftCheckedList
-    })
-  },
   /**
    * 隐藏遮罩事件
    * 
@@ -255,21 +258,14 @@ Page({
     innerAudioContext.play()
   },
 
-  // 如果是非编辑模式，则打开词典，如果是编辑模式，则选中或反选框框
   onCellTapped(e) {
-    if (!this.data.editMode) {
-      this.setData({
-        currentWord: e.currentTarget.dataset.word,
-      })
-      //  发音
-      // this.speakCurrentWord()
-      this.toggleDict()
-    } else {
-      this.onLeftBtnTapped(e)
-    }
+    this.setData({
+      currentWord: e.currentTarget.dataset.word,
+    })
+    //  发音
+    // this.speakCurrentWord()
+    this.toggleDict()
   },
-
-
 
   toggleDict() {
     let that = this
@@ -307,24 +303,20 @@ Page({
     })
   },
 
-  goToPage: function () {
-    if (this.data.jumpPage == null) return
-    this.getDate(this.data.jumpPage)
-  },
-
   onChangePageIndex: function (e) {
     // console.log(e.detail)
     this.setData({
       jumpPage: e.detail
     })
   },
+
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    console.log("onReachBottom")
     if (this.data.hasNextPage) {
       console.log("has Next Page")
-
       let indexPage = this.data.currentPageIndex + 1
       this.getDate(indexPage)
     } else {
@@ -334,14 +326,25 @@ Page({
 
   getDate(pageIndex) {
     let that = this
-    wordlistApi.getWordList(pageIndex).then(e => {
-      console.log(e)
+    wordlistApi.getWordList(this.data.groupId, pageIndex).then(e => {
+      let map = that.data.wordListMap
+      e.list.forEach(row => {
+        if (map.hasOwnProperty(0 - row.date)) {
+          map[0 - row.date].list.push(row.word)
+        } else {
+          map[0 - row.date] = {
+            "date": row.date.substr(0, 4) + "." + row.date.substr(4, 2) + "." + row.date.substr(6),
+            list: [row.word]
+          }
+        }
+      })
+
       wx.hideLoading()
       this.setData({
         lastPage: e.lastPage,
         currentPageIndex: e.pageNum,
         totalWordNum: e.total,
-        wordList: that.data.wordList.concat(e.list),
+        wordListMap: map,
         hasNextPage: e.hasNextPage
       })
     })
@@ -364,13 +367,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 获取组件高度
-
     const data = router.extract(options);
-    // console.log(data)
-    // todo: 去获取单词本
+    console.log(data)
     this.setData({
-      groupName: data.name,
+      groupId: data.id,
     })
     wx.showLoading({
       title: '加载资源中',
@@ -391,7 +391,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
     this.setData({
       wordRightCheckedList: [],
       darkMode: app.globalData.theme == 'dark'

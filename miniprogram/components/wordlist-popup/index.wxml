@@ -10,17 +10,16 @@
       </view>
 
       <van-cell-group>
-        <block wx:for="{{wordlistGroup}}" wx:key="id" wx:for-item="item">
-          <van-cell bindtap="selectGroup" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}个单词" center clickable>
+        <block wx:for="{{wordListGroup}}" wx:key="id" wx:for-item="item">
+          <van-cell bindtap="selectGroup" data-name="{{item.groupName}}" data-id="{{item.id}}" label="共{{item.count}}个单词" center clickable>
             <image class="right-icon" src="{{curId==item.id?'./images/checked.png':'./images/unchecked.png'}}" slot="right-icon">
             </image>
             <view slot="title">
-              <view class="van-cell-text">{{item.name}}</view>
+              <view class="van-cell-text">{{item.groupName}}</view>
             </view>
           </van-cell>
-        </block>
+        </block> 
       </van-cell-group>
-      <view style="height:6vh"></view>
       <!-- <view class="bottom"> -->
       <view style="position: fixed; bottom:2vh;  width: 100%;" bindtap="closePopup">
         <bg-btn title="完成" bgColor="#3D4262" width="246" height="34"></bg-btn>

@@ -25,14 +25,8 @@ page {
   color: #4c34f0;
 }
 .btn-container {
-  width: 100%;
-  display: flex;
-  bottom: 100px;
-  left: 0;
-  right: 0;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  transform: translateX(100%);
+  bottom: 66px;
   position: fixed;
 }
 

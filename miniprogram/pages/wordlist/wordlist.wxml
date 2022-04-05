@@ -4,10 +4,10 @@
     <v-navigation-bar type="leftBar" title="单词本" bind:naviBack="onNaviBack"></v-navigation-bar>
   </van-sticky>
   <van-cell-group>
-    <block wx:for="{{wordlistGroup}}" wx:key="id" wx:for-item="item">
-      <van-cell data-popoverOffsetY="-30" data-popoverOffsetX="0" id="group_{{item.id}}" bindlongpress="openBottomSheet" bindtap="jump2WordlistDetail" data-name="{{item.name}}" data-id="{{item.id}}" label="共{{item.count}}单词" center clickable is-link>
+    <block wx:for="{{wordListGroup}}" wx:key="id" wx:for-item="item">
+      <van-cell data-popoverOffsetY="-30" data-popoverOffsetX="0" id="group_{{item.id}}" bindlongpress="openBottomSheet" bindtap="jump2WordlistDetail" data-name="{{item.groupName}}" data-id="{{item.id}}" label="共{{item.count}}单词" center clickable is-link>
         <view slot="title">
-          <view class="van-cell-text">{{item.name}}</view>
+          <view class="van-cell-text">{{item.groupName}}</view>
         </view>
       </van-cell>
     </block>

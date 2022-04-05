@@ -18,6 +18,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    allSelectMode: false,
     cardCur: 0,
     wordlist: ["hello", "abandon", "people", "world", "open"],
     nextWordList: [],
@@ -37,11 +38,33 @@ Page({
       },
     ],
   },
+
+  onAllSelectBtnTapped: function () {
+    let allSelectMode = this.data.allSelectMode
+
+    let checkedCardArr = [] //this.data.checkedCardArr
+    if (!allSelectMode) {
+      this.data.todayCards.forEach(e => {
+        checkedCardArr.push(e)
+      })
+    }
+
+    this.setData({
+      allSelectMode: !allSelectMode,
+      checkedCardArr
+    })
+  },
+
   onPractice: function () {
     if (this.data.checkedCardArr.length == 0) return
     // 增加复习模式
     this.setData({
       showPracticeSheetValue: true
+    })
+  },
+  onClosePracticeSheet() {
+    this.setData({
+      showPracticeSheetValue: false
     })
   },
   /**
@@ -248,7 +271,6 @@ Page({
     let that = this
     // 获取今日卡片
     cardApi.genTodayCard(0).then(e => {
-      console.log(e)
       that.setData({
         todayCards: e.list,
         currentPageIndex: e.pageNum,
@@ -257,6 +279,124 @@ Page({
         loading: false
       })
     })
+
+    // 如果是从练习页退回来的，则要取消掉选定的数组
+    this.setData({
+      checkedCardArr: [],
+      allChecked: false
+    })
+
+  },
+
+
+  /**
+   * 添加卡片事件
+   * 
+   * @param {}  无需参数
+   * @setData {userWordCardToday}  更新数据
+   */
+  async onAddCard() {
+    // 如果没有选定词书，则弹出警告
+    if (app.globalData.currentBookCode == null || app.globalData.currentBookCode == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '还未选择词书',
+      })
+      return
+    }
+
+    // 防止多次点击
+    if (this.data.todayCards.length != 0 && this.data.todayCards[this.data.todayCards.length - 1].cardId == -1) {
+      wx.showLoading({
+        title: '添加卡片中',
+      })
+      return
+    }
+
+    let that = this;
+    wx.showToast({
+      icon: 'none',
+      title: '新增单词卡片\r\n《' + config.dictInfo[app.globalData.currentBookCode].name + '》',
+      duration: 500
+    })
+
+    // 占位用的空的卡片
+    let emptyNewCard = {
+      dictCode: "0301",
+      progress: [],
+      cardId: -1,
+      wordList: [],
+      loading: true,
+      loadingAddCard: true
+    }
+
+    if (this.data.todayCards.length == 0) {
+      this.setData({
+        loadingAddCard: true,
+        [`todayCards`]: [emptyNewCard],
+      })
+    } else {
+      let todayCards = this.data.todayCards
+      todayCards.push(emptyNewCard)
+      this.setData({
+        loadingAddCard: true,
+        todayCards
+      })
+    }
+    that.setData({
+      latestCardId: -1
+    })
+
+    // 从服务器拉取今日卡片  
+    var p = cardApi.genNewCard()
+    p.then(function (fetchNewCard) {
+        let todayCards = that.data.todayCards
+        // Check: 是否卡片为空 
+        todayCards.forEach(e => {
+          if (e.cardId == -1) {
+            e.dictCode = fetchNewCard.dictCode
+            e.cardId = fetchNewCard.cardId
+            e.progress = null
+            e.loading = false
+            e.wordList = fetchNewCard.wordList
+            return;
+          }
+        })
+        // 处理一下progressList
+        let progressList = that.data.progressList
+        progressList[that.data.currentBookCode] = progressList[that.data.currentBookCode] + 5
+        that.setData({
+          loadingAddCard: false,
+          todayCards,
+          progressList
+        })
+
+        setTimeout(() => {
+          console.log(app.globalData.needReviewCard.total)
+          if (app.globalData.showGuide && app.globalData.needReviewCard.total == 0) {
+            that.setData({
+              showGuide: true
+            })
+            app.globalData.showGuide = false
+          }
+        }, 500);
+
+
+        app.globalData.todayCards = todayCards
+        app.globalData.needRefreshCalendarData = true
+        app.globalData.needRefreshReviewData = true
+      },
+      function (e) {
+        // 背完了就要删除掉-1的卡片
+        let todayCards = that.data.todayCards
+        todayCards.pop()
+        that.setData({
+          loadingAddCard: false,
+          todayCards
+        })
+        console.log("背完了")
+      }
+    )
   },
 
   /**

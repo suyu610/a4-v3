@@ -97,7 +97,6 @@ Component({
       let date = this.data.wordCard.date
       if (date != null) {
         date = date.substr(0, 4) + "." + date.substr(4, 2) + "." + date.substr(6)
-        console.log(date)
       }
 
       this.setData({
@@ -150,11 +149,36 @@ Component({
         showCardStatusValue: false
       })
     },
+
     changeCardStatus: function () {
-      this.setData({
-        showCardStatusValue: true
-      })
+      let statusMode = this.data.status_mode
+      if (statusMode == 1) {
+        wx.showToast({
+          icon: 'none',
+          title: '已练习状态才能修改',
+        })
+        return
+      }
+      if (statusMode == 2) {
+        wx.showModal({
+          title: '是否切换至已完成',
+          content: "将不会在之后的复习中出现",
+          confirmColor: '#220aac',
+        })
+        return
+      }
+
+      if (statusMode == 3) {
+        wx.showModal({
+          title: '是否重置卡片状态',
+          content: "将清空练习次数",
+          confirmColor: '#220aac',
+        })
+        return
+      }
+
     },
+
     /**
      * 切换卡片选中状态
      */

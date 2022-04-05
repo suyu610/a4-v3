@@ -11,8 +11,7 @@
 <van-sticky>
   <v-navigation-bar type="leftBar" title="{{groupName}}"></v-navigation-bar>
 </van-sticky>
-<van-empty description="未收藏单词哦" wx:if="{{wordList.length==0}}" />
-<scroll-view class="container" wx:else id="scroller" bind:scroll="onScroll" scroll-y style="height: {{scrollViewHeight}}px;">
+<scroll-view bindscrolltolower="onReachBottom" class="container" id="scroller" bind:scroll="onScroll" scroll-y style="height: {{scrollViewHeight}}px;">
   <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }} ">
     <view class="container-head" id="containerHeader">
       <view bindtap="onTapSettingBtn">
@@ -31,71 +30,21 @@
         </view>
       </view>
     </view>
-
   </van-sticky>
-
-  <van-cell-group title="2022.02.12">
-    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
-      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
-        <view slot="title" style="display:flex;justify-content:start">
-          <view class="van-cell-text">{{item.wordName}}</view>
-        </view>
-        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
-      </van-cell>
-    </block>
-  </van-cell-group>
-  <van-cell-group title="2022.02.12">
-    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
-      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
-        <view slot="title" style="display:flex;justify-content:start">
-          <view class="van-cell-text">{{item.wordName}}</view>
-        </view>
-        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
-      </van-cell>
-    </block>
-  </van-cell-group>
-  <van-cell-group title="2022.02.12">
-    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
-      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
-        <view slot="title" style="display:flex;justify-content:start">
-          <view class="van-cell-text">{{item.wordName}}</view>
-        </view>
-        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
-      </van-cell>
-    </block>
-  </van-cell-group>
-  <van-cell-group title="2022.02.12">
-    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
-      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
-        <view slot="title" style="display:flex;justify-content:start">
-          <view class="van-cell-text">{{item.wordName}}</view>
-        </view>
-        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
-      </van-cell>
-    </block>
-  </van-cell-group>
-  <van-cell-group title="2022.02.12">
-    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
-      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
-        <view slot="title" style="display:flex;justify-content:start">
-          <view class="van-cell-text">{{item.wordName}}</view>
-        </view>
-        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
-      </van-cell>
-    </block>
-  </van-cell-group>
-  <van-cell-group title="2022.02.09">
-    <block wx:for="{{wordList}}" wx:key="wordName" wx:for-item="item">
-      <van-cell bindtap="onCellTapped" data-word="{{item.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
-        <view slot="title" style="display:flex;justify-content:start">
-          <view class="van-cell-text">as{{item.wordName}}z</view>
-        </view>
-        <image catchtap="onRightBtnTapped" data-word="{{item.wordName}}" class="right-checked-img" src="{{m1.showChecked(item.wordName,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
-      </van-cell>
-    </block>
-  </van-cell-group>
+  <block wx:for="{{wordListMap}}" wx:for-item="dateGroup" wx:key="date">
+    <van-cell-group title="{{dateGroup.date}}" wx:if="{{dateGroup.list.length !=0}}">
+      <block wx:for="{{dateGroup.list}}" wx:key="index" wx:for-item="item">
+        <van-cell bindtap="onCellTapped" data-word="{{item}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+          <view slot="title" style="display:flex;justify-content:start">
+            <view class="van-cell-text">{{item}}</view>
+          </view>
+          <image catchtap="onRightBtnTapped" data-word="{{item}}" class="right-checked-img" src="{{m1.showChecked(item,wordCheckedList) ? darkmodeUtil.addSuffix('images/checked.png',darkMode): darkmodeUtil.addSuffix('images/unchecked.png',darkMode)}}"></image>
+        </van-cell>
+      </block>
+    </van-cell-group>
+  </block>
   <!-- addBtn -->
-  <view class="btn-container" id="add-btn" bindtap="onTapDeleteWordArr">
+  <view class="btn-container" id="add-btn" bindtap="onTapBottomBtn">
     <shadow-btn wx:if="{{wordCheckedList.length!=0}}" title="{{editMode?'删除':'开始练习'}}"></shadow-btn>
   </view>
 

@@ -3,16 +3,15 @@
 
 <movable-area class="container">
   <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
-  <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
-    <header title="今日计划新学" cardNum="{{totalCardNum}}" bgColor="transparent"></header>
+  <view wx:if="{{loading}}"></view>
+  <scroll-view wx:else scroll-y style="height: {{scrollViewHeight}}px;">
+    <header title="今日计划新学" cardNum="{{totalCardNum}}" bgColor="transparent" bind:onRightBtnTapped="onAllSelectBtnTapped"></header>
     <block wx:for="{{todayCards}}" wx:key="cardId">
-      <!-- wordCard [Not Loading OR Empty] -->
       <wordCard class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
     </block>
     <view class="add-btn-wrapper">
       <image class="add-btn" src="./images/add-btn.png" mode="widthFix"></image>
     </view>
-    <!-- <bg-btn title="点此添加卡片" width="112" textColor="#86909C"></bg-btn> -->
   </scroll-view>
   <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}">
     <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}" bindtap="onTapBottomBtn">

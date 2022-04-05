@@ -13,10 +13,11 @@
     "miniprogram": {
       "list": [
         {
-          "name": "review",
-          "pathName": "pages/review/review",
-          "query": "",
-          "scene": null
+          "name": "邀请模式",
+          "pathName": "pages/index/index",
+          "query": "invite=\"abcd\"",
+          "scene": null,
+          "launchMode": "default"
         },
         {
           "name": "settings",

@@ -1,4 +1,10 @@
 // components/wordlist-popup/index.js
+import {
+  WordList
+} from "../../models/wordlist"
+
+let wordlistApi = new WordList()
+const app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -11,44 +17,42 @@ Component({
    */
   data: {
     curId: 0,
-    wordlistGroup: [{
-        id: 0,
-        name: '我的收藏',
-        count: 18
-      }, {
-        id: 4,
-        name: '我的收藏',
-        count: 18
-      }, {
-        id: 5,
-        name: '我的收藏',
-        count: 18
-      }, {
-        id: 6,
-        name: '我的收藏',
-        count: 18
-      }, {
-        id: 7,
-        name: '我的收藏',
-        count: 18
-      },
-      {
-        id: 1,
-        name: '自定义单词本-1',
-        count: 27
-      }, {
-        id: 2,
-        name: '自定义单词本-2',
-        count: 123
-      }
-    ]
+    wordListGroup: []
+
   },
 
+  observers: {
+    'show': function (show) {
+      if (show) {
+        let that = this
+        if (app.globalData.wordListGroup == null) {
+          wordlistApi.getWordListGroup().then(e => {
+            e.sort(that.sortById);
+            that.setData({
+              wordListGroup: e
+            })
+            app.globalData.wordListGroup = e
+          })
+        } else {
+          this.setData({
+            wordListGroup: app.globalData.wordListGroup
+          })
+        }
+      }
+    }
+  },
+  lifetimes: {
+    ready() {
 
+    }
+  },
   /**
    * 组件的方法列表
    */
   methods: {
+    sortById: function (a, b) {
+      return a.id - b.id
+    },
     closePopup() {
       this.setData({
         show: false

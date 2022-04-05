@@ -1,6 +1,14 @@
 // pages/wordlist/detail/detail.js
 import router from '../../router/index'
 
+
+import {
+  WordList
+} from "../../models/wordlist"
+
+const app = getApp()
+let wordlistApi = new WordList()
+
 Page({
 
   /**
@@ -10,7 +18,6 @@ Page({
     position: 'bottom',
     duration: 300,
     showBottomSheetValue: false,
-
     bottomSheetActions: [{
         name: '重命名',
       },
@@ -20,22 +27,9 @@ Page({
       },
     ],
 
-    wordlistGroup: [{
-        id: 0,
-        name: '我的收藏',
-        count: 18
-      },
-      {
-        id: 1,
-        name: '自定义单词本-1',
-        count: 27
-      }, {
-        id: 2,
-        name: '自定义单词本-2',
-        count: 123
-      }
-    ]
+    wordListGroup: []
   },
+
   onTap: function () {
     this.popover = this.selectComponent('#popover')
     // 获取按钮元素的坐标信息
@@ -45,6 +39,7 @@ Page({
       this.popover.onDisplay(res);
     }).exec();
   },
+
   selectBottomSheet(e) {
     switch (e.detail.name) {
       case '重命名':
@@ -57,12 +52,11 @@ Page({
   },
 
   modifyGroupName() {
-    // this.setData({
-    //   showFieldPopupValue: true,
-    //   editMode: true
-    // })
-
-
+    wx.showToast({
+      icon: 'none',
+      title: '开发中...',
+    })
+    return
     wx.showModal({
       title: '修改分组名',
       editable: true,
@@ -72,19 +66,45 @@ Page({
       confirmText: '完成'
     })
   },
+
   openBottomSheet(e) {
+    if (e.currentTarget.dataset.id == 0) {
+      wx.showToast({
+        icon: 'none',
+        title: '不可修改默认单词本',
+      })
+      return
+    }
     this.setData({
       showBottomSheetValue: true,
       curGroupName: e.currentTarget.dataset.name,
       curGroupId: e.currentTarget.dataset.id
     })
   },
+
   deleteGroup() {
-    wx.showToast({
-      icon: 'none',
-      title: '删除成功',
+    let that = this
+    let curGroupId = this.data.curGroupId
+    wordlistApi.deleteGroup(curGroupId).then(e => {
+      let wordListGroup = that.data.wordListGroup
+      wordListGroup.forEach((item, index) => {
+        if (item.id == curGroupId) {
+          wordListGroup[0].count += item.count
+          let index = wordListGroup.indexOf(item)
+          wordListGroup.splice(index, 1)
+        }
+      })
+      wx.showToast({
+        icon: 'none',
+        title: '删除成功',
+      })
+
+      that.setData({
+        wordListGroup
+      })
     })
   },
+
   deleteGroupComfirm() {
     let that = this
     wx.showModal({
@@ -105,17 +125,49 @@ Page({
     })
   },
   openFieldPupup() {
-    // this.setData({
-    //   showFieldPopupValue: true,
-    //   editMode: false
-    // })
+    let that = this
     wx.showModal({
       title: '新建单词本',
       editable: true,
       placeholderText: '请输入单词本名称',
       cancelColor: 'cancelColor',
       confirmColor: '#4931EB',
-      confirmText: '完成'
+      confirmText: '完成',
+      success(res) {
+        if (res.confirm) {
+          if (res.content == '') {
+            wx.showToast({
+              icon: 'none',
+              title: '创建失败\r\n请填写分组名',
+            })
+            setTimeout(() => {
+              that.openFieldPupup()
+            }, 500);
+          } else {
+            if (res.content.length > 50) {
+              wx.showToast({
+                icon: 'none',
+                title: '创建失败\r\n分组名过长',
+              })
+              setTimeout(() => {
+                that.openFieldPupup()
+              }, 500);
+              return
+            }
+            // 创建单词分组
+            wordlistApi.createWordListGroup(res.content).then(e => {
+              wx.showToast({
+                title: '创建成功',
+              })
+              let wordListGroup = that.data.wordListGroup
+              wordListGroup.push(e)
+              that.setData({
+                wordListGroup
+              })
+            })
+          }
+        }
+      }
     })
   },
 
@@ -125,6 +177,7 @@ Page({
       editMode: false
     })
   },
+
   jump2WordlistDetail(e) {
     router.push({
       name: 'wordlistDetail',
@@ -142,52 +195,19 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  sortById: function (a, b) {
+    return a.id - b.id
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-    this.onTap()
+    // this.onTap()
+    wordlistApi.getWordListGroup().then(e => {
+      // id从小到大排序
+      e.sort(this.sortById);
+      this.setData({
+        wordListGroup: e
+      })
+      app.globalData.wordListGroup = e 
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

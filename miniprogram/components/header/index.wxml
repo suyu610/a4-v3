@@ -5,9 +5,7 @@
       <view>{{title}} 「<text class="blue">{{cardNum}}</text>张卡片」</view>
     </view>
   </view>
-  <view class="head-right">
-    <!-- <view class="" bindtap="selectAll"> -->
-    <image class="select-all-btn" mode="heightFix" src="{{'./images/all.png'}}"></image>
-    <!-- </view> -->
+  <view class="head-right" bindtap="onRightBtnTapped">
+    <image class="select-all-btn" mode="heightFix" src="./images/{{!status?'all':'cancel'}}.png"></image>
   </view>
 </view>

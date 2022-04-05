@@ -91,14 +91,11 @@ Page({
     let dayCount = 31
     let curIndex = 15
     let data = [0, 1, 2, 3, 0, 0, 1, 2, 3, 0, 1, 2, 3, 3, 3, 1, 2, 3, 3, 0, 1, 2, 3, 3, 0, 1, 2, 3, 3, 3]
-    let progressInfo = {
-      "year": 3,
-      "month": 1,
-      "continuous": 1,
-    }
+
+    let progressInfo = app.globalData.studyRecordInfo
 
     let bottomProgressInfo = {
-      "newCard": 222,
+      "newCard": 222, 
       "reviewCard": 2,
       "studyTime": 18,
       "practiceCount": 14
@@ -110,8 +107,9 @@ Page({
     styleData = that.drawProgressInfo(progressInfo, styleData)
     // styleData = that.drawBottomProgressInfo(bottomProgressInfo, styleData)
 
-    styleData = that.drawDate("11th March, 2022", styleData)
-
+    const today = new Date()
+    styleData = that.drawDate(today.toLocaleString('en', {  year: "numeric", month: "short", day: "numeric" }), styleData)
+    
     that.setData({
       styleData
     })
@@ -188,13 +186,14 @@ Page({
     return styleData
   },
   drawProgressInfo: function (progressInfo, styleData) {
+    console.log(progressInfo)
     styleData['views'].push({
       "type": "text",
-      "text": progressInfo['year'].toString(),
+      "text": progressInfo.yearDayCount.toString(),
       "css": {
         "color": "#000",
         "top": "70px",
-        "left": progressInfo['year'] >= 100 ? "210px" : progressInfo['year'] >= 10 ? "240px" : "254px",
+        "left": progressInfo.yearDayCount >= 100 ? "210px" : progressInfo.yearDayCount >= 10 ? "240px" : "254px",
         "fontSize": "64px",
         "fontWeight": "bold",
         "fontFamily": "Inter",
@@ -203,11 +202,11 @@ Page({
     })
     styleData['views'].push({
       "type": "text",
-      "text": progressInfo['month'].toString(),
+      "text": progressInfo.monthDayCount.toString(),
       "css": {
         "color": "#000",
         "top": "70px",
-        "left": progressInfo['month'] >= 100 ? "450px" : progressInfo['month'] >= 10 ? "480px" : "494px",
+        "left": progressInfo.monthDayCount >= 100 ? "450px" : progressInfo.monthDayCount >= 10 ? "480px" : "494px",
         "fontSize": "64px",
         "fontWeight": "bold",
         "fontFamily": "Inter",
@@ -216,11 +215,11 @@ Page({
     })
     styleData['views'].push({
       "type": "text",
-      "text": progressInfo['continuous'].toString(),
+      "text": progressInfo.lastDayCount.toString(),
       "css": {
         "color": "#000",
         "top": "70px",
-        "left": progressInfo['continuous'] >= 100 ? "700px" : progressInfo['continuous'] >= 10 ? "730px" : "744px",
+        "left": progressInfo.lastDayCount >= 100 ? "700px" : progressInfo.lastDayCount >= 10 ? "730px" : "744px",
         "fontSize": "64px",
         "fontWeight": "bold",
         "fontFamily": "Inter",
@@ -231,8 +230,8 @@ Page({
   },
   drawAvatar: function (styleData) {
     let url = "/images/avatar.png"
-    if (app.globalData.userInfo) {
-      url = app.globalData.userInfo.avatarUrl
+    if (app.globalData.userBaseInfo) {
+      url = app.globalData.userBaseInfo.avatarUrl
     }
 
     styleData['views'].push({

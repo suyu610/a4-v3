@@ -198,6 +198,7 @@ Component({
     confirmWord: function () {
       this.triggerEvent('confirmWord', {}, {})
     },
+    
     replaceWord: function () {
       let that = this
       this.setData({
@@ -224,45 +225,6 @@ Component({
       })
     },
 
-    confirmDelete: function () {
-      let that = this
-      // 检测一下 showNoEver
-      if (this.data.showNoEver) {
-        that.deleteWord()
-        return;
-      }
-
-      Dialog.confirm({
-          title: '注意',
-          message: '删除的单词不可恢复',
-          confirmButtonText: '删除',
-          context: this
-        })
-        .then(() => {
-          that.deleteWord()
-          wx.setStorage({
-            key: 'showNoEver',
-            data: that.data.showNoEver
-          })
-        })
-        .catch(() => {
-          // on cancel
-        });
-
-      // wx.showModal({
-      //   title: "注意",
-      //   content: "删除的单词不可恢复",
-      //   confirmColor: '#220aac',
-      //   confirmText: '删除',
-      //   success(res) {
-      //     if (res.confirm) {
-      //       that.deleteWord()
-      //     } else if (res.cancel) {
-      //       console.log('用户点击取消')
-      //     }
-      //   }
-      // })
-    },
     deleteWord: function () {
       let that = this
       wx.showLoading({
@@ -311,6 +273,7 @@ Component({
         }
       })
     },
+
     removeWord: function () {
       let that = this
       wordListApi.removeWordFromWordList(this.data.wordContent.wordName).then(e => {

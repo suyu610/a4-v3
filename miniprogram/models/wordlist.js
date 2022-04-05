@@ -60,19 +60,77 @@ class WordList extends HTTP {
     })
   }
 
+  /**
+   * 创建单词分组
+   */
+  createWordListGroup(groupName) {
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/wordlist/group/create',
+        method: 'POST',
+        data: groupName
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
 
+  /**
+   * 删除单词分组
+   */
+  deleteGroup(groupId) {
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/wordlist/group/delete/' + groupId,
+        method: 'POST',
+        data: groupId
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
+
+
+
+  /**
+   * 获取单词本分组
+   * @param {*} pageIndex 
+   * @param {*} groupName 
+   */
+  getWordListGroup() {
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/wordlist/self/group',
+        method: 'GET'
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
   /**
    * 获取自己的单词本
    *
    * @return {wordArr} 单词本数组
    */
-  getWordList(pageIndex) {
+  getWordList(groupId, pageIndex) {
     if (pageIndex == null) {
       pageIndex == 1
     }
     return new Promise((resolve, reject) => {
       this.request({
-        url: '/wordlist/self/' + pageIndex,
+        url: '/wordlist/self/' + groupId + '/' + pageIndex,
         method: 'GET'
       }).then(res => {
         resolve(res)

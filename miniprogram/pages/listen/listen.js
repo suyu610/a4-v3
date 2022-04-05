@@ -346,7 +346,6 @@ Page({
   onLoad: function (options) {
     const data = router.extract(options);
     let bgmInnerAudioContext = wx.createInnerAudioContext({});
-    bgmInnerAudioContext.src = "https://cdns.qdu.life/a4/bgm/canno.mp3"
     bgmInnerAudioContext.loop = true
     bgmInnerAudioContext.volume = 0.2
     this.setData({

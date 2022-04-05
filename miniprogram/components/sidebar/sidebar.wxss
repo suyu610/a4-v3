@@ -1,4 +1,6 @@
 /* components/sidebar/sidebar.wxss */
+@import "../../style/font.wxss";
+
 page {
   --cell-vertical-padding: 14px;
 }
@@ -35,7 +37,7 @@ page {
   padding-top: 36rpx;
 }
 
-.top .timeinfo .time .notshow{
+.top .timeinfo .time .notshow {
   font-size: 16px;
   padding-bottom: 3px;
   color: #9fa7b5;
@@ -80,6 +82,8 @@ page {
   text-align: center;
   align-items: center;
 }
+
+
 
 .divider {
   height: 15px;
@@ -129,32 +133,6 @@ page {
   position: relative;
   height: 100%;
   box-sizing: border-box;
-}
-
-.invite-popup-container {
-  padding: 24px;
-  position: relative;
-  height: 100%;
-  box-sizing: border-box;
-}
-.invite-popup-container .title {
-  color: #1d2129;
-  text-align: left;
-  padding-bottom: 20rpx;
-  font-weight: bold;
-}
-
-.invite-popup-container .sub-title {
-  font-size: 12px;
-}
-
-.invite-popup-container .popup-container-bottom {
-  position: absolute;
-  bottom: 14px;
-  margin: 0 auto;
-  left: 50%;
-  transform: translate(-50%);
-
 }
 
 .popup-container .title {

@@ -100,15 +100,7 @@ Component({
     },
 
     showInvitePopup() {
-      this.setData({
-        showInvitePopupValue: true
-      })
-    },
-
-    hideInvitePopup() {
-      this.setData({
-        showInvitePopupValue: false
-      })
+      this.triggerEvent('showInvitePopup')
     },
 
     getUserProfile(e) {
@@ -254,32 +246,9 @@ Component({
 
   lifetimes: {
     ready() {
-      let isInviteMode = this.data.isInviteMode
-      let userAuthInfo = this.data.userAuthInfo || {}
-      let role = userAuthInfo.role
-      let unlockCount = userAuthInfo.unlockCount
-      let invitePopupTitleText = isInviteMode === 'undefined' ? "会员解锁邀请" : (role != "vip") ? "邀请好友" : "恭喜！你已成功解锁会员"
-      let invitePopupSubTitleText = "共同免费解锁会员权益"
-      let invitePopupBottomText = "分享给好友或群聊"
-
-      if (isInviteMode) {
-        invitePopupSubTitleText = "xxx邀请你共同免费解锁会员权益"
-      } else {
-        if (role == 'vip') {
-          if (unlockCount < 3) {
-            invitePopupSubTitleText = "你可以继续分享，帮助" + parseInt(3 - unlockCount) + "名好友解锁"
-          } else {
-            invitePopupSubTitleText = "你的解锁名额已经用完"
-          }
-        }
-      } 
 
       this.setData({
         searchBarTop: app.globalData.searchBarTop,
-        unlockCount,
-        invitePopupSubTitleText,
-        invitePopupTitleText,
-        invitePopupBottomText
       })
     }
   }

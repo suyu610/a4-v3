@@ -69,16 +69,6 @@
   </view>
 </van-popup>
 
-<van-popup round show="{{ showInvitePopupValue }}" custom-class="dictPopup" position="center" bind:close="hideInvitePopup" lock-scroll="{{true}}" custom-style="height:50%;width:80%">
-  <view class="invite-popup-container" wx:if="{{ showInvitePopupValue }}">
-    <view class="title">{{invitePopupTitleText}}</view>
-    <view class="sub-title">{{invitePopupSubTitleText}}</view>
-    <view class="popup-container-bottom" bindtap="onInviteFriendTapped">
-      <bg-btn title="{{invitePopupBottomText}}" share bgColor="#6C30F0" width="220" height="30"></bg-btn>
-    </view>
-  </view>
-</van-popup>
-
 <van-popup round show="{{ showTimePickerPopupValue }}" custom-class="dictPopup" position="bottom" bind:close="closeTimePickerPopup" lock-scroll="{{false}}" custom-style="height:50%">
   <van-datetime-picker wx:if="{{ showTimePickerPopupValue }}" type="time" bind:cancel="closeTimePickerPopup" bind:confirm="closeTimePickerPopup" show-toolbar title="每日提醒时间" filter="{{ timePickerFilter }}" />
 </van-popup>

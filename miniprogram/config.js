@@ -2,9 +2,9 @@
 const config = {
 
   // 域名前缀 
-  api_base_url: 'https://beta.opentext.press/v1',
+  // api_base_url: 'https://beta.opentext.press/v1',
   // api_base_url: 'http://localhost:6110/v2', 
-  // api_base_url: 'http://192.168.43.29:6110/v2',
+  api_base_url: 'http://192.168.43.29:6110/v2',
   // api_base_url: 'http://10.195.247.202:6110/v2', 
 
   // 词书信息
@@ -13,7 +13,7 @@ const config = {
       name: "人教版一年级上",
       totalWordNum: 53,
       desc: "完整收录四级大纲词汇，高级备考之选"
-    },
+    }, 
     "0201": {
       name: "初中英语词汇",
       totalWordNum: 1849,
