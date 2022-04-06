@@ -1,5 +1,7 @@
 // pages/snapshot/snapshot.js
 const app = getApp()
+let radio = 0.66
+
 const cavasPosArr = [
   [{
       "top": "",
@@ -26,8 +28,8 @@ Page({
     calendarDateArr: ["", "double", "orange", "blue", "", "double", "orange"],
     styleData: {}
   },
+
   onImgOK(e) {
-    console.log(e)
     this.setData({
       imgUrl: e.detail.path
     })
@@ -61,32 +63,31 @@ Page({
     var d = new Date(year, month, 0);
     return d.getDate();
   },
+  didShow: function (e) {
+    console.log(e)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let that = this
-    wx.loadFontFace({
-      family: 'Inter',
-      source: 'https://cdns.qdu.life/a4/font/Inter.ttf',
-    })
-
     ///  解析数据
     let styleData = {}
     styleData = {
-      "width": "933px",
-      "height": "1366px",
+      "width": 933 * radio + "px",
+      "height": 1366 * radio + "px",
       "background": "#f8f8f8",
+      "borderRadius": 50 * radio + "px",
       "views": [{
         "type": "image",
-        "url": "https://cdns.qdu.life/a4/snapshot/bg_2@x3.png",
+        "url": "https://cdns.qdu.life/a4/snapshot/bg_3@x2.png",
         "css": {
-          "width": "933px",
-          "height": "1366px",
+          "width": 933 * radio + "px",
+          "height": 1366 * radio + "px",
           "top": "0px",
           "left": "0px",
           "rotate": "0",
-          "borderRadius": "",
+          "borderRadius": 50 * radio + "px",
           "borderWidth": "",
           "borderColor": "#000000",
           "shadow": "",
@@ -107,7 +108,13 @@ Page({
     let data = [0, 1, 2, 3, 0, 0, 1, 2, 3, 0, 1, 2, 3, 3, 3, 1, 2, 3, 3, 0, 1, 2, 3, 3, 0, 1, 2, 3, 3, 3]
 
     let progressInfo = app.globalData.studyRecordInfo
-
+    if (progressInfo == null) {
+      progressInfo = {
+        yearDayCount: 0,
+        monthDayCount: 0,
+        lastDayCount: 0
+      }
+    }
     let bottomProgressInfo = {
       "newCard": 222,
       "reviewCard": 2,
@@ -126,76 +133,33 @@ Page({
     let d = dateStr.split(' ');
     dateStr = d[1] + '. ' + d[2] + ' ' + d[3]
     styleData = that.drawDate(dateStr, styleData)
-
     that.setData({
       styleData
     })
+
+    // wx.loadFontFace({
+    //   global: true,
+    //   family: 'Inter',
+    //   scopes: ['webview', 'native'],
+    //   source: 'https://cdns.qdu.life/a4/font/Inter.ttf',
+    //   success(res) {
+    //     that.setData({
+    //       styleData
+    //     })
+    //   }
+    // })
   },
 
-  drawBottomProgressInfo: function (bottomProgressInfo, styleData) {
-    styleData['views'].push({
-      "type": "text",
-      "text": bottomProgressInfo['newCard'].toString(),
-      "css": {
-        "color": "#000",
-        "top": "1176px",
-        "left": bottomProgressInfo['newCard'] >= 100 ? "276px" : bottomProgressInfo['newCard'] >= 10 ? "300px" : "310px",
-        "fontSize": "44px",
-        "fontWeight": "bold",
-        "fontFamily": "Inter",
-        "textAlign": "right",
-      }
-    })
-    styleData['views'].push({
-      "type": "text",
-      "text": bottomProgressInfo['reviewCard'].toString(),
-      "css": {
-        "color": "#000",
-        "top": "1176px",
-        "left": bottomProgressInfo['reviewCard'] >= 100 ? "714px" : bottomProgressInfo['reviewCard'] >= 10 ? "740px" : "750px",
-        "fontSize": "44px",
-        "fontWeight": "bold",
-        "fontFamily": "Inter",
-        "textAlign": "center",
-      }
-    })
-    styleData['views'].push({
-      "type": "text",
-      "text": bottomProgressInfo['studyTime'].toString(),
-      "css": {
-        "color": "#000",
-        "top": "1376px",
-        "left": bottomProgressInfo['studyTime'] >= 100 ? "250px" : bottomProgressInfo['studyTime'] >= 10 ? "290px" : "317px",
-        "fontSize": "44px",
-        "fontWeight": "bold",
-        "fontFamily": "Inter",
-        "textAlign": "center",
-      }
-    })
-    styleData['views'].push({
-      "type": "text",
-      "text": bottomProgressInfo['practiceCount'].toString(),
-      "css": {
-        "color": "#000",
-        "top": "1376px",
-        "left": bottomProgressInfo['practiceCount'] >= 100 ? "714px" : bottomProgressInfo['practiceCount'] >= 10 ? "740px" : "750px",
-        "fontSize": "44px",
-        "fontWeight": "bold",
-        "fontFamily": "Inter",
-        "textAlign": "center",
-      }
-    })
-    return styleData;
-  },
+
   drawDate: function (dateStr, styleData) {
     styleData['views'].push({
       "type": "text",
       "text": dateStr,
       "css": {
         "color": "#000",
-        "top": "284px",
-        "left": "90px",
-        "fontSize": "46px",
+        "top": 284 * radio + "px",
+        "left": 90 * radio + "px",
+        "fontSize": 46 * radio + "px",
         "fontWeight": "normal",
         "fontFamily": 'Inter',
         "textAlign": "right",
@@ -204,15 +168,14 @@ Page({
     return styleData
   },
   drawProgressInfo: function (progressInfo, styleData) {
-    console.log(progressInfo)
     styleData['views'].push({
       "type": "text",
       "text": progressInfo.yearDayCount.toString(),
       "css": {
         "color": "#000",
-        "top": "70px",
-        "left": progressInfo.yearDayCount >= 100 ? "210px" : progressInfo.yearDayCount >= 10 ? "240px" : "254px",
-        "fontSize": "64px",
+        "top": 70 * radio + "px",
+        "left": progressInfo.yearDayCount >= 100 ? 210 * radio + "x" : progressInfo.yearDayCount >= 10 ? 240 * radio + "px" : 254 * radio + "px",
+        "fontSize": 64 * radio + "px",
         "fontWeight": "bold",
         "fontFamily": "Inter",
         "textAlign": "right",
@@ -223,9 +186,9 @@ Page({
       "text": progressInfo.monthDayCount.toString(),
       "css": {
         "color": "#000",
-        "top": "70px",
-        "left": progressInfo.monthDayCount >= 100 ? "450px" : progressInfo.monthDayCount >= 10 ? "480px" : "494px",
-        "fontSize": "64px",
+        "top": 70 * radio + "px",
+        "left": progressInfo.monthDayCount >= 100 ? 450 * radio + "px" : progressInfo.monthDayCount >= 10 ? 480 * radio + "px" : 494 * radio + "px",
+        "fontSize": 64 * radio + "px",
         "fontWeight": "bold",
         "fontFamily": "Inter",
         "textAlign": "center",
@@ -236,9 +199,9 @@ Page({
       "text": progressInfo.lastDayCount.toString(),
       "css": {
         "color": "#000",
-        "top": "70px",
-        "left": progressInfo.lastDayCount >= 100 ? "700px" : progressInfo.lastDayCount >= 10 ? "730px" : "744px",
-        "fontSize": "64px",
+        "top": 70 * radio + "px",
+        "left": progressInfo.lastDayCount >= 100 ? 700 * radio + "px" : progressInfo.lastDayCount >= 10 ? 730 * radio + "px" : 744 * radio + "px",
+        "fontSize": 64 * radio + "px",
         "fontWeight": "bold",
         "fontFamily": "Inter",
         "textAlign": "center",
@@ -256,12 +219,12 @@ Page({
       "type": "image",
       "url": url,
       "css": {
-        "width": "150px",
-        "height": "150px",
-        "top": "60px",
-        "left": "50px",
+        "width": 150 * radio + "px",
+        "height": 150 * radio + "px",
+        "top": 60 * radio + "px",
+        "left": 50 * radio + "px",
         "rotate": "0",
-        "borderRadius": "75px",
+        "borderRadius": 75 * radio + "px",
         "borderWidth": "",
         "borderColor": "#000000",
         "shadow": "",
@@ -297,10 +260,10 @@ Page({
         "type": "image",
         "url": url,
         "css": {
-          "width": data[index - startIndex] == 3 ? "21px" : "9px",
-          "height": "9px",
-          "top": 547 + 108 * parseInt(index / 7) + "px",
-          "left": (data[index - startIndex] == 3 ? 118 : 122) + 114 * (index % 7) + "px",
+          "width": data[index - startIndex] == 3 ? 21 * radio + "px" : 9 * radio + "px",
+          "height": 9 * radio + "px",
+          "top": radio * (547 + 108 * parseInt(index / 7)) + "px",
+          "left": radio * ((data[index - startIndex] == 3 ? 118 : 122) + 114 * (index % 7)) + "px",
           "rotate": "0",
           "borderRadius": "",
           "borderWidth": "",
@@ -328,9 +291,9 @@ Page({
         "text": (index - startIndex + 1).toString(),
         "css": {
           "color": (index - startIndex + 1) > curIndex ? "#C9CDD4" : (index - startIndex + 1) == curIndex ? "#4C34F0" : "#000",
-          "top": 497 + 108 * parseInt(index / 7) + "px",
-          "left": 109 + 114 * (index % 7) + "px",
-          "fontSize": "34px",
+          "top": radio * (497 + 108 * parseInt(index / 7)) + "px",
+          "left": radio * (109 + 114 * (index % 7)) + "px",
+          "fontSize": 34 * radio + "px",
           "fontWeight": "bold",
           "fontFamily": "Inter",
           "textAlign": "center",
@@ -340,47 +303,7 @@ Page({
     }
     return styleData
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
 
   /**
    * 用户点击右上角分享

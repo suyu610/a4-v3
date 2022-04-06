@@ -4,7 +4,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    briefCalendarList: Array
   },
 
   /**
@@ -12,7 +12,7 @@ Component({
    */
   data: {
     weeks: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-    days: [15, 16, 17, 18, 19, 20, 21]
+    todayIndex: new Date().getDay()
   },
 
   /**

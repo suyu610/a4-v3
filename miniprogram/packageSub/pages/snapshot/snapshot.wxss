@@ -1,11 +1,17 @@
 /* pages/snapshot/snapshot.wxss */
 @import "../../../style/font.wxss";
-
 page {
+  height: 100vh;
+  background-color: #4c34f0;
+  overflow: hidden;
+}
+.container {
   background: url("https://cdns.qdu.life/a4/images/poster/bg.png") 100% 100%
     no-repeat;
   background-color: #4c34f0;
   overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 }
 .empty {
   background-color: white;

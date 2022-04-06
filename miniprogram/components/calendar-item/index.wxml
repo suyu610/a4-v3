@@ -2,7 +2,7 @@
   <image class="icon" src="./images/{{index}}.png"></image>
   <view class="info">
     <view class="right-top">
-      <view class="right-num">{{num}}</view>
+      <view class="right-num" style="opacity: {{piece=='暂未统计'?'0':'1'}};">{{num}}</view>
       <view class="right-top">{{piece}}</view>
     </view>
     <view class="right-bottom">{{info}}</view>

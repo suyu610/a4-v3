@@ -1,12 +1,24 @@
 <!--components/sidebar-canlendar/index.wxml-->
+
+<wxs module="m">
+  var a = function (text) {
+    if (text != null) {
+      return text.split("-")[2]
+    }
+  }
+  module.exports.a = a;
+</wxs>
+
+
+
 <view class="container">
   <block wx:for="{{7}}" wx:key="index">
     <view class="day-item">
       <view class="week">{{weeks[index]}}</view>
-      <view class="days {{index==3?'days-active':''}} {{index>3?'days-grey':''}}">{{days[index]}}</view>
-      <view class="dots" wx:if="{{index<4 && index!=3}}">
-        <view class="blue dot" wx:if="{{index!=1}}"></view>
-        <view class="yellow dot" wx:if="{{index!=2}}"></view>
+      <view class="days {{index==todayIndex?'days-active':''}} {{index>todayIndex?'days-grey':''}}"> {{m.a(briefCalendarList[index].date)}}</view>
+      <view class="dots">
+        <view class=" blue dot" wx:if="{{briefCalendarList[index].status==1 || briefCalendarList[index].status==3}}"></view>
+        <view class="yellow dot" wx:if="{{briefCalendarList[index].status==2 || briefCalendarList[index].status==3}}"></view>
       </view>
     </view>
   </block>

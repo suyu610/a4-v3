@@ -7,7 +7,7 @@
   <scroll-view wx:else scroll-y style="height: {{scrollViewHeight}}px;">
     <header title="今日计划新学" cardNum="{{totalCardNum}}" bgColor="transparent" bind:onRightBtnTapped="onAllSelectBtnTapped"></header>
     <block wx:for="{{todayCards}}" wx:key="cardId">
-      <wordCard class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
+      <wordCard mode="study" class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
     </block>
     <view class="add-btn-wrapper">
       <image class="add-btn" src="./images/add-btn.png" mode="widthFix"></image>

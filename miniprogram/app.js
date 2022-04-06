@@ -93,13 +93,7 @@ App({
 
 
   initFont() {
-    // wx.loadFontFace({
-    //   global: true,
-    //   family: 'PoppinsNormal',
-    //   scopes: ['webview', 'native'],
-    //   source: 'https://cdns.qdu.life/a4/font/Poppins-normal.ttf',
 
-    // })
   },
 
   initSystemCache: function () {

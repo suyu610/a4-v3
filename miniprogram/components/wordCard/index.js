@@ -3,6 +3,8 @@ import {
 } from "../../models/card"
 
 import config from '../../config'
+import * as dateTools from '../../utils/dateTools'
+
 
 // components/wordCard/index.js
 const app = getApp()
@@ -94,14 +96,33 @@ Component({
 
   lifetimes: {
     ready() {
-      let date = this.data.wordCard.date
+      let date = this.data.wordCard.createTimeStamp
       if (date != null) {
-        date = date.substr(0, 4) + "." + date.substr(4, 2) + "." + date.substr(6)
+        date = date.substr(0, 4) + "." + date.substr(5, 2) + "." + date.substr(8, 2)
       }
-
+      let status_mode = 0
+      if (this.data.mode == "study") {
+        if (this.data.wordCard.deleted || (this.data.wordCard.progress != null && this.data.wordCard.progress.seq == 5)) {
+          // 已完成
+          status_mode = 3
+        } else if (this.data.wordCard.progress == null || this.data.wordCard.progress.seq == 0) {
+          // 待练习
+          status_mode = 1
+        } else {
+          // 已练习 
+          status_mode = 2
+        }
+      } else if (this.data.mode == "review") {
+        // 今天已经复习过了
+        if (this.data.wordCard.isTodayHasReview) {
+          status_mode = 2
+        } else {
+          status_mode = 1
+        }
+      } 
       this.setData({
         date,
-        status_mode: Math.round(Math.random() * 2) + 1,
+        status_mode,
         darkMode: app.globalData.theme == 'dark',
       })
 

@@ -7,6 +7,12 @@ import {
 } from '../../models/resource.js'
 const resource = new Resource()
 
+
+import {
+  Card
+} from '../../models/card.js'
+const cardApi = new Card()
+
 Page({
 
   /**
@@ -102,21 +108,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let e = app.globalData.todayInitData
-    let todayCards = app.globalData.needReviewCard.list
     const data = router.extract(options);
-    let nextWordList = []
-    let that = this
-    this.data.wordlist.forEach(word => {
-      resource.getWordInfo(word).then(function (ele) {
-        nextWordList.push(ele)
-        that.setData({
-          nextWordList,
-        })
-      })
-    });
-
-
     if (data != null && data.mode != null) {
       this.setData({
         title: data.mode == "export" ? "导出卡片" : "随身听",
@@ -124,24 +116,14 @@ Page({
         mode: data.mode
       })
     }
-    todayCards.forEach(e => {
-      e.open = false
-    });
     this.setData({
       movable_y: app.globalData.windowHeight - 70,
       movable_x: (app.globalData.windowWidth - 125) / 2,
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
-      senInfo: e.sentence,
-      loading: false,
-      progressList: e.progressList,
-      currentBookCode: e.currentBookCode,
-      currentPageIndex: e.todayCards.pageNum,
-      totalCardNum: e.todayCards.total,
-      hasNextPage: e.todayCards.hasNextPage,
+      loading: true,
       windowWidth: app.globalData.windowWidth,
-      todayCards
     })
   },
 
@@ -177,12 +159,31 @@ Page({
   onReady: function () {
 
   },
+  getInitData() {
+    let that = this
+    // 获取今日卡片
+    cardApi.getNeedReviewCard(0).then(e => {
+      console.log(e)
+      that.setData({
+        todayCards: e.list,
+        currentPageIndex: e.pageNum,
+        totalCardNum: e.total, 
+        hasNextPage: e.hasNextPage,
+        loading: false
+      }) 
+    })
 
+    // 如果是从练习页退回来的，则要取消掉选定的数组
+    this.setData({
+      checkedCardArr: [],
+      allChecked: false
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getInitData()
   },
 
   /**

@@ -38,7 +38,7 @@ Page({
         value: 1
       }
     ],
-    value1: 0, 
+    value1: 0,
     value2: -1,
     value3: -1,
     dataRange: null
@@ -58,8 +58,12 @@ Page({
   onConfirmCalendar(e) {
     const firstDate = new Date(e.detail[0])
     const secondDate = new Date(e.detail[1])
+    let resDate = this.p((firstDate.getMonth() + 1)) + '/' + this.p(firstDate.getDate())
+    
+    if (e.detail[1] != null) {
+      resDate = this.p((firstDate.getMonth() + 1)) + '/' + this.p(firstDate.getDate()) + '-' + this.p((secondDate.getMonth() + 1)) + '/' + this.p(secondDate.getDate())
+    }
 
-    const resDate = this.p((firstDate.getMonth() + 1)) + '/' + this.p(firstDate.getDate()) + '-' + this.p((secondDate.getMonth() + 1)) + '/' + this.p(secondDate.getDate())
     this.setData({
       dataRange: resDate
     })

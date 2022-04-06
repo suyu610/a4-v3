@@ -47,7 +47,7 @@
   </view>
   <view class="bottom">
     <view class="canlendar" bindtap="jump2Calendar">
-      <canlendar></canlendar>
+      <canlendar briefCalendarList="{{studyRecordInfo.briefCalendarList}}"></canlendar>
     </view>
     <block wx:for="{{notvipFuncItemList}}" wx:key="index">
       <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>

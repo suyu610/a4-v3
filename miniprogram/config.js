@@ -13,7 +13,7 @@ const config = {
       name: "人教版一年级上",
       totalWordNum: 53,
       desc: "完整收录四级大纲词汇，高级备考之选"
-    }, 
+    },
     "0201": {
       name: "初中英语词汇",
       totalWordNum: 1849,

@@ -152,6 +152,11 @@ page {
   bottom: 0;
   left: 0;
 }
+.faq-page {
+  text-align: center;
+  padding: 50px 0;
+  /* height: 100%; */
+}
 
 .btn-container {
   width: 100%;
@@ -368,7 +373,6 @@ page {
   display: table-cell;
   vertical-align: middle;
 }
-
 
 .invite-popup-container {
   text-align: center;

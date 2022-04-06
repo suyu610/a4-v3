@@ -6,23 +6,27 @@
   var icon, pullText, tips;
 
   function onAbort(evt, instance) {
-    var icon = instance.selectComponent('.icon')
+    icon = instance.selectComponent('.icon')
     icon.setStyle({
       "transform": "rotate(0deg)"
     })
+    pullText = instance.selectComponent('.pullText')
+    pullText.callMethod('stopPullTop')
   }
 
   function onPulling(evt, instance) {
 
-    var p = Math.min((evt.detail.dy - 30) * 180 / 80, 180)
+    var p = Math.min((evt.detail.dy) * 180 / 80, 180)
     var o = Math.min((evt.detail.dy - 30) / 80, 1)
 
     dy = evt.detail.dy
-    var icon = instance.selectComponent('.icon')
-    var pullText = instance.selectComponent('.pullText')
-    var tips = instance.selectComponent('.tips')
-
-    if (evt.detail.dy > 30) {
+    icon = instance.selectComponent('.icon')
+    pullText = instance.selectComponent('.pullText')
+    tips = instance.selectComponent('.tips')
+    if (dy > 80) {
+      pullText.callMethod('sayHi')
+    }
+    if (evt.detail.dy) {
       icon.setStyle({
         "transform": "rotate(" + p + "deg)"
       })
@@ -57,6 +61,7 @@
   </view>
 </view>
 
+
 <van-transition show="{{ !loading }}">
   <view class="wrapper" refresher-threshold="{{80}}" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
     <view class="container">
@@ -88,7 +93,9 @@
           <view>「 随心一张 」 </view>
           <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image>
         </view>
+
       </scroll-view>
+
 
       <popover animation id='popover' show="{{true}}" parent-id="random">
         <!-- <view>hello</view> -->
@@ -103,7 +110,7 @@
       </view>
 
       <!-- van-overlay -->
-      <van-overlay show="{{ showOverlay }}" custom-style="z-index:99" bind:click="onClickHideOverlay" />
+      <van-overlay id="overlay" show="{{ showOverlay }}" custom-style="z-index:99" bind:click="onClickHideOverlay" />
 
       <!-- 词典 -->
       <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
@@ -116,6 +123,15 @@
       <sidebar studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}" userBaseInfo="{{userBaseInfo}}" bind:openAlarm="openAlarm" bind:share="share" bind:showInvitePopup="showInvitePopup"></sidebar>
     </view>
   </view>
+
+  <page-container show="{{showPageContainerValue}}" round overlay duration="{{500}}" position="right" close-on-slide-down bind:enter="enter" bind:leave="leavePageContainer" bindclickoverlay="onClickOverlay" custom-style="z-index:9999" overlay-style="background-color: rgba(0, 0, 0, 0.7);z-index:9998">
+    <view class="faq-page random-popup-container">
+      <view class="title">常见问题</view>
+      <view class="random-popup-container-footer" bindtap="exit">
+        <bg-btn shadow title="离开" bindtap="exit" bgColor="#6C30F0" width="220" height="30"></bg-btn>
+      </view>
+    </view>
+  </page-container>
 </van-transition>
 
 <!-- 分享解锁页面 -->
@@ -126,7 +142,6 @@
     <view class="popup-container-bottom" bindtap="onInviteFriendTapped">
       <bg-btn shadow wx:if="{{invitePopupBottomText!='立即解锁'}}" title="{{invitePopupBottomText}}" share bgColor="#6C30F0" width="220" height="30"></bg-btn>
       <bg-btn bindtap="checkShareStatus" shadow wx:else title="{{invitePopupBottomText}}" bgColor="#6C30F0" width="220" height="30"></bg-btn>
-
     </view>
     <image class="invite-popup-bg-img" src="https://cdns.qdu.life/a4/images/share_img.png" mode="widthFix"></image>
   </view>

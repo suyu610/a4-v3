@@ -2,12 +2,14 @@ var startmark = 0;
 var status = 0;
 var JUDGEPOINT = 0.3;
 var drawerComp, drawerWidth, iconComp;
+var showPageContainerValue = false
 
 function touchStart(e, ins) {
   var pageX = e.touches[0].pageX;
   startmark = pageX;
   drawerComp = ins.selectComponent('.drawer');
   iconComp = ins.selectComponent('.menu-img');
+  overlay = ins.selectComponent('#overlay');
   drawerWidth = drawerComp.getDataset().drawerwidth;
   iconComp.setStyle({
     'opacity': "0"
@@ -23,7 +25,15 @@ function touchMove(e, ins) {
 
   if (offset > 0 && status == 0) {
     setDrawer(Math.min(drawerWidth, offset));
+
+    if (offset > drawerWidth * JUDGEPOINT) {
+      drawerComp.callMethod('openDrawer')
+    }
   }
+
+  // if (offset < -100 && status == 0) {
+  //   drawerComp.callMethod('openPageContainer')
+  // }
 }
 
 function setIcon(isOpen) {
@@ -51,19 +61,24 @@ function touchEnd(e, ins) {
   if (offset > 0 && status == 0) {
     if (offset < drawerWidth * JUDGEPOINT) {
       setDrawer(0);
+      drawerComp.callMethod('closeDrawer')
     } else {
       setDrawer(drawerWidth);
       status = 1;
     }
   } else if (offset < -10) {
     setDrawer(0);
+    drawerComp.callMethod('closeDrawer')
     status = 0;
   }
-
   setIcon(status == 1)
 }
 
 function setDrawer(x) {
+  // drawerComp.callMethod('openOverlay')
+  // overlay.setStyle({
+  //   opacity: x / drawerWidth,
+  // })
   setCompTransX(drawerComp, x);
 }
 

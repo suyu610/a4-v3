@@ -24,6 +24,9 @@ const cardApi = new Card()
 Page({
 
   data: {
+    drawerStatus: false,
+    showOverlay: false,
+    showPageContainerValue: false,
     showInvitePopupValue: false,
     showWordGroupPopupValue: false,
     randomCard: {
@@ -96,7 +99,56 @@ Page({
     todayCards: [],
     checkedCardArr: [],
     searchWordInputValue: "",
-    showDictPopup: false
+    showDictPopup: false,
+    tmpFlag: false
+  },
+
+  stopPullTop() {
+    console.log("stop")
+    this.setData({
+      tmpFlag: false
+    })
+  },
+  openDrawer() {
+    if (!this.data.drawerStatus) {
+      wx.vibrateShort()
+      this.setData({
+        drawerStatus: true
+      })
+    }
+  },
+  closeDrawer() {
+    this.setData({
+      drawerStatus: false
+    })
+  },
+  openPageContainer() {
+    if (!this.data.showPageContainerValue) {
+      wx.vibrateShort()
+      this.setData({
+        showPageContainerValue: true
+      })
+    }
+  },
+  leavePageContainer() {
+    this.exit()
+  },
+  exit() {
+    this.setData({
+      showPageContainerValue: false
+    })
+  },
+  sayHi() {
+    let that = this
+    if (!this.data.tmpFlag) {
+      wx.vibrateShort({
+        success() {
+          that.setData({
+            tmpFlag: true
+          })
+        }
+      })
+    }
   },
   showWordGroupPopup() {
     this.setData({
@@ -272,6 +324,11 @@ Page({
 
   },
 
+  openOverlay() {
+    this.setData({
+      showOverlay: true,
+    })
+  },
   /**
    * 隐藏遮罩事件
    * 
@@ -342,7 +399,7 @@ Page({
       that.setData({
         currentCardId: cardId,
         currentDictCode: dictCode,
-        curWord: e, 
+        curWord: e,
         showSearchBar: false,
         showDictPopup: true,
         searchWordInputValue: "",
@@ -454,8 +511,12 @@ Page({
       gData.userid = e.userid
       gData.userBaseInfo = e.userBaseInfo
       gData.dailyStudyTask = e.dailyStudyTask
+
+      if (e.studyRecordInfo.lastDayCount == null) {
+        e.studyRecordInfo.lastDayCount = 0
+      }
       gData.studyRecordInfo = e.studyRecordInfo
-      
+
       that.setData({
         navigationBarHeight: app.globalData.navigationBarHeight,
         searchBarTop: app.globalData.searchBarTop,
@@ -588,18 +649,20 @@ Page({
    */
   onScrollViewRefresh: function (e) {
     if (e.detail.dy > 80) {
-      console.log(e)
       this.onSearch()
       this.setData({
         refresherTriggered: false
       })
-      wx.vibrateShort()
     } else {
       this.setData({
         refresherTriggered: false
       })
     }
   },
+  enter() {
+
+  },
+
 
   onTapMenu: function () {
     this.setData({

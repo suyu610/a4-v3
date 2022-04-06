@@ -2,7 +2,6 @@
 const app = getApp()
 const globalData = app.globalData
 import router from '../../router/index'
-
 import {
   Resource
 } from '../../models/resource.js'
@@ -206,17 +205,6 @@ Page({
   onLoad: function (options) {
     let e = app.globalData.todayInitData
     const data = router.extract(options);
-    let nextWordList = []
-    let that = this
-
-    // this.data.wordlist.forEach(word => {
-    //   resource.getWordInfo(word).then(function (ele) {
-    //     nextWordList.push(ele)
-    //     that.setData({
-    //       nextWordList,
-    //     })
-    //   })
-    // });
 
     if (data != null && data.mode != null) {
       this.setData({
@@ -277,6 +265,7 @@ Page({
     let that = this
     // 获取今日卡片
     cardApi.genTodayCard(0).then(e => {
+      console.log(e)
       that.setData({
         todayCards: e.list,
         currentPageIndex: e.pageNum,
@@ -338,7 +327,7 @@ Page({
 
     if (this.data.todayCards.length == 0) {
       this.setData({
-        loadingAddCard: true, 
+        loadingAddCard: true,
         [`todayCards`]: [emptyNewCard],
       })
     } else {
@@ -376,17 +365,6 @@ Page({
           todayCards,
           progressList
         })
-
-        setTimeout(() => {
-          console.log(app.globalData.needReviewCard.total)
-          if (app.globalData.showGuide && app.globalData.needReviewCard.total == 0) {
-            that.setData({
-              showGuide: true
-            })
-            app.globalData.showGuide = false
-          }
-        }, 500);
-
 
         app.globalData.todayCards = todayCards
         app.globalData.needRefreshCalendarData = true
