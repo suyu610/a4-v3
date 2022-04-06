@@ -178,19 +178,25 @@ Page({
   onWord: function (e) {
     let cardId = e.detail.cardId
     let dictCode = e.detail.dictCode
+    console.log(e.detail.wordlist)
     let that = this
 
-    resource.getWordInfo(e.detail.wordName).then(function (e) {
+    resource.getWordListInfo(e.detail.wordlist).then(function (e) {
+      console.log(e)
       that.setData({
-        currentCardId: cardId,
-        currentDictCode: dictCode,
-        curWord: e,
-        showSearchBar: false,
+        cardBaseWordList: e,
         showDictPopup: true,
-        searchWordInputValue: "",
-        showOverlay: false,
-        dictNoFooterMode: false
       })
+      // that.setData({
+      //   currentCardId: cardId,
+      //   currentDictCode: dictCode,
+      //   curWord: e,
+      //   showSearchBar: false, 
+      //   showDictPopup: true,
+      //   searchWordInputValue: "",
+      //   showOverlay: false,
+      //   dictNoFooterMode: false
+      // })
     })
   },
 
@@ -332,7 +338,7 @@ Page({
 
     if (this.data.todayCards.length == 0) {
       this.setData({
-        loadingAddCard: true,
+        loadingAddCard: true, 
         [`todayCards`]: [emptyNewCard],
       })
     } else {

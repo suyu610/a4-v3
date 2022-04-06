@@ -53,6 +53,14 @@ Page({
 
     }
   },
+  // 获取当月天数
+  mGetDate: function () {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var d = new Date(year, month, 0);
+    return d.getDate();
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -86,16 +94,22 @@ Page({
         }
       }, ]
     }
+    const today = new Date()
+    const firstDayOfMonth = new Date()
+    firstDayOfMonth.setDate(1);
+    // 本月第一天是周几
+    let startIndex = firstDayOfMonth.getDay()
+    // 本月的天数
+    let dayCount = this.mGetDate() + startIndex
+    // 今天是第几天
+    let curIndex = today.getDate()
 
-    let startIndex = 2
-    let dayCount = 31
-    let curIndex = 15
     let data = [0, 1, 2, 3, 0, 0, 1, 2, 3, 0, 1, 2, 3, 3, 3, 1, 2, 3, 3, 0, 1, 2, 3, 3, 0, 1, 2, 3, 3, 3]
 
     let progressInfo = app.globalData.studyRecordInfo
 
     let bottomProgressInfo = {
-      "newCard": 222, 
+      "newCard": 222,
       "reviewCard": 2,
       "studyTime": 18,
       "practiceCount": 14
@@ -107,13 +121,17 @@ Page({
     styleData = that.drawProgressInfo(progressInfo, styleData)
     // styleData = that.drawBottomProgressInfo(bottomProgressInfo, styleData)
 
-    const today = new Date()
-    styleData = that.drawDate(today.toLocaleString('en', {  year: "numeric", month: "short", day: "numeric" }), styleData)
-    
+    // styleData = that.drawDate(today.toLocaleString('en', {  year: "numeric", month: "short", day: "numeric" }), styleData)
+    let dateStr = today.toDateString()
+    let d = dateStr.split(' ');
+    dateStr = d[1] + '. ' + d[2] + ' ' + d[3]
+    styleData = that.drawDate(dateStr, styleData)
+
     that.setData({
       styleData
     })
   },
+
   drawBottomProgressInfo: function (bottomProgressInfo, styleData) {
     styleData['views'].push({
       "type": "text",

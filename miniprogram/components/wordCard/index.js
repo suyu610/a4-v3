@@ -329,8 +329,18 @@ Component({
      */
     onWord: function (e) {
       let word = e.currentTarget.dataset.item
+
+      let wordlist = [word.wordName]
+
+      this.data.wordCard.wordList.forEach(e => {
+        if (e.wordName != word.wordName) {
+          wordlist.push(e.wordName)
+        }
+      })
+
       this.triggerEvent('word', {
         wordName: word.wordName,
+        wordlist: wordlist,
         cardId: this.data.wordCard.cardId,
         dictCode: this.data.wordCard.dictCode,
         selfDefWordNameCh: word.selfDefWordNameCh,

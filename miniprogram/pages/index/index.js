@@ -338,17 +338,17 @@ Page({
 
     let that = this
     resource.getWordInfo(e.detail.wordName).then(function (e) {
+      console.log(e)
       that.setData({
         currentCardId: cardId,
         currentDictCode: dictCode,
-        curWord: e,
+        curWord: e, 
         showSearchBar: false,
         showDictPopup: true,
         searchWordInputValue: "",
         showOverlay: false,
         dictNoFooterMode: false
       })
-
     })
 
   },

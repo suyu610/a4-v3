@@ -27,7 +27,7 @@
 <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}" custom-style="height:100%;width:100%;background: transparent;">
   <view style="align-items: center;" wx:if="{{showDictPopup}}">
     <swiper indicator-dots indicator-color="rgba(255, 255, 255, .3)" indicator-active-color="#fff" class="card-swiper" bindchange="cardSwiper" bindtap="onClickHideOverlay" data-class="card-swiper" current="{{cardCur}}">
-      <swiper-item data-class="swiper-item" wx:if="{{nextWordList.length !=0}}" wx:for="{{nextWordList}}" wx:key="index" wx:for-item="item" class="swiper-item {{cardCur==index?'cardCur':'cardNotCur'}}">
+      <swiper-item data-class="swiper-item" wx:if="{{cardBaseWordList.length !=0}}" wx:for="{{cardBaseWordList}}" wx:key="index" wx:for-item="item" class="swiper-item {{cardCur==index?'cardCur':'cardNotCur'}}">
         <view class="swiper-item" data-class="swiper-item" catchtap="onClickHideOverlay" data-class="swiper-item">
           <view class="hidden"></view>
           <v-word-dic class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{false}}" wordContent="{{item}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:confirmWord="confirmWord" bind:refreshCard="refreshCard" />

@@ -12,7 +12,7 @@ class Resource extends HTTP {
    * 获取初始数据
    *  
    */
-  getInitData() {   
+  getInitData() {
     return this.request({
       url: '/init',
       method: 'POST',
@@ -40,7 +40,23 @@ class Resource extends HTTP {
     })
   }
 
-
+  /**
+   * 批量获取单词信息
+   *
+   * @param {word} 单词
+   * @return {wordInfo} 单词信息
+   */
+  getWordListInfo(wordlist) {
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/dictionary/search/',
+        method: 'POST',
+        data: wordlist
+      }).then(res => {
+        resolve(res)
+      }).catch(e => reject())
+    })
+  }
   /**
    * 获取单词信息
    *

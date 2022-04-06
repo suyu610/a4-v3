@@ -109,7 +109,7 @@ App({
   initSystemData: function () {
     let that = this
     innerAudioContext = wx.createInnerAudioContext({
-      useWebAudioImplement: true
+      // useWebAudioImplement: true
     });
 
     this.globalData.innerAudioContext = innerAudioContext
