@@ -501,8 +501,24 @@ Page({
   },
   initFromServer() {
     let that = this
-
-    resource.getInitData().then(e => {
+    let p = resource.getInitData()
+    p.finally(e => {
+      that.setData({
+        loading: false,
+        navigationBarHeight: app.globalData.navigationBarHeight,
+        searchBarTop: app.globalData.searchBarTop,
+        searchBarHeight: app.globalData.searchBarHeight,
+        scrollViewHeight: app.globalData.scrollViewHeight,
+        windowWidth: app.globalData.windowWidth,
+      })
+    })
+    p.catch(e => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络错误，进入离线模式',
+      })
+    })
+    p.then(e => {
       console.log(e)
       gData.progressList = e.progressList || {}
       gData.currentBookCode = e.currentBookCode
@@ -511,25 +527,30 @@ Page({
       gData.userid = e.userid
       gData.userBaseInfo = e.userBaseInfo
       gData.dailyStudyTask = e.dailyStudyTask
-
-      if (e.studyRecordInfo.lastDayCount == null) {
+      gData.dailyFinishedData = e.dailyFinishedData
+      gData.needReviewTodayStudyDate = true
+      if (e.studyRecordInfo != null && e.studyRecordInfo.lastDayCount == null) {
         e.studyRecordInfo.lastDayCount = 0
       }
+      if (e.studyRecordInfo == null) {
+        e.studyRecordInfo = {
+          lastDayCount: 6,
+          monthDayCount: 4,
+          yearDayCount: 6
+        }
+      }
+
       gData.studyRecordInfo = e.studyRecordInfo
 
       that.setData({
-        navigationBarHeight: app.globalData.navigationBarHeight,
-        searchBarTop: app.globalData.searchBarTop,
-        searchBarHeight: app.globalData.searchBarHeight,
-        scrollViewHeight: app.globalData.scrollViewHeight,
-        windowWidth: app.globalData.windowWidth,
         progressList: e.progressList,
         currentBookCode: e.currentBookCode,
         dailyStudyTask: e.dailyStudyTask,
         userAuthInfo: e.userAuthInfo,
         userBaseInfo: e.userBaseInfo,
         studyRecordInfo: e.studyRecordInfo,
-        setting: e.setting
+        setting: e.setting,
+        dailyFinishedData: e.dailyFinishedData
       })
       that.judgeSharePopup()
       var planTimeColumn = that.data.planTimeColumn
@@ -541,14 +562,10 @@ Page({
       that.setData({
         planTimeColumn
       })
-
-      setTimeout(() => {
-        that.setData({
-          loading: false
-        })
-      }, 1000);
+      that.setData({
+        loading: false
+      })
     })
-
   },
 
   share() {

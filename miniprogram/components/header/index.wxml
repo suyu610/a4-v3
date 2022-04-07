@@ -6,6 +6,6 @@
     </view>
   </view>
   <view class="head-right" bindtap="onRightBtnTapped">
-    <image class="select-all-btn" mode="heightFix" src="./images/{{!status?'all':'cancel'}}.png"></image>
+    <image class="select-all-btn" mode="heightFix" src="./images/{{!selectMode?'all':'cancel'}}.png"></image>
   </view>
 </view>

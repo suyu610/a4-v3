@@ -368,7 +368,6 @@ Page({
    */
   onLoad: function (options) {
     const data = router.extract(options);
-    console.log(data)
     this.setData({
       groupId: data.id,
     })
@@ -376,8 +375,7 @@ Page({
       title: '加载资源中',
     })
 
-    this.getDate(1)
-
+    this.getDate(0)
   },
 
   /** 

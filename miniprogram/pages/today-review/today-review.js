@@ -25,6 +25,7 @@ Page({
     bottomBtnTitle: "开始学习",
     mode: "study", // study export listen
     checkedCardArr: [],
+    cardsGroupByDate: {},
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
     open: false
   },
@@ -159,18 +160,33 @@ Page({
   onReady: function () {
 
   },
-  getInitData() {
+
+  getData(pageIndex) {
     let that = this
     // 获取今日卡片
-    cardApi.getNeedReviewCard(0).then(e => {
+    cardApi.getNeedReviewCard(pageIndex).then(e => {
       console.log(e)
+      let cardsGroupByDate = this.data.cardsGroupByDate
+      e.list.forEach(card => {
+        if (cardsGroupByDate.hasOwnProperty(0 - card.date)) {
+          cardsGroupByDate[0 - card.date].list.push(card)
+        } else {
+          cardsGroupByDate[0 - card.date] = {
+            "date": card.date.substr(4, 2) + "." + card.date.substr(6),
+            list: [card]
+          }
+        }
+      })
+
+
+
       that.setData({
-        todayCards: e.list,
+        cardsGroupByDate,
         currentPageIndex: e.pageNum,
-        totalCardNum: e.total, 
+        totalCardNum: e.total,
         hasNextPage: e.hasNextPage,
         loading: false
-      }) 
+      })
     })
 
     // 如果是从练习页退回来的，则要取消掉选定的数组
@@ -183,7 +199,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getInitData()
+    this.getData(0)
   },
 
   /**

@@ -47,7 +47,17 @@ page {
   --extra-bold: 700;
 }
 
+.loading-container {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: table;
+  justify-content: center;
+}
 
-
+.loading-container .child {
+  display: table-cell;
+  vertical-align: middle;
+}
 
 @import "app-wxa-auto-dark.wxss";

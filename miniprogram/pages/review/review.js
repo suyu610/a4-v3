@@ -707,6 +707,7 @@ Page({
       })
     }
   },
+  
   getMoreReviewCard: function (pageIndex) {
     let that = this
     cardApi.getNeedReviewCard(pageIndex).then(e => {

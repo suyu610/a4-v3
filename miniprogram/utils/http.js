@@ -121,6 +121,7 @@ class HTTP {
           },
           fail: (err) => {
             // console.error(err.errMsg)
+            reject()
             that._show_error(1)
           }
         })

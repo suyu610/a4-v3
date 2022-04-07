@@ -103,8 +103,12 @@ App({
   initSystemData: function () {
     let that = this
     innerAudioContext = wx.createInnerAudioContext({
-      // useWebAudioImplement: true
+      useWebAudioImplement: true,
     });
+
+    wx.setInnerAudioOption({
+      mixWithOther: true,
+    })
 
     this.globalData.innerAudioContext = innerAudioContext
     this.globalData.showNoEver = false

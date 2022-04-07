@@ -6,10 +6,11 @@ Component({
   properties: {
     type: String,
     doCount: Number,
-    todoCount: Number
-  },
-
-  /**
+    todoCount: Number,
+    finishedCount: Number 
+  }, 
+ 
+  /** 
    * 组件的初始数据
    */
   data: {

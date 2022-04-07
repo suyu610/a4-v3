@@ -7,6 +7,7 @@ Component({
     title: String,
     bgColor: String,
     cardNum: Number,
+    selectMode: Boolean,
     paddingBottom: {
       type: Number,
       value: 24
@@ -25,9 +26,6 @@ Component({
    */
   methods: {
     onRightBtnTapped() {
-      this.setData({
-        status: !this.data.status
-      })
       this.triggerEvent("onRightBtnTapped", {})
     }
   }

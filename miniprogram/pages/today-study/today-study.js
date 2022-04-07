@@ -21,6 +21,7 @@ Page({
     cardCur: 0,
     wordlist: ["hello", "abandon", "people", "world", "open"],
     nextWordList: [],
+    todayCards: [],
     title: "今日计划新学",
     bottomBtnTitle: "开始学习",
     mode: "study", // study export listen
@@ -186,16 +187,6 @@ Page({
         cardBaseWordList: e,
         showDictPopup: true,
       })
-      // that.setData({
-      //   currentCardId: cardId,
-      //   currentDictCode: dictCode,
-      //   curWord: e,
-      //   showSearchBar: false, 
-      //   showDictPopup: true,
-      //   searchWordInputValue: "",
-      //   showOverlay: false,
-      //   dictNoFooterMode: false
-      // })
     })
   },
 
@@ -215,14 +206,16 @@ Page({
     }
 
     this.setData({
-      movable_y: app.globalData.windowHeight - 70,
-      movable_x: (app.globalData.windowWidth - 125) / 2,
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
       loading: true,
       windowWidth: app.globalData.windowWidth
     })
+    app.globalData.needReviewTodayStudyDate = false
+    this.getDate(0)
+
+
   },
 
 
@@ -257,30 +250,39 @@ Page({
   onReady: function () {
 
   },
-
+  getDate(pageIndex) {
+    this.setData({
+      loadingMore: true
+    })
+    let that = this
+    cardApi.genTodayCard(pageIndex).then(e => {
+      let todayCards = this.data.todayCards
+      todayCards = todayCards.concat(e.list)
+      app.globalData.needReviewTodayStudyDate = false
+      that.setData({
+        todayCards: todayCards,
+        currentPageIndex: e.pageNum,
+        totalCardNum: e.total,
+        hasNextPage: e.hasNextPage,
+        loading: false,
+        loadingMore: false
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this
-    // 获取今日卡片
-    cardApi.genTodayCard(0).then(e => {
-      console.log(e)
-      that.setData({
-        todayCards: e.list,
-        currentPageIndex: e.pageNum,
-        totalCardNum: e.total,
-        hasNextPage: e.hasNextPage,
-        loading: false
+    if (app.globalData.needReviewTodayStudyDate) {
+      // 如果是从练习页退回来的，则要取消掉选定的数组
+      this.setData({
+        checkedCardArr: [],
+        allSelectMode: false,
+        todayCards: []
       })
-    })
-
-    // 如果是从练习页退回来的，则要取消掉选定的数组
-    this.setData({
-      checkedCardArr: [],
-      allChecked: false
-    })
-
+      // 获取今日卡片
+      this.getDate(0)
+    }
   },
 
 
@@ -408,7 +410,14 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    console.log("onReachBottom")
+    if (this.data.hasNextPage) {
+      console.log("has Next Page")
+      let indexPage = this.data.currentPageIndex + 1
+      this.getDate(indexPage)
+    } else {
+      console.log("not next page")
+    }
   },
 
   /**
