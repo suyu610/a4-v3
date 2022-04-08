@@ -215,9 +215,7 @@ Component({
         })
 
       })
-      // that.triggerEvent('replaceWord', {
-      //   word: that.data.wordContent.wordName
-      // }, {})
+
     },
 
     onChangeShowNoEver: function (e) {
