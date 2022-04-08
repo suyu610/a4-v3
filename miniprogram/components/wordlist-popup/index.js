@@ -10,7 +10,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    show: Boolean
+    show: Boolean,
+    word: String
   },
   /**
    * 组件的初始数据
@@ -29,13 +30,15 @@ Component({
           wordlistApi.getWordListGroup().then(e => {
             e.sort(that.sortById);
             that.setData({
-              wordListGroup: e
+              wordListGroup: e,
+              curId: 0
             })
             app.globalData.wordListGroup = e
           })
         } else {
           this.setData({
-            wordListGroup: app.globalData.wordListGroup
+            wordListGroup: app.globalData.wordListGroup,
+            curId: 0
           })
         }
       }
@@ -50,6 +53,19 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    markWord: function () {
+      let that = this
+      console.log(this.data.curId)
+      wordlistApi.addWordToWordList(this.data.word, this.data.curId).then(e => {
+        wx.showToast({
+          title: '收藏成功',
+        })
+        that.setData({
+          show: false
+        })
+        this.triggerEvent("markWord")
+      })
+    },
     sortById: function (a, b) {
       return a.id - b.id
     },

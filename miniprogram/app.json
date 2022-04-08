@@ -9,10 +9,10 @@
     "pages/pay/pay",
     "pages/all-card/all-card",
     "pages/today-study/today-study",
-    "pages/wordlist/wordlist", 
+    "pages/wordlist/wordlist",
     "pages/wordlist/detail/detail",
     "pages/review/review",
-    "pages/practice/practice",  
+    "pages/practice/practice",
     "pages/spell/spell",
     "pages/settings/more_settings/more_settings",
     "pages/today-review/today-review"
@@ -22,14 +22,17 @@
     "pages": [
       "pages/export-card-confirm/export-card-confirm",
       "pages/snapshot/snapshot"
-    ] 
+    ]
   }],
-  "darkmode": true,
+  "resizable": true,
+
   "themeLocation": "theme.json",
   "window": {
     "navigationStyle": "custom",
     "navigationBarBackgroundColor": "@navBgColor",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "pageOrientation": "portrait"
+
   },
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"

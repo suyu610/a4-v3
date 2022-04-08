@@ -136,13 +136,14 @@ App({
 
     // 设置全局变量
     let sysInfo = wx.getSystemInfoSync()
+    console.log(sysInfo)
     let theme = sysInfo.theme
     this.globalData.theme = theme
     let statusBarHeight = sysInfo.statusBarHeight
     let titleBarHeight = sysInfo.platform == 'android' ? 48 : 44
     let navigationBarHeight = statusBarHeight + titleBarHeight
     this.globalData.navigationBarHeight = navigationBarHeight
-
+    this.globalData.safeArea = sysInfo.safeArea
     let searchBarTop = wx.getMenuButtonBoundingClientRect().top;
     this.globalData.searchBarTop = searchBarTop
 
@@ -150,7 +151,11 @@ App({
     this.globalData.searchBarHeight = searchBarHeight
 
     let todayDate = dateTools.formatDate(new Date(), 'yyyyMMdd') // 在整个项目中，date都是指的'yyyymmdd'格式的日期
+    let todayMonthDate = dateTools.formatDate(new Date(), 'yyyyMM') // 在整个项目中，date都是指的'yyyymmdd'格式的日期
+
     this.globalData.todayDate = todayDate
+    this.globalData.todayMonthDate = todayMonthDate
+
 
     this.globalData.currentTimeStamp = Date.parse(new Date())
 

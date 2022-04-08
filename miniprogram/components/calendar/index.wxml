@@ -44,15 +44,15 @@
         </view>
 
         <!-- day-item -->
-        <view wx:if="{{index < chosenDate.day-1}}" bindtap="changeChosenDay" class="day-item" data-index="{{index}}">
+        <view wx:if="{{index < curDay && (curYear != chosenDate.year || curMon != chosenDate.month || index != chosenDate.day-1)}}" bindtap="changeChosenDay" class="day-item" data-index="{{index}}">
           <text class="day-item-text">{{ index + 1 }}</text>
-          <view class="dots" wx:if="{{index<15 && index!=3}}">
-            <view class="blue dot" wx:if="{{index!=1}}"></view>
-            <view class="yellow dot" wx:if="{{index!=2}}"></view>
+          <view class="dots">
+            <view class="blue dot" wx:if="{{calendarStatusDataList[index]==1 || calendarStatusDataList[index]==3 }}"></view>
+            <view class="yellow dot" wx:if="{{calendarStatusDataList[index]==2 || calendarStatusDataList[index]==3 }}"></view>
           </view>
         </view>
         <!-- 比当前时间更长的 -->
-        <view wx:if="{{index > chosenDate.day-1}}" bindtap="changeChosenDay" class="day-item day-item-future" data-index="{{index}}">
+        <view wx:if="{{index > curDay-1}}" class="day-item day-item-future" data-index="{{index}}">
           <text class="day-item-text">{{ index + 1 }}</text>
         </view>
       </van-grid-item>

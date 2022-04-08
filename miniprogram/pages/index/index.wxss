@@ -81,6 +81,7 @@ page {
   padding: 15px 0 15px 20px;
 }
 .container-footer {
+  padding-top: 5vh;
   font-family: "Baskerville";
   font-style: normal;
   font-weight: 400;
@@ -89,8 +90,6 @@ page {
   color: #86909c;
   /* text-decoration: underline; */
   width: 100%;
-  position: absolute;
-  bottom: 68rpx;
 }
 .guide {
   width: 100%;

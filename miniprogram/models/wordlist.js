@@ -13,10 +13,14 @@ class WordList extends HTTP {
    *
    * @param {word} 单词
    */
-  addWordToWordList(word) {
+  addWordToWordList(word, groupId) {
+    console.log(groupId)
+
+    if (groupId == null) groupId = 0
+    console.log(groupId)
     return new Promise((resolve, reject) => {
       this.request({
-          url: '/wordlist/add/' + word,
+          url: '/wordlist/add/' + word + "/" + groupId,
           method: 'POST'
         }).then(res => {
           resolve(res)

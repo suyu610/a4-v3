@@ -147,16 +147,13 @@ Page({
     }, 30)
   },
   onUnload() {
-    console.log("onHide")
-    if (this.data.progressCountDown != null) {
-      clearInterval(this.data.progressCountDown)
-    }
+    console.log("onUnload")
+    clearInterval(this.data.progressCountDown)
+
   },
   onHide() {
     console.log("onHide")
-    if (this.data.progressCountDown != null) {
-      clearInterval(this.data.progressCountDown)
-    }
+    clearInterval(this.data.progressCountDown)
   },
 
   showToast() {

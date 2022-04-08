@@ -1,11 +1,11 @@
 {
   "light": {
-    "navBgColor": "#ff0",
+    "navBgColor": "#fff",
     "navTxtStyle": "white",
     "likeBtnIconPath":"images/like.png"
   }, 
   "dark": {
-    "navBgColor": "#ff0",
+    "navBgColor": "#fff",
     "navTxtStyle": "white",
     "likeBtnIconPath":"images/like_fill.png"
 

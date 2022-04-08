@@ -353,7 +353,6 @@ Page({
     })
     if (data != null && data.wordlist != null && data.wordlist.length != 0) {
       let wordlist = data.wordlist
-      // let wordlist = ["American", "acre", "anymore", "ace", "acerbity", "achievement", "acknowledge"]
       this.setData({
         wordlist
       })
@@ -387,14 +386,12 @@ Page({
     console.log("onHide")
     app.globalData.innerAudioContext.stop()
     this.data.bgmInnerAudioContext.stop()
-
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log("onUnload")
     app.globalData.innerAudioContext.stop()
     this.data.bgmInnerAudioContext.stop()
   },

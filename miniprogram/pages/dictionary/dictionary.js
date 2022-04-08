@@ -14,7 +14,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    activeNames: '1',
+    showLongPressActionSheetValue: false,
+    longPressActionSheet: [{
+        name: '查看未学单词列表',
+      },
+      {
+        name: '重置进度',
+      },
+    ],
     currentWordBookName: '',
     oldWordBookName: '',
     bookList: [],
@@ -67,6 +74,24 @@ Page({
 
   },
 
+  onSelectLongPressActionSheet(e) {
+    console.log(e.detail.name)
+  },
+
+  onCloseLongPressActionSheet() {
+    this.setData({
+      showLongPressActionSheetValue: false
+    }) 
+  },
+  onLongPressBookItem(e) {
+    let curBookCode = e.currentTarget.dataset.code
+    let curBookName = e.currentTarget.dataset.name
+    this.setData({
+      curBookCode,
+      curBookName,
+      showLongPressActionSheetValue: true
+    })
+  },
   onTapBookItem(e) {
     let bookCode = e.currentTarget.dataset.code
     let bookName = e.currentTarget.dataset.name
@@ -84,6 +109,7 @@ Page({
       })
     }
   },
+
   confirmSwitchBook(bookCode) {
     let that = this
     if (bookCode != null) {
@@ -97,7 +123,7 @@ Page({
         bookColumns.forEach(column => {
           column.bookList.forEach(book => {
             book.isCurrent = book.code == bookCode
-          }) 
+          })
         })
         this.setData({
           bookColumns
@@ -123,8 +149,8 @@ Page({
       }
       book.curStudyNum = progressList[key]
     } else {
-      book.hasAdded = false 
-    } 
+      book.hasAdded = false
+    }
 
     if (currentBookCode == key) {
       book.isCurrent = true

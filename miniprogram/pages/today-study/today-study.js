@@ -1,6 +1,8 @@
 // pages/new-word/index.js
 const app = getApp()
 const globalData = app.globalData
+import config from '../../config.js';
+
 import router from '../../router/index'
 import {
   Resource
@@ -360,19 +362,20 @@ Page({
           }
         })
         // 处理一下progressList
-        let progressList = that.data.progressList
+        let progressList = app.globalData.progressList
         progressList[that.data.currentBookCode] = progressList[that.data.currentBookCode] + 5
         that.setData({
           loadingAddCard: false,
           todayCards,
           progressList
-        })
-
+        })  
+        app.globalData.dailyStudyTask.needStudyCount = app.globalData.dailyStudyTask.needStudyCount + 1
+        app.globalData.progressList = progressList
         app.globalData.todayCards = todayCards
         app.globalData.needRefreshCalendarData = true
         app.globalData.needRefreshReviewData = true
       },
-      function (e) {
+      function (e) { 
         // 背完了就要删除掉-1的卡片
         let todayCards = that.data.todayCards
         todayCards.pop()

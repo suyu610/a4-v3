@@ -148,7 +148,7 @@
 </van-popup>
 
 <van-popup show="{{ showPlanTimeColumnValue }}" bind:close="onClosePlanTimeColumn" round position="bottom" custom-style="height: 50%;">
-  <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChangePlanPicker" show-toolbar bind:confirm="onClosePlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
+  <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChangePlanPicker" show-toolbar bind:confirm="onConfirmPlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
 </van-popup>
 
 <van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 50%;background-color: #e2eeff;">
@@ -174,4 +174,4 @@
   </view>
 </van-overlay>
 
-<wordlistPopup bind:jump2BookList="jump2BookList" show="{{showWordGroupPopupValue}}"></wordlistPopup>
+<wordlistPopup bind:markWord="markWord" bind:jump2BookList="jump2BookList" show="{{showWordGroupPopupValue}}" word="{{curWord.wordName}}"></wordlistPopup>

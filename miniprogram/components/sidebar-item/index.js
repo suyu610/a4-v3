@@ -35,7 +35,6 @@ Component({
   methods: {
     jumpRouter() {
       if (this.data.routerName != '') {
-        console.log(this.data.routerData)
         router.push({
           name: this.data.routerName,
           data: this.data.routerData

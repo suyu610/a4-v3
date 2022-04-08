@@ -9,7 +9,8 @@ Component({
   },
   observers: {
     'calendarData': function (data) {
-      this.calProgressWidth(data)
+      // this.calProgressWidth(data)
+      this.toList(data)
     }
   },
   data: {
@@ -23,12 +24,14 @@ Component({
       let curYear = dateInfo.year
       let curMon = dateInfo.month
       let day = curTime.getDate()
+      let curDay = day
       this.setData({
         darkMode: app.globalData.theme == 'dark',
         targetCount: app.globalData.setting.targetCount,
         curTime: curTime,
         curYear,
         curMon,
+        curDay,
         chosenDate: {
           year: curYear,
           month: curMon,
@@ -59,6 +62,16 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    toList: function (data) {
+      let calendarStatusDataList = []
+      for (let key in data) {
+        let obj = data[key]
+        calendarStatusDataList.push(obj.status)
+      }
+      this.setData({
+        calendarStatusDataList
+      })
+    },
     calProgressWidth: function (data) {
       if (data == null) return
       let year = this.data.curYear
@@ -122,18 +135,22 @@ Component({
      *  切换月份
      **/
     tapToggleMonthBtn: function (e) {
-      let direct = e.currentTarget.dataset.direct
-      let year = this.data.curYear
-      let month = this.data.curMon
-
-      let dateInfo = this.calMonthAndYear(year, month, direct)
-      this.setData({
-        curYear: dateInfo.year,
-        curMon: dateInfo.month,
-        monthDayCount: dateInfo.monthDayCount,
-        beginWeek: dateInfo.beginWeek
+      wx.showToast({
+        icon: 'none',
+        title: '暂不支持切换月份',
       })
-      this.triggerEvent('changeMonth', dateInfo);
+      // let direct = e.currentTarget.dataset.direct
+      // let year = this.data.curYear
+      // let month = this.data.curMon
+
+      // let dateInfo = this.calMonthAndYear(year, month, direct)
+      // this.setData({
+      //   curYear: dateInfo.year,
+      //   curMon: dateInfo.month,
+      //   monthDayCount: dateInfo.monthDayCount,
+      //   beginWeek: dateInfo.beginWeek
+      // })
+      // this.triggerEvent('changeMonth', dateInfo);
     },
 
     /*

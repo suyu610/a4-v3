@@ -1,7 +1,7 @@
 <!--pages/upload-book/upload-book.wxml-->
 <view class="container">
   <van-sticky>
-    <v-navigation-bar type="leftBar" title="自定义词书" bgColor="#E8EDF6" showBottomShadow="true" bind:naviBack="onNaviBack"></v-navigation-bar>
+    <v-navigation-bar type="leftBar" title="自定义词书" bgColor="#E8EDF6" showBottomShadow="true"></v-navigation-bar>
   </van-sticky>
 
   <scroll-view scroll-y scroll-x="{{false}}" class="tab-container" style="height:{{tabContainerHeight}}px">
@@ -27,8 +27,7 @@
       </view>
     </view>
     <block wx:for="{{bookList}}" wx:for-item="book" wx:key="index">
-      <!-- <view>{{book.bookName}}</view> -->
-      <book-item bookName="{{book.bookName}}" totalCount="{{book.totalCount}}" hasAdded="{{book.hasAdded}}" isCurrent="{{book.isCurrent}}" desc="{{book.desc}}"></book-item>
+      <book-item bookName="{{book.bookName==null?'未命名':book.bookName}}" totalCount="{{book.totalNum}}" hasAdded="{{true}}" isCurrent="{{book.isCurrent}}" desc="{{book.desc}}"></book-item>
     </block>
     <view style="height: 100px;"></view>
   </scroll-view>
@@ -51,7 +50,7 @@
             成功上传<text class="blue">{{uploadWordCount}}</text>个单词
           </view>
         </view>
-        <view class="footer" bindtap="onClickHide">
+        <view class="footer" bindtap="onClickBottomBtn">
           <view class="text">{{uploadSuccess?'完成':'取消'}}</view>
         </view>
       </view>
@@ -60,6 +59,6 @@
 
 
   <view class="bottom" bindtap="chooseFile">
-    <bg-btn title="选择文件" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bg-btn>
+    <bg-btn title="点击上传" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bg-btn>
   </view>
 </view>

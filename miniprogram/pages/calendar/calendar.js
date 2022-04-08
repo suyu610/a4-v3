@@ -58,17 +58,55 @@ Page({
       })
     })
   },
+  changeMonth(e) {
+    // beginWeek: 2
+    // month: 3
+    // monthDayCount: 31
+    // year: 2022
+    console.log(e)
+  },
+  formatDateStr(year, month, day) {
+    return String(year) + String(month < 10 ? '0' + month : month) + String(day < 10 ? '0' + day : day)
+  },
+  changeChosenDate(e) {
+    console.log(e)
+    let dateStr = this.formatDateStr(e.detail.year, e.detail.month, e.detail.day)
+    let curItem = {
+      newCardCount: 0,
+      practiceCount: 0
+    }
+    if (this.data.calendarData.hasOwnProperty(dateStr)) {
+      curItem = this.data.calendarData[dateStr]
+    }
+    this.setData({
+      curItem
+    })
+    // day: 4
+    // month: 3
+    // year: 2022
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.widget = this.selectComponent('.widget')
-
-
     let that = this
-    progress.getProgressByMonth(this.data.chosenYear + this.data.chosenMonth).then(function (e) {
+    console.log(this.data.chosenYear, this.data.chosenMonth)
+
+    progress.getProgressByMonth(app.globalData.todayMonthDate).then(function (e) {
+      console.log(e)
+      let curItem = {
+        newCardCount: 0,
+        practiceCount: 0
+      }
+
+      if (e.hasOwnProperty(app.globalData.todayDate)) {
+        curItem = e[app.globalData.todayDate]
+      }
+
       that.setData({
-        calendarData: e
+        calendarData: e,
+        curItem
       })
 
       let year = that.data.chosenYear

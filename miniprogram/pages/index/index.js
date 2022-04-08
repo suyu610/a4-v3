@@ -150,6 +150,10 @@ Page({
       })
     }
   },
+  markWord(e) {
+    this.selectComponent(".v-word-dic").setMarkWord()
+    console.log(e)
+  },
   showWordGroupPopup() {
     this.setData({
       showWordGroupPopupValue: true
@@ -160,6 +164,7 @@ Page({
       "name": "wordlist"
     })
   },
+
   showTips: function (e) {
     if (this.popover == null) {
       this.popover = this.selectComponent("#popover")
@@ -420,7 +425,40 @@ Page({
       url: '../dictionary/dictionary',
     })
   },
+  onConfirmPlanTimeColumn(e) {
+    console.log(e)
+    this.changeTargetCount(parseInt(e.detail.value))
+  },
 
+  // 确认修改每日目标
+  changeTargetCount(count) {
+    let that = this
+    let tmpTargetCount = count
+    let setting = {
+      "targetCount": tmpTargetCount
+    }
+    wx.showLoading({
+      title: '修改中',
+    })
+    user.modifyUserSetting(setting).then(e => {
+      let dailyStudyTask = that.data.dailyStudyTask
+      // 成功后，要修改globaldata和本页面的data
+      app.globalData.setting.targetCount = tmpTargetCount
+      if ((dailyStudyTask.needStudyCount + dailyStudyTask.finishStudyCount) * 5 < tmpTargetCount) {
+        this.setData({
+          ['dailyStudyTask.needStudyCount']: tmpTargetCount / 5 - dailyStudyTask.finishStudyCount
+        })
+      }
+      that.setData({
+        ['setting.targetCount']: tmpTargetCount
+      })
+      that.onClosePlanTimeColumn()
+      wx.showToast({
+        icon: 'none',
+        title: '修改成功',
+      })
+    })
+  },
 
   /**
    * 生命周期函数: 监听页面显示
@@ -429,7 +467,21 @@ Page({
    * @toMethod 
    */
   onShow() {
+    app.globalData.innerAudioContext.stop()
     let that = this
+    if (app.globalData.progressList != null) {
+      this.setData({
+        progressList: app.globalData.progressList
+      })
+    }
+
+    if (app.globalData.dailyStudyTask != null) {
+      this.setData({
+        dailyStudyTask: app.globalData.dailyStudyTask
+      })
+    }
+
+
     if (app.globalData.currentBookCode != null) {
       this.setData({
         currentBookCode: app.globalData.currentBookCode
@@ -457,7 +509,6 @@ Page({
     let userAuthInfo = this.data.userAuthInfo || {}
     let role = userAuthInfo.role
     let unlockCount = userAuthInfo.unlockCount
-    console.log(unlockCount)
 
     let invitePopupTitleText = isInviteMode ? "会员解锁邀请" : (role != "vip") ? "邀请好友" : "成功解锁"
     let invitePopupSubTitleText = "共同免费解锁会员权益"
@@ -532,6 +583,7 @@ Page({
       if (e.studyRecordInfo != null && e.studyRecordInfo.lastDayCount == null) {
         e.studyRecordInfo.lastDayCount = 0
       }
+      wx.setStorageSync('userAuthInfo', e.userAuthInfo)
       if (e.studyRecordInfo == null) {
         e.studyRecordInfo = {
           lastDayCount: 6,
@@ -573,8 +625,6 @@ Page({
   },
 
   onShareAppMessage: function (options) {
-
-
     var that = this;
     // 设置菜单中的转发按钮触发转发事件时的转发内容
     var shareObj = {

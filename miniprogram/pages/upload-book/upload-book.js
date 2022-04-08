@@ -1,6 +1,11 @@
 // pages/upload-book/upload-book.js
 const app = getApp()
 let uploadTask;
+import config from '../../config.js';
+import {
+  CustomBook
+} from '../../models/customBook.js'
+const customBookApi = new CustomBook()
 Page({
 
   /**
@@ -11,37 +16,7 @@ Page({
     progressBarWidth: 0,
     tips: '上传中',
     showUploadOverLayValue: false,
-    bookList: [{
-      id: 1,
-      bookName: "考研核心词汇",
-      hasAdded: true,
-      isCurrent: false,
-      totalCount: 275,
-      addedPeopleCount: 123,
-      desc: "1111词书的介绍"
-    }, {
-      id: 1,
-      bookName: "考研核心词汇",
-      hasAdded: true,
-      isCurrent: false,
-      totalCount: 275,
-      addedPeopleCount: 123,
-      desc: "1111词书的介绍"
-    }, {
-      id: 1,
-      bookName: "考研核心词汇",
-      hasAdded: true,
-      isCurrent: false,
-      totalCount: 275,
-      addedPeopleCount: 123,
-      desc: "1111词书的介绍"
-    }, {
-      id: 1,
-      bookName: "中考核心词汇",
-      hasAdded: true,
-      totalCount: 3075,
-      desc: "33333词书的介绍"
-    }, ]
+    bookList: []
   },
   showNoMore: function () {
     let that = this
@@ -108,10 +83,47 @@ Page({
       }
     })
   },
+  /**
+   * 上传成功后弹出命名的modal，否则提示是否要中断上传
+   */
+  onClickBottomBtn() {
+    let that = this
+    if (this.data.uploadSuccess) {
+      that.onClickHide()
+      wx.showModal({
+        title: '提示',
+        placeholderText: '请输入词书名',
+        editable: true,
+        confirmColor: '#220aac',
+
+        success(res) {
+          if (res.confirm) {
+            // 重命名
+            wx.showToast({
+              title: '成功',
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '要取消上传吗？',
+        confirmColor: '#220aac',
+        success(res) {
+          if (res.confirm) {
+            that.onClickHide()
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
+  },
 
   onClickHide() {
     uploadTask.abort() // 取消上传任务
-    // if(uploadTask.)
     let that = this
     this.setData({
       showUploadOverLayValue: false,
@@ -123,22 +135,6 @@ Page({
         tips: '加载中',
       })
     }, 300);
-    // wx.showModal({
-    //   title: this.data.uploadSuccess ? "上传结果" : "要取消上传吗？",
-    //   content: this.data.uploadSuccess ? "成功 x" + this.data.uploadWordCount + "\r\n失败 x7" : "",
-    //   cancelColor: 'cancelColor',
-    //   success(res) {
-    //     if (res.confirm) {
-    //       that.setData({
-    //         showUploadOverLayValue: false,
-    //         progressBarWidth: 0,
-    //         tips: '加载中',
-    //       })
-    //     } else if (res.cancel) {
-    //       console.log('用户点击取消')
-    //     }
-    //   }
-    // })
   },
 
   startUpload(filePath) {
@@ -146,9 +142,9 @@ Page({
     uploadTask = wx.uploadFile({
       filePath: filePath,
       name: 'file',
-      url: 'http://localhost:6110/v2/custom-book/upload',
+      url: config.api_base_url + '/custom-book/upload',
       header: {
-        "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqd3QtdXNlci1vcGVuaWQiOiJvNG5PcDVBa2tibTNKM2FXMnVOWnVKcDg1am1nIiwic3ViIjoid2VhcHBfdG9rZW4iLCJyb2xlcy1pbmZvcy1rZXkiOiJyb2xlcy11c2VyIiwiaXNzIjoicWR1LmxpZmUiLCJleHAiOjE2NTEzMjYwNjMsImlhdCI6MTY0ODczNDA2M30.GtdGY3khyCWfTRwwrTH9wgwYpPf91k6zUDZ4FlSgB34"
+        "Authorization": wx.getStorageSync('token')
       },
       success(res) {
         console.log(res.data)
@@ -190,8 +186,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-
+    let currentBookCode = app.globalData.currentBookCode
+    customBookApi.getCustomBook().then(e => {
+      e.forEach(book => {
+        if (book.bookCode == currentBookCode) {
+          book.isCurrent = true
+        }
+      })
+      this.setData({
+        bookList: e
+      })
+    })
   },
 
   /**

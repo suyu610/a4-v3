@@ -37,6 +37,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    showWordGroupPopupValue: true,
     minWidth: app.globalData.windowWidth * 0.85,
     defIndex: 0,
     abbrDict: config.abbrDict,
@@ -198,7 +199,7 @@ Component({
     confirmWord: function () {
       this.triggerEvent('confirmWord', {}, {})
     },
-    
+
     replaceWord: function () {
       let that = this
       this.setData({
@@ -245,7 +246,11 @@ Component({
         }, {})
       })
     },
-
+    setMarkWord: function () {
+      this.setData({
+        'wordContent.mark': true
+      })
+    },
     // 收藏单词
     addWord: function () {
       let that = this
