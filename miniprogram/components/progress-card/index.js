@@ -1,6 +1,5 @@
 // components/progress-card/index.js
 const app = getApp()
-import config from '../../config.js'
 
 // 导入资源接口与用户接口
 // import { Resource } from '../../models/resource.js'
@@ -16,9 +15,10 @@ Component({
    */
   properties: {
     loading: Boolean,
-    userInfo: Object,
+    userBaseInfo: Object,
     progressList: Object,
-    currentBookCode: String
+    currentBookCode: String,
+    dictInfo: Object
   },
 
   /**
@@ -33,12 +33,7 @@ Component({
    */
   lifetimes: {
     ready: function () {
-      let currentBookCode = this.data.currentBookCode
-      this.setData({
-        dictInfo: config.dictInfo,
-        darkMode: app.globalData.theme == 'dark',
-        remainDay: currentBookCode != null && currentBookCode != '' ? parseInt(config.dictInfo[currentBookCode].totalWordNum / app.globalData.setting.targetCount) : 0
-      })
+      console.log(this.data.userBaseInfo)
     }
   },
 
@@ -46,12 +41,16 @@ Component({
    * 数据监听器
    */
   observers: {
-    'progressList,currentBookCode': function (progressList, currentBookCode) {
-      // 设置当前时间戳
-      this.setData({
-        currentTimeStamp: app.globalData.currentTimeStamp,
-        remainDay: currentBookCode != null && currentBookCode != '' ? parseInt(config.dictInfo[currentBookCode].totalWordNum / app.globalData.setting.targetCount) : 0
-      })
+    'progressList,currentBookCode': function (currentBookCode) {
+      if (this.data.dictInfo != null && this.data.dictInfo[currentBookCode] != null) {
+        let currentBookCode = this.data.currentBookCode
+        // 设置当前时间戳
+        this.setData({
+          darkMode: app.globalData.theme == 'dark',
+          currentTimeStamp: app.globalData.currentTimeStamp,
+          remainDay: currentBookCode != null && currentBookCode != '' ? parseInt(this.data.dictInfo[currentBookCode].totalWordNum / app.globalData.setting.targetCount) : 0
+        })
+      }
     }
   },
 

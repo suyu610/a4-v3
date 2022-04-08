@@ -106,9 +106,9 @@ App({
       useWebAudioImplement: true,
     });
 
-    wx.setInnerAudioOption({
-      mixWithOther: true,
-    })
+    // wx.setInnerAudioOption({
+    //   mixWithOther: true,
+    // })
 
     this.globalData.innerAudioContext = innerAudioContext
     this.globalData.showNoEver = false
@@ -136,7 +136,10 @@ App({
 
     // 设置全局变量
     let sysInfo = wx.getSystemInfoSync()
-    console.log(sysInfo)
+    console.log(sysInfo.platform)
+    if (sysInfo.platform == "ios") {
+      this.globalData.isIOS = true;
+    }
     let theme = sysInfo.theme
     this.globalData.theme = theme
     let statusBarHeight = sysInfo.statusBarHeight
@@ -155,7 +158,6 @@ App({
 
     this.globalData.todayDate = todayDate
     this.globalData.todayMonthDate = todayMonthDate
-
 
     this.globalData.currentTimeStamp = Date.parse(new Date())
 

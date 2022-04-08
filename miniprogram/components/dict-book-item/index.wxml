@@ -16,6 +16,16 @@
       return value;
     }
   }
+  var calWidth = function (cur, total) {
+    return Math.min(100 * cur / total, 100)
+  }
+
+  var getMin = function (cur, total) {
+    return Math.min(cur, total)
+  }
+  
+  module.exports.getMin = getMin;
+  module.exports.calWidth = calWidth;
   module.exports.toFix = toFix;
 </wxs>
 <view style="content: ''; overflow: hidden;padding-top: 12px;"></view>
@@ -38,14 +48,16 @@
     <view class="title">{{bookName}}</view>
     <view class="desc">按当前计划，剩余<text style="color:black">{{remainDay}}</text>天完成学习</view>
     <view class="progress-bar">
-      <view class="progress-active" style="width: {{100*curStudyNum/totalCount}}\%"></view>
+      <view class="progress-active" style="width:{{ tool.calWidth(curStudyNum,totalCount)}}\%"></view>
+
+
     </view>
     <view class="progress-info">
       <view class="progress-left">
         <view class="progress-title">进度</view>
-        <view class="percent">{{tool.toFix(100*curStudyNum/totalCount,1)}}%</view>
+        <view class="percent">{{tool.toFix(tool.calWidth(curStudyNum,totalCount),1)}}%</view>
       </view>
-      <view class="progress-right">({{curStudyNum}}/{{totalCount}})</view>
+      <view class="progress-right">({{tool.getMin(curStudyNum,totalCount)}}/{{totalCount}})</view>
     </view>
   </view>
 
@@ -54,4 +66,4 @@
     <view class="desc book-desc">{{desc}}</view>
     <view class="desc book-total-count">单词总数 <text class="bold">{{totalCount}}</text> </view>
   </view>
-</view> 
+</view>

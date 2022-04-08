@@ -10,7 +10,6 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    isVip: Boolean,
     isInviteMode: Boolean,
     userAuthInfo: Object,
     userBaseInfo: Object,

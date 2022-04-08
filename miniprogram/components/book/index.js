@@ -4,9 +4,13 @@ Component({
   properties: {
     bookName: String,
     totalCount: Number,
+    useCustomBook: {
+      type: Boolean,
+      value: false
+    },
     bookColumnId: {
       type: Number,
-      value: 1
+      value: 1 
     }
   },
 

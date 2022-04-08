@@ -28,6 +28,46 @@
          .catch(console.error)
      })
    }
+
+   deleteCustomBook(bookCode) {
+     return new Promise((resolve, reject) => {
+       this.request({
+           url: '/custom-book/delete/' + bookCode,
+           method: 'POST'
+         }).then(res => {
+           resolve(res)
+         })
+         .catch(console.error)
+     })
+   }
+
+
+   renameCustomBook(bookName, bookCode) {
+     return new Promise((resolve, reject) => {
+       this.request({
+           url: '/custom-book/rename',
+           method: 'POST',
+           data: {
+             "bookName": bookName,
+             "bookCode": bookCode
+           }
+         }).then(res => {
+           resolve(res)
+         })
+         .catch(console.error)
+     })
+   }
+   switchCurCustomBook(bookCode) {
+     return new Promise((resolve, reject) => {
+       this.request({
+           url: '/custom-book/switch/' + bookCode,
+           method: 'POST'
+         }).then(res => {
+           resolve(res)
+         })
+         .catch(console.error)
+     })
+   }
  }
 
 

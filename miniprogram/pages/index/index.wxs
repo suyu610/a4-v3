@@ -1,7 +1,7 @@
 var startmark = 0;
 var status = 0;
 var JUDGEPOINT = 0.3;
-var drawerComp, drawerWidth, iconComp;
+var drawerComp, drawerWidth, iconComp, isIOS;
 var showPageContainerValue = false
 
 function touchStart(e, ins) {
@@ -11,23 +11,30 @@ function touchStart(e, ins) {
   iconComp = ins.selectComponent('.menu-img');
   overlay = ins.selectComponent('#overlay');
   drawerWidth = drawerComp.getDataset().drawerwidth;
-  iconComp.setStyle({
-    'opacity': "0"
-  })
+  isIOS = drawerComp.getDataset().isios;
+
+
 }
 
 function touchMove(e, ins) {
-  var offset = e.touches[0].pageX - startmark;
 
-  if (offset < 0 && status == 1) {
-    setDrawer(drawerWidth + offset);
-  }
+  if (!isIOS) {
+    var offset = e.touches[0].pageX - startmark;
+    if (status == 0 && (offset / drawerWidth) > 0.46 || status == 1 && (offset / drawerWidth) < -0.3) {
+      iconComp.setStyle({
+        'opacity': "0"
+      })
+    }
+    if (offset < 0 && status == 1) {
+      setDrawer(drawerWidth + offset);
+    }
 
-  if (offset > 0 && status == 0) {
-    setDrawer(Math.min(drawerWidth, offset));
+    if (offset > 0 && status == 0) {
+      setDrawer(Math.min(drawerWidth, offset));
 
-    if (offset > drawerWidth * JUDGEPOINT) {
-      drawerComp.callMethod('openDrawer')
+      if (offset > drawerWidth * JUDGEPOINT) {
+        drawerComp.callMethod('openDrawer')
+      }
     }
   }
 
@@ -49,29 +56,32 @@ function setIcon(isOpen) {
 }
 
 function touchEnd(e, ins) {
-  iconComp.setStyle({
-    'opacity': "1"
-  })
+  if (!isIOS) {
 
-  setIcon(status == 1)
+    iconComp.setStyle({
+      'opacity': "1"
+    })
 
-  var pageX = (e.touches[0] || e.changedTouches[0]).pageX;
-  var offset = pageX - startmark;
+    setIcon(status == 1)
 
-  if (offset > 0 && status == 0) {
-    if (offset < drawerWidth * JUDGEPOINT) {
+    var pageX = (e.touches[0] || e.changedTouches[0]).pageX;
+    var offset = pageX - startmark;
+
+    if (offset > 0 && status == 0) {
+      if (offset < drawerWidth * JUDGEPOINT) {
+        setDrawer(0);
+        drawerComp.callMethod('closeDrawer')
+      } else {
+        setDrawer(drawerWidth);
+        status = 1;
+      }
+    } else if (offset < -10) {
       setDrawer(0);
       drawerComp.callMethod('closeDrawer')
-    } else {
-      setDrawer(drawerWidth);
-      status = 1;
+      status = 0;
     }
-  } else if (offset < -10) {
-    setDrawer(0);
-    drawerComp.callMethod('closeDrawer')
-    status = 0;
+    setIcon(status == 1)
   }
-  setIcon(status == 1)
 }
 
 function setDrawer(x) {
