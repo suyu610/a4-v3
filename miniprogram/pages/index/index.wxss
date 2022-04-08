@@ -25,9 +25,8 @@ page {
   position: absolute;
 }
 .menu-img {
-  width: 16px;
-  height: 16px;
-  padding: 0 5px 0 5px;
+  width: 24px;
+  height: 24px;
   background: center;
   background-repeat: no-repeat;
   background-position: center;
@@ -39,7 +38,7 @@ page {
 .searchBar {
   width: 400rpx;
   position: absolute;
-  left: 108rpx;
+  left: 54px;
   border: 1px solid rgba(136, 148, 162, 0.2);
   border-radius: 100px;
   box-sizing: border-box;
@@ -51,22 +50,22 @@ page {
 }
 
 .navigation-bar .search-img {
-  width: 16px;
-  height: 16px;
-  padding: 0 5px 0 15px;
+  width: 20px;
+  height: 20px;
+  padding: 0 4px 0 12px;
   z-index: 3;
 }
 
 .searchBar-text {
   color: rgba(136, 148, 162, 1);
-  font-size: var(--body);
+  font-size: 12px;
   font-family: var(--simhei);
 }
 
 .leftBar {
   width: 390rpx;
   position: absolute;
-  left: 30rpx;
+  left: 16px;
 
   display: flex;
   flex-direction: row;
@@ -81,7 +80,8 @@ page {
   padding: 15px 0 15px 20px;
 }
 .container-footer {
-  padding-top: 5vh;
+  position: fixed;
+  bottom: 32px;
   font-family: "Baskerville";
   font-style: normal;
   font-weight: 400;
@@ -344,7 +344,7 @@ page {
 .footer_text {
   width: 133px;
   height: 16px;
-  padding-top: 18rpx;
+  padding-top: 6px;
 }
 
 @keyframes myfirst {

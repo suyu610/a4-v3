@@ -12,6 +12,10 @@ Component({
       type: String,
       value: '#F5F7FB',
     },
+    textSize: {
+      type: Number,
+      value: 11,
+    },
     bgColor: {
       type: String,
       value: '#F5F7FB',
