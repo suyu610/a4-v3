@@ -2,15 +2,15 @@
 
 .wrapper {
   border-radius: 28px;
-  padding: 4.5px 7px;
+  padding: 4px 4px;
   border-radius: 50px;
   text-align: center;
   margin: 0 auto;
 }
 
-.title {
-  font-size: 11px;
-}
+/* .title {
+  font-size: 12px;
+} */
 
 .share-button {
   height: 100%;

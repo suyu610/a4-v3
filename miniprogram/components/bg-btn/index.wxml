@@ -1,6 +1,6 @@
 <!--components/bg-btn/bg-btn.wxml-->
 <view class="wrapper" style="{{shadow?'background:linear-gradient(133.36deg, #8472ff -16.27%, #1c00db 136.02%);box-shadow: 0px 4px 16px rgba(67, 43, 233, 0.16);':''}}; background-color\: {{bgColor}};width:{{width}}px\;height:{{height}}px\;line-height\: {{height}}px\;margin-top:{{pt}}px\"">
   <image wx:if="{{icon_src!=null}}" src="{{icon_src}}"></image>
-  <view class="title" style="color:{{textColor}}">{{title}}</view>
+  <view class="title" style="color:{{textColor}};font-size:{{textSize}}px;">{{title}}</view>
   <button class="share-button" open-type="share" wx:if="{{share}}"></button>
 </view>
