@@ -81,7 +81,7 @@ Page({
   onCloseLongPressActionSheet() {
     this.setData({
       showLongPressActionSheetValue: false
-    }) 
+    })
   },
   onLongPressBookItem(e) {
     let curBookCode = e.currentTarget.dataset.code
@@ -100,7 +100,7 @@ Page({
       wx.showModal({
         title: "确认",
         content: "是否切换词书为「" + bookName + "」",
-        cancelColor: 'cancelColor',
+        confirmColor: "#220aac",
         success(res) {
           if (res.confirm) {
             that.confirmSwitchBook(bookCode)
@@ -164,7 +164,6 @@ Page({
    */
   onShow() {
     const TabsLineHeight = 44
-
     let dict = config.dictInfo
     let bookColumns = this.data.bookColumns
     let currentBookCode = app.globalData.currentBookCode
@@ -181,7 +180,11 @@ Page({
     })
     for (const key in dict) {
       if (Object.hasOwnProperty.call(dict, key)) {
+
         const book = dict[key];
+        if (book.isCustomBook) {
+          continue
+        }
         this.judgeBookType(book, key, progressList, currentBookCode)
         const bookColumnId = key.substr(0, 2)
         book.bookColumnId = bookColumnId

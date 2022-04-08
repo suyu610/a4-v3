@@ -1,5 +1,6 @@
 <view class="container">
-  <image-ext class="img icon" src="https://cdns.qdu.life/a4/images/book_{{bookColumnId%5+1}}.png" placeholder-image="./images/book_loading.png" brokenImage="/icon/break.png" class="logo"></image-ext>
+  <image-ext  class="img icon" src="https://cdns.qdu.life/a4/images/book_{{bookColumnId%5+1}}.png" placeholder-image="./images/book_loading.png" brokenImage="/icon/break.png" class="logo"></image-ext>
+  <!-- <image-ext class="img icon" src="./images/book_custom.png" placeholder-image="./images/book_loading.png" brokenImage="/icon/break.png" class="logo"></image-ext> -->
   <view class="title">{{bookName=='请选择词书'?'':bookName}}</view>
   <view class="count">{{totalCount}}词</view>
-</view> 
+</view>

@@ -8,7 +8,7 @@
         {
           "name": "邀请模式",
           "pathName": "pages/index/index",
-          "query": "invite=\"abcd\"",
+          "query": "invite=697ca596b58411ec863400ffbd21ef39",
           "launchMode": "default",
           "scene": null
         },

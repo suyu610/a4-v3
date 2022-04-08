@@ -21,5 +21,6 @@
 
 
   },
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "disableSwipeBack": true
 }

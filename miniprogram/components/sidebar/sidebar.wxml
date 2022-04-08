@@ -10,7 +10,7 @@
     <view class="info">
       <view class="userinfo" wx:if="{{userBaseInfo!=null && userBaseInfo.avatarUrl != null }}">
         <image class="avatar" bindtap="onTap" src="{{userBaseInfo.avatarUrl}}" id="button1"></image>
-        <image class="medal" wx:if="{{userAuthInfo.role=='vip'}}" src="./images/medal.png"></image>
+        <image class="medal" wx:if="{{userAuthInfo.vip}}" src="./images/medal.png"></image>
         <view class="nickname">{{userBaseInfo.nickName}}</view>
         <popover id='popover1'>
           <popover-item bindtap='onClickA'>这是一个头像</popover-item>
@@ -19,6 +19,8 @@
 
       <view class="userinfo" wx:else bindtap="getUserProfile">
         <image class="avatar" src="../../images/avatar.png"></image>
+        <image class="medal" wx:if="{{userAuthInfo.vip}}" src="./images/medal.png"></image>
+
         <view class="not-login"> 点击登录 </view>
       </view>
 
@@ -51,11 +53,11 @@
     </view>
     <block wx:for="{{notvipFuncItemList}}" wx:key="index"> 
       <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
-    </block>
-    <sidebar-title bindtap="showInvitePopup" isVip="{{userAuthInfo.role=='vip'}}"></sidebar-title>
+    </block> 
+    <sidebar-title bindtap="showInvitePopup" isVip="{{userAuthInfo.vip}}"></sidebar-title>
     <block wx:for="{{vipFuncItemList}}" wx:key="index">
       <sidebar-item bindtap="onTapSidebarItem" data-name="{{item.name}}" itemName="{{item.title}}" iconPath="{{item.icon}}" isVip="true" routerName="{{item.routerName}}" routerData="{{item.routerData}}"></sidebar-item>
-    </block>
+    </block> 
   </view>
 </view>
 <van-popup round show="{{ showNotificationPopupValue }}" custom-class="dictPopup" position="bottom" bind:close="closeNotificationPopup" lock-scroll="{{false}}" custom-style="height:290px">

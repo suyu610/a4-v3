@@ -257,7 +257,8 @@ Page({
       loadingMore: true
     })
     let that = this
-    cardApi.genTodayCard(pageIndex).then(e => {
+    let useCustomBook = app.globalData.userBaseInfo.useCustomBook == 1
+    cardApi.genTodayCard(pageIndex, useCustomBook).then(e => {
       let todayCards = this.data.todayCards
       todayCards = todayCards.concat(e.list)
       app.globalData.needReviewTodayStudyDate = false
@@ -347,7 +348,8 @@ Page({
     })
 
     // 从服务器拉取今日卡片  
-    var p = cardApi.genNewCard()
+    let useCustomBook = app.globalData.userBaseInfo.useCustomBook == 1
+    var p = cardApi.genNewCard(useCustomBook)
     p.then(function (fetchNewCard) {
         let todayCards = that.data.todayCards
         // Check: 是否卡片为空 
@@ -368,14 +370,14 @@ Page({
           loadingAddCard: false,
           todayCards,
           progressList
-        })  
+        })
         app.globalData.dailyStudyTask.needStudyCount = app.globalData.dailyStudyTask.needStudyCount + 1
         app.globalData.progressList = progressList
         app.globalData.todayCards = todayCards
         app.globalData.needRefreshCalendarData = true
         app.globalData.needRefreshReviewData = true
       },
-      function (e) { 
+      function (e) {
         // 背完了就要删除掉-1的卡片
         let todayCards = that.data.todayCards
         todayCards.pop()

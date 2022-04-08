@@ -114,7 +114,7 @@ Page({
     }, 1000);
     const expireTime = new Date().getTime() + 24 * 60 * 60 * 1000
     let role = {
-      role: 'vip',
+      role: 'roles-vip',
       expire: expireTime
     }
     wx.setStorageSync('role', role)

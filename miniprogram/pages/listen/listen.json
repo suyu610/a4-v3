@@ -8,7 +8,5 @@
     "van-icon": "@vant/weapp/icon/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-count-down": "@vant/weapp/count-down/index"
-
-
   }
 }

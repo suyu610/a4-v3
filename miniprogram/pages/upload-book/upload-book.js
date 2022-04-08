@@ -6,6 +6,12 @@ import {
   CustomBook
 } from '../../models/customBook.js'
 const customBookApi = new CustomBook()
+import {
+  WordBook
+} from '../../models/wordbook.js'
+
+const wordbookApi = new WordBook()
+
 Page({
 
   /**
@@ -30,12 +36,55 @@ Page({
           that.setData({
             showTips: false
           })
-
         }
       }
     })
   },
 
+
+  onTapBookItem(e) {
+    let bookCode = e.currentTarget.dataset.code
+    let bookName = e.currentTarget.dataset.name
+    if (bookCode == this.data.currentBookCode) return
+    let that = this
+    wx.showModal({
+      title: "确认",
+      content: '是否切换词书为 \r\n 「' + (bookName == null ? '未命名' : bookName) + '」',
+      confirmColor: "#220aac",
+      success(res) {
+        if (res.confirm) {
+          that.confirmSwitchBook(bookCode)
+        }
+      }
+    })
+  },
+
+
+  confirmSwitchBook(bookCode) {
+    let that = this
+    if (bookCode != null) {
+      customBookApi.switchCurCustomBook(bookCode).then(e => {
+        wx.showToast({
+          icon: 'none',
+          title: '已切换至 \r\n「' + (e.book.bookName == null ? '未命名' : e.book.bookName) + '」',
+        })
+        app.globalData.currentBookCode = bookCode
+        let bookList = that.data.bookList
+        bookList.forEach(book => {
+          book.isCurrent = book.bookCode == bookCode
+        })
+        this.setData({
+          bookList,
+          currentBookCode: bookCode
+        })
+      })
+    } else {
+      wx.showToast({
+        icon: 'none',
+        title: '请选择词书',
+      })
+    }
+  },
   isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
       if (value.toLowerCase() === arr[i].toLowerCase()) {
@@ -60,7 +109,6 @@ Page({
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFiles
-        console.log(res)
         if (res.tempFiles.length > 0) {
           var filename = res.tempFiles[0].path
           var index = filename.lastIndexOf(".");
@@ -95,12 +143,28 @@ Page({
         placeholderText: '请输入词书名',
         editable: true,
         confirmColor: '#220aac',
-
         success(res) {
           if (res.confirm) {
             // 重命名
-            wx.showToast({
-              title: '成功',
+            customBookApi.renameCustomBook(res.content, that.data.uploadBookId).then(e => {
+              wx.showToast({
+                title: '成功',
+              })
+              let bookList = that.data.bookList
+              bookList.forEach(book => {
+                if (book.bookCode == that.data.uploadBookId) {
+                  book.bookName = res.content
+                }
+              })
+
+              config.dictInfo[that.data.uploadBookId] = {
+                name: res.content,
+                totalWordNum: config.dictInfo[that.data.uploadBookId].totalWordNum,
+                isCustomBook: true
+              }
+              that.setData({
+                bookList
+              })
             })
           } else if (res.cancel) {
             console.log('用户点击取消')
@@ -149,13 +213,28 @@ Page({
       success(res) {
         console.log(res.data)
         let data = JSON.parse(res.data);
-        console.log(data)
-        console.log(data.errcode)
         if (data.errcode == 0) {
+          let bookList = that.data.bookList
+          let uploadBook = {
+            totalCount: data.data.successCount,
+            bookName: null,
+            bookCode: data.data.customBookId
+          }
+
+          bookList.push(uploadBook)
+
+          config.dictInfo[data.data.customBookId] = {
+            name: '未命名',
+            totalWordNum: data.data.successCount,
+            isCustomBook: true
+          }
+
           that.setData({
+            bookList,
             uploadWordCount: data.data.successCount,
             totalWordCount: data.data.totalCount,
-            uploadSuccess: true
+            uploadSuccess: true,
+            uploadBookId: data.data.customBookId
           })
         } else {
           wx.showToast({
@@ -187,13 +266,22 @@ Page({
    */
   onLoad: function (options) {
     let currentBookCode = app.globalData.currentBookCode
+    let progressList = app.globalData.progressList
+
     customBookApi.getCustomBook().then(e => {
+      console.log(e)
       e.forEach(book => {
+        book.curStudyNum = progressList[book.bookCode]
+        console.log(progressList)
+        console.log(book.bookCode)
+        book.totalCount = book.totalNum
+
         if (book.bookCode == currentBookCode) {
           book.isCurrent = true
         }
       })
       this.setData({
+        currentBookCode,
         bookList: e
       })
     })
@@ -213,7 +301,7 @@ Page({
     this.setData({
       navigationBarHeight: app.globalData.navigationBarHeight,
       windowHeight: app.globalData.windowHeight,
-      tabContainerHeight: app.globalData.windowHeight - app.globalData.navigationBarHeight
+      tabContainerHeight: app.globalData.windowHeight - app.globalData.navigationBarHeight,
     })
     let that = this
 

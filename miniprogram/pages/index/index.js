@@ -18,7 +18,7 @@ import {
 } from '../../models/card'
 import router from '../../router/index'
 
-const user = new User()
+const userApi = new User()
 const resource = new Resource()
 const cardApi = new Card()
 Page({
@@ -28,6 +28,8 @@ Page({
     showOverlay: false,
     showPageContainerValue: false,
     showInvitePopupValue: false,
+    showInvitePopupResultValue: false,
+    inviteSuccess: false,
     showWordGroupPopupValue: false,
     randomCard: {
       "cardId": 976842,
@@ -440,7 +442,7 @@ Page({
     wx.showLoading({
       title: '修改中',
     })
-    user.modifyUserSetting(setting).then(e => {
+    userApi.modifyUserSetting(setting).then(e => {
       let dailyStudyTask = that.data.dailyStudyTask
       // 成功后，要修改globaldata和本页面的data
       app.globalData.setting.targetCount = tmpTargetCount
@@ -468,7 +470,6 @@ Page({
    */
   onShow() {
     app.globalData.innerAudioContext.stop()
-    let that = this
     if (app.globalData.progressList != null) {
       this.setData({
         progressList: app.globalData.progressList
@@ -477,7 +478,7 @@ Page({
 
     if (app.globalData.dailyStudyTask != null) {
       this.setData({
-        dailyStudyTask: app.globalData.dailyStudyTask
+        dailyStudyTask: app.globalData.dailyStudyTask,
       })
     }
 
@@ -490,17 +491,58 @@ Page({
 
     this.setData({
       darkMode: app.globalData.theme == 'dark',
+      dictInfo: config.dictInfo
     })
+
+
+
   },
 
+  // 做一下判断
   checkShareStatus() {
+    let userId = this.data.inviteUserId
+    let that = this
+    // 先拿到用户的id
     this.judgeSharePopup()
     this.setData({
       showInvitePopupValue: false
     })
-    wx.showToast({
-      icon: 'none',
-      title: '成功解锁',
+
+    let checkTask = userApi.checkInviteUrlAndUnlock(userId)
+    checkTask.then(e => {
+      if (e.errcode == 0) {
+        if (!that.data.userAuthInfo.isVip) {
+          that.setData({
+            userAuthInfo: {
+              role: 'roles-vip',
+              vip: true,
+              expireDate: 1893427200,
+              unlockCount: 1
+            }
+          })
+        }
+        // 解锁成功
+        that.setData({
+          showInvitePopupResultValue: true,
+          inviteSuccess: true,
+        })
+        that.judgeSharePopup()
+
+      }
+
+      if (e.errcode == -11) {
+        // 解锁失败，无名额
+        this.setData({
+          showInvitePopupResultValue: true,
+          inviteSuccess: false
+        })
+      }
+
+      if (e.errcode == 12) {
+        // 点击自己的
+
+      }
+
     })
   },
 
@@ -510,21 +552,20 @@ Page({
     let role = userAuthInfo.role
     let unlockCount = userAuthInfo.unlockCount
 
-    let invitePopupTitleText = isInviteMode ? "会员解锁邀请" : (role != "vip") ? "邀请好友" : "成功解锁"
+    let invitePopupTitleText = isInviteMode ? "会员解锁邀请" : (role != "roles-vip") ? "邀请好友" : "成功解锁"
     let invitePopupSubTitleText = "共同免费解锁会员权益"
     let invitePopupBottomText = "分享给好友或群聊"
 
     if (isInviteMode) {
       invitePopupSubTitleText = "xxx邀请你共同免费解锁会员权益",
         invitePopupBottomText = "立即解锁"
-
       this.setData({
         showInvitePopupValue: true,
         isInviteMode: false,
         invitePopupBottomText
       })
     } else {
-      if (role == 'vip') {
+      if (role == 'roles-vip') {
         if (unlockCount < 3) {
           invitePopupSubTitleText = "你可以继续分享，帮助" + parseInt(3 - unlockCount) + "名好友解锁"
         } else {
@@ -540,6 +581,7 @@ Page({
       invitePopupBottomText
     })
   },
+
   showInvitePopup() {
     this.setData({
       showInvitePopupValue: true
@@ -550,7 +592,14 @@ Page({
       showInvitePopupValue: false
     })
   },
-  initFromServer() {
+
+  hideInviteResultPopup() {
+    this.setData({
+      showInvitePopupResultValue: false
+    })
+  },
+
+  initFromServer(options) {
     let that = this
     let p = resource.getInitData()
     p.finally(e => {
@@ -562,6 +611,7 @@ Page({
         scrollViewHeight: app.globalData.scrollViewHeight,
         windowWidth: app.globalData.windowWidth,
       })
+
     })
     p.catch(e => {
       wx.showToast({
@@ -571,6 +621,7 @@ Page({
     })
     p.then(e => {
       console.log(e)
+
       gData.progressList = e.progressList || {}
       gData.currentBookCode = e.currentBookCode
       gData.setting = e.setting
@@ -591,10 +642,18 @@ Page({
           yearDayCount: 6
         }
       }
-
       gData.studyRecordInfo = e.studyRecordInfo
-
+      console.log(e.userAuthInfo)
+      if (options.invite && e.userBaseInfo.id != options.invite) {
+        console.log(options.invite)
+        // 如果是自己的，则不弹窗
+        that.setData({
+          isInviteMode: true,
+          inviteUserId: options.invite
+        })
+      }
       that.setData({
+        isIOS: app.globalData.isIOS != null,
         progressList: e.progressList,
         currentBookCode: e.currentBookCode,
         dailyStudyTask: e.dailyStudyTask,
@@ -604,6 +663,7 @@ Page({
         setting: e.setting,
         dailyFinishedData: e.dailyFinishedData
       })
+
       that.judgeSharePopup()
       var planTimeColumn = that.data.planTimeColumn
       planTimeColumn.forEach((item, index) => {
@@ -611,11 +671,21 @@ Page({
           planTimeColumn[index] = item + "*"
         }
       })
+
+      let dictInfo = config.dictInfo
+      if (e.customBookList != null) {
+        e.customBookList.forEach(book => {
+          dictInfo[book.bookCode] = {
+            name: book.bookName == null ? '未命名' : book.bookName,
+            totalWordNum: book.totalNum,
+            isCustomBook: true
+          }
+        })
+      }
       that.setData({
+        dictInfo,
+        loading: false,
         planTimeColumn
-      })
-      that.setData({
-        loading: false
       })
     })
   },
@@ -657,12 +727,8 @@ Page({
    * @toMethod 转入初始化函数 this.init()  
    */
   onLoad: function (options) {
-    this.initFromServer()
-    if (options.invite != null) {
-      this.setData({
-        isInviteMode: true,
-      })
-    }
+    this.initFromServer(options)
+
   },
 
   setBackgroudImage() {

@@ -57,7 +57,6 @@
 <view class="loading-container" wx:if="{{loading}}">
   <view class="child">
     <van-loading size="24px" vertical>加载中...</van-loading>
-    <!-- <view class="sentence">{{senInfo.english}}</view> -->
   </view>
 </view>
 
@@ -65,7 +64,6 @@
 <van-transition show="{{ !loading }}">
   <view class="wrapper" refresher-threshold="{{80}}" id="wrapper" bindtouchstart="{{drawer.touchstart}}" bindtouchmove="{{drawer.touchmove}}" bindtouchend="{{drawer.touchend}}">
     <view class="container">
-      <!-- <v-navigation-bar type="searchBar" showBottomShadow="{{ true }}" bind:search="onSearch" bindtap="{{drawer.openDrawer}}"></v-navigation-bar> -->
       <image class="top-bg" mode="widthFix" src="https://cdns.qdu.life/a4/images/shadow.png"></image>
       <view class="navigation-bar" style="height:{{navigationBarHeight}}px;">
         <view class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
@@ -86,16 +84,14 @@
           </view>
         </view>
         <!-- progress-card -->
-        <v-progress-card loading="{{loading}}" userInfo="{{userInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
+        <v-progress-card dictInfo="{{dictInfo}}" userBaseInfo="{{userBaseInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
         <homecard finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
         <homecard finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
         <view class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
-          <view>「 随心一张 」 </view>
+          <view>「 v3.02 」 </view>
           <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image>
         </view>
-
       </scroll-view>
-
 
       <popover animation id='popover' show="{{true}}" parent-id="random">
         <!-- <view>hello</view> -->
@@ -119,8 +115,8 @@
       <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
     </view>
 
-    <view class="drawer drawerA" data-drawerwidth="{{windowWidth}}">
-      <sidebar studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}" userBaseInfo="{{userBaseInfo}}" bind:openAlarm="openAlarm" bind:share="share" bind:showInvitePopup="showInvitePopup"></sidebar>
+    <view class="drawer drawerA" data-isIOS="{{isIOS}}" data-drawerwidth="{{windowWidth}}">
+      <sidebar studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}"  bind:openAlarm="openAlarm" bind:share="share" bind:showInvitePopup="showInvitePopup"></sidebar>
     </view>
   </view>
 
@@ -135,6 +131,16 @@
 </van-transition>
 
 <!-- 分享解锁页面 -->
+<van-popup round show="{{ showInvitePopupResultValue }}" custom-class="dictPopup" position="center" bind:close="hideInviteResultPopup" lock-scroll="{{true}}" z-index="999" custom-style="height:377px;width:337px;">
+  <view class="invite-result-popup-container" wx:if="{{ showInvitePopupResultValue }}">
+    <image class="invite-result-popup-bg-img" src="https://cdns.qdu.life/a4/images/unlock_{{inviteSuccess?'success':'fail'}}.png" mode="heightFix"></image>
+    <view class="title">{{inviteSuccess?'恭喜你，解锁成功':'抱歉，对方的解锁额度已经用完\r\n你可以邀请其他人已完成解锁'}}</view>
+    <view class="popup-container-bottom" bindtap="onInviteFriendTapped">
+      <bg-btn bindtap="hideInviteResultPopup" shadow title="好的" bgColor="#6C30F0" width="167" height="30"></bg-btn>
+    </view>
+  </view>
+</van-popup>
+
 <van-popup round show="{{ showInvitePopupValue }}" custom-class="dictPopup" position="center" bind:close="hideInvitePopup" lock-scroll="{{true}}" z-index="999" custom-style="height:519px;width:337px;">
   <view class="invite-popup-container" wx:if="{{ showInvitePopupValue }}">
     <view class="title">{{invitePopupTitleText}}</view>

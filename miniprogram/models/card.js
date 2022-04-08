@@ -24,11 +24,15 @@ import {
   HTTP
 } from '../utils/http.js'
 class Card extends HTTP {
-  genNewCard() {
+  genNewCard(useCustomBook) {
+    // 判断当前是自定义词书，还是官方词书
     return new Promise((resolve, reject) => {
       this.request({
         url: '/userCard/genNewCard',
-        method: 'POST'
+        method: 'POST',
+        data: {
+          useCustomBook
+        }
       }).then(res => {
         resolve(res)
       }).
@@ -70,11 +74,14 @@ class Card extends HTTP {
     })
   }
   // 今日卡片
-  genTodayCard(pageIndex) {
+  genTodayCard(pageIndex, useCustomBook) {
     return new Promise((resolve, reject) => {
       this.request({
           url: '/userCard/today/' + pageIndex,
-          method: 'GET'
+          method: 'POST',
+          data: {
+            useCustomBook
+          } 
         }).then(res => {
           resolve(res)
         })

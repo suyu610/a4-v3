@@ -13,7 +13,6 @@
       <view class="body">
         <view style="color:#4E5969">你可以按照以下任一种格式制作你的词书，然后点击最下方的上传词书按钮即可完成添加。</view>
         <view style="color:#4E5969">请确保文件拓展名为txt、text、xls、xlsx</view>
-
       </view>
       <view class="images">
         <view>
@@ -27,7 +26,7 @@
       </view>
     </view>
     <block wx:for="{{bookList}}" wx:for-item="book" wx:key="index">
-      <book-item bookName="{{book.bookName==null?'未命名':book.bookName}}" totalCount="{{book.totalNum}}" hasAdded="{{true}}" isCurrent="{{book.isCurrent}}" desc="{{book.desc}}"></book-item>
+      <book-item bindtap="onTapBookItem" bindlongpress="onLongPressBookItem" data-name="{{book.bookName}}" data-code="{{book.bookCode}}" curStudyNum="{{book.curStudyNum}}" bookName="{{book.bookName==null?'未命名':book.bookName}}" totalCount="{{book.totalCount}}" hasAdded="{{true}}" isCurrent="{{book.isCurrent}}" desc="{{book.desc}}"></book-item>
     </block>
     <view style="height: 100px;"></view>
   </scroll-view>
@@ -56,7 +55,6 @@
       </view>
     </view>
   </van-overlay>
-
 
   <view class="bottom" bindtap="chooseFile">
     <bg-btn title="点击上传" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bg-btn>

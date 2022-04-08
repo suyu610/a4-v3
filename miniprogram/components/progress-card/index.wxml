@@ -22,15 +22,17 @@
       return value;
     }
   }
+  var calWidth = function (cur, total) {
+    return Math.min(100 * cur / total, 100)
+  }
+  module.exports.calWidth = calWidth;
   module.exports.toFix = toFix;
   module.exports.subStr = subStr;
 </wxs>
 
 <!-- progress-card -->
 <view wx:if="{{!loading}}" class="progress-card">
-
-  <book bookColumnId="{{str.subStr(currentBookCode)}}" bookName="{{currentBookCode!=null && currentBookCode!=''? dictInfo[currentBookCode].name : '请选择词书'}}" totalCount="{{dictInfo[currentBookCode].totalWordNum}}"></book>
-
+  <book useCustomBook="{{dictInfo.useCustomBook}}" bookColumnId="{{str.subStr(currentBookCode)}}" bookName="{{currentBookCode!=null && currentBookCode!=''? dictInfo[currentBookCode].name : '请选择词书'}}" totalCount="{{dictInfo[currentBookCode].totalWordNum}}"></book>
   <!-- progress-container -->
   <view class="progress-container">
     <view class="progress-container-header" bind:tap="onNaviToDictionary">
@@ -45,10 +47,10 @@
       <text wx:else>暂未开始学习计划</text>
     </view>
     <view class="progress" id="progress">
-      <view class="progress-current" style="width:{{100*progressList[currentBookCode]/dictInfo[currentBookCode].totalWordNum}}\%"></view>
+      <view class="progress-current" style="width:{{str.calWidth(progressList[currentBookCode],dictInfo[currentBookCode].totalWordNum)}}\%"></view>
     </view>
     <view class=" progress-container-info" wx:if="{{currentBookCode!=null  && currentBookCode!=''}}">
-      <text class="progress-container-info-text-2">进度 <text class="black bold">{{ progressList[currentBookCode]==null?0:str.toFix(100*progressList[currentBookCode]/dictInfo[currentBookCode].totalWordNum,1)}}%</text> </text>
+      <text class="progress-container-info-text-2">进度 <text class="black bold">{{ progressList[currentBookCode]==null?0:str.toFix(str.calWidth(progressList[currentBookCode],dictInfo[currentBookCode].totalWordNum),1)}}%</text> </text>
       <text class="progress-container-info-text-2">({{progressList[currentBookCode]==null?0:progressList[currentBookCode]>dictInfo[currentBookCode].totalWordNum?dictInfo[currentBookCode].totalWordNum:progressList[currentBookCode]}}/{{dictInfo[currentBookCode].totalWordNum}})</text>
     </view>
     <view class=" progress-container-info" wx:else>

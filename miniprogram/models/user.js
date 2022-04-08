@@ -7,6 +7,27 @@ import {
 } from '../utils/http.js'
 
 class User extends HTTP {
+
+
+
+
+  /**
+   * 获取Token
+   * 
+   * @param {} 无需参数
+   * @return {token} 用户信息 
+   */
+  checkInviteUrlAndUnlock(userId) {
+    return new Promise((resolve, reject) => {
+      this.request({ 
+          url: '/user/invite/check/' + userId,
+          method: 'GET',
+        }).then(res => {
+          resolve(res)
+        })
+        .catch(console.error)
+    })
+  }
   /**
    * 获取Token
    * 
@@ -54,13 +75,13 @@ class User extends HTTP {
 
   modifyUserProfile(profile) {
     return new Promise((resolve, reject) => {
-      this.request({ 
+      this.request({
         url: '/user/profile',
-        method: 'POST', 
+        method: 'POST',
         data: profile
       }).then(res => {
         resolve(res)
-      }). 
+      }).
       catch(function (e) {
         console.log(e)
         reject(e)
@@ -77,11 +98,11 @@ class User extends HTTP {
       this.request({
         url: '/user/modifySetting',
         method: 'POST',
-        data: setting 
+        data: setting
       }).then(res => {
-        resolve(res) 
-      }). 
-      catch(function (e) { 
+        resolve(res)
+      }).
+      catch(function (e) {
         console.log(e)
         reject(e)
       })
