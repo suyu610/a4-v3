@@ -1,12 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/dict-wordlist/dict-wordlist",
     "pages/dictionary/dictionary",
     "pages/upload-book/upload-book",
     "pages/listen/listen",
     "pages/settings/settings",
     "pages/calendar/calendar",
-    "pages/pay/pay",
     "pages/all-card/all-card",
     "pages/today-study/today-study",
     "pages/wordlist/wordlist",
@@ -17,24 +17,23 @@
     "pages/settings/more_settings/more_settings",
     "pages/today-review/today-review"
   ],
-  "subpackages": [{
-    "root": "packageSub",
-    "pages": [
-      "pages/export-card-confirm/export-card-confirm",
-      "pages/snapshot/snapshot"
-    ]
-  }],
+  "subpackages": [
+    {
+      "root": "packageSub",
+      "pages": [
+        "pages/export-card-confirm/export-card-confirm",
+        "pages/snapshot/snapshot"
+      ]
+    }
+  ],
   "resizable": true,
-
   "themeLocation": "theme.json",
   "window": {
     "navigationStyle": "custom",
     "navigationBarBackgroundColor": "@navBgColor",
     "navigationBarTextStyle": "black",
     "pageOrientation": "portrait"
-
   },
-  
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"
 }

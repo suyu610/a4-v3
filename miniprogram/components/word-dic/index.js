@@ -51,16 +51,14 @@ Component({
   },
 
   lifetimes: {
-    ready: function () {}
-  },
-  pageLifetimes: {
-    show: function () {
+    ready: function () {
       this.setData({
         showNoEver: app.globalData.showNoEver,
         voiceType: app.globalData.voiceType,
       })
-    },
+    }
   },
+
 
   observers: {
     'wordContent': function (wordContent) {
@@ -70,12 +68,12 @@ Component({
         wx.getStorage({
           key: 'openAutoSpeak',
           success(res) {
-            if (res.data == 1) {
-              that.speakWordFunc()
-            }
+            // if (res.data == 1) {
+            //   that.speakWordFunc()
+            // }
           },
           fail(res) {
-            that.speakWordFunc()
+            // that.speakWordFunc()
           }
         })
         this.setData({
@@ -119,10 +117,10 @@ Component({
         defIndex: e.currentTarget.dataset.index
       })
     },
+
     /**
      * 确认修改自定义释义
      */
-
     confirmEditSelfDef() {
       let that = this
       let editSelfShortDef = this.data.editSelfShortDef
@@ -212,8 +210,10 @@ Component({
             wordContent: e,
             loading: false
           })
+          that.triggerEvent("replaceWord", {
+            e
+          })
         })
-
       })
 
     },

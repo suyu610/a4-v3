@@ -68,6 +68,7 @@ Page({
   formatDateStr(year, month, day) {
     return String(year) + String(month < 10 ? '0' + month : month) + String(day < 10 ? '0' + day : day)
   },
+  
   changeChosenDate(e) {
     console.log(e)
     let dateStr = this.formatDateStr(e.detail.year, e.detail.month, e.detail.day)

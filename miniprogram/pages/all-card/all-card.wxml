@@ -1,33 +1,43 @@
 <!--pages/new-word/index.wxml-->
-<movable-area class="container">
-  <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
-  <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
-    <header title="当前共有" bgColor="transparent" paddingBottom="4"></header>
-    <van-dropdown-menu overlay="{{showDropdownOverlay}}" active-color="#4C34F0">
-      <van-dropdown-item title="{{dataRange==null?'创建日期':dataRange}}" bind:open="onOpenCalendar" id="calendar-dropdown-item">
-        <van-calendar id="calendar" type="range" title="选择卡片创建日期" show="{{ showCalendarValue }}" round bind:close="onCloseCalendar" bind:confirm="onConfirmCalendar" position="bottom" allow-same-day color="#4c34f0" min-date="{{minDate}}" max-date="{{ maxDate }}">
-          <view class="calendar-footer" slot="footer">
-            <bg-btn title="重置" bindtap="onResetCalender" bgColor="#FB8F45" textColor="#fff" width="82" height="28"></bg-btn>
-            <bg-btn title="确定" bindtap="callConfirmCalendar" bgColor="#4C34F0" textColor="#fff" width="164" height="28"></bg-btn>
-          </view>
-        </van-calendar>
-      </van-dropdown-item>
-      <van-dropdown-item value="{{value2}}" options="{{ option2 }}" bind:open="{{openCalendar}}" />
-      <van-dropdown-item value="{{ value3 }}" options="{{ option3 }}" />
-    </van-dropdown-menu>
+<!-- <movable-area class="container"> -->
+<navigation-bar  type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
 
-    <block wx:for="{{todayCards}}" wx:key="cardId">
-      <!-- wordCard [Not Loading OR Empty] -->
-      <wordCard class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
+<scroll-view bindscrolltolower="onReachBottom" scroll-y style="height: {{scrollViewHeight}}px;">
+  <header title="当前共有" cardNum="{{totalCardNum}}" bgColor="transparent" paddingBottom="10" selectMode="{{allSelectMode}}" bind:onRightBtnTapped="onAllSelectBtnTapped"></header>
+  <van-dropdown-menu overlay="{{showDropdownOverlay}}" active-color="#4C34F0">
+    <van-dropdown-item title="{{dataRange==null?'创建日期':dataRange}}" bind:open="onOpenCalendar" id="calendar-dropdown-item">
+      <van-calendar wx:if="{{!loading}}" default-date="{{ calendarDefaultToday }}" id="calendar" type="range" title="选择卡片创建日期" show="{{ showCalendarValue }}" round bind:close="onCloseCalendar" bind:confirm="onConfirmCalendar" position="bottom" allow-same-day color="#4c34f0" min-date="{{minDate}}" max-date="{{ maxDate }}">
+        <view class="calendar-footer" slot="footer">
+          <bg-btn title="重置" bindtap="onResetCalender" bgColor="#FB8F45" textColor="#fff" width="82" height="28"></bg-btn>
+          <bg-btn title="确定" bindtap="callConfirmCalendar" bgColor="#4C34F0" textColor="#fff" width="164" height="28"></bg-btn>
+        </view>
+      </van-calendar>
+    </van-dropdown-item>
+    <van-dropdown-item value="{{ dictValue }}" options="{{ dictOption }}" bind:change="changeDictOption" />
+    <van-dropdown-item value="{{ statusValue }}" options="{{ statusOption }}" bind:change="changeStatusOption" />
+  </van-dropdown-menu>
+
+  <van-transition show="{{ !loading }}">
+    <block wx:for="{{cardList}}" wx:key="cardId">
+      <wordCard wx:if="{{item!=null}}" mode="study" class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
     </block>
+  </van-transition>
 
-    <van-empty description="当前筛选条件下没有卡片" wx:if="{{todayCards.length==0}}" />
-    <view class="placeholder"></view>
-    <!-- <bg-btn title="点此添加卡片" width="112" textColor="#86909C"></bg-btn> -->
-  </scroll-view>
-  <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}">
-    <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}" bindtap="onTapBottomBtn">
-      <shadow-btn title="{{bottomBtnTitle}}"></shadow-btn>
-    </view>
-  </movable-view>
-</movable-area>  
+  <van-empty description="当前筛选条件下没有卡片" wx:if="{{cardList.length==0}}" />
+  <view class="loadmore-container" wx:if="{{loadingMore}}">
+    <van-loading size="24px">加载中...</van-loading>
+  </view>
+
+  <view class="loadmore-container" bindtap="onReachBottom" wx:if="{{!loadingMore && hasNextPage}}">
+    <text class="add-btn-text-nomore">点击加载更多</text>
+  </view>
+
+  <view class="placeholder"></view>
+
+</scroll-view>
+<!-- <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}"> -->
+<view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}" bindtap="onTapBottomBtn">
+  <shadow-btn title="{{bottomBtnTitle}}"></shadow-btn>
+</view>
+<!-- </movable-view> -->
+<!-- </movable-area> -->

@@ -1,0 +1,19 @@
+<!--pages/dict-wordlist/dict-wordlist.wxml-->
+<navigation-bar type="leftBar" title="未学单词列表" bgColor="transparent"></navigation-bar>
+<scroll-view scroll-y class="scroll-container" style="height: {{scrollViewHeight}}px;">
+  <view class="header">
+    <view class="count">当前共有{{wordCount}}个单词</view>
+    <view bindtap="toggleShowAllMode" class="right-btn {{showAll?'blue':''}}">{{showAll?'':'不'}}显示未选中</view>
+  </view>
+  <block wx:for="{{wordList}}" wx:key="index" wx:for-item="word">
+    <van-cell wx:if="{{!word.ignore || showAll}}" bindtap="onCellTapped" data-word="{{word.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
+      <view slot="title" style="display:flex;justify-content:start">
+        <view class="van-cell-text">{{word.wordName}}</view>
+      </view>
+      <image catchtap="onCellTapped" data-word="{{word.wordName}}" class="right-checked-img" src="{{word.ignore ? 'images/unchecked.png': 'images/checked.png'}}"></image>
+    </van-cell>
+  </block>
+</scroll-view>
+<view class="footer" bindtap="finishSetting">
+  <bg-btn shadow title="完成设置"  bgColor="#6C30F0" width="125" height="30"></bg-btn>
+</view>

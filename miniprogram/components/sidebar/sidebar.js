@@ -14,20 +14,21 @@ Component({
     userAuthInfo: Object,
     userBaseInfo: Object,
     studyRecordInfo: Object,
+    notificationConfig: Object
   },
 
   /**
    * 组件的初始数据
    */
   data: {
+    isMiniScreen: app.globalData.isMiniScreen,
     showInvitePopupValue: false,
     notificationTypeIndex: 0,
-    notificationType: ['当日有未完成的任务', '总是提醒', '关闭提醒'],
+    notificationType: ['关闭提醒', '当日有未完成的任务', '总是提醒'],
     timePickerFilter(type, options) {
       if (type === 'minute') {
-        return options.filter((option) => option % 5 === 0);
+        return options.filter((option) => option % 2 === 0);
       }
-
       return options;
     },
     showTimePickerPopupValue: false,
@@ -94,6 +95,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
+
     onInviteFriendTapped() {
       this.triggerEvent("share")
     },
@@ -133,6 +135,8 @@ Component({
           showExportActionSheetValue: true,
           mode: "export"
         })
+        this.toggleLockDrawer()
+
       }
 
       if (e.currentTarget.dataset.name == 'listen') {
@@ -140,13 +144,18 @@ Component({
           showExportActionSheetValue: true,
           mode: "listen"
         })
+        this.toggleLockDrawer()
+
       }
 
       if (e.currentTarget.dataset.name == 'notification') {
         this.setData({
           showNotificationPopupValue: true
         })
+        this.toggleLockDrawer()
+
       }
+
     },
 
     onTap: function (e) {
@@ -164,20 +173,43 @@ Component({
         showTimePickerPopupValue: true
       })
     },
+    confirmTimePickerPopup(e) {
+      console.log(e.detail)
+      let notificationConfig = this.data.notificationConfig
+      notificationConfig.hour = e.detail.split(":")[0]
+      notificationConfig.minute = e.detail.split(":")[1]
+
+      this.setData({
+        notificationConfig,
+        notificationTimeStr: e.detail
+      })
+
+      this.closeTimePickerPopup()
+    },
 
     closeTimePickerPopup() {
       this.setData({
         showTimePickerPopupValue: false
       })
     },
+
     onTapConfirmBtn() {
-      this.triggerEvent('openAlarm', {})
+      this.triggerEvent('openAlarm', {
+        "notificationConfig": this.data.notificationConfig
+      })
       this.closeNotificationPopup()
     },
 
     onChangeNotificationType() {
+      let mode = this.data.notificationConfig.mode
+      if (mode == 2) {
+        mode = 0
+      } else {
+        mode = mode + 1
+      }
+
       this.setData({
-        notificationTypeIndex: ++this.data.notificationTypeIndex
+        ['notificationConfig.mode']: mode
       })
     },
 
@@ -185,8 +217,13 @@ Component({
       this.setData({
         showNotificationPopupValue: false
       })
+      this.toggleLockDrawer()
     },
 
+    toggleLockDrawer() {
+      console.log("toggleLockDrawer")
+      this.triggerEvent("toggleLockDrawer")
+    },
     onSelectExportActionSheet(e) {
       let routerName = ""
       let mode = this.data.mode
@@ -215,6 +252,8 @@ Component({
       this.setData({
         showExportActionSheetValue: false
       })
+      this.toggleLockDrawer()
+
     },
 
     jump2Calendar() {
@@ -245,9 +284,9 @@ Component({
 
   lifetimes: {
     ready() {
-
       this.setData({
         searchBarTop: app.globalData.searchBarTop,
+        notificationTimeStr: (this.data.notificationConfig.hour < 10 ? ('0' + this.data.notificationConfig.hour) : this.data.notificationConfig.hour) + ":" + (this.data.notificationConfig.minute < 10 ? ('0' + this.data.notificationConfig.minute) : this.data.notificationConfig.minute)
       })
     }
   }

@@ -1,6 +1,6 @@
 // components/sidebar-item/index.js
 import router from '../../router/index'
-
+const app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -26,7 +26,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    isMiniScreen: app.globalData.isMiniScreen
   },
 
   /**

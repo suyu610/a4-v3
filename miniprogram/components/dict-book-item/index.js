@@ -9,7 +9,10 @@ Component({
     finished: Boolean,
     bookName: String,
     bookColumnId: Number,
-    curStudyNum: Number,
+    curStudyNum: {
+      type: Number,
+      value: 0
+    },
     desc: {
       type: String,
       value: '暂无详细介绍'

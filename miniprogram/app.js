@@ -136,12 +136,15 @@ App({
 
     // 设置全局变量
     let sysInfo = wx.getSystemInfoSync()
-    console.log(sysInfo.platform)
+    console.log(sysInfo)
     if (sysInfo.platform == "ios") {
       this.globalData.isIOS = true;
     }
     let theme = sysInfo.theme
     this.globalData.theme = theme
+    let screenHeight = sysInfo.screenHeight
+    this.globalData.screenHeight = screenHeight
+    this.globalData.isMiniScreen = screenHeight < 670
     let statusBarHeight = sysInfo.statusBarHeight
     let titleBarHeight = sysInfo.platform == 'android' ? 48 : 44
     let navigationBarHeight = statusBarHeight + titleBarHeight

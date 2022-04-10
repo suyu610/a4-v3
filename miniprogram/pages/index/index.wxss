@@ -390,6 +390,12 @@ page {
   background: linear-gradient(178.41deg, #cadefd -9.59%, #ffffff 98.65%);
   text-align: center;
 }
+.orange{
+  color:orange;
+}
+.icon{ 
+  transition: .3s;
+}
 .invite-result-popup-container .title {
   font-size: 18px;
   padding-top: 17px;

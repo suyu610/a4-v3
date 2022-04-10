@@ -81,7 +81,22 @@ class Card extends HTTP {
           method: 'POST',
           data: {
             useCustomBook
-          } 
+          }
+        }).then(res => {
+          resolve(res)
+        })
+        .catch(console.error)
+    })
+  }
+
+  // 全部卡片
+  getAllCard(filterConfig, pageIndex) {
+    filterConfig['pageIndex'] = pageIndex
+    return new Promise((resolve, reject) => {
+      this.request({
+          url: '/userCard/all/' + pageIndex,
+          method: 'POST',
+          data: filterConfig
         }).then(res => {
           resolve(res)
         })

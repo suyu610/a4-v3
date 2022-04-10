@@ -1,7 +1,7 @@
 var startmark = 0;
 var status = 0;
 var JUDGEPOINT = 0.3;
-var drawerComp, drawerWidth, iconComp, isIOS;
+var drawerComp, drawerWidth, iconComp, isIOS,isLock;
 var showPageContainerValue = false
 
 function touchStart(e, ins) {
@@ -12,13 +12,13 @@ function touchStart(e, ins) {
   overlay = ins.selectComponent('#overlay');
   drawerWidth = drawerComp.getDataset().drawerwidth;
   isIOS = drawerComp.getDataset().isios;
-
+  isLock = drawerComp.getDataset().lock;
 
 }
 
 function touchMove(e, ins) {
 
-  if (!isIOS) {
+  if (!isIOS && !isLock) {
     var offset = e.touches[0].pageX - startmark;
     if (status == 0 && (offset / drawerWidth) > 0.46 || status == 1 && (offset / drawerWidth) < -0.3) {
       iconComp.setStyle({
@@ -56,8 +56,7 @@ function setIcon(isOpen) {
 }
 
 function touchEnd(e, ins) {
-  if (!isIOS) {
-
+  if (!isIOS && !isLock) {
     iconComp.setStyle({
       'opacity': "1"
     })

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "navigation-bar": "../../components/navigation-bar",
+    "van-loading": "@vant/weapp/loading/index",
     "header": "../../components/header",
     "wordCard": "../../components/wordCard",
     "shadow-btn": "../../components/shadow-btn",

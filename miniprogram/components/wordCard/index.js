@@ -72,13 +72,14 @@ Component({
    * 数据监听器
    */
   observers: {
-    // 'wordCard': function (wordCard) {
-    //   console.log(wordCard)
-    //   // 当wordCard已经被设置非空时
-    //   if (JSON.stringify(wordCard) != '{}') {
-    //     this.wordCardHandler(wordCard, false)
-    //   }
-    // },
+    'wordCard': function (wordCard) {
+      // 当wordCard已经被设置非空时
+      // if (JSON.stringify(wordCard) != '{}') {
+      //   if (this.data._wordCard != null && wordCard.cardId == this.data._wordCard.cardId) {
+      //     this.wordCardHandler(wordCard, true)
+      //   }
+      // }
+    },
 
     'cardCheckedArr': function () {
       let flag = false
@@ -119,7 +120,7 @@ Component({
         } else {
           status_mode = 1
         }
-      } 
+      }
       this.setData({
         date,
         status_mode,

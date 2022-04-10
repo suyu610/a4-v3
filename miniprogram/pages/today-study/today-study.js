@@ -20,7 +20,7 @@ Page({
    */
   data: {
     allSelectMode: false,
-    cardCur: 0,
+    curIndex: 0,
     wordlist: ["hello", "abandon", "people", "world", "open"],
     nextWordList: [],
     todayCards: [],
@@ -95,18 +95,36 @@ Page({
       this.onPractice()
     }
   },
-  replaceWord() {
-    let cardCur = this.data.cardCur
+  // 从词典传来的
+  replaceWord(e) {
+    // 把当前的改掉
+    console.log(e.detail.e)
+    let targetWordName = e.detail.e.wordName
+    let currentCardId = this.data.currentCardId
+    let currentWordName = this.data.currentWordName
+    var todayCards = this.data.todayCards
+    var targetCardIndex = 0
+    var targetWordIndex = 0
 
-    if (cardCur + 1 == this.data.wordlist.length) {
-      cardCur = 0
-    } else {
-      cardCur++
-    }
-
-    this.setData({
-      cardCur
+    todayCards.forEach((card, cardIndex) => {
+      if (card.cardId == currentCardId) {
+        targetCardIndex = cardIndex
+        card.wordList.forEach((word, wordIndex) => {
+          if (word.wordName == currentWordName) {
+            targetWordIndex = wordIndex
+            word.wordName = targetWordName
+          }
+        })
+      }
     })
+
+    console.log(targetCardIndex, targetWordIndex)
+    this.setData({
+      todayCards
+    })
+
+    this.selectComponent("#card_" + currentCardId).wordCardHandler(todayCards[targetCardIndex], true)
+
   },
 
 
@@ -138,8 +156,10 @@ Page({
 
   cardSwiper(e) {
     let that = this
+    let curIndex = e.detail.current
     that.setData({
-      cardCur: e.detail.current
+      curIndex,
+      currentWordName: this.data.cardBaseWordList[curIndex].wordName
     })
   },
 
@@ -165,6 +185,7 @@ Page({
     let that = this
     // 更新数据
     this.setData({
+      curIndex: 0,
       showOverlay: false,
       showSearchBar: false,
       showDictPopup: false
@@ -178,17 +199,25 @@ Page({
    * @setData {showPopup}  显示搜索框
    */
   onWord: function (e) {
+
     let cardId = e.detail.cardId
     let dictCode = e.detail.dictCode
-    console.log(e.detail.wordlist)
+    let wordName = e.detail.wordName
+
+    console.log(wordName)
     let that = this
 
     resource.getWordListInfo(e.detail.wordlist).then(function (e) {
-      console.log(e)
       that.setData({
+        currentCardId: cardId,
+        currentDictCode: dictCode,
         cardBaseWordList: e,
         showDictPopup: true,
       })
+    })
+
+    this.setData({
+      currentWordName: wordName
     })
   },
 

@@ -19,7 +19,7 @@ class User extends HTTP {
    */
   checkInviteUrlAndUnlock(userId) {
     return new Promise((resolve, reject) => {
-      this.request({ 
+      this.request({
           url: '/user/invite/check/' + userId,
           method: 'GET',
         }).then(res => {
@@ -48,27 +48,22 @@ class User extends HTTP {
         .catch(console.error)
     })
   }
-
-  /**
-   * 获取用户信息信息
-   *
-   * @param {} 无需参数
-   * @return {userInfo} 用户信息
-   */
-  getUserInfo() {
+  modifyNotificationConfig(notificationConfig) {
     return new Promise((resolve, reject) => {
-      wx.cloud.callFunction({
-          name: 'user-info',
-          data: {
-            method: 'GET'
-          }
-        })
-        .then(res => {
-          resolve(res.result.data[0])
-        })
-        .catch(console.error)
+      this.request({ 
+        url: '/user/notification',
+        method: 'POST',
+        data: notificationConfig 
+      }).then(res => {  
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
     })
   }
+
   /**
    * 修改用户资料
    */

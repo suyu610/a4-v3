@@ -4,6 +4,7 @@ let gData = app.globalData
 
 // 导入资源接口与用户接口
 import config from '../../config.js'
+import router from '../../router/index'
 
 import {
   User
@@ -16,7 +17,6 @@ import {
 import {
   Card
 } from '../../models/card'
-import router from '../../router/index'
 
 const userApi = new User()
 const resource = new Resource()
@@ -24,6 +24,7 @@ const cardApi = new Card()
 Page({
 
   data: {
+    lockDrawerValue: false,
     drawerStatus: false,
     showOverlay: false,
     showPageContainerValue: false,
@@ -104,7 +105,12 @@ Page({
     showDictPopup: false,
     tmpFlag: false
   },
-
+  toggleLockDrawer() {
+    console.log("index toggleLockDrawer")
+    this.setData({
+      lockDrawerValue: !this.data.lockDrawerValue
+    })
+  },
   stopPullTop() {
     console.log("stop")
     this.setData({
@@ -554,12 +560,12 @@ Page({
 
     let invitePopupTitleText = isInviteMode ? "会员解锁邀请" : (role != "roles-vip") ? "邀请好友" : "成功解锁"
     let invitePopupSubTitleText = "共同免费解锁会员权益"
-    let invitePopupBottomText = "分享给好友或群聊"
+    let invitePopupBottomText = "分享给好友或群聊" 
 
     if (isInviteMode) {
-      invitePopupSubTitleText = "xxx邀请你共同免费解锁会员权益",
+      invitePopupSubTitleText = "邀请你共同免费解锁会员权益",
         invitePopupBottomText = "立即解锁"
-      this.setData({
+      this.setData({ 
         showInvitePopupValue: true,
         isInviteMode: false,
         invitePopupBottomText
@@ -604,6 +610,7 @@ Page({
     let p = resource.getInitData()
     p.finally(e => {
       that.setData({
+        screenHeight:app.globalData.screenHeight,        
         loading: false,
         navigationBarHeight: app.globalData.navigationBarHeight,
         searchBarTop: app.globalData.searchBarTop,
@@ -630,6 +637,7 @@ Page({
       gData.userBaseInfo = e.userBaseInfo
       gData.dailyStudyTask = e.dailyStudyTask
       gData.dailyFinishedData = e.dailyFinishedData
+      gData.notificationConfig = e.notificationConfig
       gData.needReviewTodayStudyDate = true
       if (e.studyRecordInfo != null && e.studyRecordInfo.lastDayCount == null) {
         e.studyRecordInfo.lastDayCount = 0
@@ -643,9 +651,7 @@ Page({
         }
       }
       gData.studyRecordInfo = e.studyRecordInfo
-      console.log(e.userAuthInfo)
       if (options.invite && e.userBaseInfo.id != options.invite) {
-        console.log(options.invite)
         // 如果是自己的，则不弹窗
         that.setData({
           isInviteMode: true,
@@ -653,6 +659,7 @@ Page({
         })
       }
       that.setData({
+        notificationConfig: e.notificationConfig,
         isIOS: app.globalData.isIOS != null,
         progressList: e.progressList,
         currentBookCode: e.currentBookCode,
@@ -737,26 +744,33 @@ Page({
     })
   },
 
-  openAlarm() {
-    wx.getSetting({
-      withSubscriptions: true,
-      success(res) {
-        console.log(res.subscriptionsSetting)
-      }
+  openAlarm(e) {
+    console.log(e.detail.notificationConfig)
+    wx.showLoading({
+      title: '设置中',
     })
-    let that = this
-    this.setBackgroudImage()
-    wx.requestSubscribeMessage({
-      tmplIds: ['HjD6Lq6HwmjuG7fCBKZ96sUEzmvAnl39bu3gS1rHbXU'],
-      success(res) {
-        console.log(res)
-        that.setData({
-          alarmOverlay: false
-        })
-      },
-      fail(res) {
-        console.log(res)
-      }
+    userApi.modifyNotificationConfig(e.detail.notificationConfig).then(e => {
+      wx.hideLoading()
+      wx.getSetting({
+        withSubscriptions: true,
+        success(res) {
+          console.log(res.subscriptionsSetting)
+        }
+      })
+      let that = this
+      // this.setBackgroudImage()
+      wx.requestSubscribeMessage({
+        tmplIds: ['HjD6Lq6HwmjuG7fCBKZ96sUEzmvAnl39bu3gS1rHbXU'],
+        success(res) {
+          console.log(res)
+          that.setData({
+            alarmOverlay: false
+          })
+        },
+        fail(res) {
+          console.log(res)
+        }
+      })
     })
   },
 

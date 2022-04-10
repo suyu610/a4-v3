@@ -1,5 +1,5 @@
 <!--components/sidebar-item/index.wxml-->
-<view class="container" bindtap="jumpRouter">
+<view class="container" bindtap="jumpRouter" style="padding:{{isMiniScreen?'24rpx 40rpx':'28rpx 40rpx'}}">
   <view class="left">
     <view class="icon">
       <image class="item-icon" src="{{iconPath}}">

@@ -2,6 +2,12 @@
 const app = getApp()
 const globalData = app.globalData
 import router from '../../router/index'
+import config from '../../config'
+import {
+  Card
+} from '../../models/card.js'
+
+const cardApi = new Card()
 
 Page({
 
@@ -9,44 +15,47 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    allSelectMode: false,
+    loading: true,
     title: "全部卡片",
+    currentPageIndex: 0,
     bottomBtnTitle: "开始学习",
     mode: "study", // study export listen
-
     showDropdownOverlay: true,
     checkedCardArr: [],
+    cardList: [],
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
-    maxDate: null, //new Date().getTime(),
-    minDate: null, //new Date(2021, 9, 1).getTime(),
-
+    maxDate: new Date().getTime(),
+    minDate: new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 3,
     showCalendar: false,
-    option2: [{
+    dictOption: [{
       text: '选择词书',
-      value: -1
+      value: 0
     }],
-    option3: [{
+
+    statusOption: [{
         text: '卡片状态',
-        value: -1
-      },
-      {
-        text: '未完成',
         value: 0
       },
       {
-        text: '已完成',
+        text: '未完成',
         value: 1
+      },
+      {
+        text: '已完成',
+        value: 2
       }
     ],
-    value1: 0,
-    value2: -1,
-    value3: -1,
+
+    dictValue: 0,
+    statusValue: 0,
     dataRange: null
   },
 
   p(s) {
     return s < 10 ? '0' + s : s
   },
+
   onResetCalender() {
     this.selectComponent("#calendar").reset()
   },
@@ -55,44 +64,25 @@ Page({
     this.selectComponent("#calendar").onConfirm();
   },
 
-  onConfirmCalendar(e) {
-    const firstDate = new Date(e.detail[0])
-    const secondDate = new Date(e.detail[1])
-    let resDate = this.p((firstDate.getMonth() + 1)) + '/' + this.p(firstDate.getDate())
-    
-    if (e.detail[1] != null) {
-      resDate = this.p((firstDate.getMonth() + 1)) + '/' + this.p(firstDate.getDate()) + '-' + this.p((secondDate.getMonth() + 1)) + '/' + this.p(secondDate.getDate())
-    }
 
-    this.setData({
-      dataRange: resDate
-    })
 
-    this.onCloseCalendar()
-  },
   onCloseCalendar() {
-    console.log("onCloseCalendar")
     this.selectComponent('#calendar-dropdown-item').toggle(false);
 
     this.setData({
       showDropdownOverlay: true,
-
       showCalendarValue: false
     })
   },
+
   onOpenCalendar() {
-    if (this.data.minDate == null) {
-      this.setData({
-        maxDate: new Date().getTime(),
-        minDate: new Date(2021, 9, 1).getTime(),
-      })
-    }
 
     this.setData({
       showDropdownOverlay: false,
       showCalendarValue: true
     })
   },
+
   onTapBottomBtn() {
     let wordlist = []
     if (this.data.mode == 'export' || this.data.mode == "listen") {
@@ -113,13 +103,59 @@ Page({
       })
     }
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
+
+  onAllSelectBtnTapped: function () {
+    let allSelectMode = this.data.allSelectMode
+
+    let checkedCardArr = [] //this.data.checkedCardArr
+    if (!allSelectMode) {
+      this.data.cardList.forEach(e => {
+        checkedCardArr.push(e)
+      })
+    }
+
+    this.setData({
+      allSelectMode: !allSelectMode,
+      checkedCardArr
+    })
+  },
+  getDate(filterConfig, pageIndex) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.setData({
+      loadingMore: true,
+    })
+
+    let that = this
+    let cardList = this.data.cardList
+    console.log(pageIndex)
+    cardApi.getAllCard(filterConfig, pageIndex).then(e => {
+      wx.hideLoading()
+      cardList = cardList.concat(e.list)
+      that.setData({
+        loading: false, 
+        loadingMore: false, 
+        cardList,
+        currentPageIndex: e.pageNum,
+        totalCardNum: e.total,
+        hasNextPage: e.hasNextPage,
+      })
+    })
+  },
   onLoad: function (options) {
-    let e = app.globalData.todayInitData
+    let that = this
+
     const data = router.extract(options);
-    console.log(data.mode)
+
+    let filterConfig = {}
+    this.setData({
+      filterConfig,
+      calendarDefaultToday: [new Date().getTime(), new Date().getTime()]
+    })
+    this.getDate(filterConfig, 0)
+
+
     if (data != null && data.mode != null) {
       this.setData({
         title: data.mode == "export" ? "导出卡片" : data.mode == "learn" ? "全部卡片" : "随身听",
@@ -128,6 +164,7 @@ Page({
       })
     }
 
+    let progressList = app.globalData.progressList
     this.setData({
       movable_y: app.globalData.windowHeight - 70,
       movable_x: (app.globalData.windowWidth - 125) / 2,
@@ -135,12 +172,93 @@ Page({
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
       loading: false,
-      progressList: app.globalData.progressList,
+      progressList,
       windowWidth: app.globalData.windowWidth
     })
+
+    let dictOption = this.data.dictOption
+    for (var key in progressList) {
+      dictOption.push({
+        text: config.dictInfo[key].name,
+        value: key
+      })
+    }
+
+    this.setData({
+      dictOption
+    })
+
+  },
+  // 切换日历配置
+  onConfirmCalendar(e) {
+    const firstDate = new Date(e.detail[0])
+    const secondDate = new Date(e.detail[1])
+    let resDate = this.p((firstDate.getMonth() + 1)) + '/' + this.p(firstDate.getDate()) + "后"
+
+    if (e.detail[1] != null) {
+      resDate = this.p((firstDate.getMonth() + 1)) + '/' + this.p(firstDate.getDate()) + '-' + this.p((secondDate.getMonth() + 1)) + '/' + this.p(secondDate.getDate())
+    }
+
+    this.setData({
+      dataRange: resDate
+    })
+    let config = this.data.filterConfig
+    config['startDate'] = e.detail[0]
+    config['endDate'] = e.detail[1]
+    this.setData({
+      cardList: [],
+      loading: true
+    })
+    this.getDate(config, 0)
+    this.onCloseCalendar()
   },
 
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    console.log("onReachBottom")
+    if (this.data.hasNextPage) {
+      console.log("has Next Page")
+      let pageIndex = this.data.currentPageIndex + 1
+      this.getDate(this.data.filterConfig, pageIndex)
+    } else {
+      console.log("not next page")
+    }
+  },
+  changeStatusOption(e) {
+    console.log("切换状态")
+    let newStatusValue = e.detail
+    if (this.data.statusValue != newStatusValue) {
+      // 
+      console.log("改变了状态")
+      // -1 是全部
+      // 0 是未完成
+      // 1 是已完成
+      let config = this.data.filterConfig
+      config['cardStatus'] = newStatusValue
+      this.setData({
+        cardList: [],
+        loading: true,
+        statusValue: newStatusValue
+      })
+      this.getDate(config, 0)
+    }
+  },
 
+  changeDictOption(e) {
+    let newDictValue = e.detail
+    if (newDictValue != this.data.dictValue) {
+      let config = this.data.filterConfig
+      config['bookCode'] = newDictValue
+      this.setData({
+        cardList: [],
+        loading: true,
+        dictValue: newDictValue
+      })
+      this.getDate(config, 0)
+    }
+  },
   /**
    * 切换卡片选中状态
    */
@@ -165,53 +283,4 @@ Page({
       checkedCardArr: _checkedCardArr
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

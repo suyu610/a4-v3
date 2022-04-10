@@ -20,6 +20,11 @@ module.exports = {
   wordlist: {
     path: '/pages/wordlist/wordlist'
   },
+  
+  dictWordList: {
+    path: '/pages/dict-wordlist/dict-wordlist'
+
+  },
   wordlistDetail: {
     path: '/pages/wordlist/detail/detail'
   },

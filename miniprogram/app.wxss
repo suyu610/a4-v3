@@ -55,6 +55,15 @@ page {
   justify-content: center;
 }
 
+.add-btn-text-nomore {
+  color: var(--deepGrey);
+  font-size: var(--body);
+  font-family: var(--simhei);
+  font-weight: var(--medium);
+  line-height: 18px;
+  text-align: center;
+}
+
 .loading-container .child {
   display: table-cell;
   vertical-align: middle;

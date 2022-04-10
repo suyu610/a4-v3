@@ -10,7 +10,7 @@
 @media (prefers-color-scheme: dark) {
     .clickable--hover {
         background-color: rgb(25, 26, 27);
-    }
+    } 
 
     page {
         background-color: rgb(19, 19, 19);

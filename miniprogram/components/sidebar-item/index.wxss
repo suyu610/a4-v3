@@ -5,6 +5,7 @@
   text-align: center;
   padding: 28rpx 40rpx;
 }
+
 .container {
   display: flex;
   justify-content: space-between;

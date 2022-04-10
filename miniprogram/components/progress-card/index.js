@@ -34,6 +34,12 @@ Component({
   lifetimes: {
     ready: function () {
       console.log(this.data.userBaseInfo)
+      let currentBookCode = this.data.currentBookCode
+
+      this.setData({
+        remainDay: currentBookCode != null && currentBookCode != '' ? parseInt(this.data.dictInfo[currentBookCode].totalWordNum / app.globalData.setting.targetCount) : 0
+      })
+
     }
   },
 
@@ -41,15 +47,17 @@ Component({
    * 数据监听器
    */
   observers: {
-    'progressList,currentBookCode': function (currentBookCode) {
+    'progressList,currentBookCode': function (progressList,currentBookCode) {
+      console.log(progressList)
+      console.log("observers:progressList,currentBookCode")
       if (this.data.dictInfo != null && this.data.dictInfo[currentBookCode] != null) {
-        let currentBookCode = this.data.currentBookCode
+        let currentBookCode = app.globalData.currentBookCode
         // 设置当前时间戳
         this.setData({
           darkMode: app.globalData.theme == 'dark',
           currentTimeStamp: app.globalData.currentTimeStamp,
           remainDay: currentBookCode != null && currentBookCode != '' ? parseInt(this.data.dictInfo[currentBookCode].totalWordNum / app.globalData.setting.targetCount) : 0
-        })
+        }) 
       }
     }
   },

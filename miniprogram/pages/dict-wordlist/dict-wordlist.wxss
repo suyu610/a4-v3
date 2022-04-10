@@ -1,0 +1,48 @@
+/* pages/dict-wordlist/dict-wordlist.wxss */
+page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 16px;
+}
+
+.header .count {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.header .right-btn {
+  font-weight: 400;
+  font-size: 12px;
+  color: #86909c;
+}
+
+.blue {
+  color: #4c34f0 !important;
+}
+
+.cell-title-class {
+  font-weight: var(--bold);
+}
+
+.cell-value-class {
+  flex: none !important;
+}
+
+.right-checked-img {
+  padding: 5px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+}
+
+.footer {
+  position: fixed;
+  bottom: 33px;
+  transform: translateX(-50%);
+  left: 50vw;
+}

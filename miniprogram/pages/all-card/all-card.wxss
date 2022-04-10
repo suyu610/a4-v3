@@ -6,6 +6,7 @@ page {
   --dropdown-menu-title-font-size: 14px;
 
   --dropdown-menu-title-text-color: #4e5969;
+  background-color: #eaeef6;
   /* --calendar-range-edge-background-color:  */
 }
 .container {
@@ -29,12 +30,21 @@ page {
 .placeholder {
   width: 100%;
   text-align: center;
-  padding-bottom: 65px;
-  padding-top: 24px;
+  padding-bottom: 20px;
+  padding-top: 20px;
 }
-
+.btn-container {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 .calendar-footer {
   display: flex;
   justify-content: space-around;
   padding: 10px 0;
+}
+
+.loadmore-container {
+  text-align: center;
 }

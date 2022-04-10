@@ -9,7 +9,7 @@
 <scroll-view wx:else bindscrolltolower="onReachBottom" class="container" scroll-y style="height: {{scrollViewHeight}}px;">
   <header title="今日计划新学" cardNum="{{totalCardNum}}" bgColor="transparent" selectMode="{{allSelectMode}}" bind:onRightBtnTapped="onAllSelectBtnTapped"></header>
   <block wx:for="{{todayCards}}" wx:key="cardId">
-    <wordCard mode="study" class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
+    <wordCard wx:if="{{item!=null}}" mode="study" class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
   </block>
 
   <view class="loadmore-container" wx:if="{{loadingMore}}">
@@ -36,8 +36,8 @@
 <!-- 词典 -->
 <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}" custom-style="height:100%;width:100%;background: transparent;">
   <view style="align-items: center;" wx:if="{{showDictPopup}}">
-    <swiper indicator-dots indicator-color="rgba(255, 255, 255, .3)" indicator-active-color="#fff" class="card-swiper" bindchange="cardSwiper" bindtap="onClickHideOverlay" data-class="card-swiper" current="{{cardCur}}">
-      <swiper-item data-class="swiper-item" wx:if="{{cardBaseWordList.length !=0}}" wx:for="{{cardBaseWordList}}" wx:key="index" wx:for-item="item" class="swiper-item {{cardCur==index?'cardCur':'cardNotCur'}}">
+    <swiper indicator-dots indicator-color="rgba(255, 255, 255, .3)" indicator-active-color="#fff" class="card-swiper" bindchange="cardSwiper" bindtap="onClickHideOverlay" data-class="card-swiper" current="{{curIndex}}">
+      <swiper-item data-class="swiper-item" wx:if="{{cardBaseWordList.length !=0}}" wx:for="{{cardBaseWordList}}" wx:key="index" wx:for-item="item" class="swiper-item {{curIndex==index?'cardCur':'cardNotCur'}}">
         <view class="swiper-item" data-class="swiper-item" catchtap="onClickHideOverlay" data-class="swiper-item">
           <view class="hidden"></view>
           <v-word-dic class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{false}}" wordContent="{{item}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:confirmWord="confirmWord" bind:refreshCard="refreshCard" />

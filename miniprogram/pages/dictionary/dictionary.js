@@ -1,6 +1,7 @@
 // pages/settings/settings.js
 const app = getApp()
 import config from '../../config.js'
+import router from '../../router/index'
 
 import {
   WordBook
@@ -76,6 +77,16 @@ Page({
 
   onSelectLongPressActionSheet(e) {
     console.log(e.detail.name)
+    console.log(e)
+    if (e.detail.name == "查看未学单词列表") {
+      router.push({ 
+        name: "dictWordList",
+        data: {
+          code: "123",
+          isCustomBook: false
+        }
+      })
+    }
   },
 
   onCloseLongPressActionSheet() {

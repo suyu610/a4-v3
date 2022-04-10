@@ -17,7 +17,7 @@
   function onPulling(evt, instance) {
 
     var p = Math.min((evt.detail.dy) * 180 / 80, 180)
-    var o = Math.min((evt.detail.dy - 30) / 80, 1)
+    var o = Math.min((evt.detail.dy) / 80, 1)
 
     dy = evt.detail.dy
     icon = instance.selectComponent('.icon')
@@ -26,7 +26,7 @@
     if (dy > 80) {
       pullText.callMethod('sayHi')
     }
-    if (evt.detail.dy) {
+    if (evt.detail.dy > 80) {
       icon.setStyle({
         "transform": "rotate(" + p + "deg)"
       })
@@ -84,10 +84,10 @@
           </view>
         </view>
         <!-- progress-card -->
-        <v-progress-card dictInfo="{{dictInfo}}" userBaseInfo="{{userBaseInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
-        <homecard finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
-        <homecard finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
-        <view class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
+        <v-progress-card wx:if="{{userBaseInfo!=null}}" dictInfo="{{dictInfo}}" userBaseInfo="{{userBaseInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
+        <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
+        <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
+        <view wx:if="{{screenHeight >670}}" class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
           <view style="color:#415268;">「 随心一张 」</view>
           <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image>
         </view>
@@ -110,13 +110,12 @@
 
       <!-- 词典 -->
       <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}">
-        <v-word-dic bind:showWordGroupPopup="showWordGroupPopup" class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
+        <v-word-dic wx:if="{{showDictPopup}}" bind:showWordGroupPopup="showWordGroupPopup" class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{dictLoading}}" wordContent="{{curWord}}" noFooter="{{dictNoFooterMode}}" bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:refreshCard="refreshCard" />
       </van-popup>
       <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
     </view>
-
-    <view class="drawer drawerA" data-isIOS="{{isIOS}}" data-drawerwidth="{{windowWidth}}">
-      <sidebar studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}"  bind:openAlarm="openAlarm" bind:share="share" bind:showInvitePopup="showInvitePopup"></sidebar>
+    <view class="drawer drawerA" data-isIOS="{{isIOS}}" data-lock="{{lockDrawerValue}}" data-drawerwidth="{{windowWidth}}">
+      <sidebar bind:toggleLockDrawer="toggleLockDrawer" wx:if="{{notificationConfig!=null}}" notificationConfig="{{notificationConfig}}" studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}" bind:openAlarm="openAlarm" bind:share="share" bind:showInvitePopup="showInvitePopup"></sidebar>
     </view>
   </view>
 

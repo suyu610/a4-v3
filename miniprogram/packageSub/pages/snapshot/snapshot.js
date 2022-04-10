@@ -1,6 +1,11 @@
 // pages/snapshot/snapshot.js
 const app = getApp()
 let radio = 0.66
+import {
+  Progress
+} from '../../../models/progress'
+
+const progressApi = new Progress()
 
 const cavasPosArr = [
   [{
@@ -71,83 +76,100 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    ///  解析数据
-    let styleData = {}
-    styleData = {
-      "width": 933 * radio + "px",
-      "height": 1366 * radio + "px",
-      "background": "#f8f8f8",
-      "borderRadius": 50 * radio + "px",
-      "views": [{
-        "type": "image",
-        "url": "https://cdns.qdu.life/a4/snapshot/bg_3@x2.png",
-        "css": {
-          "width": 933 * radio + "px",
-          "height": 1366 * radio + "px",
-          "top": "0px",
-          "left": "0px",
-          "rotate": "0",
-          "borderRadius": 50 * radio + "px",
-          "borderWidth": "",
-          "borderColor": "#000000",
-          "shadow": "",
-          "mode": "scaleToFill"
-        }
-      }, ]
-    }
     const today = new Date()
     const firstDayOfMonth = new Date()
     firstDayOfMonth.setDate(1);
     // 本月第一天是周几
     let startIndex = firstDayOfMonth.getDay()
     // 本月的天数
-    let dayCount = this.mGetDate() + startIndex
+    let dayCount = that.mGetDate() + startIndex
     // 今天是第几天
     let curIndex = today.getDate()
 
-    let data = [0, 1, 2, 3, 0, 0, 1, 2, 3, 0, 1, 2, 3, 3, 3, 1, 2, 3, 3, 0, 1, 2, 3, 3, 0, 1, 2, 3, 3, 3]
+    progressApi.getProgressByMonth(app.globalData.todayMonthDate).then(function (e) {
+      console.log(e)
 
-    let progressInfo = app.globalData.studyRecordInfo
-    if (progressInfo == null) {
-      progressInfo = {
-        yearDayCount: 0,
-        monthDayCount: 0,
-        lastDayCount: 0
+      let data = []
+      console.log(dayCount)
+      for (var i = startIndex; i < dayCount; i++) {
+        let todayStr = parseInt(i - startIndex + 1) < 10 ? ("0" + (i - startIndex + 1)) : (i - startIndex + 1)
+        todayStr = app.globalData.todayMonthDate + todayStr
+        if (e.hasOwnProperty(todayStr)) {
+          data.push(e[todayStr].status)
+        } else {
+          data.push(0)
+        }
       }
-    }
-    let bottomProgressInfo = {
-      "newCard": 222,
-      "reviewCard": 2,
-      "studyTime": 18,
-      "practiceCount": 14
-    }
+      ///  解析数据
+      let styleData = {}
+      styleData = {
+        "width": 933 * radio + "px",
+        "height": 1366 * radio + "px",
+        "background": "#f8f8f8",
+        "borderRadius": 50 * radio + "px",
+        "views": [{
+          "type": "image",
+          "url": "https://cdns.qdu.life/a4/snapshot/bg_3@x2.png",
+          "css": {
+            "width": 933 * radio + "px",
+            "height": 1366 * radio + "px",
+            "top": "0px",
+            "left": "0px",
+            "rotate": "0",
+            "borderRadius": 50 * radio + "px",
+            "borderWidth": "",
+            "borderColor": "#000000",
+            "shadow": "",
+            "mode": "scaleToFill"
+          }
+        }, ]
+      }
 
-    styleData = that.fillDay(startIndex, dayCount, curIndex, styleData)
-    styleData = that.fillDot(startIndex, dayCount, data, curIndex, styleData)
-    styleData = that.drawAvatar(styleData)
-    styleData = that.drawProgressInfo(progressInfo, styleData)
-    // styleData = that.drawBottomProgressInfo(bottomProgressInfo, styleData)
 
-    // styleData = that.drawDate(today.toLocaleString('en', {  year: "numeric", month: "short", day: "numeric" }), styleData)
-    let dateStr = today.toDateString()
-    let d = dateStr.split(' ');
-    dateStr = d[1] + '. ' + d[2] + ' ' + d[3]
-    styleData = that.drawDate(dateStr, styleData)
-    that.setData({
-      styleData
+
+      let progressInfo = app.globalData.studyRecordInfo
+      if (progressInfo == null) {
+        progressInfo = {
+          yearDayCount: 0,
+          monthDayCount: 0,
+          lastDayCount: 0
+        }
+      }
+      let bottomProgressInfo = {
+        "newCard": 222,
+        "reviewCard": 2,
+        "studyTime": 18,
+        "practiceCount": 14
+      }
+
+      styleData = that.fillDay(startIndex, dayCount, curIndex, styleData)
+      styleData = that.fillDot(startIndex, dayCount, data, curIndex, styleData)
+      styleData = that.drawAvatar(styleData)
+      styleData = that.drawProgressInfo(progressInfo, styleData)
+      // styleData = that.drawBottomProgressInfo(bottomProgressInfo, styleData)
+
+      // styleData = that.drawDate(today.toLocaleString('en', {  year: "numeric", month: "short", day: "numeric" }), styleData)
+      let dateStr = today.toDateString()
+      let d = dateStr.split(' ');
+      dateStr = d[1] + '. ' + d[2] + ' ' + d[3]
+      styleData = that.drawDate(dateStr, styleData)
+      that.setData({
+        styleData
+      })
+
+      // wx.loadFontFace({
+      //   global: true,
+      //   family: 'Inter',
+      //   scopes: ['webview', 'native'],
+      //   source: 'https://cdns.qdu.life/a4/font/Inter.ttf',
+      //   success(res) {
+      //     that.setData({
+      //       styleData
+      //     })
+      //   }
+      // })
+
     })
-
-    // wx.loadFontFace({
-    //   global: true,
-    //   family: 'Inter',
-    //   scopes: ['webview', 'native'],
-    //   source: 'https://cdns.qdu.life/a4/font/Inter.ttf',
-    //   success(res) {
-    //     that.setData({
-    //       styleData
-    //     })
-    //   }
-    // })
   },
 
 

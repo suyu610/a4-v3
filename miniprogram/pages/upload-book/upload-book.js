@@ -18,29 +18,57 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showTips: true,
+    notShowTips: false,
     progressBarWidth: 0,
     tips: '上传中',
     showUploadOverLayValue: false,
-    bookList: []
+    bookList: [],
+    longPressActionSheet: [{
+        name: '查看单词列表',
+      }, {
+        name: '重命名',                                                                                                                                                                                                                                                                                                                                      
+      }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ,
+      {
+        name: '删除词书',
+      },
+      {
+        name: '重置进度',
+        color: "red",
+      },
+    ],
+  },
+  onCloseLongPressActionSheet() {
+    this.setData({
+      showLongPressActionSheetValue: false
+    })
   },
   showNoMore: function () {
     let that = this
     wx.showModal({
       title: "提示",
-      content: "确认要关闭使用说明吗",
+      content: "确认要关闭使用说明吗", 
       cancelColor: 'cancelColor',
-      confirmColor: '#220aac',
+      confirmColor: '#220aac', 
       success(res) {
         if (res.confirm) {
-          that.setData({
-            showTips: false
-          })
+          that.setData({                                        
+            notShowTips: true
+          })  
+          wx.setStorageSync('showCustomTips', true)
         }
       }
     })
   },
 
+  onLongPressBookItem(e) {
+    let curBookCode = e.currentTarget.dataset.code
+    let curBookName = e.currentTarget.dataset.name == null ? '未命名词书' : e.currentTarget.dataset.name
+    this.setData({
+      curBookCode,
+      curBookName,
+      showLongPressActionSheetValue: true
+    })
+  },
 
   onTapBookItem(e) {
     let bookCode = e.currentTarget.dataset.code
@@ -261,21 +289,29 @@ Page({
     })
 
   },
+
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let currentBookCode = app.globalData.currentBookCode
     let progressList = app.globalData.progressList
-
+    var notShowTips = wx.getStorageSync('showCustomTips')
+    if (notShowTips == '') {
+      this.setData({
+        notShowTips: false
+      })
+    } else {
+      this.setData({
+        notShowTips
+      })
+    }
     customBookApi.getCustomBook().then(e => {
-      console.log(e)
       e.forEach(book => {
         book.curStudyNum = progressList[book.bookCode]
-        console.log(progressList)
-        console.log(book.bookCode)
         book.totalCount = book.totalNum
-
         if (book.bookCode == currentBookCode) {
           book.isCurrent = true
         }

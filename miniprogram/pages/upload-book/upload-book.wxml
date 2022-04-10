@@ -5,7 +5,7 @@
   </van-sticky>
 
   <scroll-view scroll-y scroll-x="{{false}}" class="tab-container" style="height:{{tabContainerHeight}}px">
-    <view class="desc-container" id="descContainer" wx:if="{{showTips}}">
+    <view class="desc-container" id="descContainer" wx:if="{{!notShowTips}}">
       <view class="title">
         <view>使用说明</view>
         <view class="right" bindtap="showNoMore">不再提示</view>
@@ -60,3 +60,6 @@
     <bg-btn title="点击上传" width="246" height="30" textColor="#fff" bgColor="#3D4262"></bg-btn>
   </view>
 </view>
+
+<van-action-sheet description="{{curBookName}}" show="{{ showLongPressActionSheetValue }}" bind:close="onCloseLongPressActionSheet" bind:select="onSelectLongPressActionSheet" bind:cancel="onCloseLongPressActionSheet" actions="{{ longPressActionSheet }}" cancel-text="取消">
+</van-action-sheet>

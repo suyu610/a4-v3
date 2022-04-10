@@ -9,9 +9,7 @@
   module.exports.a = a;
 </wxs>
 
-
-
-<view class="container">
+<view class="container" style="padding-bottom:{{isMiniScreen?'20rpx':'40rpx'}}">
   <block wx:for="{{7}}" wx:key="index">
     <view class="day-item">
       <view class="week">{{weeks[index]}}</view>
