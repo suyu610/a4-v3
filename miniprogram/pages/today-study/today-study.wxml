@@ -13,7 +13,7 @@
   </block>
 
   <view class="loadmore-container" wx:if="{{loadingMore}}">
-    <van-loading size="24px">加载中...</van-loading>
+    <van-loading size="13px">加载中...</van-loading>
   </view>
 
   <view class="loadmore-container" bindtap="onReachBottom" wx:if="{{!loadingMore && hasNextPage}}">

@@ -30,7 +30,7 @@
 
       <!-- addBtn -->
       <view class="btn-container" wx:if="{{!backFromPrctice && reviewNextPageLoading && reviewHasNextPage}}">
-        <van-loading size="24px">加载中...</van-loading>
+        <van-loading size="13px">加载中...</van-loading>
       </view>
 
       <view class="btn-container" bindtap="onReachBottom" wx:if="{{backFromPrctice}}">
@@ -91,7 +91,7 @@
       <!-- addBtn -->
 
       <view class="btn-container" wx:if="{{!backFromPrctice && calendarNextPageLoading && calendarHasNextPage}}">
-        <van-loading size="24px">加载中...</van-loading>
+        <van-loading size="13px">加载中...</van-loading>
       </view>
 
       <view class="btn-container" wx:if="{{!backFromPrctice && (!calendarNextPageLoading || !calendarHasNextPage)}}">

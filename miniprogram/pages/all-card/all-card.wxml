@@ -23,9 +23,9 @@
     </block>
   </van-transition>
 
-  <van-empty description="当前筛选条件下没有卡片" wx:if="{{cardList.length==0}}" />
+  <van-empty description="当前筛选条件下没有卡片" wx:if="{{cardList.length==0 && !loading}}" />
   <view class="loadmore-container" wx:if="{{loadingMore}}">
-    <van-loading size="24px">加载中...</van-loading>
+    <van-loading size="13px">加载中...</van-loading>
   </view>
 
   <view class="loadmore-container" bindtap="onReachBottom" wx:if="{{!loadingMore && hasNextPage}}">
