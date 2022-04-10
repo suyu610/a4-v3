@@ -27,13 +27,11 @@
   <view class="loadmore-container" wx:if="{{loadingMore}}">
     <van-loading size="13px">加载中...</van-loading>
   </view>
-
+ 
   <view class="loadmore-container" bindtap="onReachBottom" wx:if="{{!loadingMore && hasNextPage}}">
     <text class="add-btn-text-nomore">点击加载更多</text>
   </view>
-
   <view class="placeholder"></view>
-
 </scroll-view>
 <!-- <movable-view direction="all" x="{{movable_x}}" y="{{movable_y}}"> -->
 <view class="btn-container" wx:if="{{ checkedCardArr.length!=0 }}" bindtap="onTapBottomBtn">

@@ -178,9 +178,11 @@ Page({
 
     let dictOption = this.data.dictOption
     for (var key in progressList) {
+      console.log(key)
+      console.log(config.dictInfo[key])
       dictOption.push({
         text: config.dictInfo[key].name,
-        value: key
+        value: key 
       })
     }
 
