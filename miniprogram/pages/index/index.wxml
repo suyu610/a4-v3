@@ -88,8 +88,8 @@
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
         <view wx:if="{{screenHeight >670}}" class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
-          <view style="color:#415268;">「 随心一张 」</view>
-          <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image>
+          <view style="    color: #b2bbc7;padding-bottom: 7px;">「 长按收藏功能可以选择单词本分组 」</view>
+          <!-- <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image> -->
         </view>
       </scroll-view>
 
@@ -134,7 +134,7 @@
   <view class="invite-result-popup-container" wx:if="{{ showInvitePopupResultValue }}">
     <image class="invite-result-popup-bg-img" src="https://cdns.qdu.life/a4/images/unlock_{{inviteSuccess?'success':'fail'}}.png" mode="heightFix"></image>
     <view class="title">{{inviteSuccess?'恭喜你，解锁成功':'抱歉，对方的解锁额度已经用完\r\n你可以邀请其他人已完成解锁'}}</view>
-    <view class="popup-container-bottom" bindtap="onInviteFriendTapped">
+    <view class="popup-container-bottom">
       <bg-btn bindtap="hideInviteResultPopup" shadow title="好的" bgColor="#6C30F0" width="167" height="30"></bg-btn>
     </view>
   </view>
@@ -159,12 +159,12 @@
 <van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 50%;background-color: #e2eeff;">
   <view class="random-popup-container">
     <view class="title">
-      <view>随机一张</view>
-      <image style="width: 15px;height: 13px;" src="./images/random.png"></image>
+      <view>Tips</view>
+      <!-- <image style="width: 15px;height: 13px;" src="./images/random.png"></image> -->
     </view>
     <v-wordCard type="random" class="vwordcard" loading="{{randomCard.loading}}" wordCard="{{randomCard}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></v-wordCard>
-    <view class="random-popup-container-footer">
-      <shadow-btn class="shadow-btn" title="开始练习"></shadow-btn>
+    <view class="random-popup-container-footer" bindtap="onCloseRandomCard">
+      <shadow-btn class="shadow-btn" title="关闭"></shadow-btn>
     </view>
   </view>
 </van-popup>

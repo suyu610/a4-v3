@@ -3,11 +3,16 @@ import config from '../../config'
 import router from '../../router/index'
 const app = getApp()
 const audioBaseUrl = "https://cdns.qdu.life/a4/listen/"
+const bgmInnerAudioContext = wx.createInnerAudioContext();
+
 import {
   Resource
 } from '../../models/resource.js'
+import {
+  WordList
+} from '../../models/wordlist'
 const resource = new Resource()
-
+const wordListApi = new WordList()
 Page({
 
   /**
@@ -18,6 +23,7 @@ Page({
     abbrDict: config.abbrDict,
     showListPopupValue: false,
     showSettingPopupValue: false,
+    currentBgmValue: 0.2,
     time: 0,
     closeTimerValue: 0,
     stopAllAudioValue: false,
@@ -70,10 +76,22 @@ Page({
     showClockSettingSheetValue: false
   },
 
+  setBgmVolumn() {
+    console.log(bgmInnerAudioContext.volume)
+    bgmInnerAudioContext.volume = this.data.currentBgmValue
+  },
+
+  onChangingBgmVolumn(e) {
+    console.log(e)
+    this.setData({
+      currentBgmValue: e.detail / 100
+    })
+
+  },
   stopAllAudio() {
     console.log('stopAllAudio')
     app.globalData.innerAudioContext.stop()
-    this.data.bgmInnerAudioContext.stop()
+    bgmInnerAudioContext.stop()
     this.setData({
       isPlay: false,
       clockValue: '不自动关闭'
@@ -124,10 +142,10 @@ Page({
   onSelectBgmSettingSheet(e) {
     let bgmName = e.detail.name
     if (bgmName == '关闭') {
-      this.data.bgmInnerAudioContext.stop()
+      bgmInnerAudioContext.stop()
     } else {
-      this.data.bgmInnerAudioContext.src = 'https://cdns.qdu.life/a4/bgm/' + (bgmName == 'piano' ? 'canon-piano.mp3' : 'BWV-1007.mp3')
-      this.data.bgmInnerAudioContext.play()
+      bgmInnerAudioContext.src = 'https://cdns.qdu.life/a4/bgm/' + (bgmName == 'piano' ? 'canon-piano.mp3' : 'BWV-1007.mp3')
+      bgmInnerAudioContext.play()
     }
     this.setData({
       bgmName
@@ -215,21 +233,16 @@ Page({
 
   onTapNextBtn() {
     this.setNextAudioSrc()
-    this.playWordAudio()
   },
 
   onTapPrevBtn() {
     this.setPrevAudioSrc()
-    this.playWordAudio()
   },
 
-  playWordAudio() {
-    if (this.data.isPlay && app.globalData.innerAudioContext.src != '') {
-      app.globalData.innerAudioContext.play()
-    }
-  },
+
 
   setNextAudioSrc() {
+    app.globalData.innerAudioContext.stop()
     let curPlayIndex = 0
     if (this.data.random) {
       curPlayIndex = Math.round(Math.random() * (this.data.wordlist.length - 1));
@@ -246,10 +259,16 @@ Page({
       curWordContent: this.data.wordResourceList[curPlayIndex]
     })
     app.globalData.innerAudioContext.src = this.data.wordResourceList[curPlayIndex].audioSrc + this.calAudioType()
+    app.globalData.innerAudioContext.play()
+    this.setData({
+      isPlay: true
+    })
   },
 
 
   setPrevAudioSrc() {
+    app.globalData.innerAudioContext.stop()
+
     let curPlayIndex = 0
     if (this.data.random) {
       curPlayIndex = Math.round(Math.random() * (this.data.wordlist.length - 1));
@@ -266,6 +285,10 @@ Page({
       curWordContent: this.data.wordResourceList[curPlayIndex]
     })
     app.globalData.innerAudioContext.src = this.data.wordResourceList[curPlayIndex].audioSrc + this.calAudioType()
+    app.globalData.innerAudioContext.play()
+    this.setData({
+      isPlay: true
+    })
   },
 
   onTapPlayBtn() {
@@ -274,13 +297,14 @@ Page({
       isPlay: !this.data.isPlay
     })
     if (this.data.isPlay) {
-      if (that.data.bgmInnerAudioContext.paused && that.data.bgmName != '关闭' && that.data.bgmInnerAudioContext.src != '') {
-        that.data.bgmInnerAudioContext.play()
+      if (bgmInnerAudioContext.paused && that.data.bgmName != '关闭' && bgmInnerAudioContext.src != '') {
+        bgmInnerAudioContext.play()
       }
-      this.playWordAudio()
+
+      app.globalData.innerAudioContext.play()
     } else {
-      app.globalData.innerAudioContext.pause()
-      that.data.bgmInnerAudioContext.pause()
+      app.globalData.innerAudioContext.stop()
+      bgmInnerAudioContext.pause()
     }
   },
 
@@ -302,8 +326,9 @@ Page({
     app.globalData.innerAudioContext.src = wordResourceList[0].audioSrc + this.calAudioType()
 
     app.globalData.innerAudioContext.onEnded(function () {
+      console.log(app.globalData.innerAudioContext.src)
       that.setNextAudioSrc()
-      that.playWordAudio()
+      // that.playWordAudio() 
     })
 
     app.globalData.innerAudioContext.onError(function () {
@@ -315,29 +340,25 @@ Page({
         title: '无此音频，即将切换',
       })
       that.setNextAudioSrc()
-      that.playWordAudio()
+      // that.playWordAudio()
     })
   },
 
   fetchInitDate(wordlist) {
     console.log("fetchInitDate")
     let that = this
-    let wordResourceList = []
-    let index = 0
     // 这里用promise all
-    wordlist.forEach(word => {
-      resource.getWordInfo(word).then(function (e) {
-        index++
-        e.audioSrc = audioBaseUrl + word
-        wordResourceList.push(e)
-        if (index == wordlist.length) {
-          that.setData({
-            wordResourceList
-          })
-          that.onFinishFetchInitDate(wordResourceList)
-        }
+    wordListApi.preListenFromWordList(wordlist).then(function (wordArr) {
+      console.log(wordArr)
+      wordArr.forEach(word => {
+        word.audioSrc = audioBaseUrl + word.wordName
+        that.setData({
+          wordResourceList: wordArr
+        })
       })
-    });
+
+      that.onFinishFetchInitDate(wordArr)
+    })
   },
 
   /**
@@ -345,9 +366,8 @@ Page({
    */
   onLoad: function (options) {
     const data = router.extract(options);
-    let bgmInnerAudioContext = wx.createInnerAudioContext({});
     bgmInnerAudioContext.loop = true
-    bgmInnerAudioContext.volume = 0.2
+    bgmInnerAudioContext.volume = this.data.currentBgmValue
     this.setData({
       bgmInnerAudioContext
     })
@@ -385,7 +405,7 @@ Page({
   onHide: function () {
     console.log("onHide")
     app.globalData.innerAudioContext.stop()
-    this.data.bgmInnerAudioContext.stop()
+    bgmInnerAudioContext.stop()
   },
 
   /**
@@ -393,7 +413,7 @@ Page({
    */
   onUnload: function () {
     app.globalData.innerAudioContext.stop()
-    this.data.bgmInnerAudioContext.stop()
+    bgmInnerAudioContext.stop()
   },
 
   /**

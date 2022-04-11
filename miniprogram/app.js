@@ -132,11 +132,10 @@ App({
     this.globalData.needRefreshPracticeCard = true
     this.globalData.needRefreshCalendarData = true
     this.globalData.needRefreshReviewData = true
-
+    this.globalData.needRefreshHomePageData = true
 
     // 设置全局变量
     let sysInfo = wx.getSystemInfoSync()
-    console.log(sysInfo)
     if (sysInfo.platform == "ios") {
       this.globalData.isIOS = true;
     }

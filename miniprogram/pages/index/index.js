@@ -217,6 +217,7 @@ Page({
 
     return true
   },
+
   jump2TodayReview() {
     // 如果未选择词书
     if (!this.hasSetDict()) {
@@ -281,47 +282,6 @@ Page({
         })
       }
   },
-
-  /**
-   * 删除卡片，同时要在选定词卡数组中也删除
-   */
-  deleteCard: function (e) {
-    let cardId = e.detail.cardId
-    let todayCards = this.data.todayCards
-    let checkedCardArr = this.data.checkedCardArr
-
-    let newtodayCards = todayCards.filter(function (e) {
-      if (e.cardId == cardId) {
-        return false;
-      } else {
-        return true;
-      }
-    })
-
-    // 删除选定的 checkedCardArr 
-    let newCheckedCardArr = checkedCardArr.filter(function (e) {
-      if (e.cardId == cardId) {
-        return false;
-      } else {
-        return true;
-      }
-    })
-
-    this.setData({
-      todayCards: newtodayCards,
-      checkedCardArr: newCheckedCardArr
-    })
-    // 
-    wx.showToast({
-      title: '删除成功',
-      duration: 500
-    })
-    app.globalData.needRefreshReviewData = true
-    app.globalData.needRefreshCalendarData = true
-  },
-
-
-
   /**
    * 搜索事件
    * 
@@ -342,6 +302,7 @@ Page({
       showOverlay: true,
     })
   },
+
   /**
    * 隐藏遮罩事件
    * 
@@ -368,31 +329,6 @@ Page({
   onKeyboardFocus: function (e) {
     this.setData({
       keyboardHeight: e.detail.height
-    })
-  },
-
-  /**
-   * 切换卡片选中状态
-   */
-  cardChecked: function (e) {
-    let isPush = e.detail.isPush
-    let card = e.detail.card
-    let checkedCardArr = this.data.checkedCardArr
-    let _checkedCardArr = []
-    if (isPush) {
-      checkedCardArr.push(card)
-      _checkedCardArr = checkedCardArr
-    } else {
-      _checkedCardArr = checkedCardArr.filter(function (e) {
-        if (e.cardId == card.cardId) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-    }
-    this.setData({
-      checkedCardArr: _checkedCardArr
     })
   },
 
@@ -433,6 +369,7 @@ Page({
       url: '../dictionary/dictionary',
     })
   },
+
   onConfirmPlanTimeColumn(e) {
     console.log(e)
     this.changeTargetCount(parseInt(e.detail.value))
@@ -476,27 +413,9 @@ Page({
    */
   onShow() {
     app.globalData.innerAudioContext.stop()
-    if (app.globalData.progressList != null) {
-      this.setData({
-        progressList: app.globalData.progressList
-      })
-    }
-
-    if (app.globalData.dailyStudyTask != null) {
-      this.setData({
-        dailyStudyTask: app.globalData.dailyStudyTask,
-      })
-    }
-
-
-    this.setData({
-      currentBookCode: app.globalData.currentBookCode
-    })
-
-    this.setData({
-      darkMode: app.globalData.theme == 'dark',
-      dictInfo: config.dictInfo
-    })
+    // if (app.globalData.needRefreshHomePageData) {
+    this.initFromServer()
+    // }
   },
 
   // 做一下判断
@@ -541,9 +460,7 @@ Page({
 
       if (e.errcode == 12) {
         // 点击自己的
-
       }
-
     })
   },
 
@@ -600,44 +517,31 @@ Page({
     })
   },
 
-  initFromServer(options) {
+  initFromServer() {
+    console.log("initFromServer")
     let that = this
     let p = resource.getInitData()
-    p.finally(e => {
-      that.setData({
-        screenHeight: app.globalData.screenHeight,
-        loading: false,
-        navigationBarHeight: app.globalData.navigationBarHeight,
-        searchBarTop: app.globalData.searchBarTop,
-        searchBarHeight: app.globalData.searchBarHeight,
-        scrollViewHeight: app.globalData.scrollViewHeight,
-        windowWidth: app.globalData.windowWidth,
-      })
 
+    p.finally(e => {
+      this.setData({
+        loading: false
+      })
     })
+
     p.catch(e => {
       wx.showToast({
         icon: 'none',
         title: '网络错误，进入离线模式',
       })
     })
-    p.then(e => {
-      console.log(e)
 
-      gData.progressList = e.progressList || {}
-      gData.currentBookCode = e.currentBookCode
-      gData.setting = e.setting
-      gData.userAuthInfo = e.userAuthInfo
-      gData.userid = e.userid
-      gData.userBaseInfo = e.userBaseInfo
-      gData.dailyStudyTask = e.dailyStudyTask
-      gData.dailyFinishedData = e.dailyFinishedData
-      gData.notificationConfig = e.notificationConfig
-      gData.needReviewTodayStudyDate = true
+    p.then(e => {
       if (e.studyRecordInfo != null && e.studyRecordInfo.lastDayCount == null) {
         e.studyRecordInfo.lastDayCount = 0
       }
+
       wx.setStorageSync('userAuthInfo', e.userAuthInfo)
+
       if (e.studyRecordInfo == null) {
         e.studyRecordInfo = {
           lastDayCount: 6,
@@ -645,26 +549,15 @@ Page({
           yearDayCount: 6
         }
       }
-      gData.studyRecordInfo = e.studyRecordInfo
-      if (options.invite && e.userBaseInfo.id != options.invite) {
+      let options = that.data.options
+      if (options != null && options.invite && e.userBaseInfo.id != options.invite) {
         // 如果是自己的，则不弹窗
         that.setData({
           isInviteMode: true,
-          inviteUserId: options.invite
+          inviteUserId: options.invite,
+          options: null
         })
       }
-      that.setData({
-        notificationConfig: e.notificationConfig,
-        isIOS: app.globalData.isIOS != null,
-        progressList: e.progressList,
-        currentBookCode: e.currentBookCode,
-        dailyStudyTask: e.dailyStudyTask,
-        userAuthInfo: e.userAuthInfo,
-        userBaseInfo: e.userBaseInfo,
-        studyRecordInfo: e.studyRecordInfo,
-        setting: e.setting,
-        dailyFinishedData: e.dailyFinishedData
-      })
 
       that.judgeSharePopup()
       var planTimeColumn = that.data.planTimeColumn
@@ -684,7 +577,30 @@ Page({
           }
         })
       }
+
+      gData.progressList = e.progressList || {}
+      gData.currentBookCode = e.currentBookCode
+      gData.setting = e.setting
+      gData.userAuthInfo = e.userAuthInfo
+      gData.userid = e.userid
+      gData.userBaseInfo = e.userBaseInfo
+      gData.dailyStudyTask = e.dailyStudyTask
+      gData.dailyFinishedData = e.dailyFinishedData
+      gData.notificationConfig = e.notificationConfig
+      gData.needReviewTodayStudyDate = true
+      gData.studyRecordInfo = e.studyRecordInfo
+
       that.setData({
+        notificationConfig: e.notificationConfig,
+        isIOS: app.globalData.isIOS != null,
+        progressList: e.progressList,
+        currentBookCode: e.currentBookCode,
+        dailyStudyTask: e.dailyStudyTask,
+        userAuthInfo: e.userAuthInfo,
+        userBaseInfo: e.userBaseInfo,
+        studyRecordInfo: e.studyRecordInfo,
+        setting: e.setting,
+        dailyFinishedData: e.dailyFinishedData,
         dictInfo,
         loading: false,
         planTimeColumn
@@ -717,9 +633,19 @@ Page({
     }
   },
 
-
   onChangePlanPicker(e) {
     console.log(parseInt(e.detail.value))
+  },
+
+  initSystem() {
+    this.setData({
+      screenHeight: app.globalData.screenHeight,
+      navigationBarHeight: app.globalData.navigationBarHeight,
+      searchBarTop: app.globalData.searchBarTop,
+      searchBarHeight: app.globalData.searchBarHeight,
+      scrollViewHeight: app.globalData.scrollViewHeight,
+      windowWidth: app.globalData.windowWidth,
+    })
   },
 
   /**  
@@ -729,8 +655,10 @@ Page({
    * @toMethod 转入初始化函数 this.init()  
    */
   onLoad: function (options) {
-    this.initFromServer(options)
-
+    this.initSystem()
+    this.setData({
+      options
+    })
   },
 
   setBackgroudImage() {

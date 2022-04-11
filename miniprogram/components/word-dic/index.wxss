@@ -1,13 +1,6 @@
 /* pages/index/index.wxss */
 @import "../../style/font.wxss";
-@media (prefers-color-scheme: dark) {
-  .phoneticSign-text {
-    color: var(--black) !important;
-  }
-}
-page {
-  --divider-margin: 7px 0;
-}
+
 .short-def-footer {
   justify-content: space-between !important;
 }
@@ -16,6 +9,7 @@ page {
 }
 
 .container {
+  --divider-margin: 7px 0;
   padding: 24px 16px;
   background-color: var(--white);
   overflow: hidden;

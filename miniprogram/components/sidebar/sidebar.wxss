@@ -1,9 +1,9 @@
 /* components/sidebar/sidebar.wxss */
 @import "../../style/font.wxss";
 
-page {
+/* page {
   --cell-vertical-padding: 14px;
-}
+} */
 .container {
   width: 100vw;
   box-sizing: border-box;

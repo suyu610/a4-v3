@@ -29,11 +29,14 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    },
+    },  
     "useIsolateContext": true,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
+    "userConfirmedBundleSwitch": false, 
+    "packNpmManually": true,
+    "packNpmRelationList": [{
+      "packageJsonPath": "./package.json",
+      "miniprogramNpmDistDir": "./"
+    }],
     "minifyWXSS": true,
     "disableUseStrict": false,
     "minifyWXML": true,

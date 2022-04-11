@@ -1,9 +1,9 @@
 // config.js
 const config = {
   // 域名前缀 
-  // api_base_url: 'https://beta.opentext.press/v2', 
+  api_base_url: 'https://beta.opentext.press/v2', 
   // api_base_url: 'http://localhost:6110/v2',
-  api_base_url: 'http://192.168.43.29:6110/v2',
+  // api_base_url: 'http://192.168.43.29:6110/v2',
   // api_base_url: 'http://10.195.247.202:6110/v2', 
   // 词书信息 
   dictInfo: {

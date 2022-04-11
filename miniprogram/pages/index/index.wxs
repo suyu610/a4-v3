@@ -9,7 +9,6 @@ function touchStart(e, ins) {
   startmark = pageX;
   drawerComp = ins.selectComponent('.drawer');
   iconComp = ins.selectComponent('.menu-img');
-  overlay = ins.selectComponent('#overlay');
   drawerWidth = drawerComp.getDataset().drawerwidth;
   isIOS = drawerComp.getDataset().isios;
   isLock = drawerComp.getDataset().lock;

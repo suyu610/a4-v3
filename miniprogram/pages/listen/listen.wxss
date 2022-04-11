@@ -12,6 +12,29 @@
   position: absolute;
   height: 100%;
 }
+.bgm-setting-sheet-footer {
+  padding-top: 20px;
+  width: 80vw;
+  margin: 20px auto;
+  padding-bottom: 20px;
+}
+.volume-button {
+  width: 33px;
+  height: 32px;
+  background: #ffffff;
+  text-align: center;
+  border: 1px solid #595ef1;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volume-button-icon {
+  width: 20px;
+  height: 20px;
+}
 
 .loading-container {
   height: 100%;
@@ -43,8 +66,8 @@
 .word-name {
   padding-top: 80rpx;
   text-align: center;
-  font-family: "Poppins"; 
-  font-style: normal; 
+  font-family: "Poppins";
+  font-style: normal;
   font-weight: 700;
   font-size: 32px;
   color: #1d2129;
@@ -73,7 +96,10 @@
   color: #4e5969;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-
+.voice-type{
+  padding-right: 6px;
+  font-size: 14px;
+}
 .voice-icon {
   width: 18px;
   height: 18px;
@@ -90,13 +116,9 @@
   display: flex;
   justify-content: space-between;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 16px;
-  /* identical to box height, or 100% */
-
-  /* Text/5-强调、正文标题 */
-
-  color: #1d2129;
+  color: #D1D4DA;
 }
 
 .defination-container {
@@ -224,7 +246,6 @@
   font-size: 16px;
   line-height: 20px;
   /* identical to box height, or 125% */
-
   /* Text/5-强调、正文标题 */
 
   color: #1d2129;

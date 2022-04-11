@@ -168,7 +168,26 @@ class WordList extends HTTP {
       })
     })
   }
-
+  /**
+   * 进随身听之前
+   * @param {*} wordArr 
+   */
+  preListenFromWordList(wordArr) {
+    if (wordArr == null || wordArr.length == 0) return
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/wordlist/listen',
+        method: 'POST',
+        data: wordArr
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
   /**
    * 进入复习模式
    */
