@@ -16,7 +16,8 @@ page {
   --secondary: #6066ee;
   --deepBlue: #150b47;
   --deepGrey: #8c8c8c;
-  --wordName-En-practice: 54rpx;
+  --wordName-En-practice: 64rpx;
+  --wordName-Zh-practice: 32rpx;
   --wordName-Ch: 22px;
   --wordName-En: 18px;
   --header-1: 16px;

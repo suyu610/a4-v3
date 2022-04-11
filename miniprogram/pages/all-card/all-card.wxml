@@ -1,6 +1,6 @@
 <!--pages/new-word/index.wxml-->
 <!-- <movable-area class="container"> -->
-<navigation-bar  type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
+<navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
 
 <scroll-view bindscrolltolower="onReachBottom" scroll-y style="height: {{scrollViewHeight}}px;">
   <header title="当前共有" cardNum="{{totalCardNum}}" bgColor="transparent" paddingBottom="10" selectMode="{{allSelectMode}}" bind:onRightBtnTapped="onAllSelectBtnTapped"></header>
@@ -24,10 +24,8 @@
   </van-transition>
 
   <van-empty description="当前筛选条件下没有卡片" wx:if="{{cardList.length==0 && !loading}}" />
-  <view class="loadmore-container" wx:if="{{loadingMore}}">
-    <van-loading size="13px">加载中...</van-loading>
-  </view>
- 
+  <van-empty image="search" description="加载中" wx:if="{{cardList.length==0 && loading}}" />
+
   <view class="loadmore-container" bindtap="onReachBottom" wx:if="{{!loadingMore && hasNextPage}}">
     <text class="add-btn-text-nomore">点击加载更多</text>
   </view>
@@ -39,3 +37,5 @@
 </view>
 <!-- </movable-view> -->
 <!-- </movable-area> -->
+<!-- 学习模式选择 -->
+<van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />

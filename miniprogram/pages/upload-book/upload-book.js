@@ -9,15 +9,19 @@ const customBookApi = new CustomBook()
 import {
   WordBook
 } from '../../models/wordbook.js'
-
+import {
+  User
+} from '../../models/user.js'
 const wordbookApi = new WordBook()
-
+const userApi = new User()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    resetProgressTextValue: "",
+    resetProgressValue: false,
     notShowTips: false,
     progressBarWidth: 0,
     tips: '上传中',
@@ -26,8 +30,8 @@ Page({
     longPressActionSheet: [{
         name: '查看单词列表',
       }, {
-        name: '重命名',                                                                                                                                                                                                                                                                                                                                      
-      }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ,
+        name: '重命名',
+      },
       {
         name: '删除词书',
       },
@@ -37,6 +41,32 @@ Page({
       },
     ],
   },
+  closeResetPopup() {
+    this.setData({
+      resetProgressValue: false, 
+      resetProgressTextValue: '',
+    })
+  }, 
+  beginResetProgress() {
+    if (this.data.resetProgressTextValue != '重置进度') return
+    this.setData({
+      resetProgressTextValue: '',
+      resetProgressValue: false
+    })
+    wx.showLoading({
+      title: '重置中',
+    })
+
+    userApi.resetDictProgress(this.data.curTapBookCode).then(e => {
+      wx.hideLoading();
+      wx.showToast({
+        icon: 'none',
+        title: '重置成功\r\n建议重启小程序',
+      })
+    })
+  },
+
+
   onCloseLongPressActionSheet() {
     this.setData({
       showLongPressActionSheetValue: false
@@ -46,14 +76,14 @@ Page({
     let that = this
     wx.showModal({
       title: "提示",
-      content: "确认要关闭使用说明吗", 
+      content: "确认要关闭使用说明吗",
       cancelColor: 'cancelColor',
-      confirmColor: '#220aac', 
+      confirmColor: '#220aac',
       success(res) {
         if (res.confirm) {
-          that.setData({                                        
+          that.setData({
             notShowTips: true
-          })  
+          })
           wx.setStorageSync('showCustomTips', true)
         }
       }
@@ -61,11 +91,11 @@ Page({
   },
 
   onLongPressBookItem(e) {
-    let curBookCode = e.currentTarget.dataset.code
-    let curBookName = e.currentTarget.dataset.name == null ? '未命名词书' : e.currentTarget.dataset.name
+    let curTapBookCode = e.currentTarget.dataset.code
+    let curTapBookName = e.currentTarget.dataset.name == null ? '未命名词书' : e.currentTarget.dataset.name
     this.setData({
-      curBookCode,
-      curBookName,
+      curTapBookCode,
+      curTapBookName,
       showLongPressActionSheetValue: true
     })
   },
@@ -166,39 +196,14 @@ Page({
     let that = this
     if (this.data.uploadSuccess) {
       that.onClickHide()
-      wx.showModal({
-        title: '提示',
-        placeholderText: '请输入词书名',
-        editable: true,
-        confirmColor: '#220aac',
-        success(res) {
-          if (res.confirm) {
-            // 重命名
-            customBookApi.renameCustomBook(res.content, that.data.uploadBookId).then(e => {
-              wx.showToast({
-                title: '成功',
-              })
-              let bookList = that.data.bookList
-              bookList.forEach(book => {
-                if (book.bookCode == that.data.uploadBookId) {
-                  book.bookName = res.content
-                }
-              })
-
-              config.dictInfo[that.data.uploadBookId] = {
-                name: res.content,
-                totalWordNum: config.dictInfo[that.data.uploadBookId].totalWordNum,
-                isCustomBook: true
-              }
-              that.setData({
-                bookList
-              })
-            })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
+      if (this.data.uploadWordCount > 0) {
+        that.renameBook(this.data.uploadBookId)
+      } else {
+        wx.showToast({
+          icon: 'none',
+          title: '上传成功单词数为0',
+        })
+      }
     } else {
       wx.showModal({
         title: '要取消上传吗？',
@@ -213,12 +218,128 @@ Page({
       })
     }
   },
+  jump2WordList() {
 
+  },
+  renameBook(bookId) {
+    let that = this
+    wx.showModal({
+      title: '提示',
+      placeholderText: '请输入词书名',
+      editable: true,
+      confirmColor: '#220aac',
+      success(res) {
+        if (res.confirm) {
+          // 重命名
+          customBookApi.renameCustomBook(res.content, bookId).then(e => {
+            wx.showToast({
+              title: '成功',
+            })
+            let bookList = that.data.bookList
+            bookList.forEach(book => {
+              if (book.bookCode == bookId) {
+                book.bookName = res.content
+              }
+            })
+
+            config.dictInfo[bookId] = {
+              name: res.content,
+              totalWordNum: config.dictInfo[bookId].totalWordNum,
+              isCustomBook: true
+            }
+            that.setData({
+              bookList
+            })
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  /**
+   * 删除后，要同步修改config里的内容，如果是当前选中的词书，则需要把currentDictCode置NULL
+   * @param {*} bookCode 
+   * @param {*} bookName 
+   */
+  delBook(bookCode, bookName) {
+    let that = this
+    wx.showModal({
+      title: '提示',
+      content: '确认删除' + bookName + '吗',
+      confirmColor: '#220aac',
+      success(res) {
+        if (res.confirm) {
+          // 如果是当前选中的词书，则需要把currentDictCode置NULL
+          if (app.globalData.currentBookCode = bookCode) {
+            app.globalData.currentBookCode = null
+          }
+          // 删除
+          customBookApi.deleteCustomBook(bookCode).then(e => {
+            wx.showToast({
+              title: '成功',
+            })
+            let bookList = that.data.bookList
+            bookList.forEach(book => {
+              if (book.bookCode == bookCode) {
+                // todo 删除
+                book.deleted = 1
+              }
+            })
+            // remove 
+            config.dictInfo[bookCode] = {
+              name: res.content,
+              totalWordNum: config.dictInfo[bookCode].totalWordNum,
+              isCustomBook: true
+            }
+            that.setData({
+              bookList
+            })
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+
+  },
+  resetProgress() {
+    this.setData({
+      resetProgressValue: !this.data.resetProgressValue
+    })
+  },
+
+  onSelectLongPressActionSheet(e) {
+
+    let optionName = e.detail.name
+    let bookName = this.data.curTapBookName
+    let bookCode = this.data.curTapBookCode
+    console.log(e)
+    if (optionName == "查看单词列表") {
+      this.jump2WordList()
+      return
+    }
+    if (optionName == "重命名") {
+      this.renameBook(bookCode)
+      return
+    }
+    if (optionName == "删除词书") {
+      this.delBook(bookCode, bookName)
+      return
+    }
+    if (optionName == "重置进度") {
+      this.resetProgress()
+      return
+    }
+  },
   onClickHide() {
     uploadTask.abort() // 取消上传任务
     let that = this
     this.setData({
       showUploadOverLayValue: false,
+      totalWordCount: 0,
+      uploadWordCount: 0,
+      uploadSuccess: false
     })
 
     setTimeout(() => {

@@ -1,6 +1,8 @@
 /* pages/practice/practice.wxss */
 @import "../../style/font.wxss";
-
+page {
+  background: #f2f5fa;
+}
 .container {
   padding: 17px 24px 50px 24px;
   box-sizing: border-box;
@@ -20,11 +22,12 @@
 .container-head {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
 }
 
 .container-up {
+  transition: 0.2s;
   left: 24px;
   right: 24px;
   top: 110px;
@@ -33,16 +36,55 @@
   flex-direction: column;
   align-items: center;
 }
+.bottom-btn {
+  width: 50px;
+  height: 26px;
+}
+.input-class {
+  height: 60px;
+  line-height: 60px;
+  min-height: 60px;
+  text-align: center;
+}
 
+.input-placeholder-class {
+  color: lightgrey;
+  font-weight: normal;
+  text-decoration: underline;
+  height: 60px;
+  line-height: 60px;
+  min-height: 60px;
+}
 .container-down {
-  bottom: 60px;
   left: 24px;
   right: 24px;
   position: absolute;
-  margin: 0 auto;
+  margin: 20px auto;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+
   align-items: center;
+  height: 40px;
+  line-height: 40px;
+}
+
+.short-def-container {
+  transition: 0.2s;
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.short-def-icon {
+  padding-right: 20rpx;
+  width: 18px;
+  height: 18px;
+}
+
+.short-def-text {
+  padding-left: 9rpx;
+  font-weight: var(--bold);
 }
 
 .wordname-text {
@@ -51,13 +93,16 @@
   font-weight: 700;
   font-size: var(--wordName-En-practice);
 }
+.wordname-zh {
+  font-size: var(--wordName-Zh-practice) !important;
+}
 
 .short-def-text {
   font-weight: 700;
 }
 
 .sound-container {
-  padding: 12px 0 50px 0;
+  padding: 20px 0 50px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -79,7 +124,6 @@
 .favor-img {
   width: 16px;
   height: 16px;
-  padding-right: 8px;
 }
 
 .setting-img {
@@ -248,7 +292,7 @@
   margin: 0 auto;
   padding: 0 20rpx;
   background-color: var(--white);
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .keyboard-tool-item {
@@ -289,7 +333,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color:var(--background-color);
+  background-color: var(--background-color);
   width: 100%;
   border-radius: 10px;
   padding-bottom: 20px;
@@ -310,7 +354,7 @@
   margin: 20rpx auto;
   padding: 10rpx;
   color: var(--black);
-  background-color:var(--white);
+  background-color: var(--white);
   font-size: 36rpx;
   border-radius: 8rpx;
   white-space: pre;

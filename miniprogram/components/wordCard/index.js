@@ -97,7 +97,9 @@ Component({
 
   lifetimes: {
     ready() {
+
       let date = this.data.wordCard.createTimeStamp
+
       if (date != null) {
         date = date.substr(0, 4) + "." + date.substr(5, 2) + "." + date.substr(8, 2)
       }
@@ -126,6 +128,12 @@ Component({
         status_mode,
         darkMode: app.globalData.theme == 'dark',
       })
+
+      if (this.data.wordCard.dictCode == "9999") {
+        this.setData({
+          date: this.data.wordCard.date
+        })
+      }
 
       // console.log(this.data.status_mode)
       // 判断是否都删除了

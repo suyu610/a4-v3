@@ -489,19 +489,14 @@ Page({
     }
 
 
-    if (app.globalData.currentBookCode != null) {
-      this.setData({
-        currentBookCode: app.globalData.currentBookCode
-      })
-    }
+    this.setData({
+      currentBookCode: app.globalData.currentBookCode
+    })
 
     this.setData({
       darkMode: app.globalData.theme == 'dark',
       dictInfo: config.dictInfo
     })
-
-
-
   },
 
   // 做一下判断
@@ -560,12 +555,12 @@ Page({
 
     let invitePopupTitleText = isInviteMode ? "会员解锁邀请" : (role != "roles-vip") ? "邀请好友" : "成功解锁"
     let invitePopupSubTitleText = "共同免费解锁会员权益"
-    let invitePopupBottomText = "分享给好友或群聊" 
+    let invitePopupBottomText = "分享给好友或群聊"
 
     if (isInviteMode) {
       invitePopupSubTitleText = "邀请你共同免费解锁会员权益",
         invitePopupBottomText = "立即解锁"
-      this.setData({ 
+      this.setData({
         showInvitePopupValue: true,
         isInviteMode: false,
         invitePopupBottomText
@@ -610,7 +605,7 @@ Page({
     let p = resource.getInitData()
     p.finally(e => {
       that.setData({
-        screenHeight:app.globalData.screenHeight,        
+        screenHeight: app.globalData.screenHeight,
         loading: false,
         navigationBarHeight: app.globalData.navigationBarHeight,
         searchBarTop: app.globalData.searchBarTop,

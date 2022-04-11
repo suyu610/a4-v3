@@ -44,8 +44,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    keyboardFocusValue: false,
-    showKeyboard: false,
+    textValue: "",
+    keyboardHeight: 0,
     spellCorrect: false,
     pMode: 'practice',
     showMeaning: true,
@@ -64,8 +64,8 @@ Page({
     curPracticeIndex: 0,
     // 打开详细释义
     showDictValue: false,
-    // 是否显示倒计时
-    showCountDown: true,
+    // 提示
+    showAnswer: false,
     // 显示自定义释义还是词典释义，true为自定义
     showSelfDef: false,
     voiceType: '美',
@@ -88,27 +88,11 @@ Page({
     ],
   },
 
-  /**
-   * 控制倒计时
-   */
-  startCountDown() {
-    let that = this
-    // 首先复位
+  toggleAnswer() {
     this.setData({
-      progressCurrentWidth: 100
+      showAnswer: !this.data.showAnswer
     })
-    // 3秒 从 100->0
-    // 每0.03秒减少1
-    this.data.progressCountDown = setInterval(function () {
-      if (that.data.progressCurrentWidth <= 0) {
-        clearInterval(that.data.progressCountDown)
-      }
-      that.setData({
-        progressCurrentWidth: that.data.progressCurrentWidth - 1
-      })
-    }, 30)
   },
-
   /**
    * 下一步，这个地方的逻辑是，
    * 1. 判断 轮询数组是否为空，如果不为空，则把轮询数组中第一个拿出来
@@ -122,43 +106,42 @@ Page({
     let curPracticeIndex = this.data.curPracticeIndex
     let curWord = {}
     let reviewMode = this.data.reviewMode
-    // 停止倒计时
-    if (this.data.progressCountDown != null) clearInterval(this.data.progressCountDown)
-
-    if (this.data.pMode == 'spelling') {
-      // 还有单词没复习到
-      if (curPracticeIndex < practiceWordArr.length - 1) {
-        this.startCountDown()
-        reviewMode = true
-        curPracticeIndex++
-        practiceWordArr[curPracticeIndex].isLearned = true
-        curWord = practiceWordArr[curPracticeIndex]
-        // 将所有已复习的单词，放入circleWordArr
-      } else {
-        flag = false
-        curWord = {
-          "wordName": "复习完毕"
-        }
-        wx.disableAlertBeforeUnload();
-        // 所有单词都复习到了
-        wx.showModal({
-          title: '复习完毕',
-          content: '真棒',
-          confirmText: that.data.from == 'card' ? '保存进度' : '返回',
-          confirmColor: '#220aac',
-          showCancel: false,
-          success() {
-            if (that.data.from == 'card') {
-              that.saveProgress();
-            } else {
-              wx.navigateBack({
-                delta: 0,
-              })
-            }
-          }
-        })
+    this.setData({
+      textValue: "",
+      showAnswer: false
+    })
+    // 还有单词没复习到
+    if (curPracticeIndex < practiceWordArr.length - 1) {
+      reviewMode = true
+      curPracticeIndex++
+      practiceWordArr[curPracticeIndex].isLearned = true
+      curWord = practiceWordArr[curPracticeIndex]
+      // 将所有已复习的单词，放入circleWordArr
+    } else {
+      flag = false
+      curWord = {
+        "wordName": "复习完毕"
       }
+      wx.disableAlertBeforeUnload();
+      // 所有单词都复习到了
+      wx.showModal({
+        title: '复习完毕',
+        content: '真棒',
+        confirmText: that.data.from == 'card' ? '保存进度' : '返回',
+        confirmColor: '#220aac',
+        showCancel: false,
+        success() {
+          if (that.data.from == 'card') {
+            that.saveProgress();
+          } else {
+            wx.navigateBack({
+              delta: 0,
+            })
+          }
+        }
+      })
     }
+
 
     this.setData({
       curWord,
@@ -171,7 +154,11 @@ Page({
     // if (flag) this.speakCurrentWord()
 
   },
-
+  bindKeyInput: function (e) {
+    this.setData({
+      textValue: e.detail.value
+    })
+  },
   /**
    * 保存学习进度
    */
@@ -262,26 +249,18 @@ Page({
    * @param {e}  事件内部参数
    * @setData {keyboardHeight}  显示搜索框
    */
-  onKeyboardFocus: function (e) {
+  bindkeyboardheightchange: function (e) {
     this.setData({
-      keyboardHeight: e.detail.height
+      keyboardHeight: e.detail.height,
     })
   },
 
-  onKeyboardBlur: function (e) {
-    this.setData({
-      keyboardHeight: 0
-    })
-  },
 
   /**
    * 读当前卡片中的词
    */
   speakCurrentWord() {
     this.speakWordFunc(this.data.curWord.wordName, this.data.voiceType)
-    if (this.data.isFocus) {
-      this.showKeyboard()
-    }
   },
 
   /**
@@ -344,10 +323,6 @@ Page({
       this.setData({
         showDictValue: false
       })
-
-      if(this.data.isFocus){
-        this.keyboardFocus()
-      }
 
       return;
     }
@@ -421,93 +396,6 @@ Page({
     this.speakCurrentWord()
   },
 
-  /**
-   * 切换显示词典还是自定义释义
-   */
-  toggleShowSelfDef() {
-    this.setData({
-      showSelfDef: !this.data.showSelfDef
-    })
-  },
-
-  /**
-   * 是否显示倒计时 
-   */
-  onChangeShowCountDown(e) {
-    this.setData({
-      showCountDown: e.detail
-    })
-  },
-
-  /**
-   * 修改单词字体粗细 ，拖拽和点击都支持
-   */
-  onChangeFontWeight(e) {
-    this.setData({
-      wordfontWeight: e.detail.value || e.detail
-    })
-  },
-
-  /**
-   * 修改单词字体大小，拖拽和点击都支持
-   */
-  onChangeFontSize(e) {
-    this.setData({
-      wordfontSize: e.detail.value || e.detail
-    })
-  },
-
-  /**
-   * 修改释义字体大小，拖拽和点击都支持
-   */
-  onChangeDefFontSize(e) {
-    this.setData({
-      defFontSize: e.detail.value || e.detail
-    })
-  },
-
-  /**
-   * 点击设置按钮
-   */
-  onTapSettingBtn() {
-    // if (this.data.showMeaning) {
-    //   wx.showToast({
-    //     icon: 'none',
-    //     title: '临时办法\r\n将就一下'
-    //   })
-    // }
-    // this.setData({
-    //   showMeaning: !this.data.showMeaning
-    // })
-    // this.toggleSettingSheet()
-    // 暂时关闭设置按钮
-
-    wx.showToast({
-      icon: 'none',
-      title: '设置项暂未完善\r\n欢迎提出你的想法',
-    })
-  },
-
-  /**
-   * 点击字体修改按钮
-   */
-  toggleFontSettingSheet: function () {
-    this.setData({
-      showFontSettingSheetValue: !this.data.showFontSettingSheetValue
-    })
-    this.toggleSettingSheet()
-  },
-
-  /**
-   * 切换设置页面开关状态
-   */
-
-  toggleSettingSheet: function () {
-    this.setData({
-      showSettingSheetValue: !this.data.showSettingSheetValue
-    })
-  },
-
   throwErr() {
     wx.showToast({
       icon: 'none',
@@ -561,7 +449,6 @@ Page({
           reviewMode: that.data.pMode == 'memory' ? false : true
         })
         // that.speakCurrentWord()
-        that.startCountDown()
 
       },
       function (e) {
@@ -611,7 +498,6 @@ Page({
         reviewMode: that.data.pMode == 'memory' ? false : true
       })
       // that.speakCurrentWord()
-      that.startCountDown()
     })
   },
 
@@ -619,20 +505,6 @@ Page({
     let that = this
     this.setData({
       voiceType: app.globalData.voiceType
-    })
-
-    wx.getStorage({
-      key: 'customKeyboard',
-      success(res) {
-        that.setData({
-          customKeyboard: res.data
-        })
-      },
-      fail() {
-        that.setData({
-          customKeyboard: 1
-        })
-      }
     })
 
     wx.getStorage({
@@ -723,29 +595,7 @@ Page({
     })
   },
 
-  clearKeyboardValue() {
-    this.setData({
-      textValue: ''
-    })
-    this.selectComponent("#keyboard").clearAllValue()
-  },
 
-
-  showKeyboard() {
-    this.setData({
-      isFocus: true,
-      showKeyboard: true
-    })
-
-    this.keyboardFocus()
-  },
-
-
-  hideKeyboard() {
-    this.setData({
-      isFocus: false
-    })
-  },
   /**
    * 配合键盘点击‘完成’事件：done，设置虚拟输入框为未激活状态
    */
@@ -763,7 +613,6 @@ Page({
         this.setData({
           spellCorrect: false
         })
-        this.clearKeyboardValue()
         this.nextStep()
       }, 500);
     } else {
@@ -777,20 +626,10 @@ Page({
         title: '拼写有误',
       })
     }
-
-    this.keyboardFocus()
   },
 
 
-  keyboardFocus() {
-    let that = this
-    setTimeout(() => {
-      that.setData({
-        keyboardFocusValue: true
-      })
 
-    }, 200);
-  },
 
   skipSpell() {
     this.setData({
@@ -800,10 +639,7 @@ Page({
       this.setData({
         spellCorrect: false
       })
-      this.clearKeyboardValue()
       this.nextStep()
     }, 500);
-
-    this.showKeyboard()
   }
 })

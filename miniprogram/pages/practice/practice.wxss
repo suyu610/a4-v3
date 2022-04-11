@@ -90,14 +90,14 @@ page {
 
 .short-def-text {
   padding-left: 9rpx;
-  font-weight: var(--normal);
+  font-weight: var(--bold);
 }
 
 .sound-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-top: 12px;
+  padding-top: 20px;
 }
 
 .sound-img {

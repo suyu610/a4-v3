@@ -11,7 +11,7 @@
   filter: drop-shadow(0px 2px 24px rgba(55, 47, 208, 0.12));
 }
 
-.container .img { 
+.container .img {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,3 +35,4 @@
   right: 8px;
   font-size: 10px;
 }
+

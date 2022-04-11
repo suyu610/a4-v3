@@ -14,7 +14,5 @@
   </van-tabs>
 </view>
 
-<van-action-sheet description="{{curBookName}}" show="{{ showLongPressActionSheetValue }}" bind:close="onCloseLongPressActionSheet" bind:select="onSelectLongPressActionSheet" bind:cancel="onCloseLongPressActionSheet" actions="{{ longPressActionSheet }}" cancel-text="取消">
-
-
+<van-action-sheet description="「 {{curBookName}} 」" show="{{ showLongPressActionSheetValue }}" bind:close="onCloseLongPressActionSheet" bind:select="onSelectLongPressActionSheet" bind:cancel="onCloseLongPressActionSheet" actions="{{ longPressActionSheet }}" cancel-text="取消">
 </van-action-sheet>

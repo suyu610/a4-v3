@@ -6,6 +6,11 @@
     "van-progress": "@vant/weapp/progress/index",
     "book-item": "../../components/dict-book-item",
     "van-sticky": "@vant/weapp/sticky/index",
-    "van-action-sheet": "@vant/weapp/action-sheet/index"
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-cell": "../../miniprogram_npm/@vant/weapp/cell/index",
+    "van-cell-group": "../../miniprogram_npm/@vant/weapp/cell-group/index"
   }
 }

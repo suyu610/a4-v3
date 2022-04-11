@@ -10,7 +10,6 @@
     "v-word-dic": "../../components/word-dic",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-dialog": "@vant/weapp/dialog/index",
-    "usKeyboard": "/components/wx-us-keyboard/index",
     "van-transition": "@vant/weapp/transition/index"
 
 

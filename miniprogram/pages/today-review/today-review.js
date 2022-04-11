@@ -27,12 +27,65 @@ Page({
     checkedCardArr: [],
     cardsGroupByDate: {},
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
-    open: false
+    open: false,
+    showPracticeSheetValue: false,
+    practiceModeActions: [{
+        name: '记忆模式',
+      }, {
+        name: '复习模式',
+      },
+      {
+        name: '拼写模式',
+      },
+    ],
   },
   cardSwiper(e) {
     let that = this
     that.setData({
       cardCur: e.detail.current
+    })
+  },
+  jumpToPractice(pMode) {
+    // 传参
+    var obj = JSON.stringify(this.data.checkedCardArr)
+    wx.navigateTo({
+      url: '../practice/practice?checkedCardArr=' + obj + '&pMode=' + pMode,
+    })
+  },
+  jumpToSpellPractice(pMode) {
+    // 传参
+    var obj = JSON.stringify(this.data.checkedCardArr)
+    wx.navigateTo({
+      url: '../spell/spell?checkedCardArr=' + obj + '&pMode=' + pMode,
+    })
+  },
+  onSelectPracticeSheet(e) {
+    let nameStr = e.detail.name
+    if (nameStr == '记忆模式') {
+      this.jumpToPractice('memory')
+      return
+    }
+
+    if (nameStr == '复习模式') {
+      this.jumpToPractice('practice')
+      return
+    }
+
+    if (nameStr == '拼写模式') {
+      this.jumpToSpellPractice('spelling')
+      return
+    }
+  },
+  onPractice: function () {
+    if (this.data.checkedCardArr.length == 0) return
+    // 增加复习模式
+    this.setData({
+      showPracticeSheetValue: true
+    })
+  },
+  onClosePracticeSheet() {
+    this.setData({
+      showPracticeSheetValue: false
     })
   },
   onTapBottomBtn() {
@@ -53,18 +106,45 @@ Page({
           wordlist
         }
       })
+    } else {
+      this.onPractice()
     }
   },
-  toggleOpenStatus(e) {
-    let cardId = e.currentTarget.dataset.item.cardId
-    let todayCards = this.data.todayCards
-    todayCards.forEach(e => {
-      if (e.cardId == cardId) {
-        e.open = !e.open
-      }
-    });
+
+  selectAll(e) {
+    let id = e.detail.cardId
+    let checkedCardArr = this.data.checkedCardArr
+    let cardsGroupByDate = this.data.cardsGroupByDate
+    let item = cardsGroupByDate[id]
+    let list = item.list
+    item.allSelect = !item.allSelect
+
+    let checkedCardSet = new Set(checkedCardArr);
+    let thisCardSet = new Set(list);
+
+    if (item.allSelect) {
+      checkedCardArr = new Set([...checkedCardSet, ...thisCardSet])
+    } else {
+      checkedCardArr = new Set([...checkedCardSet].filter(x => !thisCardSet.has(x)))
+    }
     this.setData({
-      todayCards
+      checkedCardArr: Array.from(checkedCardArr)
+    })
+  },
+
+  toggleOpenStatus(e) {
+    let item = e.currentTarget.dataset.item
+    let id = item.id
+
+    let cardsGroupByDate = this.data.cardsGroupByDate
+    console.log(cardsGroupByDate[id].list[0])
+    cardsGroupByDate[id].list.forEach(card => {
+      card.open = (card.open == null) ? true : !card.open
+    });
+
+
+    this.setData({
+      cardsGroupByDate
     })
   },
 
@@ -173,7 +253,10 @@ Page({
         } else {
           cardsGroupByDate[0 - card.date] = {
             "date": card.date.substr(4, 2) + "." + card.date.substr(6),
-            list: [card]
+            list: [card],
+            id: 0 - card.date,
+            allSelect: false
+
           }
         }
       })

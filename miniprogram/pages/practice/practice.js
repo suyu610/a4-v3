@@ -57,7 +57,7 @@ Page({
     circleWordArr: [],
     from: 'card',
     curWord: {},
-    reviewMode: false,
+    reviewMode: 0,
     // 标记游戏步骤的
     curPracticeIndex: 0,
     // 打开详细释义
@@ -67,11 +67,13 @@ Page({
     // 显示自定义释义还是词典释义，true为自定义
     showSelfDef: false,
     voiceType: '美',
+    forgetMode: false,
     wordfontSize: 48,
     defFontSize: 32,
     wordfontWeight: 1,
     showSettingSheetValue: false,
     showFontSettingSheetValue: false,
+    forgetWordList: [],
     settingActions: [{
         name: '单词尺寸',
       },
@@ -122,8 +124,6 @@ Page({
         })
       }
     })
-
-
   },
   /**
    * 控制倒计时
@@ -138,7 +138,6 @@ Page({
     // 每0.03秒减少1
     this.data.progressCountDown = setInterval(function () {
       if (that.data.progressCurrentWidth <= 0) {
-        that.showToast()
         clearInterval(that.data.progressCountDown)
       }
       that.setData({
@@ -149,24 +148,31 @@ Page({
   onUnload() {
     console.log("onUnload")
     clearInterval(this.data.progressCountDown)
-
   },
   onHide() {
     console.log("onHide")
     clearInterval(this.data.progressCountDown)
   },
+  setRemember() {
+    this.setData({
+      reviewMode: 2
+    })
+  },
 
-  showToast() {
-    if (this.data.vibrate) {
-      wx.vibrateShort()
-    }
-    // 如果关闭则不提醒
-    if (this.data.showReviewToast == 0) return;
-    Toast({
-      duration: '1000',
-      position: 'middle',
-      message: (this.data.curWord.selfShortDef == '' || this.data.curWord.selfShortDef == null) ? this.data.curWord.shortDef : this.data.curWord.selfShortDef,
-    });
+  // 把模糊单词记录一下,只记录一次
+
+  setForget() {
+    let curWord = this.data.curWord
+    let forgetWordList = this.data.forgetWordList
+    console.log(forgetWordList)
+    const s = new Set();
+    forgetWordList.push(curWord)
+    forgetWordList.forEach(x => s.add(x));
+
+    this.setData({
+      reviewMode: 2,
+      forgetWordList: Array.from(s)
+    })
   },
 
   /** 
@@ -184,7 +190,7 @@ Page({
     let circleWordArr = this.data.circleWordArr
     let practiceWordArr = this.data.practiceWordArr
     let curPracticeIndex = this.data.curPracticeIndex
-    let preCurWord = this.data.curWord
+
     let curWord = {}
     let reviewMode = this.data.reviewMode
     // 停止倒计时
@@ -194,13 +200,11 @@ Page({
     //   title: this.data.curWord.wordName,
     // })
 
-    // Toast('我是提示文案，建议不超过十五字~');
-
     if (this.data.pMode == 'practice') {
       // 还有单词没复习到
       if (curPracticeIndex < practiceWordArr.length - 1) {
         this.startCountDown()
-        reviewMode = true
+        reviewMode = 1
         curPracticeIndex++
         practiceWordArr[curPracticeIndex].isLearned = true
         curWord = practiceWordArr[curPracticeIndex]
@@ -234,19 +238,19 @@ Page({
     if (this.data.pMode == 'memory') {
       if (circleWordArr.length != 0) {
         // 从学习模式进入复习模式，就震动一下
-        if (!reviewMode) {
+        if (reviewMode == 0) {
           if (this.data.vibrate) {
             wx.vibrateShort()
           }
         }
         this.startCountDown()
-        reviewMode = true
+        reviewMode = 1
         // curWord = circleWordArr.shift()
         curWord = circleWordArr.splice(Math.floor(Math.random() * circleWordArr.length), 1)[0]
       } else {
         // 还有单词没复习到
         if (curPracticeIndex < practiceWordArr.length - 1) {
-          reviewMode = false
+          reviewMode = 0
           curPracticeIndex++
           practiceWordArr[curPracticeIndex].isLearned = true
           curWord = practiceWordArr[curPracticeIndex]
@@ -255,6 +259,19 @@ Page({
             if (e.isLearned) {
               circleWordArr.push(e)
             }
+          })
+        } else if (this.data.forgetWordList.length != 0) {
+          this.startCountDown()
+
+          console.log(this.data.forgetWordList[0])
+          curWord = this.data.forgetWordList[0]
+          practiceWordArr = this.data.forgetWordList
+          curPracticeIndex = 0
+          reviewMode = 1
+
+          this.setData({
+            pMode: "practice",
+            forgetMode: true
           })
         } else {
           flag = false
@@ -282,6 +299,7 @@ Page({
         }
       }
     }
+
     this.setData({
       curWord,
       practiceWordArr,
@@ -677,7 +695,7 @@ Page({
           circleWordArr,
           practiceWordArr,
           curWord,
-          reviewMode: that.data.pMode == 'memory' ? false : true
+          reviewMode: that.data.pMode == 'memory' ? 0 : 1
         })
         that.speakCurrentWord()
         that.startCountDown()

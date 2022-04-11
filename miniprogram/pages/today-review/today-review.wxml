@@ -3,16 +3,14 @@
   <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
   <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
     <block wx:for="{{cardsGroupByDate}}" wx:key="index">
-      <header title="{{item.date}}" cardNum="{{item.list.length}}" bgColor="transparent"></header>
+      <header cardId="{{item.id}}" title="{{item.date}}" cardNum="{{item.list.length}}" bgColor="transparent" bind:onRightBtnTapped="selectAll"></header>
       <wordCard mode="review" class="vwordcard" id="card_{{item.list[0].cardId}}" isFolder="{{!item.open}}" loading="{{item.list[0].loading}}" wordCard="{{item.list[0]}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
-      <block wx:for="{{cardsGroupByDate.list}}" wx:key="idx" wx:for-item="card" wx:for-index="idx">
-        <!-- <van-transition name="fade" show="{{item.open}}" duration="{{ { enter: 400, leave: 300} }}"> -->
-        <view style="transition: 0;opacity: {{item.open?1:0}};transform: scaleY({{item.open?'1':'0'}});height: {{item.open?'':0}};">
+      <block wx:for="{{item.list}}" wx:key="idx" wx:for-item="card" wx:for-index="idx">
+        <view wx:if="{{idx!=0}}" style="transition: 0;opacity: {{card.open?1:0}};transform: scaleY({{card.open?'1':'0'}});height: {{card.open?'':0}};">
           <wordCard mode="review" class="vwordcard" id="card_{{card.cardId}}" loading="{{card.loading}}" wordCard="{{card}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
         </view>
-        <!-- </van-transition> -->
       </block>
-      <image wx:if="{{item.list.length>1}}" class="toggle-btn" bindtap="toggleOpenStatus" data-item="{{item}}" mode="heightFix" src="./images/{{item.open?'open':'close'}}.png"></image>
+      <image wx:if="{{item.list.length>1}}" class="toggle-btn" bindtap="toggleOpenStatus" data-item="{{item}}" mode="heightFix" src="./images/{{item.list[0].open?'open':'close'}}.png"></image>
     </block>
     <!-- <view class="add-btn-wrapper">
       <image class="add-btn" src="./images/add-btn.png" mode="widthFix"></image>
@@ -40,3 +38,6 @@
     </swiper>
   </view>
 </van-popup>
+
+<!-- 学习模式选择 -->
+<van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />

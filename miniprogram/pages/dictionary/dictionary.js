@@ -21,6 +21,7 @@ Page({
       },
       {
         name: '重置进度',
+        color: "red",
       },
     ],
     currentWordBookName: '',
@@ -79,7 +80,7 @@ Page({
     console.log(e.detail.name)
     console.log(e)
     if (e.detail.name == "查看未学单词列表") {
-      router.push({ 
+      router.push({
         name: "dictWordList",
         data: {
           code: "123",

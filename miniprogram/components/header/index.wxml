@@ -1,6 +1,6 @@
 <!--components/header/index.wxml-->
 <view class="container-head" id="containerHeader" style="background-color: {{bgColor}};padding-bottom: {{paddingBottom}}px;">
-  <view bindtap="onTapSettingBtn" class="head-progress">
+  <view class="head-progress">
     <view class="head-progress">
       <view>{{title}} 「<text class="blue">{{cardNum}}</text>张卡片」</view>
     </view>

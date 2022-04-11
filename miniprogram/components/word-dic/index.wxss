@@ -8,6 +8,12 @@
 page {
   --divider-margin: 7px 0;
 }
+.short-def-footer {
+  justify-content: space-between !important;
+}
+.short-def-btn {
+  width: 30vw !important;
+}
 
 .container {
   padding: 24px 16px;

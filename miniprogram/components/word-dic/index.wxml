@@ -118,11 +118,11 @@
     </view> -->
   </view>
 
-  <view class="footer" wx:if="{{editMode}}">
-    <view class="footer-left" bindtap="toggleEditMode">
+  <view class="footer short-def-footer" wx:if="{{editMode}}">
+    <view class="footer-left short-def-btn" bindtap="toggleEditMode">
       <text class="footer-left-text">取消</text>
     </view>
-    <view class="footer-right" bindtap="confirmEditSelfDef">
+    <view class="footer-right short-def-btn" bindtap="confirmEditSelfDef">
       <text class="footer-right-text">修改</text>
     </view>
   </view>

@@ -135,7 +135,13 @@ Page({
       url: '../practice/practice?checkedCardArr=' + obj + '&pMode=' + pMode,
     })
   },
-
+  jumpToSpellPractice(pMode) {
+    // 传参
+    var obj = JSON.stringify(this.data.checkedCardArr)
+    wx.navigateTo({
+      url: '../spell/spell?checkedCardArr=' + obj + '&pMode=' + pMode,
+    })
+  },
   onSelectPracticeSheet(e) {
     let nameStr = e.detail.name
     if (nameStr == '记忆模式') {

@@ -15,6 +15,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showPracticeSheetValue: false,
+    practiceModeActions: [{
+        name: '记忆模式',
+      }, {
+        name: '复习模式',
+      },
+      {
+        name: '拼写模式',
+      },
+    ],
     allSelectMode: false,
     loading: true,
     title: "全部卡片",
@@ -51,7 +61,39 @@ Page({
     statusValue: 0,
     dataRange: null
   },
+  jumpToPractice(pMode) {
+    // 传参
+    var obj = JSON.stringify(this.data.checkedCardArr)
+    wx.navigateTo({
+      url: '../practice/practice?checkedCardArr=' + obj + '&pMode=' + pMode,
+    })
+  },
 
+  onSelectPracticeSheet(e) {
+    let nameStr = e.detail.name
+    if (nameStr == '记忆模式') {
+      this.jumpToPractice('memory')
+      return
+    }
+
+    if (nameStr == '复习模式') {
+      this.jumpToPractice('practice')
+      return
+    }
+
+    if (nameStr == '拼写模式') {
+      this.jumpToSpellPractice('spelling')
+      return
+    }
+  },
+
+  jumpToSpellPractice(pMode) {
+    // 传参
+    var obj = JSON.stringify(this.data.checkedCardArr)
+    wx.navigateTo({
+      url: '../spell/spell?checkedCardArr=' + obj + '&pMode=' + pMode,
+    })
+  },
   p(s) {
     return s < 10 ? '0' + s : s
   },
@@ -82,7 +124,18 @@ Page({
       showCalendarValue: true
     })
   },
-
+  onPractice: function () {
+    if (this.data.checkedCardArr.length == 0) return
+    // 增加复习模式
+    this.setData({
+      showPracticeSheetValue: true
+    })
+  },
+  onClosePracticeSheet() {
+    this.setData({
+      showPracticeSheetValue: false
+    })
+  },
   onTapBottomBtn() {
     let wordlist = []
     if (this.data.mode == 'export' || this.data.mode == "listen") {
@@ -101,6 +154,8 @@ Page({
           wordlist
         }
       })
+    } else {
+      this.onPractice()
     }
   },
 
@@ -134,8 +189,8 @@ Page({
       wx.hideLoading()
       cardList = cardList.concat(e.list)
       that.setData({
-        loading: false, 
-        loadingMore: false, 
+        loading: false,
+        loadingMore: false,
         cardList,
         currentPageIndex: e.pageNum,
         totalCardNum: e.total,
@@ -180,10 +235,12 @@ Page({
     for (var key in progressList) {
       console.log(key)
       console.log(config.dictInfo[key])
-      dictOption.push({
-        text: config.dictInfo[key].name,
-        value: key 
-      })
+      if (config.dictInfo[key] != null) {
+        dictOption.push({
+          text: config.dictInfo[key].name,
+          value: key
+        })
+      }
     }
 
     this.setData({
