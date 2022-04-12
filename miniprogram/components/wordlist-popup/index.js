@@ -3,6 +3,8 @@ import {
   WordList
 } from "../../models/wordlist"
 
+import router from '../../router/index'
+
 let wordlistApi = new WordList()
 const app = getApp()
 Component({
@@ -81,7 +83,9 @@ Component({
     },
 
     jump2BookList() {
-      this.triggerEvent("jump2BookList")
+      router.push({
+        "name": "wordlist"
+      })
     }
 
   }

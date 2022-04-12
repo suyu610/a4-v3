@@ -39,3 +39,20 @@
 <!-- </movable-area> -->
 <!-- 学习模式选择 -->
 <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
+
+<!-- 词典 -->
+<van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}" custom-style="height:100%;width:100%;background: transparent;">
+  <view style="align-items: center;" wx:if="{{showDictPopup}}">
+    <swiper indicator-dots indicator-color="rgba(255, 255, 255, .3)" indicator-active-color="#fff" class="card-swiper" bindchange="cardSwiper" bindtap="onClickHideOverlay" data-class="card-swiper" current="{{curIndex}}">
+      <swiper-item data-class="swiper-item" wx:for="{{cardBaseWordList}}" wx:key="index" wx:for-item="item" class="swiper-item">
+        <view class="swiper-item" data-class="swiper-item" catchtap="onClickHideOverlay" data-class="swiper-item">
+          <view class="hidden"></view>
+          <v-word-dic class="v-word-dic" id="dict_{{item.wordName}}" loading="{{dictLoading}}" bind:showWordGroupPopup="showWordGroupPopup" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{false}}" wordContent="{{item}}" noFooter bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:confirmWord="confirmWord" bind:refreshCard="refreshCard" />
+          <view class="hidden"></view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+</van-popup>
+
+<wordlistPopup bind:markWord="markWord" show="{{showWordGroupPopupValue}}" word="{{currentWordName}}"></wordlistPopup>

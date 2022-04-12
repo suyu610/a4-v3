@@ -41,12 +41,14 @@ Page({
       },
     ],
   },
+
   closeResetPopup() {
     this.setData({
-      resetProgressValue: false, 
+      resetProgressValue: false,
       resetProgressTextValue: '',
     })
-  }, 
+  },
+
   beginResetProgress() {
     if (this.data.resetProgressTextValue != '重置进度') return
     this.setData({
@@ -72,6 +74,7 @@ Page({
       showLongPressActionSheetValue: false
     })
   },
+
   showNoMore: function () {
     let that = this
     wx.showModal({
@@ -143,6 +146,7 @@ Page({
       })
     }
   },
+
   isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
       if (value.toLowerCase() === arr[i].toLowerCase()) {
@@ -195,15 +199,17 @@ Page({
   onClickBottomBtn() {
     let that = this
     if (this.data.uploadSuccess) {
-      that.onClickHide()
       if (this.data.uploadWordCount > 0) {
         that.renameBook(this.data.uploadBookId)
       } else {
         wx.showToast({
           icon: 'none',
-          title: '上传成功单词数为0',
+          title: '未上传成功',
         })
       }
+
+      that.onClickHide()
+
     } else {
       wx.showModal({
         title: '要取消上传吗？',

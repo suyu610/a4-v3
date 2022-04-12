@@ -10,15 +10,12 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const REVIEW_TIME_ARR = [
   0,
-  5 * 60,
-  30 * 60,
-  12 * 60 * 60,
   1 * 24 * 60 * 60,
-  2 * 24 * 60 * 60,
-  4 * 24 * 60 * 60,
-  7 * 24 * 60 * 60,
-  15 * 24 * 60 * 60
-]
+  2 * 24 * 60 * 60, 
+  4 * 24 * 60 * 60,  
+  7 * 24 * 60 * 60,  
+  15 * 24 * 60 * 60     
+]    
 import {
   Progress
 } from '../../models/progress'
@@ -319,9 +316,11 @@ Page({
     if (this.data.inSaving) {
       return;
     }
+
     this.setData({
       inSaving: true
     })
+
     wx.hideModal
     wx.showLoading({
       title: '保存中',
@@ -329,19 +328,28 @@ Page({
     let checkedCardArr = this.data.checkedCardArr
     let cardArr = []
     checkedCardArr.forEach(e => {
-      if (e.progress == null) {
+      if (e.progress == null || e.progress.seq == 0) {
         cardArr.push({
           id: e.cardId,
           pseq: 1,
-          nrt: new Date().getTime() + REVIEW_TIME_ARR[1] * 1000
+          nrt: new Date().getTime() + REVIEW_TIME_ARR[1] * 1000,
         })
-      } else if (e.progress.seq + 1 < REVIEW_TIME_ARR.length) {
-        // console.log("current Date:", new Date().getTime())
-        // console.log("Gap Date:", REVIEW_TIME_ARR[e.progress.seq] * 1000)
+      }
+      // 如果还没到下一次复习的时间，则seq就不需要加
+      else if (new Date().getTime() < e.progress.practiceTime + REVIEW_TIME_ARR[e.validPracticeCount] * 1000) {
+        console.log("无需加")
+        console.log(new Date().getTime())
+        console.log(e.progress.practiceTime + REVIEW_TIME_ARR[e.validPracticeCount + 1])
         cardArr.push({
           id: e.cardId,
-          pseq: e.progress.seq + 1,
-          nrt: new Date().getTime() + REVIEW_TIME_ARR[e.progress.seq + 1] * 1000
+          pseq: e.validPracticeCount,
+          nrt: e.progress.practiceTime + REVIEW_TIME_ARR[e.validPracticeCount] * 1000
+        })
+      } else if (e.validPracticeCount + 1 < REVIEW_TIME_ARR.length) {
+        cardArr.push({
+          id: e.cardId,
+          pseq: e.validPracticeCount + 1,
+          nrt: new Date().getTime() + REVIEW_TIME_ARR[e.validPracticeCount + 1] * 1000
         })
         // 超出复习次数
       } else {
@@ -364,9 +372,10 @@ Page({
       });
       setTimeout(() => {
         wx.navigateBack({
-          delta: 0,
+          delta: 9,
         })
         app.globalData.needRefreshTodayCard = true
+        app.globalData.needRefreshData = true
         app.globalData.needRefreshPracticeCard = true
         app.globalData.needRefreshCalendarData = true
         app.globalData.needRefreshReviewData = true

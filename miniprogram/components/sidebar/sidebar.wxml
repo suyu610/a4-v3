@@ -13,7 +13,7 @@
         <image class="medal" wx:if="{{userAuthInfo.vip}}" src="./images/medal.png"></image>
         <view class="nickname">{{userBaseInfo.nickName}}</view>
         <popover id='popover1'>
-          <popover-item bindtap='onClickA'>被按了一下</popover-item>
+          <popover-item bindtap='getUserProfile'>点我刷新昵称</popover-item>
         </popover>
       </view>
 

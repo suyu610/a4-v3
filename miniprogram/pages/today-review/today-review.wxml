@@ -1,7 +1,9 @@
 <!--pages/new-word/index.wxml-->
 <movable-area class="container">
   <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
+  <!-- <navigation-bar type="leftBar" title="{{Object.keys(cardsGroupByDate).length}}" bgColor="transparent"></navigation-bar> -->
   <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
+    <van-empty description="今日复习已完成" wx:if="{{totalCardNum == 0}}" />
     <block wx:for="{{cardsGroupByDate}}" wx:key="index">
       <header cardId="{{item.id}}" title="{{item.date}}" cardNum="{{item.list.length}}" bgColor="transparent" bind:onRightBtnTapped="selectAll"></header>
       <wordCard mode="review" class="vwordcard" id="card_{{item.list[0].cardId}}" isFolder="{{!item.open}}" loading="{{item.list[0].loading}}" wordCard="{{item.list[0]}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
@@ -27,17 +29,18 @@
 <!-- 词典 -->
 <van-popup round show="{{ showDictPopup }}" custom-class="dictPopup" position="center" bind:close="onClickHideOverlay" lock-scroll="{{false}}" custom-style="height:100%;width:100%;background: transparent;">
   <view style="align-items: center;" wx:if="{{showDictPopup}}">
-    <swiper indicator-dots indicator-color="rgba(255, 255, 255, .3)" indicator-active-color="#fff" class="card-swiper" bindchange="cardSwiper" bindtap="onClickHideOverlay" data-class="card-swiper" current="{{cardCur}}">
-      <swiper-item data-class="swiper-item" wx:if="{{nextWordList.length !=0}}" wx:for="{{nextWordList}}" wx:key="index" wx:for-item="item" class="swiper-item {{cardCur==index?'cardCur':'cardNotCur'}}">
+    <swiper indicator-dots indicator-color="rgba(255, 255, 255, .3)" indicator-active-color="#fff" class="card-swiper" bindchange="cardSwiper" bindtap="onClickHideOverlay" data-class="card-swiper" current="{{curIndex}}">
+      <swiper-item data-class="swiper-item" wx:if="{{cardBaseWordList.length !=0}}" wx:for="{{cardBaseWordList}}" wx:key="index" wx:for-item="item" class="swiper-item">
         <view class="swiper-item" data-class="swiper-item" catchtap="onClickHideOverlay" data-class="swiper-item">
           <view class="hidden"></view>
-          <v-word-dic class="v-word-dic" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{false}}" wordContent="{{item}}" noFooter bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:confirmWord="confirmWord" bind:refreshCard="refreshCard" />
+          <v-word-dic class="v-word-dic" id="dict_{{item.wordName}}" loading="{{dictLoading}}" bind:showWordGroupPopup="showWordGroupPopup" dictCode="{{currentDictCode}}" data-cardId="{{currentCardId}}" cardId="{{currentCardId}}" loading="{{false}}" wordContent="{{item}}" noFooter bind:closeDict="onClickHideOverlay" bind:replaceWord="replaceWord" bind:confirmWord="confirmWord" bind:refreshCard="refreshCard" />
           <view class="hidden"></view>
         </view>
       </swiper-item>
     </swiper>
-  </view>
+  </view> 
 </van-popup>
 
 <!-- 学习模式选择 -->
 <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
+<wordlistPopup bind:markWord="markWord" show="{{showWordGroupPopupValue}}" word="{{currentWordName}}"></wordlistPopup>

@@ -19,6 +19,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    curIndex: 0,
+    dictLoading: false,
+    showWordGroupPopupValue: false,
     cardCur: 0,
     wordlist: ["hello", "abandon", "people", "world", "open"],
     title: "今日推荐复习",
@@ -39,10 +42,23 @@ Page({
       },
     ],
   },
+  showWordGroupPopup() {
+    this.setData({
+      showWordGroupPopupValue: true
+    })
+  },
+  markWord(e) {
+    let wordName = this.data.currentWordName
+    this.selectComponent("#dict_" + wordName).setMarkWord()
+    console.log(e)
+  },
+
   cardSwiper(e) {
     let that = this
+    let curIndex = e.detail.current
     that.setData({
-      cardCur: e.detail.current
+      curIndex,
+      currentWordName: this.data.cardBaseWordList[curIndex].wordName
     })
   },
   jumpToPractice(pMode) {
@@ -155,6 +171,7 @@ Page({
     let that = this
     // 更新数据
     this.setData({
+      curIndex: 0,
       showOverlay: false,
       showSearchBar: false,
       showDictPopup: false
@@ -167,21 +184,26 @@ Page({
    * @setData {showPopup}  显示搜索框
    */
   onWord: function (e) {
+
     let cardId = e.detail.cardId
     let dictCode = e.detail.dictCode
+    let wordName = e.detail.wordName
     let that = this
 
-    resource.getWordInfo(e.detail.wordName).then(function (e) {
+
+    resource.getWordListInfo(e.detail.wordlist).then(function (e) {
       that.setData({
         currentCardId: cardId,
         currentDictCode: dictCode,
-        curWord: e,
-        showSearchBar: false,
-        showDictPopup: true,
-        searchWordInputValue: "",
-        showOverlay: false,
-        dictNoFooterMode: false
+        cardBaseWordList: e,
+        dictLoading: false
       })
+    })
+
+    this.setData({
+      currentWordName: wordName,
+      showDictPopup: true,
+      dictLoading: true
     })
   },
 
@@ -189,6 +211,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.getData(0)
+
     const data = router.extract(options);
     if (data != null && data.mode != null) {
       this.setData({
@@ -234,21 +259,18 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
 
   getData(pageIndex) {
     let that = this
     // 获取今日卡片
     cardApi.getNeedReviewCard(pageIndex).then(e => {
-      console.log(e)
+      app.globalData.needRefreshData = false
       let cardsGroupByDate = this.data.cardsGroupByDate
+
+
       e.list.forEach(card => {
         if (cardsGroupByDate.hasOwnProperty(0 - card.date)) {
+          // 看看该卡片是不是已存在
           cardsGroupByDate[0 - card.date].list.push(card)
         } else {
           cardsGroupByDate[0 - card.date] = {
@@ -256,13 +278,9 @@ Page({
             list: [card],
             id: 0 - card.date,
             allSelect: false
-
           }
         }
       })
-
-
-
       that.setData({
         cardsGroupByDate,
         currentPageIndex: e.pageNum,
@@ -282,41 +300,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getData(0)
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

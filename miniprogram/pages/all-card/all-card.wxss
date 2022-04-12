@@ -6,15 +6,15 @@ page {
   --dropdown-menu-title-font-size: 14px;
 
   --dropdown-menu-title-text-color: #4e5969;
-  background-color: #eaeef6; 
+  background-color: #eaeef6;
   /* --calendar-range-edge-background-color:  */
 }
 .container {
   /* background-image: linear-gradient(#dde4f3 0%, rgba(253, 253, 253, 0) 100%); */
- 
+
   /* background: linear-gradient(179.99deg, #dde4f3 -23.82%, #f5f6f8 38.3%),
     #f4f5f7; */
-  height: 100vh; 
+  height: 100vh;
   width: 100vw;
   overflow: hidden;
   position: absolute;
@@ -26,7 +26,23 @@ page {
   bottom: 0;
   position: fixed;
 }
-
+.swiper-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in 0s;
+  width: 95vw;
+  box-sizing: border-box;
+  padding-left: 5vw !important;
+  padding-right: 5vw !important;
+}
+.card-swiper {
+  height: 98vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .placeholder {
   width: 100%;
   text-align: center;

@@ -19,6 +19,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    dictLoading: false,
+    showWordGroupPopupValue: false,
     allSelectMode: false,
     curIndex: 0,
     wordlist: ["hello", "abandon", "people", "world", "open"],
@@ -39,6 +41,17 @@ Page({
         name: '拼写模式',
       },
     ],
+  },
+  markWord(e) {
+    let wordName = this.data.currentWordName
+    this.selectComponent("#dict_" + wordName).setMarkWord()
+    console.log(e)
+  },
+
+  showWordGroupPopup() {
+    this.setData({
+      showWordGroupPopupValue: true
+    })
   },
 
   onAllSelectBtnTapped: function () {
@@ -188,7 +201,6 @@ Page({
     if (e.currentTarget.dataset.class == "swiper-item") {
       return
     }
-    let that = this
     // 更新数据
     this.setData({
       curIndex: 0,
@@ -210,7 +222,6 @@ Page({
     let dictCode = e.detail.dictCode
     let wordName = e.detail.wordName
 
-    console.log(wordName)
     let that = this
 
     resource.getWordListInfo(e.detail.wordlist).then(function (e) {
@@ -218,12 +229,18 @@ Page({
         currentCardId: cardId,
         currentDictCode: dictCode,
         cardBaseWordList: e,
+        dictLoading: false,
         showDictPopup: true,
       })
+      wx.hideLoading()
     })
-
+    wx.showLoading({
+      title: '资源加载中',
+    })
     this.setData({
-      currentWordName: wordName
+      cardBaseWordList: [],
+      currentWordName: wordName,
+      dictLoading: true
     })
   },
 
@@ -233,6 +250,7 @@ Page({
   onLoad: function (options) {
     let e = app.globalData.todayInitData
     const data = router.extract(options);
+    app.globalData.needRefreshData = true
 
     if (data != null && data.mode != null) {
       this.setData({
@@ -246,17 +264,14 @@ Page({
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
-      loading: true,
+      loading: true,    
       windowWidth: app.globalData.windowWidth
-    })
+    })  
     app.globalData.needReviewTodayStudyDate = false
-    this.getDate(0)
-
-
-  },
-
-
-  /**
+  },  
+ 
+ 
+  /** 
    * 切换卡片选中状态
    */
   cardChecked: function (e) {
@@ -290,13 +305,14 @@ Page({
   getDate(pageIndex) {
     this.setData({
       loadingMore: true
-    })
+    }) 
     let that = this
     let useCustomBook = app.globalData.userBaseInfo.useCustomBook == 1
+
     cardApi.genTodayCard(pageIndex, useCustomBook).then(e => {
       let todayCards = this.data.todayCards
       todayCards = todayCards.concat(e.list)
-      app.globalData.needReviewTodayStudyDate = false
+      app.globalData.needRefreshData = false
       that.setData({
         todayCards: todayCards,
         currentPageIndex: e.pageNum,
@@ -311,7 +327,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.globalData.needReviewTodayStudyDate) {
+    if (app.globalData.needRefreshData) {
       // 如果是从练习页退回来的，则要取消掉选定的数组
       this.setData({
         checkedCardArr: [],

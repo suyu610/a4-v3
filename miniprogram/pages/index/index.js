@@ -17,7 +17,7 @@ import {
 import {
   Card
 } from '../../models/card'
-
+const originPlanTimeColumn = ["10", "15", "20", "30", "40", "50", "60", "70", "80", "90", "100", "150", "200", "300", "400", "500"]
 const userApi = new User()
 const resource = new Resource()
 const cardApi = new Card()
@@ -83,7 +83,7 @@ Page({
       ]
     },
 
-    planTimeColumn: ["10", "15", "20", "30", "40", "50", "60", "70", "80", "90", "100", "150", "200", "300", "400", "500"],
+    planTimeColumn: [],
     showPlanTimeColumnValue: false,
     showGuide: false,
     appearDict: {},
@@ -158,20 +158,18 @@ Page({
       })
     }
   },
+  //////////////////// 单词分组相关 ///////////////////////////////////
   markWord(e) {
     this.selectComponent(".v-word-dic").setMarkWord()
     console.log(e)
   },
+
   showWordGroupPopup() {
     this.setData({
       showWordGroupPopupValue: true
     })
   },
-  jump2BookList: function () {
-    router.push({
-      "name": "wordlist"
-    })
-  },
+
 
   showTips: function (e) {
     if (this.popover == null) {
@@ -386,17 +384,8 @@ Page({
       title: '修改中',
     })
     userApi.modifyUserSetting(setting).then(e => {
-      let dailyStudyTask = that.data.dailyStudyTask
-      // 成功后，要修改globaldata和本页面的data
-      app.globalData.setting.targetCount = tmpTargetCount
-      if ((dailyStudyTask.needStudyCount + dailyStudyTask.finishStudyCount) * 5 < tmpTargetCount) {
-        this.setData({
-          ['dailyStudyTask.needStudyCount']: tmpTargetCount / 5 - dailyStudyTask.finishStudyCount
-        })
-      }
-      that.setData({
-        ['setting.targetCount']: tmpTargetCount
-      })
+      // 成功后
+      that.initFromServer()
       that.onClosePlanTimeColumn()
       wx.showToast({
         icon: 'none',
@@ -557,13 +546,14 @@ Page({
           inviteUserId: options.invite,
           options: null
         })
-      }
-
-      that.judgeSharePopup()
+      }   
+ 
       var planTimeColumn = that.data.planTimeColumn
-      planTimeColumn.forEach((item, index) => {
+      originPlanTimeColumn.forEach((item, index) => {
         if (item == e.setting.targetCount) {
           planTimeColumn[index] = item + "*"
+        }else{
+          planTimeColumn[index] = item
         }
       })
 
@@ -605,6 +595,9 @@ Page({
         loading: false,
         planTimeColumn
       })
+
+      that.judgeSharePopup()
+
     })
   },
 

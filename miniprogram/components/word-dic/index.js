@@ -46,15 +46,16 @@ Component({
     windowHeight: wx.getSystemInfoSync().windowHeight,
     translate: '',
     voiceType: '美',
-    editMode: false,
+    editMode: false, 
     editSelfShortDef: ''
-  },
-
+  }, 
+ 
   lifetimes: {
     ready: function () {
       this.setData({
         showNoEver: app.globalData.showNoEver,
         voiceType: app.globalData.voiceType,
+        nickName: app.globalData.userBaseInfo.nickName
       })
     }
   },
@@ -93,7 +94,6 @@ Component({
       // 获取按钮元素的坐标信息
       var id = e.target.id // 或者  获取点击元素的 ID 值
       wx.createSelectorQuery().in(this).select('#' + id).boundingClientRect(res => {
-        console.log(res)
         // 调用自定义组件 popover 中的 onDisplay 方法z
         this.popover.onDisplay(res);
       }).exec();

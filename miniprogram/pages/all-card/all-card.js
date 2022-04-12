@@ -7,7 +7,13 @@ import {
   Card
 } from '../../models/card.js'
 
+import {
+  Resource
+} from '../../models/resource.js'
+
 const cardApi = new Card()
+
+const resource = new Resource()
 
 Page({
 
@@ -61,6 +67,28 @@ Page({
     statusValue: 0,
     dataRange: null
   },
+
+  cardSwiper(e) {
+    let that = this
+    let curIndex = e.detail.current
+    that.setData({
+      curIndex,
+      currentWordName: this.data.cardBaseWordList[curIndex].wordName
+    })
+  },
+  onClickHideOverlay: function (e) {
+    if (e.currentTarget.dataset.class == "swiper-item") {
+      return
+    }
+    // 更新数据
+    this.setData({
+      curIndex: 0,
+      showOverlay: false,
+      showSearchBar: false,
+      showDictPopup: false
+    })
+  },
+
   jumpToPractice(pMode) {
     // 传参
     var obj = JSON.stringify(this.data.checkedCardArr)
@@ -94,6 +122,65 @@ Page({
       url: '../spell/spell?checkedCardArr=' + obj + '&pMode=' + pMode,
     })
   },
+
+  showWordGroupPopup() {
+    this.setData({
+      showWordGroupPopupValue: true
+    })
+  },
+
+  markWord(e) {
+    let wordName = this.data.currentWordName
+    this.selectComponent("#dict_" + wordName).setMarkWord()
+    console.log(e)
+  },
+  /**
+   * 点击单词事件
+   * 
+   * @param {}  无需参数
+   * @setData {showPopup}  显示搜索框
+   */
+  onWord: function (e) {
+
+    let cardId = e.detail.cardId
+    let dictCode = e.detail.dictCode
+    let wordName = e.detail.wordName
+
+    let that = this
+
+    resource.getWordListInfo(e.detail.wordlist).then(function (e) {
+      that.setData({
+        currentCardId: cardId,
+        currentDictCode: dictCode,
+        cardBaseWordList: e,
+        dictLoading: false,
+        showDictPopup: true,
+      })
+      wx.hideLoading()
+    })
+    wx.showLoading({
+      title: '资源加载中',
+    })
+    this.setData({
+      cardBaseWordList: [],
+      currentWordName: wordName,
+      dictLoading: true
+    })
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   p(s) {
     return s < 10 ? '0' + s : s
   },
@@ -174,6 +261,7 @@ Page({
       checkedCardArr
     })
   },
+
   getDate(filterConfig, pageIndex) {
     wx.showLoading({
       title: '加载中',
@@ -197,20 +285,32 @@ Page({
         hasNextPage: e.hasNextPage,
       })
     })
+
+    app.globalData.needRefreshData = false
+
   },
-  onLoad: function (options) {
-    let that = this
 
+
+
+  onShow() {
+    if (app.globalData.needRefreshData) {
+      this.setData({
+        checkedCardArr: [],
+        allSelectMode: false,
+        cardList: [],
+      })
+      this.getDate(this.data.filterConfig, 0)
+    }
+  },
+  
+  onLoad: function (options) {  
     const data = router.extract(options);
-
+    app.globalData.needRefreshData = true 
     let filterConfig = {}
     this.setData({
       filterConfig,
-      calendarDefaultToday: [new Date().getTime(), new Date().getTime()]
+      calendarDefaultToday: [new Date().getTime(), new Date().getTime()],
     })
-    this.getDate(filterConfig, 0)
-
-
     if (data != null && data.mode != null) {
       this.setData({
         title: data.mode == "export" ? "导出卡片" : data.mode == "learn" ? "全部卡片" : "随身听",

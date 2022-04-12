@@ -7,9 +7,9 @@ Component({
     type: String,
     doCount: Number,
     todoCount: Number,
-    finishedCount: Number 
-  }, 
- 
+    finishedCount: Number
+  },
+
   /** 
    * 组件的初始数据
    */

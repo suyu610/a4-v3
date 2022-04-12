@@ -10,6 +10,7 @@
     "v-word-dic": "../../components/word-dic",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-popup": "@vant/weapp/popup/index",
+    "wordlistPopup": "../../components/wordlist-popup/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index"
   },
   "onReachBottomDistance": 300

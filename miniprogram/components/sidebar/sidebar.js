@@ -105,6 +105,7 @@ Component({
     },
 
     getUserProfile(e) {
+      console.log("getUserProfile")
       wx.showLoading({
         title: '登录中',
       })
@@ -117,12 +118,14 @@ Component({
             userBaseInfo: res.userInfo,
             hasUserInfo: true
           })
-          console.log(res.userInfo)
 
           // todo: 发送给服务端
           userApi.modifyUserProfile(res.userInfo).then(e => {
             console.log("修改成功")
           })
+        },
+        fail(res) {
+          console.log(res)
         },
         complete: () => {
           wx.hideLoading()
@@ -158,6 +161,10 @@ Component({
 
     },
 
+    onAvatarLongPress() {
+
+    },
+
     onTap: function (e) {
       this.popover = this.selectComponent('#popover1')
       // 获取按钮元素的坐标信息
@@ -168,6 +175,7 @@ Component({
         this.popover.onDisplay(res);
       }).exec();
     },
+
     showTimePickerPopup() {
       this.setData({
         showTimePickerPopupValue: true

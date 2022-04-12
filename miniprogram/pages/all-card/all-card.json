@@ -11,6 +11,9 @@
     "van-dropdown-item": "@vant/weapp/dropdown-item/index",
     "van-calendar": "@vant/weapp/calendar/index",
     "van-empty": "@vant/weapp/empty/index",
+    "wordlistPopup": "../../components/wordlist-popup/index",
+    "v-word-dic": "../../components/word-dic",
+    "van-popup": "@vant/weapp/popup/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index"
 
   }

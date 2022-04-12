@@ -102,5 +102,5 @@ padding: 0 12px;
 
 
 .grey {
-  opacity: 0.6;
+  opacity: 1;
 }

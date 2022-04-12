@@ -9,7 +9,9 @@
     "v-word-dic": "../../components/word-dic",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-popup": "@vant/weapp/popup/index",
-    "van-action-sheet": "@vant/weapp/action-sheet/index"
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-empty": "@vant/weapp/empty/index",
+    "wordlistPopup": "../../components/wordlist-popup/index"
 
   }
 }

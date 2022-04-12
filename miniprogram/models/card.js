@@ -24,6 +24,39 @@ import {
   HTTP
 } from '../utils/http.js'
 class Card extends HTTP {
+
+  emptyCard(cardId) {
+    // 判断当前是自定义词书，还是官方词书
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/userCard/status/empty/' + cardId,
+        method: 'POST',
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
+
+  completeCard(cardId) {
+    // 判断当前是自定义词书，还是官方词书
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/userCard/status/complete/' + cardId,
+        method: 'POST',
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
+
   genNewCard(useCustomBook) {
     // 判断当前是自定义词书，还是官方词书
     return new Promise((resolve, reject) => {

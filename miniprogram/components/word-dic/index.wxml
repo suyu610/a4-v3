@@ -1,7 +1,7 @@
 <wxs module="tools">
   var N_Filter = function (text) {
     if (text) {
-      console.log(text); var pattern = "\\\\n"; var target = "\n"; var reg = getRegExp(pattern, "g"); return text.replace(reg, target);
+      var pattern = "\\\\n"; var target = "\n"; var reg = getRegExp(pattern, "g"); return text.replace(reg, target);
     }
   }
   module.exports = { N_Filter: N_Filter } //暴露接口
@@ -17,12 +17,13 @@
     <!-- <van-radio value="{{ showNoEver }}" bind:change="onChangeShowNoEver" name="1" icon-size="16px" checked-color="#220aac" label-class="radio-label">以后不再显示 </van-radio> -->
   </view>
 </van-dialog>
+<image wx:if="{{nickName == '仰望星空' || nickName == '素冻饺子'}}" mode="widthFix" class="ear" src="../../images/ear.png"></image>
 
-<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; width: {{noFooter?'80vw':'85vw'}};">
+<view class="container" wx:if="{{loading}}" style="transition:.2s;text-align: center;min-height: 25vh;justify-items: center;display: flex;justify-content: center;align-items: center;min-height: 30vh; width: {{noFooter?'85vw':'90vw'}};">
   <van-loading color="#1989fa" vertical>加载中...</van-loading>
 </view>
 <!--  bind:touchmove="{{test.touchmove}}" -->
-<view wx:if="{{!loading}}" style=" width: {{noFooter?'80vw':'85vw'}};" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
+<view wx:if="{{!loading}}" style=" width: {{noFooter?'85vw':'90vw'}}" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
   <!-- header -->
   <view class=" header">
     <view class="header-up">

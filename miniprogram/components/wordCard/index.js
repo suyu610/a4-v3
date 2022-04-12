@@ -5,7 +5,6 @@ import {
 import config from '../../config'
 import * as dateTools from '../../utils/dateTools'
 
-
 // components/wordCard/index.js
 const app = getApp()
 const MAX_CARD_WIDTH = app.globalData.windowWidth - 60
@@ -181,6 +180,7 @@ Component({
     },
 
     changeCardStatus: function () {
+      let that = this
       let statusMode = this.data.status_mode
       if (statusMode == 1) {
         wx.showToast({
@@ -194,6 +194,19 @@ Component({
           title: '是否切换至已完成',
           content: "将不会在之后的复习中出现",
           confirmColor: '#220aac',
+          success(res) {
+            if (res.confirm) {
+              cardApi.completeCard(that.data.wordCard.cardId).then(e => {
+                that.setData({
+                  status_mode: 3, 
+                })
+                wx.showToast({  
+                  icon: 'none', 
+                  title: '切换成功',  
+                })  
+              })
+            }
+          }
         })
         return
       }
@@ -203,6 +216,20 @@ Component({
           title: '是否重置卡片状态',
           content: "将清空练习次数",
           confirmColor: '#220aac',
+          success(res) {
+            if (res.confirm) {
+              cardApi.emptyCard(that.data.wordCard.cardId).then(e => {
+                that.setData({
+                  status_mode: 1,
+                  ['wordCard.progress']: null
+                })
+                wx.showToast({
+                  icon: 'none',
+                  title: '切换成功',
+                })
+              })
+            }
+          }
         })
         return
       }
