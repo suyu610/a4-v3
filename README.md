@@ -1,9 +1,13 @@
-# A4-App
+# A4-App v3.0.0
 
-## 前端
+## Target
 
 - 核心理念：简洁与极致「AirPods Pro」
 - 现阶段愿景：地表最强背单词软件「记忆软件」
+
+## Blog
+
+www.uuorb.com
 
 ## todos
 
