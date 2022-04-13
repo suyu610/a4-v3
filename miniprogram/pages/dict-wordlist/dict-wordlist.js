@@ -24,9 +24,9 @@ Page({
     this.setData({
       showAll,
     })
-    this.setData({
-      wordCount: this.calWordCount()
-    })
+    // this.setData({
+    //   wordCount: this.calWordCount()
+    // })
   },
 
   onCellTapped(e) {
