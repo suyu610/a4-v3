@@ -475,11 +475,13 @@ Page({
     })
   },
 
+  // todo: 要拉取一下数据
   showInvitePopup() {
     this.setData({
       showInvitePopupValue: true
     })
   },
+
   hideInvitePopup() {
     this.setData({
       showInvitePopupValue: false

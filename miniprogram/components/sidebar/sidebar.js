@@ -134,31 +134,43 @@ Component({
     },
     onTapSidebarItem(e) {
       if (e.currentTarget.dataset.name == 'export') {
+        if (app.globalData.userAuthInfo.role == 'user') {
+          wx.showToast({
+            icon: 'none',
+            title: '请先开通会员',
+          })
+          return
+        }
         this.setData({
           showExportActionSheetValue: true,
           mode: "export"
         })
         this.toggleLockDrawer()
-
       }
 
       if (e.currentTarget.dataset.name == 'listen') {
+        // 
+        if (app.globalData.userAuthInfo.role == 'user') {
+          wx.showToast({
+            icon: 'none',
+            title: '请先开通会员',
+          })
+          return
+        }
         this.setData({
           showExportActionSheetValue: true,
           mode: "listen"
         })
         this.toggleLockDrawer()
-
       }
 
       if (e.currentTarget.dataset.name == 'notification') {
+        // 
         this.setData({
           showNotificationPopupValue: true
         })
         this.toggleLockDrawer()
-
       }
-
     },
 
     onAvatarLongPress() {

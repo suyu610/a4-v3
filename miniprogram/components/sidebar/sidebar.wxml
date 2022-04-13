@@ -60,6 +60,7 @@
     </block>
   </view>
 </view>
+
 <van-popup round show="{{ showNotificationPopupValue }}" custom-class="dictPopup" position="bottom" bind:close="closeNotificationPopup" lock-scroll="{{false}}" custom-style="height:290px">
   <view class="popup-container">
     <view class="title">定时提醒</view>

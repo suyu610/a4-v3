@@ -60,7 +60,7 @@ Page({
     if (data != null && data.wordlist != null && data.wordlist.length != 0) {
       // 发送请求
       wx.request({
-        url: 'http://49.232.162.245:7777/genPdf',
+        url: 'https://pdf.opentext.press/genPdf',
         method: "POST",
         header: {
           'content-type': 'application/x-www-form-urlencoded' //修改此处即可
