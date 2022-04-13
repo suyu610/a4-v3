@@ -3,40 +3,20 @@
 const app = getApp()
 const globalData = app.globalData
 import router from '../../router/index'
+import {
+  WordList
+} from '../../models/wordlist'
+
+const wordListApi = new WordList()
 
 Page({
 
   data: {
     showAll: false,
     wordCount: 0,
-    wordList: [{
-      wordName: "abandon",
-      ignore: false
-    }, {
-      wordName: "abolish",
-      ignore: false
-    }, {
-      wordName: "aboard",
-      ignore: false
-    }, {
-      wordName: "aboard2",
-      ignore: false
-    }, {
-      wordName: "aboard3",
-      ignore: false
-    }, {
-      wordName: "aboard4",
-      ignore: false
-    }, {
-      wordName: "aboard5",
-      ignore: true
-    }, {
-      wordName: "aboard6",
-      ignore: false
-    }, {
-      wordName: "aboard7",
-      ignore: false
-    }]
+    changedWordDict: {},
+    dictCode: "0302",
+    wordList: []
   },
 
   toggleShowAllMode() {
@@ -50,15 +30,19 @@ Page({
   },
 
   onCellTapped(e) {
+    // 把他压到改变了的数组里去
+    let changedWordDict = this.data.changedWordDict
     let wordList = this.data.wordList
     let tapWord = e.currentTarget.dataset.word
     wordList.forEach(word => {
       if (word.wordName == tapWord) {
-        word.ignore = !word.ignore
+        word.isIgnore = word.isIgnore == 1 ? 0 : 1
+        changedWordDict[word.wordName] = word.isIgnore
       }
     })
 
     this.setData({
+      changedWordDict,
       wordList,
       wordCount: this.calWordCount()
     })
@@ -80,25 +64,35 @@ Page({
     }
   },
 
-  getDate() {
-    this.setData({
-      wordCount: this.calWordCount()
+  getDate(pageIndex) {
+    let that = this
+    wordListApi.getBookWordList(this.data.dictCode, 0, pageIndex).then(e => {
+      console.log(e)
+      let wordList = that.data.wordList
+      wordList = wordList.concat(e.list)
+      that.setData({
+        wordList,
+        wordCount: e.total
+      })
     })
-  },
 
+  }, 
+ 
   finishSetting() {
-    console.log(this.data.wordList)
-    router.pop()
-  },
-
-  onLoad(options) {
-    const data = router.extract(options);
+    let changedWordDict = this.data.changedWordDict
+    wordListApi.saveIgnoreWordList(changedWordDict).then(e => {
+      router.pop() 
+    })   
+  },   
+ 
+  onLoad(options) { 
+    const data = router.extract(options); 
     console.log(data)
     this.setData({
       scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
     })
 
-    this.getDate()
+    this.getDate(0)
 
   }
 })

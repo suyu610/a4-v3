@@ -16,3 +16,20 @@
 
 <van-action-sheet description="「 {{curBookName}} 」" show="{{ showLongPressActionSheetValue }}" bind:close="onCloseLongPressActionSheet" bind:select="onSelectLongPressActionSheet" bind:cancel="onCloseLongPressActionSheet" actions="{{ longPressActionSheet }}" cancel-text="取消">
 </van-action-sheet>
+
+
+<van-popup show="{{ resetProgressValue }}" clo round bind:close="closeResetPopup" position="bottom" custom-style="height:40%;padding:20px;text-align:center">
+  <view class="settings-header" style="padding:0;padding-bottom: 5px;font-weight: bold;">
+    <text class="settings-header-text"> 将重置「{{curBookName}}」的所有进度</text>
+  </view>
+  <view style="color:#1C00DB!important;padding-bottom:30px;font-size: 12px;">\n本词书所有卡片将被删除且不可恢复</view>
+  <van-cell-group>
+    <van-field model:value="{{ resetProgressTextValue }}" placeholder="确认请在此输入 \" 重置进度\"" />
+  </van-cell-group>
+  <!-- footer -->
+  <view class="reset-footer" bindtap="beginResetProgress" style="opacity: {{resetProgressTextValue=='重置进度'?'1':'0.3'}};">
+    <view class="footer-right">
+      <text style="color:white">重置</text>
+    </view>
+  </view>
+</van-popup>

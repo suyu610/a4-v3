@@ -8,6 +8,27 @@ import {
 
 
 class WordList extends HTTP {
+
+
+  /**
+   * 
+   * @param {*} word 
+   * @param {*} groupId 
+   */
+
+  saveIgnoreWordList(changedWordDict) {
+    return new Promise((resolve, reject) => {
+      this.request({
+          url: '/wordbook/ignore/save',
+          method: 'POST',
+          data: changedWordDict
+        }).then(res => {
+          resolve(res)
+        })
+        .catch(console.error)
+    })
+  }
+
   /**
    * 添加单词到单词本
    *
@@ -146,12 +167,33 @@ class WordList extends HTTP {
     })
   }
 
-
+  /**
+   * 获取词书单词
+   * @param {*} bookCode,
+   * @param {*} isCustomBook 
+   * @param {*} PageIndex 
+   */
+  getBookWordList(bookCode, isCustomBook, pageIndex) {
+    if (pageIndex == null) {
+      pageIndex == 1
+    }
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/wordbook/list/' + bookCode + '/' + isCustomBook + '/' + pageIndex,
+        method: 'GET'
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        console.log(e)
+        reject(e)
+      })
+    })
+  }
 
   /**
    * 取消收藏单词
    */
-
   removeWordArr(wordArr) {
     if (wordArr == null || wordArr.length == 0) return
     return new Promise((resolve, reject) => {

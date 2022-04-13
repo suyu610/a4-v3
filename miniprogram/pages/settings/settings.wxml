@@ -1,6 +1,6 @@
 <!-- navigation-bar -->
 <!-- <v-navigation-bar type="searchBar" showBottomShadow="true"></v-navigation-bar> -->
-<navigation-bar type="leftBar" title="设置页"></navigation-bar>
+<navigation-bar type="leftBar" bgColor="transparent" title="设置页"></navigation-bar>
 
 <scroll-view scroll-y class="container">
   <!-- settings-header -->
@@ -15,10 +15,21 @@
     </van-cell> -->
     <!-- <van-cell title-class="cell-title" clickable value="{{currentDictName}}" title="修改当前词书" bind:click="jumpToDictChange" is-link>
     </van-cell> -->
-    <van-cell title-class="cell-title" clickable title="深色模式" bind:click="openDarkMode" is-link>
+    <!-- <van-cell title-class="cell-title" clickable title="深色模式" bind:click="openDarkMode" is-link>
     </van-cell>
     <van-cell title-class="cell-title" clickable title="更多设置" bind:click="jump2MoreSettings" is-link>
+    </van-cell> -->
+
+    <van-cell title-class="cell-title" clickable value="{{setting.openCountdown==1?'已开启':'已关闭'}}" title="练习模式倒计时" data-name="2" bind:click="switchCountdown" is-link>
     </van-cell>
+    <van-cell title-class="cell-title" clickable value="{{setting.showReviewToast==1?'已开启':'已关闭'}}" title="倒计时结束后提示释义" data-name="2" bind:click="switchReviewShowToast" is-link>
+    </van-cell>
+    <van-cell title-class="cell-title" clickable value="{{setting.openAutoSpeak==1?'已开启':'已关闭'}}" title="打开词典自动读音" data-name="2" bind:click="switchAutoSpeak" is-link>
+    </van-cell>
+    <van-cell title-class="cell-title" clickable value="{{setting.vibrate==1?'已开启':'已关闭'}}" title="震动模式" data-name="2" bind:click="switchVibrate" is-link>
+    </van-cell>
+    <!-- <van-cell title-class="cell-title" clickable value="{{setting.customKeyboard==1?'使用':'不使用'}}" title="自定义键盘" bind:click="switchCustomKeyboard" is-link>
+      </van-cell> -->
   </van-cell-group>
 
   <view style="width:100%;height:15px;"></view>
@@ -33,8 +44,8 @@
     <van-cell title-class="cell-title" clickable title="官方QQ群" value="233956276" data-qq="233956276" data-name="2" bind:click="copyQQ" is-link>
     </van-cell>
 
-    <van-cell title-class="cell-title" clickable title="重置当前词书进度" data-name="2" bind:click="onClickResetProgress" is-link>
-    </van-cell>
+    <!-- <van-cell title-class="cell-title" clickable title="重置当前词书进度" data-name="2" bind:click="onClickResetProgress" is-link>
+    </van-cell> -->
   </van-cell-group>
 
 </scroll-view>

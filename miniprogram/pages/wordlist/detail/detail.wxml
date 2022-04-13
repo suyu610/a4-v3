@@ -45,7 +45,7 @@
   </block>
   <!-- addBtn -->
   <view class="btn-container" id="add-btn" bindtap="onTapBottomBtn">
-    <shadow-btn wx:if="{{wordCheckedList.length!=0}}" title="{{editMode?'删除':'开始练习'}}"></shadow-btn>
+    <shadow-btn wx:if="{{wordCheckedList.length!=0}}" bgColor="{{editMode?'red':''}}" title="{{editMode?'删除':'开始练习'}}"></shadow-btn>
   </view>
 
 </scroll-view>

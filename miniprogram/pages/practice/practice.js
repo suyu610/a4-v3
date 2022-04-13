@@ -11,11 +11,11 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 const REVIEW_TIME_ARR = [
   0,
   1 * 24 * 60 * 60,
-  2 * 24 * 60 * 60, 
-  4 * 24 * 60 * 60,  
-  7 * 24 * 60 * 60,  
-  15 * 24 * 60 * 60     
-]    
+  2 * 24 * 60 * 60,
+  4 * 24 * 60 * 60,
+  7 * 24 * 60 * 60,
+  15 * 24 * 60 * 60
+]
 import {
   Progress
 } from '../../models/progress'
@@ -42,6 +42,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showWordGroupPopupValue: false,
     pMode: 'practice',
     showMeaning: true,
     showAddDefBar: false,
@@ -84,11 +85,22 @@ Page({
       },
     ],
   },
-  showWordListPopup() {
+
+  showWordGroupPopup() {
     this.setData({
-      showWordListPopupValue: true
+      showWordGroupPopupValue: true
     })
   },
+
+  markWord(e) {
+    let wordName = this.data.currentWordName
+    this.selectComponent(".word-dict").setMarkWord()
+    this.setData({
+      'curWord.favor': 1
+    })
+  },
+
+
   onShow() {
     this.setData({
       voiceType: app.globalData.voiceType
@@ -455,6 +467,15 @@ Page({
     } else {
       // 收藏
       this.addWord()
+    }
+  },
+
+  onLongTapFavorBtn() {
+    if (this.data.curWord.favor == 1) {
+      // 取消收藏
+      this.removeWord()
+    } else {
+      this.showWordGroupPopup()
     }
   },
 

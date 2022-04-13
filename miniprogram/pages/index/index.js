@@ -24,6 +24,7 @@ const cardApi = new Card()
 Page({
 
   data: {
+    showRandomCardValue: false,
     lockDrawerValue: false,
     drawerStatus: false,
     showOverlay: false,
@@ -40,47 +41,7 @@ Page({
         "practiceTime": 1645463839000,
         "seq": 1
       },
-      "wordList": [{
-          "isDeleted": 0,
-          "left_cal": 14,
-          "passed": 0,
-          "top_cal": 0,
-          "width": 47.28125,
-          "wordName": "yours"
-        },
-        {
-          "isDeleted": 0,
-          "left_cal": 90,
-          "passed": 0,
-          "top_cal": 0,
-          "width": 75.96875,
-          "wordName": "anymore"
-        },
-        {
-          "isDeleted": 0,
-          "left_cal": 35,
-          "passed": 0,
-          "top_cal": 1,
-          "width": 61.546875,
-          "wordName": "choose"
-        },
-        {
-          "isDeleted": 0,
-          "left_cal": 107,
-          "passed": 0,
-          "top_cal": 1,
-          "width": 49.140625,
-          "wordName": "today"
-        },
-        {
-          "isDeleted": 0,
-          "left_cal": 50,
-          "passed": 0,
-          "top_cal": 2,
-          "width": 101.625,
-          "wordName": "conjunction"
-        }
-      ]
+      "wordList": []
     },
 
     planTimeColumn: [],
@@ -104,6 +65,31 @@ Page({
     searchWordInputValue: "",
     showDictPopup: false,
     tmpFlag: false
+  },
+
+  showTipImage(e) {
+    let current = e.currentTarget.dataset.seq
+    console.log(current)
+    const baseUrl = "https://cdns.qdu.life/a4/tips/"
+    const imgList = [baseUrl + "0.png", baseUrl + "1.png", baseUrl + "2@v1.png"]
+    
+    wx.previewImage({
+      urls: imgList,
+      current: imgList[current]
+    })
+  },
+
+  copyQQ(e) {
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.qq,
+      // success: function (res) {
+      //   wx.showModal({
+      //     title: '提示',
+      //     content: '复制群号成功',
+      //     showCancel: false
+      //   });
+      // }
+    })
   },
   toggleLockDrawer() {
     console.log("index toggleLockDrawer")
@@ -546,13 +532,13 @@ Page({
           inviteUserId: options.invite,
           options: null
         })
-      }   
- 
+      }
+
       var planTimeColumn = that.data.planTimeColumn
       originPlanTimeColumn.forEach((item, index) => {
         if (item == e.setting.targetCount) {
           planTimeColumn[index] = item + "*"
-        }else{
+        } else {
           planTimeColumn[index] = item
         }
       })

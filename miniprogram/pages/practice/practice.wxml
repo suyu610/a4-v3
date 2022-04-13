@@ -7,8 +7,8 @@
 <!-- container -->
 <view class="container" style="height:{{practiceViewHeight}}px; ">
   <view class="container-head">
-    <view> 
-      <image bindtap="onTapFavorBtn" bindlongpress="showWordListPopup" class="favor-img" src="./images/favor{{curWord.favor?'_fill':''}}.png"></image>
+    <view>
+      <image bindtap="onTapFavorBtn" bindlongpress="onLongTapFavorBtn" class="favor-img" src="./images/favor{{curWord.favor?'_fill':''}}.png"></image>
     </view>
   </view>
 
@@ -99,6 +99,9 @@
 <van-overlay show="{{ showOverlay }}" bind:click="onClickHideOverlay" />
 
 <!-- 词典，让他去调用自己的接口吧 -->
-<van-popup round show="{{ showDictValue }}" position="center" bind:close="toggleDict">
-  <v-word-dic noFooter="{{true}}" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
+<van-popup round show="{{ showDictValue }}" custom-class="dictPopup" position="center" bind:close="toggleDict">
+  <v-word-dic class="word-dict" noFooter="{{true}}" bind:showWordGroupPopup="showWordGroupPopup" wordContent="{{curSearchWord}}" bind:closeDict="toggleDict" />
+
 </van-popup>
+
+<wordlistPopup bind:markWord="markWord" show="{{showWordGroupPopupValue}}" word="{{curWord.wordName}}"></wordlistPopup>

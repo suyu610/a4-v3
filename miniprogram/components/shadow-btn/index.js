@@ -8,7 +8,8 @@ Component({
     iconPath: {
       type: String,
       value: null
-    }
+    },
+    bgColor: String
 
   },
 

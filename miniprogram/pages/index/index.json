@@ -17,7 +17,9 @@
     "popover-item": "../../components/popover/popover-item",
     "wordlistPopup": "../../components/wordlist-popup/index",
     "van-loading": "@vant/weapp/loading/index",
-    "van-transition": "@vant/weapp/transition/index"
+    "van-transition": "@vant/weapp/transition/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index"
 
 
   },

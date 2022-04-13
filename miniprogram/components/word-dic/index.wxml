@@ -24,7 +24,7 @@
 </view>
 <!--  bind:touchmove="{{test.touchmove}}" -->
 <view wx:if="{{!loading}}" style=" width: {{noFooter?'85vw':'90vw'}}" class="container" data-height="{{windowHeight}}" bindtouchend="{{test.touchend}}" bindtouchstart="{{test.touchstart}}">
-  <!-- header -->
+  <!-- header --> 
   <view class=" header">
     <view class="header-up">
       <view class="header-up-left">

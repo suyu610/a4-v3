@@ -4,11 +4,20 @@
 
 page {
   --picker-option-font-size: 15px;
+  --cell-background-color: transparent;
 }
 .wrapper {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+}
+
+.ear {
+  width: 23vw; 
+  padding-left: 72vw;
+  margin-bottom: -4px;
+  position: fixed;
+  bottom: 70.5vh;
 }
 .container {
   background-image: linear-gradient(#dde4f3 0%, rgba(253, 253, 253, 0) 100%);
@@ -390,18 +399,18 @@ page {
   background: linear-gradient(178.41deg, #cadefd -9.59%, #ffffff 98.65%);
   text-align: center;
 }
-.orange{
-  color:orange;
+.orange {
+  color: orange;
 }
-.icon{ 
-  transition: .3s;
+.icon {
+  transition: 0.3s;
 }
 .invite-result-popup-container .title {
   font-size: 18px;
   padding-top: 17px;
   white-space: pre-line;
   line-height: 28px;
-  color: #24395C;
+  color: #24395c;
 }
 .invite-result-popup-container .popup-container-bottom {
   position: absolute;

@@ -71,15 +71,6 @@ Component({
    * 数据监听器
    */
   observers: {
-    'wordCard': function (wordCard) {
-      // 当wordCard已经被设置非空时
-      // if (JSON.stringify(wordCard) != '{}') {
-      //   if (this.data._wordCard != null && wordCard.cardId == this.data._wordCard.cardId) {
-      //     this.wordCardHandler(wordCard, true)
-      //   }
-      // }
-    },
-
     'cardCheckedArr': function () {
       let flag = false
       this.data.cardCheckedArr.forEach(e => {
@@ -99,8 +90,12 @@ Component({
 
       let date = this.data.wordCard.createTimeStamp
 
+
       if (date != null) {
         date = date.substr(0, 4) + "." + date.substr(5, 2) + "." + date.substr(8, 2)
+      } else {
+        date = this.data.wordCard.date
+        date = date.substr(0, 4) + "." + date.substr(4, 2) + "." + date.substr(6, 2)
       }
       let status_mode = 0
       if (this.data.mode == "study") {
@@ -198,12 +193,12 @@ Component({
             if (res.confirm) {
               cardApi.completeCard(that.data.wordCard.cardId).then(e => {
                 that.setData({
-                  status_mode: 3, 
+                  status_mode: 3,
                 })
-                wx.showToast({  
-                  icon: 'none', 
-                  title: '切换成功',  
-                })  
+                wx.showToast({
+                  icon: 'none',
+                  title: '切换成功',
+                })
               })
             }
           }

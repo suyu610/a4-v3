@@ -24,25 +24,45 @@ Component({
 
   },
 
+  pageLifetimes: {
+    show: function () {
+      let that = this
+      if (app.globalData.wordListGroup == null) {
+        wordlistApi.getWordListGroup().then(e => {
+          e.sort(that.sortById);
+          that.setData({
+            wordListGroup: e,
+            curId: 0
+          })
+          app.globalData.wordListGroup = e
+        })
+      } else {
+        this.setData({
+          wordListGroup: app.globalData.wordListGroup,
+          curId: 0
+        })
+      }
+    },
+  },
   observers: {
     'show': function (show) {
       if (show) {
         let that = this
-        if (app.globalData.wordListGroup == null) {
-          wordlistApi.getWordListGroup().then(e => {
-            e.sort(that.sortById);
-            that.setData({
-              wordListGroup: e,
-              curId: 0
-            })
-            app.globalData.wordListGroup = e
-          })
-        } else {
-          this.setData({
-            wordListGroup: app.globalData.wordListGroup,
+        // if (app.globalData.wordListGroup == null) {
+        wordlistApi.getWordListGroup().then(e => {
+          e.sort(that.sortById);
+          that.setData({
+            wordListGroup: e,
             curId: 0
           })
-        }
+          app.globalData.wordListGroup = e
+        })
+        // } else {
+        //   this.setData({
+        //     wordListGroup: app.globalData.wordListGroup,
+        //     curId: 0
+        //   })
+        // }
       }
     }
   },

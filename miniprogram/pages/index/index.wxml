@@ -88,12 +88,12 @@
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
         <view wx:if="{{screenHeight >670}}" class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
-          <view style="color: #b2bbc7;padding-bottom: 7px;">「 长按收藏功能可以选择单词本分组 」</view>
+          <view style="color: #b2bbc7;padding-bottom: 7px;">- Tips -</view>
           <!-- <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image> -->
         </view>
       </scroll-view>
 
-      <popover animation id='popover' show="{{true}}" parent-id="random">
+      <popover animation id='popover' show="{{false}}" parent-id="random">
         <!-- <view>hello</view> -->
         <popover-item closeable hasline>内容超出会自动隐藏用...表示 </popover-item>
       </popover>
@@ -156,13 +156,23 @@
   <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChangePlanPicker" show-toolbar bind:confirm="onConfirmPlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
 </van-popup>
 
-<van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 50%;background-color: #e2eeff;">
+<van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 70%;background-color: #f5f9ff;">
+  <image mode="widthFix" class="ear" src="../../images/ear.png"></image>
+
   <view class="random-popup-container">
     <view class="title">
       <view>Tips</view>
       <!-- <image style="width: 15px;height: 13px;" src="./images/random.png"></image> -->
     </view>
-    <v-wordCard type="random" class="vwordcard" loading="{{randomCard.loading}}" wordCard="{{randomCard}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></v-wordCard>
+    <van-cell-group> 
+      <van-cell center title="1、修改发音类型" label="点击词典的「英」「美」按钮" value="示例" bindtap="showTipImage" data-seq="0" is-link />
+      <van-cell center title="2、分组收藏单词" label="长按词典右上方的收藏按钮" value="示例" bindtap="showTipImage" data-seq="1" is-link />
+      <van-cell center title="3、查看词书单词列表" label="在词书列表页，长按词书" value="示例" bindtap="showTipImage" data-seq="2" is-link />
+      <van-cell center title="4、官方QQ群" label="233956276" value="点击复制" value="233956276" data-qq="233956276" data-name="2" is-link bindtap="copyQQ" />
+    </van-cell-group>
+
+
+
     <view class="random-popup-container-footer" bindtap="onCloseRandomCard">
       <shadow-btn class="shadow-btn" title="关闭"></shadow-btn>
     </view>

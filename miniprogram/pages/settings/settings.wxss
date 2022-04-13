@@ -1,5 +1,9 @@
 /* pages/settings/settings.wxss */
 @import "../../style/font.wxss";
+page {
+  background-image: linear-gradient(#dde4f3 0%, rgba(253, 253, 253, 0) 100%);
+  --cell-background-color: transparent;
+}
 
 .settings-header {
   padding: 15px 0 15px 20px;

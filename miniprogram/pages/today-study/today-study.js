@@ -264,13 +264,13 @@ Page({
       navigationBarHeight: app.globalData.navigationBarHeight,
       searchBarTop: app.globalData.searchBarTop,
       searchBarHeight: app.globalData.searchBarHeight,
-      loading: true,    
+      loading: true,
       windowWidth: app.globalData.windowWidth
-    })  
+    })
     app.globalData.needReviewTodayStudyDate = false
-  },  
- 
- 
+  },
+
+
   /** 
    * 切换卡片选中状态
    */
@@ -305,7 +305,7 @@ Page({
   getDate(pageIndex) {
     this.setData({
       loadingMore: true
-    }) 
+    })
     let that = this
     let useCustomBook = app.globalData.userBaseInfo.useCustomBook == 1
 
@@ -378,7 +378,8 @@ Page({
       cardId: -1,
       wordList: [],
       loading: true,
-      loadingAddCard: true
+      loadingAddCard: true,
+      date:app.globalData.todayDate
     }
 
     if (this.data.todayCards.length == 0) {
@@ -422,11 +423,6 @@ Page({
           todayCards,
           progressList
         })
-        app.globalData.dailyStudyTask.needStudyCount = app.globalData.dailyStudyTask.needStudyCount + 1
-        app.globalData.progressList = progressList
-        app.globalData.todayCards = todayCards
-        app.globalData.needRefreshCalendarData = true
-        app.globalData.needRefreshReviewData = true
       },
       function (e) {
         // 背完了就要删除掉-1的卡片

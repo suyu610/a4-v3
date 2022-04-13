@@ -81,7 +81,12 @@ page {
   justify-content: space-between;
   align-items: center;
 }
-
+.dictPopup {
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: auto !important;
+  background-color: transparent !important;
+}
 .short-def-icon {
   padding-right: 9rpx;
   width: 18px;

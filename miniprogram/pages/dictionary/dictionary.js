@@ -6,18 +6,23 @@ import router from '../../router/index'
 import {
   WordBook
 } from '../../models/wordbook.js'
+import {
+  User
+} from '../../models/user.js'
 
 const wordbook = new WordBook()
-
+const userApi = new User()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    resetProgressValue: false,
+    resetProgressTextValue: '',
     showLongPressActionSheetValue: false,
     longPressActionSheet: [{
-        name: '查看未学单词列表',
+        name: '查看词书单词列表',
       },
       {
         name: '重置进度',
@@ -69,17 +74,41 @@ Page({
     ]
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  closeResetPopup() {
+    this.setData({
+      resetProgressValue: false,
+      resetProgressTextValue: '',
+    })
   },
 
+  beginResetProgress() {
+    if (this.data.resetProgressTextValue != '重置进度') return
+    this.setData({
+      resetProgressTextValue: '',
+      resetProgressValue: false
+    })
+    wx.showLoading({
+      title: '重置中',
+    })
+
+    userApi.resetDictProgress(this.data.curBookCode).then(e => {
+      wx.hideLoading();
+      wx.showToast({
+        icon: 'none',
+        title: '重置成功\r\n须重启小程序',
+      })
+    })
+  },
+
+  resetProgress() {
+    this.setData({
+      resetProgressValue: !this.data.resetProgressValue
+    })
+  },
   onSelectLongPressActionSheet(e) {
     console.log(e.detail.name)
     console.log(e)
-    if (e.detail.name == "查看未学单词列表") {
+    if (e.detail.name == "查看词书单词列表") {
       router.push({
         name: "dictWordList",
         data: {
@@ -87,6 +116,12 @@ Page({
           isCustomBook: false
         }
       })
+      return
+    }
+
+    if (e.detail.name == "重置进度") {
+      this.resetProgress()
+      return
     }
   },
 

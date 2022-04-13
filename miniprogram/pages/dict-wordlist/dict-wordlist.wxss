@@ -34,7 +34,7 @@ page {
 }
 
 .right-checked-img {
-  padding: 5px;
+  padding: 5px 5px 5px 33px;
   width: 18px;
   height: 18px;
   display: flex;

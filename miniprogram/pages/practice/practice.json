@@ -10,7 +10,8 @@
     "v-word-dic": "../../components/word-dic",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-dialog": "@vant/weapp/dialog/index",
-    "van-toast": "@vant/weapp/toast/index"
+    "van-toast": "@vant/weapp/toast/index",
+    "wordlistPopup": "../../components/wordlist-popup/index"
 
 
 
