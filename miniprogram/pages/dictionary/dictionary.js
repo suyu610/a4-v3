@@ -108,12 +108,14 @@ Page({
   onSelectLongPressActionSheet(e) {
     console.log(e.detail.name)
     console.log(e)
+    let that = this
     if (e.detail.name == "查看词书单词列表") {
       router.push({
         name: "dictWordList",
         data: {
-          code: "123",
-          isCustomBook: false
+          code: that.data.curBookCode,
+          progress: that.data.curProgressIndex,
+          custom: 0
         }
       })
       return
@@ -130,15 +132,22 @@ Page({
       showLongPressActionSheetValue: false
     })
   },
+
   onLongPressBookItem(e) {
     let curBookCode = e.currentTarget.dataset.code
     let curBookName = e.currentTarget.dataset.name
+    let curProgressIndex = e.currentTarget.dataset.progress
+    if (!curProgressIndex) {
+      curProgressIndex = 0
+    }
     this.setData({
       curBookCode,
       curBookName,
-      showLongPressActionSheetValue: true
+      curProgressIndex,
+      showLongPressActionSheetValue: true,
     })
   },
+
   onTapBookItem(e) {
     let bookCode = e.currentTarget.dataset.code
     let bookName = e.currentTarget.dataset.name

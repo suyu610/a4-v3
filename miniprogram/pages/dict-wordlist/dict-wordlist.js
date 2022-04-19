@@ -15,7 +15,7 @@ Page({
     showAll: false,
     wordCount: 0,
     changedWordDict: {},
-    dictCode: "0302",
+    dictCode: "",
     wordList: []
   },
 
@@ -30,6 +30,9 @@ Page({
   },
 
   onCellTapped(e) {
+    if (this.data.isCustomBook == 1) {
+      return
+    }
     // 把他压到改变了的数组里去
     let changedWordDict = this.data.changedWordDict
     let wordList = this.data.wordList
@@ -65,34 +68,54 @@ Page({
   },
 
   getDate(pageIndex) {
+    this.setData({
+      loadingMore: true
+    })
     let that = this
-    wordListApi.getBookWordList(this.data.dictCode, 0, pageIndex).then(e => {
+    wordListApi.getBookWordList(this.data.dictCode, this.data.isCustomBook, pageIndex).then(e => {
       console.log(e)
       let wordList = that.data.wordList
       wordList = wordList.concat(e.list)
       that.setData({
         wordList,
-        wordCount: e.total
+        wordCount: e.total,
+        currentPageIndex: e.pageNum,
+        hasNextPage: e.hasNextPage,
+        loading: false,
+        loadingMore: false
       })
     })
+  },
 
-  }, 
- 
   finishSetting() {
     let changedWordDict = this.data.changedWordDict
     wordListApi.saveIgnoreWordList(changedWordDict).then(e => {
-      router.pop() 
-    })   
-  },   
- 
-  onLoad(options) { 
-    const data = router.extract(options); 
-    console.log(data)
+      router.pop()
+    })
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    if (this.data.hasNextPage) {
+      console.log("has Next Page")
+      let indexPage = this.data.currentPageIndex + 1
+      this.getDate(indexPage)
+    } else {
+      console.log("not next page")
+    }
+  },
+
+  onLoad(options) {
+    const data = router.extract(options);
     this.setData({
       scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
+      dictCode: data.code,
+      currentPageIndex: data.progress / 30,
+      isCustomBook: data.custom
     })
 
-    this.getDate(0)
+    this.getDate(parseInt(data.progress / 30))
 
   }
 })

@@ -6,7 +6,10 @@ module.exports = {
     path: '/pages/index/index',
   },
 
-
+  rules: {
+    auth: false,
+    path: '/pages/rules/rules',
+  },
   settings: {
     auth: false,
     path: '/pages/settings/settings',
@@ -20,7 +23,7 @@ module.exports = {
   wordlist: {
     path: '/pages/wordlist/wordlist'
   },
-  
+
   dictWordList: {
     path: '/pages/dict-wordlist/dict-wordlist'
 

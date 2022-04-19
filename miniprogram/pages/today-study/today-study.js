@@ -180,6 +180,9 @@ Page({
       curIndex,
       currentWordName: this.data.cardBaseWordList[curIndex].wordName
     })
+
+    app.speakWordFunc(this.data.cardBaseWordList[curIndex].wordName)
+
   },
 
   confirmWord: function (e) {
@@ -223,6 +226,7 @@ Page({
     let wordName = e.detail.wordName
 
     let that = this
+    app.speakWordFunc(wordName)
 
     resource.getWordListInfo(e.detail.wordlist).then(function (e) {
       that.setData({
@@ -462,7 +466,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    console.log("onReachBottom")
     if (this.data.hasNextPage) {
       console.log("has Next Page")
       let indexPage = this.data.currentPageIndex + 1

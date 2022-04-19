@@ -14,5 +14,6 @@
   </view> -->
 </view>
 <view class="share-btn">
-  <bg-btn title="截图分享" width="246" height="30" textColor="#fff" bgColor="#3D4262" bindtap="renderToCanvas"></bg-btn>
+  <bg-btn title="截图分享" width="120" height="30" textColor="#fff" bgColor="#3D4262" bindtap="renderToCanvas"></bg-btn>
+  <bg-btn title="查看当日卡片" width="180" height="30" textColor="#fff" bgColor="#647BF7" bindtap="jump2AllCard" data-date="{{curDate}}"></bg-btn>
 </view>

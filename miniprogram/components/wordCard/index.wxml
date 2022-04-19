@@ -1,19 +1,21 @@
 <view class="body">
   <!-- <view wx:if="{{!ifEmpty}}" class="wordCard" style="box-shadow:{{isFolder?' 0 0.0625em 0.1875em 0 rgba(0, 0, 0, 0.1), 0 0.5em 0 -0.25em #f2f2f2, 0 0.5em 0.1875em -0.25em rgb(0 0 0 / 8%), 0 0 0 0 #e5e5e5eb, 0 1em 0.1875em -0.5em  rgb(0 0 0 / 0%)':''}} "> -->
   <view wx:if="{{!ifEmpty}}" class="wordCard">
-
+ 
     <view class="header">
       <view class="header-left">
         <view class="left-top">
-          <text wx:if="{{mode=='study'}}" class="header-left-text-1">练习{{wordCard.progress==null?0:wordCard.progress.seq}}次</text>
-          <text wx:if="{{mode=='review'}}" class="header-left-text-1">练习{{wordCard.validPracticeCount}}次</text>
-          <!-- <text class="header-left-text-2" decode="true" wx:if="{{formatTime!=null && formatTime != 'HAS_DONE'}}">&nbsp;/&nbsp;{{time>0?'推荐'+ formatTime +'后复习':'推荐现在复习'}} </text> -->
+          <text class="header-left-text-1">有效练习{{wordCard.validPracticeCount}}次 |</text>
+          <text wx:if="{{mode=='study'}}" class="header-left-text-1">共练习{{wordCard.progress==null?0:wordCard.progress.seq}}次</text>
+          <text wx:if="{{mode=='review'}}" class="header-left-text-1">共练习{{wordCard.progress.seq}}次</text>
+          <text class="header-left-text-2" decode="true" wx:if="{{formatTime!=null && formatTime != 'HAS_DONE'}}">&nbsp;/&nbsp;{{time>0?'推荐'+ formatTime +'后复习':'推荐现在复习'}} </text>
           <text wx:if="{{wordCard.dictCode == 9999}}" class="header-left-text-2" decode="true">&nbsp;/&nbsp;历史词书</text>
           <text wx:if="{{wordCard.dictCode != 9999 && dictInfo[wordCard.dictCode]!=null}}" class="header-left-text-2" decode="true">&nbsp;/&nbsp;{{dictInfo[wordCard.dictCode].name}}</text>
           <text wx:if="{{wordCard.dictCode != 9999 && dictInfo[wordCard.dictCode]==null}}" class="header-left-text-2" decode="true">&nbsp;/&nbsp;已删除词书</text>
+          <text class="header-left-text-2" decode="true">&nbsp;#{{wordCard.cardId}} </text>
         </view>
-        <view class="left-bottom">
-          创建于{{date}}
+        <view class="left-bottom">  
+          创建于{{date}} 
         </view>
       </view>
       <view class="header-right" bindtap="changeCardStatus">

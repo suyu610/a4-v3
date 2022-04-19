@@ -99,7 +99,7 @@ Component({
       }
       let status_mode = 0
       if (this.data.mode == "study") {
-        if (this.data.wordCard.deleted || (this.data.wordCard.progress != null && this.data.wordCard.progress.seq == 5)) {
+        if (this.data.wordCard.deleted || (this.data.wordCard.progress != null && this.data.wordCard.validPracticeCount == 5)) {
           // 已完成
           status_mode = 3
         } else if (this.data.wordCard.progress == null || this.data.wordCard.progress.seq == 0) {

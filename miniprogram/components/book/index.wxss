@@ -5,6 +5,7 @@
   background-size: contain;
 }
 .container {
+  position: relative;
   width: 67px;
   height: 88px;
   background-color: transparent;

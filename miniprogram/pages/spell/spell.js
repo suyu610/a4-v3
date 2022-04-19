@@ -4,7 +4,7 @@
 const app = getApp()
 let innerAudioContext
 import * as cardDataTools from '../../utils/cardDataTools'
-
+import * as notificationUtil from '../../utils/notificationUtil'
 const REVIEW_TIME_ARR = [
   0,
   1 * 24 * 60 * 60,
@@ -168,7 +168,6 @@ Page({
       inSaving: true
     })
 
-    wx.hideModal
     wx.showLoading({
       title: '保存中',
     })
@@ -176,6 +175,7 @@ Page({
     let cardArr = []
     checkedCardArr.forEach(e => {
       if (e.progress == null || e.progress.seq == 0) {
+        console.log("进度为空")
         cardArr.push({
           id: e.cardId,
           pseq: 1,
@@ -183,52 +183,63 @@ Page({
         })
       }
       // 如果还没到下一次复习的时间，则seq就不需要加
-      else if (new Date().getTime() < e.progress.practiceTime + REVIEW_TIME_ARR[e.validPracticeCount + 1] * 1000) {
-        console.log("无需加")
-        console.log(new Date().getTime())
-        console.log(e.progress.practiceTime + REVIEW_TIME_ARR[e.validPracticeCount + 1])
+      else if (new Date().getTime() < new Date(e.nextPracticeTime).getTime()) {
         cardArr.push({
           id: e.cardId,
           pseq: e.validPracticeCount,
-          nrt: e.progress.practiceTime + REVIEW_TIME_ARR[e.validPracticeCount] * 1000
+          nrt: e.nextPracticeTime
         })
       } else if (e.validPracticeCount + 1 < REVIEW_TIME_ARR.length) {
-        cardArr.push({
+        console.log("正常加")
+        let recordInfo = {
           id: e.cardId,
           pseq: e.validPracticeCount + 1,
           nrt: new Date().getTime() + REVIEW_TIME_ARR[e.validPracticeCount + 1] * 1000
-        })
+        }
+        cardArr.push(recordInfo)
         // 超出复习次数
       } else {
         cardArr.push({
           id: e.cardId,
-          pseq: 999,
-          nrt: new Date("9999-01-01 00:00:00").getTime()
+          pseq: 9,
+          nrt: new Date("2088-01-01 00:00:00").getTime()
         })
       }
     })
-
-    progressApi.savePracticeProgress(cardArr).then(e => {
-      wx.showToast({
-        title: '保存成功',
+    
+    if (notificationUtil.shouldShowNotification()) {
+      wx.requestSubscribeMessage({
+        tmplIds: ['HjD6Lq6HwmjuG7fCBKZ96sUEzmvAnl39bu3gS1rHbXU'],
+        success(res) {
+          progressApi.savePracticeProgress(cardArr).then(e => {
+            wx.showToast({
+              title: '保存成功',
+            })
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 9,
+              })
+            }, 1000)
+          })
+          wx.setStorageSync('notificationSetFlag', app.globalData.todayDate)
+        },
+        fail(res) {
+          console.log(res)
+        },
       })
-      let pages = getCurrentPages() //获取当前页面栈的信息
-      let prevPage = pages[pages.length - 2] //获取上一个页面
-      prevPage.setData({ //把需要回传的值保存到上一个页面
-        fromRoute: "practice"
-      });
-      setTimeout(() => {
-        wx.navigateBack({
-          delta: 0,
+    } else {
+      progressApi.savePracticeProgress(cardArr).then(e => {
+        wx.showToast({
+          title: '保存成功',
         })
-        app.globalData.needRefreshTodayCard = true
-        app.globalData.needRefreshPracticeCard = true
-        app.globalData.needRefreshData = true
-        app.globalData.needRefreshCalendarData = true
-        app.globalData.needRefreshReviewData = true
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 9,
+          })
+        }, 1000)
+      })
+    }
 
-      }, 1000);
-    })
   },
 
   onAddSelfDefTapped() {

@@ -33,6 +33,9 @@ page {
   flex: none !important;
 }
 
+.loadmore-container {
+  text-align: center;
+}
 .right-checked-img {
   padding: 5px 5px 5px 33px;
   width: 18px;

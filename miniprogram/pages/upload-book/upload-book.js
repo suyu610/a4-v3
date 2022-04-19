@@ -2,6 +2,7 @@
 const app = getApp()
 let uploadTask;
 import config from '../../config.js';
+import router from '../../router/index'
 import {
   CustomBook
 } from '../../models/customBook.js'
@@ -225,8 +226,16 @@ Page({
     }
   },
   jump2WordList() {
-
+    router.push({
+      name: "dictWordList",
+      data: {
+        code: this.data.curTapBookCode,
+        progress: 0,
+        custom: 1
+      }
+    })
   },
+
   renameBook(bookId) {
     let that = this
     wx.showModal({
@@ -375,15 +384,12 @@ Page({
             bookName: null,
             bookCode: data.data.customBookId
           }
-
           bookList.push(uploadBook)
-
           config.dictInfo[data.data.customBookId] = {
             name: '未命名',
             totalWordNum: data.data.successCount,
             isCustomBook: true
           }
-
           that.setData({
             bookList,
             uploadWordCount: data.data.successCount,
@@ -392,17 +398,26 @@ Page({
             uploadBookId: data.data.customBookId
           })
         } else {
-          wx.showToast({
-            title: data.errmsg,
+          that.setData({
+            showUploadOverLayValue: false,
           })
+          wx.showModal({
+            title: '解析错误',
+            content: data.errmsg,
+            confirmColor: "#332FEB"
+          })
+
         }
       },
       fail(res) {
         wx.showToast({
-          icon: 'none',
+          icon: 'none', 
           title: '未知错误',
         })
         console.log(res) //do something
+        that.setData({
+          showUploadOverLayValue: false,
+        })
       }
     })
 

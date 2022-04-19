@@ -314,7 +314,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    console.log("onReachBottom")
     if (this.data.hasNextPage) {
       console.log("has Next Page")
       let indexPage = this.data.currentPageIndex + 1

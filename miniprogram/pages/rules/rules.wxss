@@ -1,0 +1,13 @@
+/* pages/rules/rules.wxss */
+page{
+  background: #e8edf6;
+}
+.container {
+  padding: 20px;
+}
+
+.tip {
+  padding-bottom: 15px;
+}
+
+

@@ -65,13 +65,13 @@
   <view class="popup-container">
     <view class="title">定时提醒</view>
     <van-cell title="每日提醒的时间" bindtap="showTimePickerPopup" title-class="popup-container-title" value-class="popup-container-value" value="{{notificationTimeStr}}" is-link></van-cell>
-    <van-cell title="提醒的触发条件" title-class="popup-container-title" bindtap="onChangeNotificationType" value-class="popup-container-value" value="{{notificationType[notificationConfig.mode]}}" is-link></van-cell>
+    <van-cell title="提醒的触发条件" title-class="popup-container-title" bindtap="onChangeNotificationType" value-class="popup-container-value {{notificationConfig.mode==0?'red':''}}" value="{{notificationType[notificationConfig.mode]}}" is-link></van-cell>
     <view class="popup-container-bottom" bindtap="onTapConfirmBtn">
       <bg-btn title="完成设置" bgColor="#3D4262" width="246" height="34"></bg-btn>
-    </view>
-  </view>
-</van-popup>
-
+    </view> 
+  </view> 
+</van-popup>  
+ 
 <van-popup round show="{{ showTimePickerPopupValue }}" custom-class="dictPopup" position="bottom" bind:close="closeTimePickerPopup" lock-scroll="{{false}}" custom-style="height:50%">
   <van-datetime-picker value="{{notificationTimeStr}}" wx:if="{{ showTimePickerPopupValue }}" type="time" bind:cancel="closeTimePickerPopup" bind:confirm="confirmTimePickerPopup" show-toolbar title="每日提醒时间" filter="{{ timePickerFilter }}" />
 </van-popup>

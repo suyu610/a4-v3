@@ -1,6 +1,5 @@
 /* pages/index/index.wxss */
 @import "../../style/font.wxss";
-@import "index-wxa-auto-dark.wxss";
 
 page {
   --picker-option-font-size: 15px;
@@ -451,3 +450,4 @@ page {
   left: 50%;
   transform: translate(-50%);
 }
+

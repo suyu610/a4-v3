@@ -2,10 +2,10 @@
 <view class="container" wx:if="{{type=='review'}}">
   <view class="header">
     <view class="left">
-      <image mode="aspectFit" class="title-img icon" src="./images/title_1_1.png"></image>
+      <image mode="heightFix" class="title-img icon" src="./images/title_1_{{todoCount!=0?'1':'2'}}.png"></image>
     </view>
     <view class="right">
-      <bg-btn title="了解规则" textColor="#ABB9CD"></bg-btn>
+      <bg-btn title="了解规则" bindtap="subBtnTapped" textColor="#ABB9CD"></bg-btn>
     </view>
   </view>
   <view class="main flex">
@@ -25,11 +25,11 @@
   <view class="footer flex">
     <view class="left">
       <image class="people" mode="heightFix" src="./images/people.png"></image>
-      <text class="info">今日{{finishedCount}}人完成复习计划</text> 
+      <text class="info">今日{{finishedCount}}人完成复习计划</text>
     </view>
     <view class="right" bindtap="mainBtnTapped">
       <bg-btn title="开始复习" bgColor="#595EF1" textColor="#fff" textSize="12" width="82" height="24"></bg-btn>
-    </view>  
+    </view>
   </view>
 </view>
 
@@ -37,7 +37,7 @@
 <view class="container" wx:if="{{type=='study'}}">
   <view class="header">
     <view class="left">
-      <image mode="aspectFit" class="title-img icon" src="./images/title_2_1.png"></image>
+      <image mode="heightFix" class="title-img icon" src="./images/title_2_{{todoCount!=0?'1':'2'}}.png"></image>
     </view>
     <view class="right">
       <bg-btn title="修改计划" bindtap="subBtnTapped" textColor="#ABB9CD"></bg-btn>

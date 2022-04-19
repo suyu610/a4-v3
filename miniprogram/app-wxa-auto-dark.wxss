@@ -1,5 +1,5 @@
 /* 
-此文件为开发者工具生成，生成时间: 2022/4/5 上午1:57:23
+此文件为开发者工具生成，生成时间: 2022/4/15 下午11:18:36
 使用方法：
 在 app.wxss 文件末尾引入样式
 ```
@@ -10,7 +10,7 @@
 @media (prefers-color-scheme: dark) {
     .clickable--hover {
         background-color: rgb(25, 26, 27);
-    } 
+    }
 
     page {
         background-color: rgb(19, 19, 19);

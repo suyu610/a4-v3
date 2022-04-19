@@ -54,11 +54,11 @@ Page({
         value: 0
       },
       {
-        text: '未完成',
+        text: '未完成复习计划',
         value: 1
       },
       {
-        text: '已完成',
+        text: '已完成复习计划',
         value: 2
       }
     ],
@@ -75,6 +75,9 @@ Page({
       curIndex,
       currentWordName: this.data.cardBaseWordList[curIndex].wordName
     })
+    
+    app.speakWordFunc(this.data.cardBaseWordList[curIndex].wordName)
+
   },
   onClickHideOverlay: function (e) {
     if (e.currentTarget.dataset.class == "swiper-item") {
@@ -147,6 +150,7 @@ Page({
     let wordName = e.detail.wordName
 
     let that = this
+    app.speakWordFunc(wordName)
 
     resource.getWordListInfo(e.detail.wordlist).then(function (e) {
       that.setData({
@@ -302,15 +306,25 @@ Page({
       this.getDate(this.data.filterConfig, 0)
     }
   },
-  
-  onLoad: function (options) {  
+
+  onLoad: function (options) {
     const data = router.extract(options);
-    app.globalData.needRefreshData = true 
+    console.log(data)
+    app.globalData.needRefreshData = true
     let filterConfig = {}
-    this.setData({
-      filterConfig,
-      calendarDefaultToday: [new Date().getTime(), new Date().getTime()],
-    })
+
+
+    if (data != null && data.year != null) {
+      // 拼接一下
+      var date = new Date(data.year + '-' + data.month + '-' + data.day);
+
+      filterConfig.startDate = date.getTime();
+      filterConfig.endDate = date.getTime();
+      this.setData({
+        dataRange: data.month + '月' + data.day + '日'
+      })
+    }
+
     if (data != null && data.mode != null) {
       this.setData({
         title: data.mode == "export" ? "导出卡片" : data.mode == "learn" ? "全部卡片" : "随身听",
@@ -318,6 +332,11 @@ Page({
         mode: data.mode
       })
     }
+
+    this.setData({
+      filterConfig,
+      calendarDefaultToday: [new Date().getTime(), new Date().getTime()],
+    })
 
     let progressList = app.globalData.progressList
     this.setData({
@@ -362,8 +381,9 @@ Page({
       dataRange: resDate
     })
     let config = this.data.filterConfig
-    config['startDate'] = e.detail[0]
-    config['endDate'] = e.detail[1]
+    console.log(e.detail[0].valueOf())
+    config['startDate'] = e.detail[0].valueOf()
+    config['endDate'] = e.detail[1].valueOf()
     this.setData({
       cardList: [],
       loading: true
@@ -376,7 +396,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    console.log("onReachBottom")
     if (this.data.hasNextPage) {
       console.log("has Next Page")
       let pageIndex = this.data.currentPageIndex + 1

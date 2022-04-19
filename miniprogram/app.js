@@ -175,6 +175,13 @@ App({
     this.globalData.practiceViewHeight = practiceViewHeight
   },
 
+  speakWordFunc(wordName) {
+    // 调用有道api
+    let url = "https://dict.youdao.com/dictvoice?audio=" + wordName + "&type=" + (this.globalData.voiceType == '美' ? '2' : '1')
+    this.globalData.innerAudioContext.src = url
+    this.globalData.innerAudioContext.play()
+  },
+
   loadFontFace() {
     wx.loadFontFace({
       global: true, // 版本 2.10.0 后 全局app.js 使用

@@ -83,8 +83,6 @@
   align-items: center;
 }
 
-
-
 .divider {
   height: 15px;
   width: 1px;
@@ -145,6 +143,9 @@
   color: #1d2129 !important;
   font-weight: bold;
 }
+.red {
+  color: red !important;
+} 
 .popup-container .popup-container-bottom {
   position: absolute;
   bottom: 14px;

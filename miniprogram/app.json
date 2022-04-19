@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/rules/rules",
     "pages/dict-wordlist/dict-wordlist",
     "pages/dictionary/dictionary",
     "pages/upload-book/upload-book",
@@ -25,6 +26,7 @@
       ]
     }
   ],
+  "darkmode": false,
   "resizable": true,
   "themeLocation": "theme.json",
   "window": {

@@ -1,0 +1,10 @@
+<!--pages/rules/rules.wxml-->
+<navigation-bar type="leftBar" bgColor="transparent" title="规则说明"></navigation-bar>
+<view class="container">
+  <view class="tip">① 卡片进行第一次学习后，会进入复习状态，系统将在第1、2、4、7、14天，推荐复习。</view>
+  <view class="tip">② 在推荐时间前复习，不会记录有效练习次数。</view>
+  <view class="tip">③ 当完成5次有效练习后，卡片会变成已完成状态，之后将不再推荐复习。你也可以手动将其修改为已完成状态。</view>
+  <view class="tip">④ 如果尚未学习今日新学卡片，他将出现在明日的新学计划中。</view>
+  <view class="tip">⑤ 如果新学卡片的单词过于简单，你可以点击该单词，进行替换。</view>
+</view>
+<image bindtap="previewImage" mode="widthFix" style="padding-top:20px;width: 95vw;padding-left: 2.5vw;" src="./images/card_status.png"></image>

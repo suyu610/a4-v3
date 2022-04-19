@@ -104,6 +104,25 @@ class User extends HTTP {
     })
   }
 
+
+  /**
+   * 
+   * 检查当前用户身份 
+   */
+  getUserAuthInfo(){
+    return new Promise((resolve, reject) => {
+      this.request({
+        url: '/user/authInfo/',
+        method: 'GET',
+      }).then(res => {
+        resolve(res)
+      }).
+      catch(function (e) {
+        reject(e)
+      })
+    })
+  }
+
   /**
    * 重置词书
    */

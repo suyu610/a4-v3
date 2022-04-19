@@ -68,9 +68,8 @@ Page({
   formatDateStr(year, month, day) {
     return String(year) + String(month < 10 ? '0' + month : month) + String(day < 10 ? '0' + day : day)
   },
-  
+
   changeChosenDate(e) {
-    console.log(e)
     let dateStr = this.formatDateStr(e.detail.year, e.detail.month, e.detail.day)
     let curItem = {
       newCardCount: 0,
@@ -80,11 +79,19 @@ Page({
       curItem = this.data.calendarData[dateStr]
     }
     this.setData({
-      curItem
+      curItem,
+      curDate: e.detail
     })
     // day: 4
     // month: 3
     // year: 2022
+  },
+
+  jump2AllCard: function () {
+    router.push({
+      name: "allCard",
+      data: this.data.curDate
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -92,7 +99,6 @@ Page({
   onLoad: function (options) {
     this.widget = this.selectComponent('.widget')
     let that = this
-    console.log(this.data.chosenYear, this.data.chosenMonth)
 
     progress.getProgressByMonth(app.globalData.todayMonthDate).then(function (e) {
       console.log(e)
@@ -104,10 +110,15 @@ Page({
       if (e.hasOwnProperty(app.globalData.todayDate)) {
         curItem = e[app.globalData.todayDate]
       }
-
+      let today = new Date()
       that.setData({
         calendarData: e,
-        curItem
+        curItem,
+        curDate: {
+          year: today.getFullYear(),
+          month: today.getUTCMonth() + 1,
+          day: today.getDate()
+        }
       })
 
       let year = that.data.chosenYear

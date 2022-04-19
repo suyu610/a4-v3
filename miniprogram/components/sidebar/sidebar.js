@@ -27,7 +27,7 @@ Component({
     notificationType: ['关闭提醒', '当日有未完成的任务', '总是提醒'],
     timePickerFilter(type, options) {
       if (type === 'minute') {
-        return options.filter((option) => option % 2 === 0);
+        return options.filter((option) => option % 5 === 0);
       }
       return options;
     },

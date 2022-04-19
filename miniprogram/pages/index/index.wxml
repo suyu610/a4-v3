@@ -85,10 +85,10 @@
         </view>
         <!-- progress-card -->
         <v-progress-card wx:if="{{userBaseInfo!=null}}" dictInfo="{{dictInfo}}" userBaseInfo="{{userBaseInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
-        <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped=""></homecard>
+        <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped="onOpenRuleImage"></homecard>
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
         <view wx:if="{{screenHeight >670}}" class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
-          <view style="color: #b2bbc7;padding-bottom: 7px;">- Tips -</view>
+          <view style="color: #b2bbc7;padding-bottom: 7px;">- 使用提示 -</view>
           <!-- <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image> -->
         </view>
       </scroll-view>
@@ -144,9 +144,9 @@
   <view class="invite-popup-container" wx:if="{{ showInvitePopupValue }}">
     <view class="title">{{invitePopupTitleText}}</view>
     <view class="sub-title">{{invitePopupSubTitleText}}</view>
-    <view class="popup-container-bottom" bindtap="onInviteFriendTapped">
+    <view class="popup-container-bottom">
       <bg-btn shadow wx:if="{{invitePopupBottomText!='立即解锁'}}" title="{{invitePopupBottomText}}" share bgColor="#6C30F0" width="220" height="30"></bg-btn>
-      <bg-btn bindtap="checkShareStatus" shadow wx:else title="{{invitePopupBottomText}}" bgColor="#6C30F0" width="220" height="30"></bg-btn>
+      <bg-btn shadow wx:else bindtap="checkShareStatus" title="{{invitePopupBottomText}}" bgColor="#6C30F0" width="220" height="30"></bg-btn>
     </view>
     <image class="invite-popup-bg-img" src="https://cdns.qdu.life/a4/images/share_img.png" mode="widthFix"></image>
   </view>
@@ -162,16 +162,15 @@
   <view class="random-popup-container">
     <view class="title">
       <view>Tips</view>
-      <!-- <image style="width: 15px;height: 13px;" src="./images/random.png"></image> -->
     </view>
-    <van-cell-group> 
-      <van-cell center title="1、修改发音类型" label="点击词典的「英」「美」按钮" value="示例" bindtap="showTipImage" data-seq="0" is-link />
-      <van-cell center title="2、分组收藏单词" label="长按词典右上方的收藏按钮" value="示例" bindtap="showTipImage" data-seq="1" is-link />
-      <van-cell center title="3、查看词书单词列表" label="在词书列表页，长按词书" value="示例" bindtap="showTipImage" data-seq="2" is-link />
-      <van-cell center title="4、官方QQ群" label="233956276" value="点击复制" value="233956276" data-qq="233956276" data-name="2" is-link bindtap="copyQQ" />
+    <van-cell-group>
+      <van-cell title-width="70%" center title="1、修改发音类型" label="点击词典的「英」「美」按钮" value="示例" bindtap="showTipImage" data-seq="0" is-link />
+      <van-cell title-width="70%" center title="2、单词本怎么分组" label="长按词典右上方的收藏按钮" value="示例" bindtap="showTipImage" data-seq="1" is-link />
+      <van-cell title-width="70%" center title="3、查看词书单词列表" label="在词书列表页，长按词书" value="示例" bindtap="showTipImage" data-seq="2" is-link />
+      <van-cell title-width="70%" center title="4、单词太简单，怎么替换" label="在新学卡片页，点击卡片上的单词" value="示例" bindtap="showTipImage" data-seq="3" is-link />
+      <van-cell title-width="70%" center title="5、怎么查看历史记录" label="点击侧边栏的日历组件，或在全部卡片里搜索" />
+      <van-cell title-width="70%" center title="6、官方QQ群" label="233956276" value="点击复制" value="点击复制" data-qq="233956276" data-name="2" is-link bindtap="copyQQ" />
     </van-cell-group>
-
-
 
     <view class="random-popup-container-footer" bindtap="onCloseRandomCard">
       <shadow-btn class="shadow-btn" title="关闭"></shadow-btn>
@@ -179,12 +178,10 @@
   </view>
 </van-popup>
 
-<van-overlay z-index="999" show="{{ alarmOverlay }}" bind:click="onClickHide">
-  <view class="wrapper" style="display: flex;align-items: center;justify-content: center;height: 50%; width: 90%;margin: 0 auto;">
-    <view class="block" catch:tap="noop" style="color: white;font-weight: bolder;font-size: 20px;animation:myfirst 2s infinite">
-      <view>勾选底部，"总是保持以上选择"</view>
-      <view>将不再出现此弹窗</view>
-      <!-- <image src=""></image> -->
+<van-overlay z-index="999" show="{{ showRulesOverlayValue }}" bind:click="onClickHideOverlay">
+  <view class="wrapper" style="display: flex;align-items: center;justify-content: center;height: 80vh; width: 90%;margin: 10vh auto;">
+    <view class="block" catch:tap="onClickHideOverlay" style=" margin-top: 10vh;width: 100%;    background: white;    padding: 10px;border-radius: 15px;">
+      <image mode="widthFix" style="height: 100%;width: 100%;" src="https://cdns.qdu.life/a4/tips/rules.png"></image>
     </view>
   </view>
 </van-overlay>

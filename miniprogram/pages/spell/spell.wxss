@@ -104,14 +104,14 @@ page {
 .sound-container {
   padding: 20px 0 50px 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
 }
 
 .sound-img {
-  width: 12px;
-  height: 12px;
-  padding: 0 3px 0 0;
+  width: 25px;
+  height: 25px;
+  padding: 0px 0px 9px 0;
 }
 .keyboard-del-icon {
   width: 18px;
@@ -133,7 +133,6 @@ page {
 }
 
 .phonetic-type {
-  padding-right: 6px;
   font-size: var(--english);
   font-family: var(--simhei);
   font-weight: var(--light);

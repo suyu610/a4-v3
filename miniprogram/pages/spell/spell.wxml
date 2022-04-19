@@ -12,12 +12,12 @@
     <input placeholder="             " placeholder-class="input-placeholder-class" bindconfirm="inputDone" bindinput="bindKeyInput" value="{{textValue}}" hold-keyboard confirm-hold confirm-type="done" type="text" class="wordname-text input-class" type="text" bindkeyboardheightchange="bindkeyboardheightchange" focus="{{true}}" />
     <!-- phoneticSign -->
     <view class="sound-container" bindtap="speakCurrentWord">
-      <text class="phonetic-type" catchtap="toggleVoiceType">[{{voiceType}}]</text>
       <image class="sound-img" src="./images/sound.png"></image>
-      <text class="phoneticSign-text">/ {{voiceType=='美'?curWord.prsUs:curWord.prsUk}} /</text>
+      <!-- <text class="phonetic-type" catchtap="toggleVoiceType">{{voiceType}}</text> -->
+      <!-- <text class="phoneticSign-text">/ {{voiceType=='美'?curWord.prsUs:curWord.prsUk}} /</text> -->
     </view>
 
-    <view class="short-def-container" style="padding-top:{{keyboardHeight>0?'20px':'40px'}}">
+    <view class="short-def-container" bindtap="onAddSelfDefTapped" style="padding-top:{{keyboardHeight>0?'20px':'40px'}}">
       <image class="short-def-icon" src="./images/pen-edit.png"></image>
       <text class="wordname-text wordname-zh">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text>
     </view>

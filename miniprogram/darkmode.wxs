@@ -1,5 +1,4 @@
 function addSuffix(filename, darkmode) {
-
   return getFileName(filename) + (darkmode ? '_dark' : '') + getExtension(filename)
 }
 

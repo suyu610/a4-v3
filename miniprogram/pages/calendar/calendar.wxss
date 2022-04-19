@@ -5,9 +5,14 @@ page {
   --grid-item-content-padding: 8px 8px;
 }
 .share-btn {
-  width: 100vw;
+  width: 90vw;
+  margin: 0 auto;
   bottom: 50px;
+  display: flex;
   position: absolute;
+  left: 5vw;
+  /* right: 5vw; */
+  justify-content: space-between;
 }
 .controlTool .top,
 .controlTool .bottom {

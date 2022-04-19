@@ -9,6 +9,7 @@ page {
   background-color: #fff;
   border-radius: 12px;
   color: rgba(29, 29, 31, 1);
+  padding-bottom: 6px;
 }
 .container {
   height: 100vh;
@@ -142,6 +143,12 @@ page {
   bottom: 20px;
 }
 
+.red {
+  color: red;
+}
+.pb-5 {
+  padding-bottom: 5px;
+}
 .footer {
   position: absolute;
   bottom: 0;

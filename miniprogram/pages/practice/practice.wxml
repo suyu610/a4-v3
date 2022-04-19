@@ -7,6 +7,11 @@
 <!-- container -->
 <view class="container" style="height:{{practiceViewHeight}}px; ">
   <view class="container-head">
+    <view style="align-items: center;display: flex;">
+      <text class="header-text" wx:if="{{prevWord!=null && showPrevWord}}">{{prevWord.wordName}}：</text>
+      <text class="header-text" wx:if="{{showPrevWord}}">{{(prevWord.selfShortDef == '' || prevWord.selfShortDef == null) ?prevWord.shortDef : prevWord.selfShortDef}}</text>
+      <image bindtap="closePrevWord" wx:if="{{prevWord!=null && showPrevWord}}" mode="heightFix" class="header-text" style="height: 19px;    padding-left: 10px;" src="./images/close.png"></image>
+    </view>
     <view>
       <image bindtap="onTapFavorBtn" bindlongpress="onLongTapFavorBtn" class="favor-img" src="./images/favor{{curWord.favor?'_fill':''}}.png"></image>
     </view>
@@ -27,7 +32,7 @@
 
     <!-- shortDef -->
     <!-- <text class="shortDef-text" style="font-size:  {{defFontSize}}rpx;">{{practiceWordArr[curPracticeIndex].isLearned?'请复述五遍单词的释义':showSelfDef?'记录':'n. 提供证据或讲述过去事件的官方书面文件'}}</text> -->
-    <view class="short-def-container" style="transition:.1s;filter:blur{{pMode=='practice' ||  reviewMode==1?'(8px)':'(0px)'}};">
+    <view class="short-def-container" bindtap="onAddSelfDefTapped" style="transition:.1s;filter:blur{{pMode=='practice' ||  reviewMode==1?'(8px)':'(0px)'}};">
       <image class="short-def-icon" src="./images/pen-edit.png"></image>
       <text class="short-def-text">{{(curWord.selfShortDef == '' || curWord.selfShortDef == null) ?curWord.shortDef : curWord.selfShortDef}}</text>
     </view>

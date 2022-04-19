@@ -71,8 +71,8 @@ Page({
     let current = e.currentTarget.dataset.seq
     console.log(current)
     const baseUrl = "https://cdns.qdu.life/a4/tips/"
-    const imgList = [baseUrl + "0.png", baseUrl + "1.png", baseUrl + "2@v1.png"]
-    
+    const imgList = [baseUrl + "0.png", baseUrl + "1.png", baseUrl + "2@v1.png", baseUrl + "3.png"]
+
     wx.previewImage({
       urls: imgList,
       current: imgList[current]
@@ -179,8 +179,6 @@ Page({
     })
   },
 
-
-
   jump2TodayStudy() {
     if (!this.hasSetDict()) {
       return
@@ -240,7 +238,7 @@ Page({
     wx.showLoading({
       title: '搜索中',
     })
-
+    app.speakWordFunc(this.data.searchWordInputValue)
     resource.getWordInfo(this.data.searchWordInputValue).then(function (e) {
         wx.hideLoading()
         console.log(e)
@@ -287,6 +285,12 @@ Page({
     })
   },
 
+  onOpenRuleImage() {
+    router.push({
+      name: "rules"
+    })
+  },
+
   /**
    * 隐藏遮罩事件
    * 
@@ -299,7 +303,8 @@ Page({
     this.setData({
       showOverlay: false,
       showSearchBar: false,
-      showDictPopup: false
+      showDictPopup: false,
+      showRulesOverlayValue: false
     })
 
   },
@@ -393,8 +398,9 @@ Page({
     // }
   },
 
-  // 做一下判断
+  // 判断是否解锁成功
   checkShareStatus() {
+    console.log("checkShareStatus")
     let userId = this.data.inviteUserId
     let that = this
     // 先拿到用户的id
@@ -405,6 +411,7 @@ Page({
 
     let checkTask = userApi.checkInviteUrlAndUnlock(userId)
     checkTask.then(e => {
+      console.log(e)
       if (e.errcode == 0) {
         if (!that.data.userAuthInfo.isVip) {
           that.setData({
@@ -422,7 +429,6 @@ Page({
           inviteSuccess: true,
         })
         that.judgeSharePopup()
-
       }
 
       if (e.errcode == -11) {
@@ -436,47 +442,65 @@ Page({
       if (e.errcode == 12) {
         // 点击自己的
       }
+
+      if (e.errcode == -10) {
+        wx.showToast({
+          icon: 'none',
+          title: '链接有误',
+        })
+      }
     })
   },
 
   judgeSharePopup() {
     let isInviteMode = this.data.isInviteMode
-    let userAuthInfo = this.data.userAuthInfo || {}
-    let role = userAuthInfo.role
-    let unlockCount = userAuthInfo.unlockCount
-
-    let invitePopupTitleText = isInviteMode ? "会员解锁邀请" : (role != "roles-vip") ? "邀请好友" : "成功解锁"
-    let invitePopupSubTitleText = "共同免费解锁会员权益"
-    let invitePopupBottomText = "分享给好友或群聊"
-
+    console.log(isInviteMode)
     if (isInviteMode) {
-      invitePopupSubTitleText = "邀请你共同免费解锁会员权益",
-        invitePopupBottomText = "立即解锁"
       this.setData({
         showInvitePopupValue: true,
         isInviteMode: false,
-        invitePopupBottomText
+        invitePopupBottomText: "立即解锁",
+        invitePopupSubTitleText: "邀请你共同免费解锁会员权益",
+        invitePopupTitleText: "会员解锁邀请"
       })
+
     } else {
-      if (role == 'roles-vip') {
-        if (unlockCount < 3) {
-          invitePopupSubTitleText = "你可以继续分享，帮助" + parseInt(3 - unlockCount) + "名好友解锁"
-        } else {
-          invitePopupSubTitleText = "你的解锁名额已用完"
+      this.setData({
+        invitePopLoading: true
+      })
+      // 在这发起请求
+      userApi.getUserAuthInfo().then(e => {
+        let invitePopupTitleText = "成功解锁"
+        let invitePopupSubTitleText = "共同免费解锁会员权益"
+        let invitePopupBottomText = "分享给好友或群聊"
+        let role = e.role
+        let unlockCount = e.unlockCount
+        if (role == 'roles-vip') {
+          if (unlockCount < 3) {
+            invitePopupSubTitleText = "你可以继续分享，帮助" + parseInt(3 - unlockCount) + "名好友解锁"
+          } else {
+            invitePopupSubTitleText = "你的解锁名额已用完"
+          }
         }
-      }
+
+        this.setData({
+          unlockCount,
+          invitePopupTitleText,
+          invitePopupBottomText,
+          invitePopupSubTitleText
+        })
+      })
+
+
+
     }
 
-    this.setData({
-      unlockCount,
-      invitePopupSubTitleText,
-      invitePopupTitleText,
-      invitePopupBottomText
-    })
+
   },
 
   // todo: 要拉取一下数据
   showInvitePopup() {
+    this.judgeSharePopup()
     this.setData({
       showInvitePopupValue: true
     })
@@ -588,7 +612,6 @@ Page({
 
     })
   },
-
   share() {
     console.log("share")
   },
@@ -607,6 +630,7 @@ Page({
     // 返回shareObj
     return shareObj;
   },
+  
   onShareTimeline: function () {
     return {
       title: '来体验A4纸背单词的方法吧',
@@ -653,6 +677,9 @@ Page({
     wx.showLoading({
       title: '设置中',
     })
+
+    app.globalData.notificationConfig = e.detail.notificationConfig
+
     userApi.modifyNotificationConfig(e.detail.notificationConfig).then(e => {
       wx.hideLoading()
       wx.getSetting({
@@ -667,6 +694,7 @@ Page({
         tmplIds: ['HjD6Lq6HwmjuG7fCBKZ96sUEzmvAnl39bu3gS1rHbXU'],
         success(res) {
           console.log(res)
+          wx.setStorageSync('notificationSetFlag', app.globalData.todayDate)
           that.setData({
             alarmOverlay: false
           })

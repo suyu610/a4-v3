@@ -1,19 +1,28 @@
 <!--pages/dict-wordlist/dict-wordlist.wxml-->
 <navigation-bar type="leftBar" title="词书单词列表" bgColor="transparent"></navigation-bar>
-<scroll-view scroll-y class="scroll-container" style="height: {{scrollViewHeight}}px;">
+<scroll-view bindscrolltolower="onReachBottom" scroll-y class="scroll-container" style="height: {{scrollViewHeight}}px;">
   <view class="header">
     <view class="count">共有{{wordCount}}个单词</view>
-    <view bindtap="toggleShowAllMode" class="right-btn {{showAll?'blue':''}}">{{showAll?'':'不'}}显示未选中</view>
+    <view wx:if="{{isCustomBook==0}}" bindtap="toggleShowAllMode" class="right-btn {{showAll?'blue':''}}">{{showAll?'':'不'}}显示未选中</view>
   </view>
   <block wx:for="{{wordList}}" wx:key="index" wx:for-item="word">
     <van-cell wx:if="{{word.isIgnore == 0 || showAll}}" bindtap="onCellTapped" data-word="{{word.wordName}}" center clickable title-class="cell-title-class" value-class="cell-value-class">
       <view slot="title" style="display:flex;justify-content:start">
         <view class="van-cell-text">{{word.wordName}}</view>
       </view>
-      <image catchtap="onCellTapped" data-word="{{word.wordName}}" class="right-checked-img" src="{{word.isIgnore==1 ? 'images/unchecked.png': 'images/checked.png'}}"></image>
+      <image wx:if="{{isCustomBook==0}}" catchtap="onCellTapped" data-word="{{word.wordName}}" class="right-checked-img" src="{{word.isIgnore==1 ? 'images/unchecked.png': 'images/checked.png'}}"></image>
     </van-cell>
   </block>
+
+  <view class="loadmore-container" wx:if="{{loadingMore}}">
+    <van-loading size="13px">加载中...</van-loading>
+  </view>
+
+  <view class="loadmore-container" bindtap="onReachBottom" wx:if="{{!loadingMore && hasNextPage}}">
+    <text class="add-btn-text-nomore">点击加载更多</text>
+  </view>
 </scroll-view>
-<view class="footer" bindtap="finishSetting">
+
+<view class="footer" bindtap="finishSetting" wx:if="{{isCustomBook==0}}">
   <bg-btn shadow title="完成设置" bgColor="#6C30F0" width="125" height="30"></bg-btn>
 </view>
