@@ -1,7 +1,7 @@
 <!--pages/upload-book/upload-book.wxml-->
 <view class="container">
   <van-sticky>
-    <v-navigation-bar type="leftBar" title="自定义词书" bgColor="#E8EDF6" showBottomShadow="true"></v-navigation-bar>
+    <v-navigation-bar type="leftBar" title="自定义词书" bgColor="transparent" showBottomShadow="true"></v-navigation-bar>
   </van-sticky>
 
   <scroll-view scroll-y scroll-x="{{false}}" class="tab-container" style="height:{{tabContainerHeight}}px">

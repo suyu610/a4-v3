@@ -29,11 +29,16 @@
   color: #2f3137;
 }
 
+@media (prefers-color-scheme: dark) {
+  .container .left .name {
+    color: #fffefea8;
+  }
+}
+
 .jumpIcon .icon {
   width: 16rpx;
 }
 
-.jumpIcon .lock{
+.jumpIcon .lock {
   width: 30rpx;
-
 }

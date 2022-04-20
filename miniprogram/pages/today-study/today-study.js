@@ -391,6 +391,7 @@ Page({
       this.setData({
         loadingAddCard: true,
         [`todayCards`]: [emptyNewCard],
+        totalCardNum: that.data.totalCardNum + 1
       })
     } else {
       let todayCards = this.data.todayCards

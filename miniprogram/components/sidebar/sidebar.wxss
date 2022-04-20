@@ -60,6 +60,12 @@
   color: #1d2129;
 }
 
+@media (prefers-color-scheme: dark) {
+  .top .info .userinfo .nickname {
+    color: #fffefea8;
+  }
+}
+
 .top .info .userinfo .avatar {
   width: 52px;
   height: 52px;
@@ -106,10 +112,30 @@
 
   font-size: 12px;
 }
+.setting-icon {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.required:after {
+  content: "●";
+  color: #1c00db;
+  position: absolute;
+  margin-left: 4px;
+  font-weight: bold;
+  line-height: 1.8em;
+  top: -13px;
+  left: 12px;
+  width: 19px;
+  height: 12px;
+  font-size: 15px;
+}
 
 .setting-icon .icon {
   width: 20px;
   height: 20px;
+  padding-right: 5px;
 }
 
 .closeIcon {
@@ -123,7 +149,7 @@
   width: 100vw;
   min-height: 576px;
   height: 800px;
-  background-color: #fff;
+  background-color: var(--white);
 }
 
 .popup-container {
@@ -139,13 +165,16 @@
   padding-bottom: 20px;
   font-weight: bold;
 }
+
 .popup-container-value {
   color: #1d2129 !important;
   font-weight: bold;
 }
+
 .red {
   color: red !important;
-} 
+}
+
 .popup-container .popup-container-bottom {
   position: absolute;
   bottom: 14px;

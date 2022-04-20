@@ -1,6 +1,13 @@
 /* pages/settings/settings.wxss */
 @import "../../style/font.wxss";
+@import "../../app-wxa-auto-dark.wxss";
 
+@media (prefers-color-scheme: dark) {
+  page {
+    background: linear-gradient(0deg, #000000, #0a2967), #fdfdfd!important;
+    --tabs-nav-background-color: linear-gradient(0deg, #f5f6f8, #f5f6f8), #fdfdfd;
+  }
+}
 page {
   background: linear-gradient(0deg, #f5f6f8, #f5f6f8), #fdfdfd;
   --tabs-nav-background-color: linear-gradient(0deg, #f5f6f8, #f5f6f8), #fdfdfd;

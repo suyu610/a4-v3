@@ -46,7 +46,7 @@
   <book-img bookColumnId="{{bookColumnId}}" bookName="{{bookName}}" totalCount="{{totalCount}}"></book-img>
   <view class="info" wx:if="{{hasAdded}}">
     <view class="title {{bookName=='未命名'?'grey':''}}">{{bookName}}</view>
-    <view class="desc">按当前计划，剩余<text style="color:black">{{remainDay}}</text>天完成学习</view>
+    <view class="desc">按当前计划，剩余<text class="black">{{remainDay}}</text>天完成学习</view>
     <view class="progress-bar">
       <view class="progress-active" style="width:{{ tool.calWidth(curStudyNum,totalCount)}}\%"></view>
 

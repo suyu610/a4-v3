@@ -260,6 +260,23 @@
   font-weight: var(--normal);
 }
 
+@media (prefers-color-scheme: dark) {
+  .defination-english {
+    color: #ffffff !important;
+  }
+
+  .defination-chinese {
+    color: #cccede !important;
+  }
+  .footer-right {
+    background: #a9afd2 !important;
+  }
+
+  .footer-left-text {
+    color: white !important;
+  }
+}
+
 .defination-chinese {
   color: #3d4262;
   font-size: var(--body);

@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
     "v-navigation-bar": "../../components/navigation-bar",
     "v-progress-card": "../../components/progress-card",
     "v-word-dic": "../../components/word-dic",

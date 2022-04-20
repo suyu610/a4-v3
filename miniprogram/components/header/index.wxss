@@ -16,8 +16,14 @@
   width: 100%;
   display: flex;
   font-weight: bold;
-
 }
+
+@media (prefers-color-scheme: dark) {
+  .head-progress {
+    color: #fff;
+  }
+}
+
 .subtitle {
   /* color: grey; */
   font-size: 15px;
@@ -32,6 +38,13 @@
 .blue {
   color: #4c34f0;
 }
+
+@media (prefers-color-scheme: dark) {
+  .blue {
+    color: #fff !important;
+  }
+}
+
 .head-right {
   display: flex;
   height: 24px;

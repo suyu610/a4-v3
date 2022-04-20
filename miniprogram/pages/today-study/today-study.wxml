@@ -1,17 +1,24 @@
 <!--pages/new-word/index.wxml-->
 <wxs module="drawer" src="./movement.wxs"></wxs>
 <navigation-bar wx:if="{{!loading}}" type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
+
 <view class="loading-container" wx:if="{{loading}}">
   <view class="child">
     <van-loading size="24px" vertical>加载中...</van-loading>
-  </view> 
-</view> 
+  </view>
+</view>
+
 <scroll-view wx:else bindscrolltolower="onReachBottom" class="container" scroll-y style="height: {{scrollViewHeight}}px;">
-  <header title="今日计划新学" cardNum="{{totalCardNum}}" bgColor="transparent" selectMode="{{allSelectMode}}" bind:onRightBtnTapped="onAllSelectBtnTapped"></header>
+  <header title="共" cardNum="{{totalCardNum}}" bgColor="transparent" selectMode="{{allSelectMode}}" bind:onRightBtnTapped="onAllSelectBtnTapped"></header>
   <block wx:for="{{todayCards}}" wx:key="cardId">
     <wordCard wx:if="{{item!=null}}" mode="study" class="vwordcard" id="card_{{item.cardId}}" loading="{{item.loading}}" wordCard="{{item}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
   </block>
 
+  <view wx:if="{{totalCardNum == 0}}" style="text-align: center;padding-top: 6vh;padding-bottom: 10vh;">
+    <image class="coin" style="width:25vw;height:25vw;border-radius: 50%;box-shadow: #e8c5c575 4px 5px 4px 2px;" mode="widthFix" src="https://cdns.qdu.life/a4/images/empty_1.png"></image>
+    <view style="padding-top: 40px;font-size: 24px;font-weight: bold;">太棒了</view>
+    <view style="padding-top: 10px;font-size: 20px;font-weight: bold;">今日复习计划已完成</view>
+  </view>
   <view class="loadmore-container" wx:if="{{loadingMore}}">
     <van-loading size="13px">加载中...</van-loading>
   </view>

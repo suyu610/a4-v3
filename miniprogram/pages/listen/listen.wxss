@@ -1,5 +1,17 @@
 /* pages/export-confirm/export-confirm.wxss */
 @import "../../style/font.wxss";
+@import "../../app-wxa-auto-dark.wxss";
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #000 !important;
+  }
+  .word-name {
+    color: #bbcae8 !important;
+  }
+  .mean-ch {
+    color: #cacaca !important;
+  }
+}
 /* page {
   --count-down-text-color: #5d46f16e;
 } */
@@ -96,7 +108,7 @@
   color: #4e5969;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-.voice-type{
+.voice-type {
   padding-right: 6px;
   font-size: 14px;
 }
@@ -106,7 +118,7 @@
   padding: 0 6px;
 }
 .mean-detail {
-  background: white;
+  background: var(--white);
   border-radius: 12px;
   padding: 24px 18px;
   margin: 16px 18px;
@@ -118,7 +130,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: #D1D4DA;
+  color: #d1d4da;
 }
 
 .defination-container {
@@ -234,7 +246,7 @@
 }
 .mean-ch {
   height: 50px;
-  background: white;
+  background: var(--white);
   margin: 0 18px;
   border-radius: 12px;
   display: flex;
@@ -245,9 +257,6 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  /* identical to box height, or 125% */
-  /* Text/5-强调、正文标题 */
-
   color: #1d2129;
 }
 .mean-ch .left {

@@ -1,7 +1,16 @@
 /* components/dict-book-item/index.wxss */
+@media (prefers-color-scheme: dark) {
+  .info .title {
+    color: #dbdde0!important;
+  }
+}
+.black {
+  color: var(--black);
+}
+
 .container {
   display: flex;
-  background-color: #fff;
+  background-color: var(--white);
   width: 85vw;
   margin: 0 auto;
   border-radius: 12px;
@@ -14,7 +23,7 @@
   position: absolute;
   top: 19px;
   right: 12px;
-padding: 0 12px;
+  padding: 0 12px;
   height: 20px;
   border-radius: 4px;
   text-align: center;
@@ -88,18 +97,16 @@ padding: 0 12px;
 
 .progress-info .percent {
   padding-left: 4px;
-  color: black;
+  color: var(--black);
 }
-.book-total-count{
+.book-total-count {
   position: absolute;
   bottom: 20px;
 }
 
-.bold{
+.bold {
   font-weight: bold;
 }
-
-
 
 .grey {
   opacity: 1;

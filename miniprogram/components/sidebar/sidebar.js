@@ -14,7 +14,8 @@ Component({
     userAuthInfo: Object,
     userBaseInfo: Object,
     studyRecordInfo: Object,
-    notificationConfig: Object
+    notificationConfig: Object,
+    knowNewFeature: Boolean
   },
 
   /**

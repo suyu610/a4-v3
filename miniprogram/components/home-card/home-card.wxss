@@ -2,11 +2,11 @@
 @import "../../style/font.wxss";
 @import "../../icon.wxss";
 
-.container { 
+.container {
   background-color: var(--white);
   padding: 18px 16px 14px 16px;
   margin: 16px;
-  border-radius: 24rpx; 
+  border-radius: 24rpx;
 }
 
 .flex {
@@ -31,11 +31,10 @@
   width: 244rpx;
 }
 
-
 .main {
-  padding-top: 20px; 
+  padding-top: 20px;
 }
-.main .left, 
+.main .left,
 .main .right {
   width: 45%;
 }
@@ -50,12 +49,12 @@
   font-size: 11px;
 }
 
-
 .main .num {
   font-family: "SF Pro Display Num";
   font-size: 48px;
   line-height: 48px;
-  color: #303339;
+  /* color: #303339; */
+  color: var(--black);
   margin-right: 14rpx;
 }
 
@@ -67,7 +66,7 @@
 .footer .people {
   height: 20px;
   width: 20px;
-}  
+}
 
 .footer .left {
   display: flex;

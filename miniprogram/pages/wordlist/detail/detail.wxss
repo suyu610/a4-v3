@@ -21,6 +21,11 @@ page {
   color: #181a1d;
 }
 
+@media (prefers-color-scheme: dark) {
+  .head-progress {
+    color: #fff!important;
+  }
+}
 .blue {
   color: #4c34f0;
 }
@@ -98,7 +103,7 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #fcfcfc;
+  background-color: var(--white);
 }
 
 .container-up {

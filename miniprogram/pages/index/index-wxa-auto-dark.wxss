@@ -8,67 +8,68 @@
  */
 
 @media (prefers-color-scheme: dark) {
-    page {
-        --cell-background-color: rgba(0, 0, 0, 0);
+  page {
+    --cell-background-color: rgba(0, 0, 0, 0);
+  }
+
+  .container {
+    /* background-image: rgb(0, 0, 0); */
+    background-image: linear-gradient(#000000 0%, rgba(253, 253, 253, 0) 100%);
+  }
+
+  .searchBar-text {
+    color: rgb(95, 106, 119);
+  }
+
+  .container-footer {
+    color: rgb(100, 110, 121);
+  }
+
+  .search-keyboard {
+    background-color: rgb(17, 17, 17);
+  }
+
+  .dictPopup {
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+
+  .drawer {
+    color: rgb(178, 194, 219);
+    background: rgb(26, 29, 34);
+  }
+
+  .btn {
+    border: rgb(0, 0, 0);
+    color: rgb(69, 126, 153);
+  }
+
+  @keyframes myfirst {
+    0% {
+      transform: translate(0px, 0px);
     }
 
-    .container {
-        background-image: rgb(0, 0, 0);
+    50% {
+      transform: translate(5px, -5px);
     }
 
-    .searchBar-text {
-        color: rgb(95, 106, 119);
+    100% {
+      transform: translate(0px, 0px);
     }
+  }
 
-    .container-footer {
-        color: rgb(100, 110, 121);
-    }
+  .invite-result-popup-container {
+    background: rgb(0, 0, 0);
+  }
 
-    .search-keyboard {
-        background-color: rgb(17, 17, 17);
-    }
+  .orange {
+    color: rgb(117, 49, 0);
+  }
 
-    .dictPopup {
-        background-color: rgba(0, 0, 0, 0) !important;
-    }
+  .invite-result-popup-container .title {
+    color: rgb(185, 203, 247);
+  }
 
-    .drawer {
-        color: rgb(178, 194, 219);
-        background: rgb(26, 29, 34);
-    }
-
-    .btn {
-        border: rgb(0, 0, 0);
-        color: rgb(69, 126, 153);
-    }
-
-    @keyframes myfirst {
-        0% {
-            transform: translate(0px, 0px);
-        }
-
-        50% {
-            transform: translate(5px, -5px);
-        }
-
-        100% {
-            transform: translate(0px, 0px);
-        }
-    }
-
-    .invite-result-popup-container {
-        background: rgb(0, 0, 0);
-    }
-
-    .orange {
-        color: rgb(117, 49, 0);
-    }
-
-    .invite-result-popup-container .title {
-        color: rgb(185, 203, 247);
-    }
-
-    .invite-popup-container .title {
-        color: rgb(185, 203, 247);
-    }
+  .invite-popup-container .title {
+    color: rgb(185, 203, 247);
+  }
 }

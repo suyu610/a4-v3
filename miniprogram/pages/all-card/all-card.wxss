@@ -9,6 +9,13 @@ page {
   background-color: #eaeef6;
   /* --calendar-range-edge-background-color:  */
 }
+@media (prefers-color-scheme: dark) {
+  page {
+    background-color: #000;
+    --dropdown-menu-title-text-color: #8792a1;
+
+  }
+}
 .container {
   /* background-image: linear-gradient(#dde4f3 0%, rgba(253, 253, 253, 0) 100%); */
 

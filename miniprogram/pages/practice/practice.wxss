@@ -1,6 +1,6 @@
 /* pages/practice/practice.wxss */
 @import "../../style/font.wxss";
-
+@import "../../app-wxa-auto-dark.wxss";
 @media (prefers-color-scheme: dark) {
   .button-1-text {
     color: var(--black) !important;
@@ -127,6 +127,18 @@ page {
   font-size: var(--body);
   font-family: var(--simhei);
   font-weight: var(--light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .phoneticSign-text {
+    color: rgb(216 195 195);
+  }
+  .button-2 {
+    color: #eaedfd !important;
+  }
+  .header-text {
+    opacity: 0.5;
+  }
 }
 
 .favor-img {

@@ -9,7 +9,8 @@
 
 <!--pages/wordlist/wordlist.wxml-->
 <van-sticky>
-  <v-navigation-bar type="leftBar" title="{{groupName}}"></v-navigation-bar>
+  
+  <v-navigation-bar type="leftBar" title="{{groupName}}" bgColor="transparent"></v-navigation-bar>
 </van-sticky>
 <scroll-view bindscrolltolower="onReachBottom" class="container" id="scroller" bind:scroll="onScroll" scroll-y style="height: {{scrollViewHeight}}px;">
   <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }} ">

@@ -27,6 +27,7 @@ Page({
     showRandomCardValue: false,
     lockDrawerValue: false,
     drawerStatus: false,
+    knowNewFeature: false,
     showOverlay: false,
     showPageContainerValue: false,
     showInvitePopupValue: false,
@@ -364,6 +365,16 @@ Page({
     this.changeTargetCount(parseInt(e.detail.value))
   },
 
+  onTap: function (e) {
+    this.popover = this.selectComponent('#popover1')
+    // 获取按钮元素的坐标信息
+    wx.createSelectorQuery().in(this).select('#homecard').boundingClientRect(res => {
+      console.log(res)
+      // 调用自定义组件 popover 中的 onDisplay 方法z
+      this.popover.onDisplay(res);
+    }).exec();
+  },
+
   // 确认修改每日目标
   changeTargetCount(count) {
     let that = this
@@ -378,9 +389,14 @@ Page({
       // 成功后
       that.initFromServer()
       that.onClosePlanTimeColumn()
-      wx.showToast({
-        icon: 'none',
+      wx.hideLoading()
+
+      wx.showModal({
         title: '修改成功',
+        content: "已生成的卡片，将继续存在",
+        confirmColor: "#332FEB",
+        confirmText: '知道了',
+        showCancel: false,
       })
     })
   },
@@ -396,6 +412,10 @@ Page({
     // if (app.globalData.needRefreshHomePageData) {
     this.initFromServer()
     // }
+
+    // setTimeout(() => {
+    //   this.onTap()
+    // }, 500);
   },
 
   // 判断是否解锁成功
@@ -630,7 +650,7 @@ Page({
     // 返回shareObj
     return shareObj;
   },
-  
+
   onShareTimeline: function () {
     return {
       title: '来体验A4纸背单词的方法吧',
@@ -643,6 +663,21 @@ Page({
   },
 
   initSystem() {
+    let that = this
+    wx.getStorage({
+      key: 'knowNewFeature',
+      success(res) {
+        that.setData({
+          knowNewFeature: res.data
+        })
+      },
+      fail() {
+        that.setData({
+          knowNewFeature: false
+        })
+      } 
+    })
+
     this.setData({
       screenHeight: app.globalData.screenHeight,
       navigationBarHeight: app.globalData.navigationBarHeight,

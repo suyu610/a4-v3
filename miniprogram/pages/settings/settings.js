@@ -14,6 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showFinishedCard: 1,
     showTargetPopupValue: false,
     resetProgressValue: false,
     currentDictName: ''
@@ -252,6 +253,28 @@ Page({
       }
     })
   },
+  switchFinishedCard() {
+    let that = this
+    let showFinishedCard = this.data.setting.showFinishedCard == 1 ? 0 : 1
+    this.setData({
+      ['setting.showFinishedCard']: showFinishedCard
+    })
+
+    let setting = {
+      "showFinishedCard": showFinishedCard
+    }
+
+    userApi.modifyUserSetting(setting).then(e => {
+      wx.showToast({
+        icon: 'none',
+        title: '修改成功',
+      })
+      wx.setStorage({
+        key: 'showFinishedCard',
+        data: that.data.setting.showFinishedCard
+      })
+    })
+  },
 
   switchVibrate() {
     let that = this
@@ -309,9 +332,10 @@ Page({
     let that = this
     this.setData({
       setting: app.globalData.setting,
-      deletedCardCount: app.globalData.deletedCardCount,
-      markWordCount: app.globalData.markWordCount
     })
+
+    app.globalData.knowNewFeature = true
+    wx.setStorageSync('knowNewFeature', true)
 
     // 载入setting.showReviewToast
     wx.getStorage({
@@ -356,6 +380,20 @@ Page({
       }
     })
 
+
+    wx.getStorage({
+      key: 'showFinishedCard',
+      success(res) {
+        that.setData({
+          ['setting.showFinishedCard']: res.data
+        })
+      },
+      fail() {
+        that.setData({
+          ['setting.showFinishedCard']: 1
+        })
+      }
+    })
 
     wx.getStorage({
       key: 'customKeyboard',

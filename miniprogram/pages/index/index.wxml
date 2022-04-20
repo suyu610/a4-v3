@@ -67,12 +67,13 @@
       <image class="top-bg" mode="widthFix" src="https://cdns.qdu.life/a4/images/shadow.png"></image>
       <view class="navigation-bar" style="height:{{navigationBarHeight}}px;">
         <view class="leftBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;">
-          <image class="menu-img" bind:tap="{{drawer.toggleDrawer}}"></image>
+          <image class="menu-img {{drawerStatus || knowNewFeature?'':'required'}}" bind:tap="{{drawer.toggleDrawer}}"></image>
         </view>
+
         <!-- searchBar -->
         <view class="searchBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;" bind:tap="onSearch">
           <image class="search-img" src="./images/search.png"></image>
-          <text class="searchBar-text">v3.0.1</text>
+          <text class="searchBar-text">点此搜索单词</text>
         </view>
       </view>
 
@@ -82,11 +83,14 @@
           <view>
             <van-icon name="down" size="14px" color="grey" class="icon" />
           </view>
-        </view> 
+        </view>
         <!-- progress-card -->
         <v-progress-card wx:if="{{userBaseInfo!=null}}" dictInfo="{{dictInfo}}" userBaseInfo="{{userBaseInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped="onOpenRuleImage"></homecard>
-        <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
+        <homecard id="homecard" wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
+        <!-- <popover id='popover1'>
+          <popover-item>点我刷新昵称</popover-item>
+        </popover> -->
         <view wx:if="{{screenHeight > 670}}" class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
           <view style="color: #b2bbc7;padding-bottom: 7px;">- 使用提示 -</view>
           <!-- <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image> -->
@@ -115,11 +119,11 @@
       <van-action-sheet show="{{ showPracticeSheetValue }}" actions="{{ practiceModeActions }}" bind:close="onClosePracticeSheet" bind:select="onSelectPracticeSheet" cancel-text="取消" />
     </view>
     <view class="drawer drawerA" data-isIOS="{{isIOS}}" data-lock="{{lockDrawerValue}}" data-drawerwidth="{{windowWidth}}">
-      <sidebar bind:toggleLockDrawer="toggleLockDrawer" wx:if="{{notificationConfig!=null}}" notificationConfig="{{notificationConfig}}" studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}" bind:openAlarm="openAlarm" bind:share="share" bind:showInvitePopup="showInvitePopup"></sidebar>
+      <sidebar knowNewFeature="{{knowNewFeature}}" bind:toggleLockDrawer="toggleLockDrawer" wx:if="{{notificationConfig!=null}}" notificationConfig="{{notificationConfig}}" studyRecordInfo="{{studyRecordInfo}}" userBaseInfo="{{userBaseInfo}}" userAuthInfo="{{userAuthInfo}}" bind:openAlarm="openAlarm" bind:share="share" bind:showInvitePopup="showInvitePopup"></sidebar>
     </view>
   </view>
 
-  <page-container show="{{showPageContainerValue}}" round overlay duration="{{500}}" position="right" close-on-slide-down bind:enter="enter" bind:leave="leavePageContainer" bindclickoverlay="onClickOverlay" custom-style="z-index:9999" overlay-style="background-color: rgba(0, 0, 0, 0.7);z-index:9998">
+  <page-container show="{{showPageContainerValue}}" round overlay duration="{{500}}" position="right" close-on-slide-down bind:enter="enter" bind:leave="leavePageContainer" bindclickoverlay="onClickOverlay" custom-style="z-index:9999" overlay-style="z-index:9998">
     <view class="faq-page random-popup-container">
       <view class="title">常见问题</view>
       <view class="random-popup-container-footer" bindtap="exit">
@@ -156,9 +160,8 @@
   <van-picker columns="{{ planTimeColumn }}" title="每日新学单词数" bind:change="onChangePlanPicker" show-toolbar bind:confirm="onConfirmPlanTimeColumn" bind:cancel="onClosePlanTimeColumn" />
 </van-popup>
 
-<van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 70%;background-color: #f5f9ff;">
+<van-popup show="{{ showRandomCardValue }}" bind:close="onCloseRandomCard" round position="bottom" custom-style="height: 70%;">
   <image mode="widthFix" class="ear" src="../../images/ear.png"></image>
-
   <view class="random-popup-container">
     <view class="title">
       <view>Tips</view>

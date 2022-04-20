@@ -1,7 +1,7 @@
 <!--pages/wordlist/detail/detail.wxml-->
 <view class="container">
   <van-sticky>
-    <v-navigation-bar type="leftBar" title="单词本" bind:naviBack="onNaviBack"></v-navigation-bar>
+    <v-navigation-bar type="leftBar" title="单词本" bgColor="transparent"></v-navigation-bar>
   </van-sticky>
   <van-cell-group>
     <block wx:for="{{wordListGroup}}" wx:key="id" wx:for-item="item">

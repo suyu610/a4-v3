@@ -8,19 +8,30 @@
  */
 
 @media (prefers-color-scheme: dark) {
-    .clickable--hover {
-        background-color: rgb(25, 26, 27);
-    }
-
-    page {
-        background-color: rgb(19, 19, 19);
-        --black: rgb(238, 238, 241);
-        --white: rgb(17, 17, 17);
-        --grey: rgb(22, 22, 22);
-        --red: rgb(197, 32, 8);
-        --primary: rgb(223, 156, 255);
-        --secondary: rgb(119, 121, 255);
-        --deepBlue: rgb(255, 237, 255);
-        --deepGrey: rgb(111, 111, 111);
-    }
+  .clickable--hover {
+    background-color: rgb(25, 26, 27);
+  }
+  .van-picker__mask {
+    background-image: none !important;
+  }
+  page {
+    background-color: rgb(19, 19, 19) !important;
+    --picker-option-selected-text-color: #fff;
+    --picker-option-text-color: #ad9090;
+    --picker-background-color: #000;
+    --cell-background-color: #000;
+    --count-down-text-color: #323233;
+    --cell-text-color: #fff;
+    --action-sheet-item-background: #333;
+    --action-sheet-cancel-padding-color: #000;
+    --popup-background-color: #000;
+    --black: rgb(238, 238, 241);
+    --white: rgb(17, 17, 17);
+    --grey: rgb(22, 22, 22);
+    --red: rgb(197, 32, 8);
+    --primary: rgb(223, 156, 255);
+    --secondary: rgb(119, 121, 255);
+    --deepBlue: rgb(255, 237, 255);
+    --deepGrey: rgb(111, 111, 111);
+  }
 }

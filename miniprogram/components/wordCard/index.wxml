@@ -5,14 +5,14 @@
     <view class="header">
       <view class="header-left">
         <view class="left-top">
-          <text class="header-left-text-1">有效练习{{wordCard.validPracticeCount}}次 |</text>
+          <!-- <text class="header-left-text-1">有效练习{{wordCard.validPracticeCount}}次 |</text> -->
           <text wx:if="{{mode=='study'}}" class="header-left-text-1">共练习{{wordCard.progress==null?0:wordCard.progress.seq}}次</text>
           <text wx:if="{{mode=='review'}}" class="header-left-text-1">共练习{{wordCard.progress.seq}}次</text>
           <text class="header-left-text-2" decode="true" wx:if="{{formatTime!=null && formatTime != 'HAS_DONE'}}">&nbsp;/&nbsp;{{time>0?'推荐'+ formatTime +'后复习':'推荐现在复习'}} </text>
           <text wx:if="{{wordCard.dictCode == 9999}}" class="header-left-text-2" decode="true">&nbsp;/&nbsp;历史词书</text>
           <text wx:if="{{wordCard.dictCode != 9999 && dictInfo[wordCard.dictCode]!=null}}" class="header-left-text-2" decode="true">&nbsp;/&nbsp;{{dictInfo[wordCard.dictCode].name}}</text>
           <text wx:if="{{wordCard.dictCode != 9999 && dictInfo[wordCard.dictCode]==null}}" class="header-left-text-2" decode="true">&nbsp;/&nbsp;已删除词书</text>
-          <text class="header-left-text-2" decode="true">&nbsp;#{{wordCard.cardId}} </text>
+          <!-- <text class="header-left-text-2" decode="true">&nbsp;#{{wordCard.cardId}} </text> -->
         </view>
         <view class="left-bottom">  
           创建于{{date}} 

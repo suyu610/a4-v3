@@ -1,9 +1,14 @@
 <!--pages/new-word/index.wxml-->
-<movable-area class="container">
+<movable-area class="container" style="{{totalCardNum == 0?'background-image: none;background-color:white':''}}">
   <navigation-bar type="leftBar" title="{{title}}" bgColor="transparent"></navigation-bar>
   <!-- <navigation-bar type="leftBar" title="{{Object.keys(cardsGroupByDate).length}}" bgColor="transparent"></navigation-bar> -->
   <scroll-view scroll-y style="height: {{scrollViewHeight}}px;">
-    <van-empty description="今日复习已完成" wx:if="{{totalCardNum == 0}}" />
+    <view wx:if="{{totalCardNum == 0}}" style="text-align: center;padding-top: 15vh;">
+      <image class="coin" style="width:25vw;height:25vw;border-radius: 50%;box-shadow: #e8c5c575 4px 5px 4px 2px;" mode="widthFix" src="https://cdns.qdu.life/a4/images/empty_1.png"></image>
+      <view style="padding-top: 40px;font-size: 24px;font-weight: bold;">太棒了</view>
+      <view style="padding-top: 10px;font-size: 20px;font-weight: bold;">今日复习计划已完成</view>
+    </view>
+
     <block wx:for="{{cardsGroupByDate}}" wx:key="index">
       <header cardId="{{item.id}}" title="{{item.date}}" cardNum="{{item.list.length}}" bgColor="transparent" bind:onRightBtnTapped="selectAll"></header>
       <wordCard mode="review" class="vwordcard" id="card_{{item.list[0].cardId}}" isFolder="{{!item.open}}" loading="{{item.list[0].loading}}" wordCard="{{item.list[0]}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
@@ -11,9 +16,9 @@
         <view wx:if="{{idx!=0}}" style="transition: 0;opacity: {{card.open?1:0}};transform: scaleY({{card.open?'1':'0'}});height: {{card.open?'':0}};">
           <wordCard mode="review" class="vwordcard" id="card_{{card.cardId}}" loading="{{card.loading}}" wordCard="{{card}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
         </view>
-      </block>  
+      </block>
       <image wx:if="{{item.list.length>1}}" class="toggle-btn" bindtap="toggleOpenStatus" data-item="{{item}}" mode="heightFix" src="./images/{{item.list[0].open?'open':'close'}}.png"></image>
-    </block> 
+    </block>
     <!-- <view class="add-btn-wrapper"> 
       <image class="add-btn" src="./images/add-btn.png" mode="widthFix"></image>
     </view> -->
