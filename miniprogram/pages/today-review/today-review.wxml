@@ -11,10 +11,10 @@
         <view wx:if="{{idx!=0}}" style="transition: 0;opacity: {{card.open?1:0}};transform: scaleY({{card.open?'1':'0'}});height: {{card.open?'':0}};">
           <wordCard mode="review" class="vwordcard" id="card_{{card.cardId}}" loading="{{card.loading}}" wordCard="{{card}}" cardCheckedArr="{{checkedCardArr}}" bind:deleteCard="deleteCard" bind:word="onWord" bind:cardChecked="cardChecked"></wordCard>
         </view>
-      </block>
+      </block>  
       <image wx:if="{{item.list.length>1}}" class="toggle-btn" bindtap="toggleOpenStatus" data-item="{{item}}" mode="heightFix" src="./images/{{item.list[0].open?'open':'close'}}.png"></image>
-    </block>
-    <!-- <view class="add-btn-wrapper">
+    </block> 
+    <!-- <view class="add-btn-wrapper"> 
       <image class="add-btn" src="./images/add-btn.png" mode="widthFix"></image>
     </view> -->
     <!-- <bg-btn title="点此添加卡片" width="112" textColor="#86909C"></bg-btn> -->
@@ -38,7 +38,7 @@
         </view>
       </swiper-item>
     </swiper>
-  </view> 
+  </view>
 </van-popup>
 
 <!-- 学习模式选择 -->

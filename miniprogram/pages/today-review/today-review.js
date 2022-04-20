@@ -23,14 +23,12 @@ Page({
     dictLoading: false,
     showWordGroupPopupValue: false,
     cardCur: 0,
-    wordlist: ["hello", "abandon", "people", "world", "open"],
     title: "今日推荐复习",
     bottomBtnTitle: "开始学习",
     mode: "study", // study export listen
     checkedCardArr: [],
     cardsGroupByDate: {},
     scrollViewHeight: globalData.windowHeight - globalData.navigationBarHeight,
-    open: false,
     showPracticeSheetValue: false,
     practiceModeActions: [{
         name: '记忆模式',
@@ -214,7 +212,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     this.getData(0)
 
     const data = router.extract(options);
@@ -266,11 +263,9 @@ Page({
   getData(pageIndex) {
     let that = this
     // 获取今日卡片
+    app.globalData.needRefreshData = false
     cardApi.getNeedReviewCard(pageIndex).then(e => {
-      app.globalData.needRefreshData = false
       let cardsGroupByDate = this.data.cardsGroupByDate
-
-
       e.list.forEach(card => {
         if (cardsGroupByDate.hasOwnProperty(0 - card.date)) {
           // 看看该卡片是不是已存在
@@ -303,6 +298,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (app.globalData.needRefreshData) {
+      this.setData({
+        cardsGroupByDate: {},
+      })
+      this.getData(0)
+    }
   },
 })

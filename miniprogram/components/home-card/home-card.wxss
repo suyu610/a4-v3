@@ -2,8 +2,8 @@
 @import "../../style/font.wxss";
 @import "../../icon.wxss";
 
-.container {
-  background-color: #fff;
+.container { 
+  background-color: var(--white);
   padding: 18px 16px 14px 16px;
   margin: 16px;
   border-radius: 24rpx; 

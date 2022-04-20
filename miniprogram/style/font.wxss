@@ -55,3 +55,5 @@
   font-style: normal;
   font-weight: normal;
 }
+
+@import 'font-wxa-auto-dark.wxss'

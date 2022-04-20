@@ -404,8 +404,8 @@ Page({
    */
   onHide: function () {
     console.log("onHide")
-    app.globalData.innerAudioContext.stop()
-    bgmInnerAudioContext.stop()
+    // app.globalData.innerAudioContext.stop()
+    // bgmInnerAudioContext.stop()
   },
 
   /**

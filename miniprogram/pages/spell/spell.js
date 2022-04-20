@@ -131,7 +131,7 @@ Page({
             that.saveProgress();
           } else {
             wx.navigateBack({
-              delta: 9,
+              delta: 0,
             })
           }
         }
@@ -175,7 +175,6 @@ Page({
     let cardArr = []
     checkedCardArr.forEach(e => {
       if (e.progress == null || e.progress.seq == 0) {
-        console.log("进度为空")
         cardArr.push({
           id: e.cardId,
           pseq: 1,
@@ -206,7 +205,7 @@ Page({
         })
       }
     })
-    
+
     if (notificationUtil.shouldShowNotification()) {
       wx.requestSubscribeMessage({
         tmplIds: ['HjD6Lq6HwmjuG7fCBKZ96sUEzmvAnl39bu3gS1rHbXU'],
@@ -215,9 +214,10 @@ Page({
             wx.showToast({
               title: '保存成功',
             })
+            app.globalData.needRefreshData = true
             setTimeout(() => {
               wx.navigateBack({
-                delta: 9,
+                delta: 0,
               })
             }, 1000)
           })
@@ -232,9 +232,11 @@ Page({
         wx.showToast({
           title: '保存成功',
         })
+        app.globalData.needRefreshData = true
+
         setTimeout(() => {
           wx.navigateBack({
-            delta: 9,
+            delta: 0,
           })
         }, 1000)
       })

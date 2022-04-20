@@ -69,3 +69,5 @@ page {
   display: table-cell;
   vertical-align: middle;
 }
+
+@import 'app-wxa-auto-dark.wxss'

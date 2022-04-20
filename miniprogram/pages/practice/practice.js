@@ -397,8 +397,9 @@ Page({
             })
             setTimeout(() => {
               wx.navigateBack({
-                delta: 9,
+                delta: 0,
               })
+              app.globalData.needRefreshData=true
             }, 1000)
           })
           wx.setStorageSync('notificationSetFlag', app.globalData.todayDate)
@@ -409,12 +410,13 @@ Page({
       })
     } else {
       progressApi.savePracticeProgress(cardArr).then(e => {
+        app.globalData.needRefreshData=true
         wx.showToast({
           title: '保存成功',
         })
         setTimeout(() => {
           wx.navigateBack({
-            delta: 9,
+            delta: 0,
           })
         }, 1000)
       })

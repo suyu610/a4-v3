@@ -254,8 +254,7 @@ Page({
   onLoad: function (options) {
     let e = app.globalData.todayInitData
     const data = router.extract(options);
-    app.globalData.needRefreshData = true
-
+    this.getDate(0)
     if (data != null && data.mode != null) {
       this.setData({
         title: data.mode == "export" ? "导出卡片" : "随身听",
@@ -312,11 +311,11 @@ Page({
     })
     let that = this
     let useCustomBook = app.globalData.userBaseInfo.useCustomBook == 1
+    app.globalData.needRefreshData = false
 
     cardApi.genTodayCard(pageIndex, useCustomBook).then(e => {
       let todayCards = this.data.todayCards
       todayCards = todayCards.concat(e.list)
-      app.globalData.needRefreshData = false
       that.setData({
         todayCards: todayCards,
         currentPageIndex: e.pageNum,
@@ -327,11 +326,13 @@ Page({
       })
     })
   },
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
     if (app.globalData.needRefreshData) {
+
       // 如果是从练习页退回来的，则要取消掉选定的数组
       this.setData({
         checkedCardArr: [],
@@ -383,7 +384,7 @@ Page({
       wordList: [],
       loading: true,
       loadingAddCard: true,
-      date:app.globalData.todayDate
+      date: app.globalData.todayDate
     }
 
     if (this.data.todayCards.length == 0) {

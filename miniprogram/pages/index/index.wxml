@@ -72,7 +72,7 @@
         <!-- searchBar -->
         <view class="searchBar" style="height:{{searchBarHeight}}px;top:{{searchBarTop}}px;" bind:tap="onSearch">
           <image class="search-img" src="./images/search.png"></image>
-          <text class="searchBar-text">开始查询单词吧！</text>
+          <text class="searchBar-text">v3.0.1</text>
         </view>
       </view>
 
@@ -82,12 +82,12 @@
           <view>
             <van-icon name="down" size="14px" color="grey" class="icon" />
           </view>
-        </view>
+        </view> 
         <!-- progress-card -->
         <v-progress-card wx:if="{{userBaseInfo!=null}}" dictInfo="{{dictInfo}}" userBaseInfo="{{userBaseInfo}}" progressList="{{progressList}}" currentBookCode="{{currentBookCode}}" bind:naviToDictionary="onNaviToDictionary"></v-progress-card>
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishReviewCount}}" todoCount="{{dailyStudyTask.needReviewCount}}" doCount="{{dailyStudyTask.finishReviewCount}}" type="review" bind:mainBtnTapped="jump2TodayReview" bind:subBtnTapped="onOpenRuleImage"></homecard>
         <homecard wx:if="{{dailyFinishedData!=null}}" finishedCount="{{dailyFinishedData.totalFinishStudyCount}}" todoCount="{{dailyStudyTask.needStudyCount}}" doCount="{{dailyStudyTask.finishStudyCount}}" type="study" bind:mainBtnTapped="jump2TodayStudy" bind:subBtnTapped="onOpenPlanTimeColumn"></homecard>
-        <view wx:if="{{screenHeight >670}}" class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
+        <view wx:if="{{screenHeight > 670}}" class="container-footer" id="random" data-popoverOffsetY="70" data-popoverOffsetX="30" bindtap="showRandomCard">
           <view style="color: #b2bbc7;padding-bottom: 7px;">- 使用提示 -</view>
           <!-- <image mode="heightFix" class="footer_text" src="./images/footer_text.png"></image> -->
         </view>
